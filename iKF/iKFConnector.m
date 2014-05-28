@@ -1,0 +1,295 @@
+//
+//  iKFConnector.m
+//  iKF
+//
+//  Created by Yoshiaki Matsuzawa on 2014-05-13.
+//  Copyright (c) 2014 Yoshiaki Matsuzawa. All rights reserved.
+//
+
+#import "iKFConnector.h"
+
+@implementation iKFConnector
+{
+
+}
+
+- (id) initWithHost: (NSString*)host{
+    id x = [self init];
+    self.host = host;
+    return x;
+}
+
+- (BOOL) testConnectionToGoogle{
+    return [self testConnectionToTheURL: @"http://www.google.com/"] == 200;
+}
+
+- (BOOL) testConnectionToTheHost{
+    return [self testConnectionToTheURL: [NSString stringWithFormat: @"http://%@/", self.host]] == 200;
+}
+
+- (long) testConnectionToTheURL: (NSString*) urlString{
+    NSURL* url = [NSURL URLWithString: urlString];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+    [req setHTTPMethod: @"GET"];
+    NSHTTPURLResponse *res = nil;
+    NSError *error = nil;
+    [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
+    if(res != nil){
+        return [res statusCode];
+    }else if(error != nil){
+        return [error code];
+    }else{
+        [NSException raise:@"iKFConnectionException" format:@"Neither res nor error."];
+    }
+    return 0;
+}
+
+- (BOOL) loginWithName: (NSString*)name password: (NSString*)password{
+    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/account/userLogin", self.host]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+    [req setHTTPMethod: @"POST"];
+    NSString *paramString = [NSString stringWithFormat: @"userName=%@&password=%@", name, password];
+    NSData *param = [paramString dataUsingEncoding:NSUTF8StringEncoding];
+    [req setHTTPBody: param];
+    NSHTTPURLResponse *res = nil;
+    NSError *error = nil;
+    NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
+
+    if([res statusCode] != 200){
+        [NSException raise:@"iKFConnectionException" format:@"at loginWithName."];
+        return NO;
+    }
+
+    id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
+    NSMutableArray* models = [NSMutableArray array];
+    for (id each in jsonobj) {
+        iKFRegistration* model = [[iKFRegistration alloc] init];
+        model.guid = each[@"guid"];
+        model.communityId = each[@"sectionId"];
+        model.communityName = each[@"sectionTitle"];
+        model.roleName = each[@"roleInfo"][@"name"];
+        [models addObject: model];
+    }
+    self.registrations = models;
+    return YES;
+}
+
+- (BOOL) enterCommunity: (NSString*)communityId{
+    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/account/selectSection/%@", self.host, communityId]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+    [req setHTTPMethod: @"GET"];
+    NSHTTPURLResponse *res = nil;
+    NSError *error = nil;
+    [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
+    
+    if([res statusCode] != 200){
+        [NSException raise:@"iKFConnectionException" format:@"at enterCommunity."];
+        return NO;
+    }
+    return YES;
+}
+
+- (NSArray*) getViews: (NSString*)communityId {
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/content/getSectionViews/%@", self.host, communityId]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+    NSHTTPURLResponse *res;
+    NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+    
+    if([res statusCode] != 200){
+        [NSException raise:@"iKFConnectionException" format:@"at getViews."];
+        return NO;
+    }
+    
+     //[self printContents: bodyData];
+    id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
+    NSMutableArray* models = [NSMutableArray array];
+    for (id each in jsonobj) {
+        iKFView* model = [[iKFView alloc] init];
+        model.guid = each[@"guid"];
+        model.title = each[@"title"];
+        [models addObject: model];
+    }
+    return models;
+}
+
+- (NSDictionary*) getPosts: (NSString*)viewId {
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/content/getView/%@", self.host, viewId]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+    NSHTTPURLResponse *res;
+    NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+    //[self printContents: bodyData];
+    
+    if([res statusCode] != 200){
+        [NSException raise:@"iKFConnectionException" format:@"at getPosts."];
+        return NO;
+    }
+    
+    id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
+    NSMutableDictionary* models = [NSMutableDictionary dictionary];
+    for (id each in jsonobj[@"viewPostRefs"]) {
+        iKFNote* model = [[iKFNote alloc] init];
+        model.refId = each[@"guid"];
+        model.guid = each[@"postInfo"][@"guid"];
+        model.title = each[@"postInfo"][@"title"];
+        //NSLog(@"%@", each[@"postInfo"][@"title"]);
+        model.content = each[@"postInfo"][@"body"];
+        CGFloat x = [each[@"location"][@"point"][@"x"] floatValue];
+        CGFloat y = [each[@"location"][@"point"][@"y"] floatValue];
+        CGPoint p = CGPointMake(x, y);
+        model.location = p;
+        
+        iKFUser* user = [[iKFUser alloc] init];
+        user.firstName = each[@"postInfo"][@"authors"][0][@"firstName"];
+        user.lastName = each[@"postInfo"][@"authors"][0][@"lastName"];
+        model.primaryAuthor = user;
+        
+        //なんでLabelIdなの?
+        NSString* labelId = each[@"guid"];
+        [models setObject: model forKey: labelId];
+        //NSLog(@"added label %@", labelId);
+        
+        //[models setObject: model forKey: model.guid];
+        //NSLog(@"added %@ %@", models[model.guid], model.guid);
+    }
+    for (id each in jsonobj[@"buildOns"]) {
+        NSString* toId = each[@"built"];
+        NSString* fromId = each[@"buildsOn"];
+        //NSLog(@"builds from %@ to %@", fromId, toId);
+        [models[fromId] setBuildsOn: models[toId]];
+        //NSLog(@"buildson %@", [models[fromId] buildsOn]);
+    }
+    return models;
+}
+
+- (BOOL) movePost: (NSString*)viewId note: (iKFNote*)note {
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/movenote/%@/%@", self.host, viewId, note.refId]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+    [req setHTTPMethod: @"POST"];
+    NSString* formStr = [NSString stringWithFormat: @"x=%d&y=%d", (int)note.location.x, (int)note.location.y];
+    NSData *formdata = [formStr dataUsingEncoding:NSUTF8StringEncoding];
+    [req setHTTPBody: formdata];
+    NSHTTPURLResponse *res;
+    /*NSData *bodyData =*/ [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+    //[self printContents: bodyData];
+
+    //NSLog(@"%d", [res statusCode]);
+    if([res statusCode] != 200){
+        [NSException raise:@"iKFConnectionException" format:@"at movePost."];
+        return NO;
+    }
+
+    return YES;
+}
+
+- (BOOL) createNote: (NSString*)viewId buildsOn: (iKFNote*)buildsonNote location: (CGPoint)p{
+    NSURL *url;
+    if(buildsonNote != nil){
+        url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/newnote/%@/%@", self.host, viewId, buildsonNote.refId]];//!!現在はrefId!!
+    }else{
+        url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/newnote/%@/%@", self.host, viewId, nil]];
+    }
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+    [req setHTTPMethod: @"POST"];
+    NSString* formStr = [NSString stringWithFormat: @"x=%d&y=%d", (int)p.x, (int)p.y];
+    NSData *formdata = [formStr dataUsingEncoding:NSUTF8StringEncoding];
+    [req setHTTPBody: formdata];
+    NSHTTPURLResponse *res;
+   [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+
+    if([res statusCode] != 200){
+        [NSException raise:@"iKFConnectionException" format:@"at createNote.%d", [res statusCode]];
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL) updatenote: (iKFNote*)note{
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/editnote/%@", self.host, note.guid]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+    [req setHTTPMethod: @"POST"];
+    NSString* formStr = [NSString stringWithFormat: @"title=%@&body=%@", note.title, note.content];
+    NSData *formdata = [formStr dataUsingEncoding:NSUTF8StringEncoding];
+    [req setHTTPBody: formdata];
+    NSHTTPURLResponse *res;
+    [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+    
+    if([res statusCode] != 200){
+        [NSException raise:@"iKFConnectionException" format:@"at createNote.%d", [res statusCode]];
+        return NO;
+    }
+    
+    return YES;
+}
+
+
+//OLD version
+//- (BOOL) movePost: (NSString*)viewId note: (iKFNote*)note {
+//    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/forum/setPostLocation/%@", self.host, viewId]];
+//    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+//    [req setHTTPMethod: @"POST"];
+//    [req setValue: @"application/json" forHTTPHeaderField: @"Content-Type"];
+//    NSString* jsonStr = [NSString stringWithFormat:
+//    @"{"
+//"        '^EncodedType': 'org.ikit.kbe.kf.shared.portable.PositionRef',"
+//"        '^ObjectID': '2',"
+//"        'point': {"
+//"            '^EncodedType': 'org.ikit.kbe.kf.shared.portable.Point',"
+//"            '^ObjectID': '3',"
+//"            'x': %d,"
+//"            'y': %d"
+//"        },"
+//"        'refType': {"
+//"            '^EncodedType': 'org.ikit.kbe.kf.shared.portable.PositionRef$RefType',"
+//"            '^EnumStringValue': 'VIEWPOSTREF'"
+//"        },"
+//"        'referenceId': '%@'"
+//"    }", (int)note.location.x, (int)note.location.y, note.refId];
+//    NSData *jsondata = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+//    [req setHTTPBody: jsondata];
+//    NSHTTPURLResponse *res;
+//    /*NSData *bodyData =*/ [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+//    //[self printContents: bodyData];
+//    
+//    //NSLog(@"%d", [res statusCode]);
+//    if([res statusCode] != 200){
+//        [NSException raise:@"iKFConnectionException" format:@"at getPosts."];
+//        return NO;
+//    }
+//    
+//    return YES;
+//}
+
+
+
+//For debug
+- (void) printContents: (NSData*) data{
+    NSString *bodyString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", bodyString);
+}
+
+//なんと，ここでもcookieは入れなくて良い．なんで？ keep/aliveしていなければそんなことできないはずだけど．
+//- (void) kfauthor {
+//    NSURL *url = [NSURL URLWithString:@"http://132.203.154.41:8080/kforum/rest/forum/author"];
+//    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+//    //[req addValue: cookie forHTTPHeaderField: @"Cookie"];
+//    NSHTTPURLResponse *res;
+//    NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+//    NSLog(@"statusCode=%d", [res statusCode]);
+//    NSString *bodyString = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
+//    NSLog(@"%@", [[res allHeaderFields] description]);
+//    NSLog(@"%@", bodyString);
+//    
+//}
+
+//// old
+//- (id) getPosts: (NSString*)viewid {
+//    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/forum/allPostsInView/%@", self.host, viewid]];
+//    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+//    NSHTTPURLResponse *res;
+//    NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+//    id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
+//    return jsonobj;
+//}
+
+@end
