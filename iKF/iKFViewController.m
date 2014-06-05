@@ -11,7 +11,6 @@
 #import "iKFModels.h"
 #import "iKFCompositeNoteViewController.h"
 #import "iKFNoteReadViewController.h"
-#import "iKFRegistrationViewController.h"
 #import "iKFAppDelegate.h"
 
 
@@ -53,8 +52,8 @@
 }
 
 -(void)testPressed:(UIButton*)button{
-    iKFRegistrationViewController* controller = [[iKFRegistrationViewController alloc] init];
-    [self presentViewController:controller animated:YES completion:nil];
+    //iKFRegistrationViewController* controller = [[iKFRegistrationViewController alloc] init];
+    //[self presentViewController:controller animated:YES completion:nil];
 
 }
 
