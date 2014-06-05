@@ -7,27 +7,29 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iKF.h"
+//#import "iKF.h"
 #import "iKFConnector.h"
 #import "iKFModels.h"
+#import "iKFMainViewController.h"
 
 @class iKFNoteView;
+@class iKFMainViewController;
 
 @interface iKFNotePopupViewController : UIViewController
 
+//@property iKFConnector* connector;
 @property iKFNote* note;
-@property iKFConnector* connector;
-
 @property iKFNoteView* noteView;//仮
 
-@property (weak, nonatomic) IBOutlet UITextField *textFieldTitle;
+@property iKFMainViewController* kfViewController;
+
 @property (weak, nonatomic) IBOutlet UILabel *textFieldAuthor;
-@property (weak, nonatomic) IBOutlet UITextView *textAreaContents;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 - (IBAction)finishButtonPressed:(id)sender;
+- (IBAction)editButtonPressed:(id)sender;
 
-
-- (void) updateToModel;
+//- (void) updateToModel;
 
 @end

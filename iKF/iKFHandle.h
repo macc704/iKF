@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "iKF.h"
 
+@class iKFMainViewController;
+
 @interface iKFHandle : UIView
 
 - (id)init: (iKFMainViewController*)controller target: (UIView*)target;

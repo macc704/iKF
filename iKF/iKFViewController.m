@@ -9,6 +9,11 @@
 #import "iKFViewController.h"
 #import "iKFConnector.h"
 #import "iKFModels.h"
+#import "iKFCompositeNoteViewController.h"
+#import "iKFNoteReadViewController.h"
+#import "iKFRegistrationViewController.h"
+#import "iKFAppDelegate.h"
+
 
 @interface iKFViewController ()
 @end
@@ -24,9 +29,19 @@
 {
     [super viewDidLoad];
     
+    {//test button
+        UIButton* button = [UIButton buttonWithType: UIButtonTypeRoundedRect];
+        [button setTitle: @"test" forState: UIControlStateNormal];
+        button.frame = CGRectMake(100, 100, 100, 100);
+        [button addTarget:self
+                   action:@selector(testPressed:) forControlEvents:UIControlEventTouchUpInside];
+        //[button setTitle: @"hoge" forState: nil];
+        [self.view addSubview: button];
+    }
+    
     //92.168.43.97:8080 はタイムアウトする
     //128.100.72.13:8080 はすぐhost error
-    databases = @[@"132.203.154.41:8080", @"128.100.72.137:8080", @"192.168.43.97:8080", @"138.51.179.43:8080", @"no server"];
+    databases = @[@"132.203.154.41:8080", @"128.100.72.137:8080", @"192.168.43.97:8080", @"138.51.177.211:8080", @"no server"];
     _currentDatabase = databases[0];
     self.pickerDatabase.delegate = self;
     
@@ -35,6 +50,12 @@
     self.textfieldLoginID.text = @"ikit"; //tmp
     self.textfieldPassword.secureTextEntry = YES;
     self.textfieldPassword.text = @"pass"; //tmp
+}
+
+-(void)testPressed:(UIButton*)button{
+    iKFRegistrationViewController* controller = [[iKFRegistrationViewController alloc] init];
+    [self presentViewController:controller animated:YES completion:nil];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,7 +89,8 @@
     
     [_loading show: self];
     
-    iKFConnector* connector = [[iKFConnector alloc] initWithHost: _currentDatabase];
+    iKFConnector* connector = [iKFConnector getInstance];
+    connector.host = _currentDatabase;
     //iKFConnector* connector = [[iKFConnector alloc] initWithHost: @"132.203.154.41:8080"];
     BOOL googleTest = [connector testConnectionToGoogle];
     if(googleTest == NO){

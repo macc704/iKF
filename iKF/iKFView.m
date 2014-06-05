@@ -10,4 +10,8 @@
 
 @implementation iKFView
 
+- (NSString *)description{
+    return self.title;
+}
+
 @end

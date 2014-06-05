@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "iKF.h"
 
+@class iKFNoteView;
+
 @interface iKFConnectionLayerView : UIView
 
 //@property NSMutableArray* connections;

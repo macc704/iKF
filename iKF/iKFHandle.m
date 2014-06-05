@@ -7,6 +7,7 @@
 //
 
 #import "iKFHandle.h"
+#import "iKFCompositeNoteViewController.h"
 
 @implementation iKFHandle{
     iKFMainViewController* _controller;
@@ -26,53 +27,72 @@
         _target = target;
         //[self setBackgroundColor: [UIColor yellowColor]];
         CGRect targetFrame = [target frame];
-        [self setFrame: CGRectMake(targetFrame.origin.x - SIZE, targetFrame.origin.y - SIZE, targetFrame.size.width + SIZE*2, targetFrame.size.height + SIZE*2)];        
-       
-        if([_target class] == [iKFNoteView class]){
-        UIImageView* viewButton = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"view.gif"]];
-        [viewButton setFrame: CGRectMake(SIZE + targetFrame.size.width , 0, SIZE, SIZE)];
-        [self addSubview: viewButton];
-        viewButton.userInteractionEnabled = YES;
-        UITapGestureRecognizer* a = [[UITapGestureRecognizer alloc]
-                                     initWithTarget: self  action: @selector(handleViewTap:)];
-        a.numberOfTapsRequired = 1;
-        [viewButton addGestureRecognizer: a];
+        [self setFrame: CGRectMake(targetFrame.origin.x - SIZE, targetFrame.origin.y - SIZE, targetFrame.size.width + SIZE*2, targetFrame.size.height + SIZE*2)];
         
-        UIImageView* deleteButton = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"delete.gif"]];
-        [deleteButton setFrame: CGRectMake(0 , 0, SIZE, SIZE)];
-        [self addSubview: deleteButton];
-        deleteButton.userInteractionEnabled = YES;
-        UITapGestureRecognizer* b = [[UITapGestureRecognizer alloc]
-                                     initWithTarget: self  action: @selector(handleDeleteTap:)];
-        b.numberOfTapsRequired = 1;
-        [deleteButton addGestureRecognizer: b];
+        if([_target class] == [iKFNoteView class]){
+            {
+                UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"edit.png"]];
+                [button setFrame: CGRectMake(SIZE + targetFrame.size.width/2 - SIZE/2, 0, SIZE, SIZE)];
+                [self addSubview: button];
+                button.userInteractionEnabled = YES;
+                UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
+                                             initWithTarget: self  action: @selector(handleEditTap:)];
+                gesture.numberOfTapsRequired = 1;
+                [button addGestureRecognizer: gesture];
+            }
+            {
+                UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"read.png"]];
+                [button setFrame: CGRectMake(SIZE + targetFrame.size.width , 0, SIZE, SIZE)];
+                [self addSubview: button];
+                button.userInteractionEnabled = YES;
+                UITapGestureRecognizer* a = [[UITapGestureRecognizer alloc]
+                                             initWithTarget: self  action: @selector(handleViewTap:)];
+                a.numberOfTapsRequired = 1;
+                [button addGestureRecognizer: a];
+            }
             
-            _plusButton = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"plus.gif"]];
-            [_plusButton setFrame: CGRectMake(SIZE + targetFrame.size.width , SIZE + targetFrame.size.height, SIZE, SIZE)];
-            [self addSubview: _plusButton];
-            _plusButton.userInteractionEnabled = YES;
-//            UITapGestureRecognizer* c = [[UITapGestureRecognizer alloc]
-//                                         initWithTarget: self  action: @selector(handleBuildsonTap:)];
-//            c.numberOfTapsRequired = 1;
-//            [_plusButton addGestureRecognizer: c];
-            UIPanGestureRecognizer* d = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(handleBuildsonPan:)];
-            [_plusButton addGestureRecognizer: d];
+            {
+                UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"bin.png"]];
+                [button setFrame: CGRectMake(0 , 0, SIZE, SIZE)];
+                [self addSubview: button];
+                button.userInteractionEnabled = YES;
+                UITapGestureRecognizer* b = [[UITapGestureRecognizer alloc]
+                                             initWithTarget: self  action: @selector(handleDeleteTap:)];
+                b.numberOfTapsRequired = 1;
+                [button addGestureRecognizer: b];
+            }
+            
+            {
+                _plusButton = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"new.png"]];
+                //                [_plusButton setFrame: CGRectMake(SIZE + targetFrame.size.width , SIZE + targetFrame.size.height, SIZE, SIZE)];
+                [_plusButton setFrame: CGRectMake(0 , SIZE + targetFrame.size.height, SIZE, SIZE)];
+                [self addSubview: _plusButton];
+                _plusButton.userInteractionEnabled = YES;
+                UIPanGestureRecognizer* d = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(handleBuildsonPan:)];
+                [_plusButton addGestureRecognizer: d];
+            }
         }else{
-            _plusButton = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"plus.gif"]];
-            [_plusButton setFrame: CGRectMake(SIZE + targetFrame.size.width , 0, SIZE, SIZE)];
-            [self addSubview: _plusButton];
-            _plusButton.userInteractionEnabled = YES;
-            UITapGestureRecognizer* a = [[UITapGestureRecognizer alloc]
-                                         initWithTarget: self  action: @selector(handlePlusTap:)];
-            a.numberOfTapsRequired = 1;
-            [_plusButton addGestureRecognizer: a];
+            {
+                _plusButton = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"new.png"]];
+                [_plusButton setFrame: CGRectMake(SIZE + targetFrame.size.width , 0, SIZE, SIZE)];
+                [self addSubview: _plusButton];
+                _plusButton.userInteractionEnabled = YES;
+                UITapGestureRecognizer* a = [[UITapGestureRecognizer alloc]
+                                             initWithTarget: self  action: @selector(handlePlusTap:)];
+                a.numberOfTapsRequired = 1;
+                [_plusButton addGestureRecognizer: a];
+            }
         }
     }
     return self;
 }
 
+- (void) handleEditTap: (UIGestureRecognizer*) recognizer{
+    [_controller openNoteEditController: ((iKFNoteView*)_target).model mode:@"edit"];
+}
+
 - (void) handleViewTap: (UIGestureRecognizer*) recognizer{
-    [((iKFNoteView*)_target) openPopupViewer];
+    [_controller openNoteEditController: ((iKFNoteView*)_target).model mode:@"read"];
 }
 
 - (void) handleDeleteTap: (UIGestureRecognizer*) recognizer{
@@ -95,8 +115,8 @@
 
 - (void) handleBuildsonPan: (UIPanGestureRecognizer*)recognizer{
     if(recognizer.state == UIGestureRecognizerStateBegan){
-//        [[self superview] bringSubviewToFront:self];
-//        [self makeShadow];
+        //        [[self superview] bringSubviewToFront:self];
+        //        [self makeShadow];
     }
     if(recognizer.state == UIGestureRecognizerStateChanged){
         CGPoint location = [recognizer translationInView: _plusButton];
@@ -106,19 +126,19 @@
     }
     if(recognizer.state == UIGestureRecognizerStateEnded){
         [self handleBuildsonTap: nil];
-//        [_controller requestConnectionsRepaint];
-//        [self removeShadow];
+        //        [_controller requestConnectionsRepaint];
+        //        [self removeShadow];
     }
 }
 
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect
+ {
+ // Drawing code
+ }
+ */
 
 @end

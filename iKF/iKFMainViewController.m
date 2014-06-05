@@ -7,6 +7,7 @@
 //
 
 #import "iKFMainViewController.h"
+#import "iKFCompositeNoteViewController.h"
 
 //@interface iKFMainViewController ()
 //
@@ -114,9 +115,17 @@
 }
 
 - (void) showSelection{
-    iKFViewSelectionController* controller = [[iKFViewSelectionController alloc] init];
+    //iKFViewSelectionController* controller = [[iKFViewSelectionController alloc] init];
+    iKFViewSelectionController* controller = [[iKFViewSelectionController alloc] initWithNibName:nil bundle:nil];
+    controller.objects = _views;
+    controller.listener = self;
     _popController = [[UIPopoverController alloc] initWithContentViewController: controller];
-    [_popController presentPopoverFromBarButtonItem: self.bgButton permittedArrowDirections: UIPopoverArrowDirectionAny animated:YES];
+    [_popController presentPopoverFromBarButtonItem: self.viewSelectionButton permittedArrowDirections: UIPopoverArrowDirectionAny animated:YES];
+}
+
+- (void) changed: (iKFView*) view{
+    _selectedRow = [_views indexOfObject: view];
+    [self updateViews];
 }
 
 - (void) setBgFromLibrary{
@@ -192,6 +201,19 @@
         [_connectionLayer addConnectionFrom: fromView To: toView];
     }
 }
+
+- (void) openNoteEditController: (iKFNote*)note mode: (NSString*)mode{
+    //[((iKFNoteView*)_target) openPopupViewer];
+    iKFCompositeNoteViewController* noteController = [[iKFCompositeNoteViewController alloc] init];
+    if([mode isEqualToString: @"edit"]){
+        [noteController toEditMode];
+    }else if([mode isEqualToString: @"read"]){
+        [noteController toReadMode];
+    }
+    [noteController setNote: note];
+    [self presentViewController: noteController animated:YES completion: nil];
+}
+
 
 - (void) requestConnectionsRepaint{
     [_connectionLayer requestRepaint];
@@ -309,6 +331,9 @@
 - (NSString*) pickerView: (UIPickerView*)pView titleForRow: (NSInteger)rowCount forComponent:(NSInteger) comp {
     return [_views[rowCount] title];
 }
+
+
+
 
 
 //- (void) setJSON: (id)json{

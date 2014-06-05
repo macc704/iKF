@@ -14,10 +14,13 @@
 @property NSString* host;
 @property NSMutableArray* registrations;
 
-- (id) initWithHost: (NSString*)host;
++ (iKFConnector*) getInstance;
+    
+//- (id) initWithHost: (NSString*)host;
 
 - (BOOL) testConnectionToGoogle;
 - (BOOL) testConnectionToTheHost;
+- (NSString*) getURL: (NSString*) urlString;
     
 - (BOOL) loginWithName: (NSString*)name password: (NSString*)password;
 - (BOOL) enterCommunity: (NSString*)communityId;

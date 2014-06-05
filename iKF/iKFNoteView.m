@@ -117,20 +117,22 @@
 
 
 - (void) handleSingleTap: (UIGestureRecognizer *) recognizer{
-    [self openPopupViewer];
-    //[_controller showHandle: self];
-}
-
-- (void) handleDoubleTap: (UIGestureRecognizer *) recognizer{
     //[self openPopupViewer];
     [_controller showHandle: self];
 }
 
+- (void) handleDoubleTap: (UIGestureRecognizer *) recognizer{
+    [self openPopupViewer];
+    //[_controller showHandle: self];
+}
+
+//これはkfMainへ移動すること
 - (void) openPopupViewer{
     _notePopupController = [[iKFNotePopupViewController alloc] init];
     _notePopupController.note = self.model;
     _notePopupController.noteView = self;
-    _notePopupController.connector = self.connector;
+    _notePopupController.kfViewController = _controller;
+//    _notePopupController.connector = self.connector;
     _notePopupController.contentSizeForViewInPopover = _notePopupController.view.frame.size;
     _popoverController = [[UIPopoverController alloc] initWithContentViewController: _notePopupController];
     _popoverController.delegate = self;
@@ -138,13 +140,13 @@
 }
 
 - (void) closePopupViewer{
-    [_notePopupController updateToModel];
+    //[_notePopupController updateToModel];
     [_popoverController dismissPopoverAnimated:YES];
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
-    [_notePopupController updateToModel];
+    //[_notePopupController updateToModel];
     _popoverController = nil;
 //    NSLog(@"PopoverSampleViewController released popoverController.");
 }

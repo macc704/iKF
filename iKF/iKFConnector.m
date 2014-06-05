@@ -8,9 +8,22 @@
 
 #import "iKFConnector.h"
 
+static iKFConnector* singleton;
+
 @implementation iKFConnector
 {
 
+}
+
++ (iKFConnector*) getInstance{
+    if(singleton == nil){
+        singleton = [[iKFConnector alloc] init];
+    }
+    return singleton;
+}
+
+- (BOOL) testConnectionToGoogle{
+    return [[iKFConnector getInstance] testConnectionToTheURL: @"http://www.google.com/"] == 200;
 }
 
 - (id) initWithHost: (NSString*)host{
@@ -19,21 +32,37 @@
     return x;
 }
 
-- (BOOL) testConnectionToGoogle{
-    return [self testConnectionToTheURL: @"http://www.google.com/"] == 200;
-}
-
 - (BOOL) testConnectionToTheHost{
     return [self testConnectionToTheURL: [NSString stringWithFormat: @"http://%@/", self.host]] == 200;
 }
 
 - (long) testConnectionToTheURL: (NSString*) urlString{
+    return [self connectToTheURL: urlString bodyString: nil];
+}
+
+- (NSString*) getURL: (NSString*) urlString{
+    NSString* str = nil;
+    long status = [self connectToTheURL: urlString bodyString: &str];
+    if(status == 200){
+        return str;
+    }else{
+        [NSException raise:@"iKFConnectionException" format:@"getURL() error"];        
+        return nil;
+    }
+}
+
+- (long) connectToTheURL: (NSString*) urlString bodyString: (NSString**)bodyString{
     NSURL* url = [NSURL URLWithString: urlString];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"GET"];
     NSHTTPURLResponse *res = nil;
     NSError *error = nil;
-    [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
+    if(bodyString != nil){
+        NSData* bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
+        *bodyString = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
+    }else{
+        [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
+    }
     if(res != nil){
         return [res statusCode];
     }else if(error != nil){
@@ -124,6 +153,11 @@
         return NO;
     }
     
+    //NSString *bodyString = [[NSString alloc] initWithData:bodyData encoding:NSUTF32StringEncoding];
+//    NSString *bodyString = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
+//    NSLog(@"UTF8%@", bodyString);
+//    bodyString = [[NSString alloc] initWithData:bodyData encoding:NSASCIIStringEncoding];
+//    NSLog(@"ASCII%@", bodyString);
     id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
     NSMutableDictionary* models = [NSMutableDictionary dictionary];
     for (id each in jsonobj[@"viewPostRefs"]) {
@@ -131,6 +165,7 @@
         model.refId = each[@"guid"];
         model.guid = each[@"postInfo"][@"guid"];
         model.title = each[@"postInfo"][@"title"];
+        //NSLog(@"%@", each[@"postInfo"][@"title"]);
         //NSLog(@"%@", each[@"postInfo"][@"title"]);
         model.content = each[@"postInfo"][@"body"];
         CGFloat x = [each[@"location"][@"point"][@"x"] floatValue];

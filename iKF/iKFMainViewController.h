@@ -10,13 +10,15 @@
 #import "iKF.h"
 #import "iKFModels.h"
 #import "iKFConnector.h"
+#import "iKFViewSelectionController.h"
 
 @class iKFNoteView;
 
-@interface iKFMainViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, UIPickerViewDelegate>
+@interface iKFMainViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, UIPickerViewDelegate, iKFTableSelectionListener>
 
 @property iKFUser* user;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *viewSelectionButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *bgButton;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBar;
@@ -34,6 +36,7 @@
 - (void) createNote: (CGPoint)p buildson: (iKFNoteView*)from;
 - (void) removeNote: (iKFNoteView*) view;
 - (void) requestConnectionsRepaint;
+- (void) openNoteEditController: (iKFNote*)note mode: (NSString*)mode;
 
 - (void) initServer: (iKFConnector*)connector communityId: (NSString*)communityId;
 //- (void) setJSON: (id)json;

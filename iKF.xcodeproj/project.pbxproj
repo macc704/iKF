@@ -39,10 +39,23 @@
 		36E9421E17F921A20008E59A /* iKFHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E9421D17F921A20008E59A /* iKFHandle.m */; };
 		36E9422117F9385D0008E59A /* iKFConnectionLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E9422017F9385D0008E59A /* iKFConnectionLayerView.m */; };
 		36E9422417F93C220008E59A /* iKFConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E9422317F93C220008E59A /* iKFConnection.m */; };
+		49005A89193CEF5800A142D5 /* iKFNoteReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49005A88193CEF5800A142D5 /* iKFNoteReadViewController.m */; };
+		49005A8D193CF53C00A142D5 /* iKFNoteReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49005A8C193CF53C00A142D5 /* iKFNoteReadView.m */; };
+		49005A90193D14F400A142D5 /* iKFCompositeNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49005A8F193D14F400A142D5 /* iKFCompositeNoteViewController.m */; };
+		49005A93193D198B00A142D5 /* iKFNoteEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49005A92193D198B00A142D5 /* iKFNoteEditViewController.m */; };
+		49005A96193D19A600A142D5 /* iKFNoteEditViewBySource.m in Sources */ = {isa = PBXBuildFile; fileRef = 49005A95193D19A600A142D5 /* iKFNoteEditViewBySource.m */; };
+		49005A99193D1ABC00A142D5 /* iKFAbstractNoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49005A98193D1ABC00A142D5 /* iKFAbstractNoteView.m */; };
+		49005A9B193E431800A142D5 /* new.png in Resources */ = {isa = PBXBuildFile; fileRef = 49005A9A193E431800A142D5 /* new.png */; };
+		49005A9F193E432C00A142D5 /* bin.png in Resources */ = {isa = PBXBuildFile; fileRef = 49005A9C193E432C00A142D5 /* bin.png */; };
+		49005AA0193E432C00A142D5 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 49005A9D193E432C00A142D5 /* edit.png */; };
+		49005AA1193E432C00A142D5 /* read.png in Resources */ = {isa = PBXBuildFile; fileRef = 49005A9E193E432C00A142D5 /* read.png */; };
+		49005AAB193EBF1600A142D5 /* iKFAbstractNoteEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49005AAA193EBF1600A142D5 /* iKFAbstractNoteEditView.m */; };
+		49005AAE193EC07800A142D5 /* iKFNoteEditViewByTinyMCE.m in Sources */ = {isa = PBXBuildFile; fileRef = 49005AAD193EC07800A142D5 /* iKFNoteEditViewByTinyMCE.m */; };
 		49307E02192302E50075CFC9 /* iKFConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 49307E01192302E50075CFC9 /* iKFConnector.m */; };
 		49307E051923A2A20075CFC9 /* iKFRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 49307E041923A2A20075CFC9 /* iKFRegistration.m */; };
 		49307E081923A3900075CFC9 /* iKFCommunity.m in Sources */ = {isa = PBXBuildFile; fileRef = 49307E071923A3900075CFC9 /* iKFCommunity.m */; };
 		49307E0B1923A3A30075CFC9 /* iKFView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49307E0A1923A3A30075CFC9 /* iKFView.m */; };
+		493492E3193F919E0018A77A /* iKFCommonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 493492E2193F919E0018A77A /* iKFCommonView.m */; };
 		497328C91924FF6C008E5BC6 /* iKFResources.m in Sources */ = {isa = PBXBuildFile; fileRef = 497328C81924FF6C008E5BC6 /* iKFResources.m */; };
 		49A5FBED19257ADE00D0ACD2 /* iKFViewSelectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49A5FBEB19257ADE00D0ACD2 /* iKFViewSelectionController.m */; };
 		49A5FBEE19257ADE00D0ACD2 /* iKFViewSelectionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49A5FBEC19257ADE00D0ACD2 /* iKFViewSelectionController.xib */; };
@@ -110,6 +123,26 @@
 		36E9422017F9385D0008E59A /* iKFConnectionLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFConnectionLayerView.m; sourceTree = "<group>"; };
 		36E9422217F93C220008E59A /* iKFConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFConnection.h; sourceTree = "<group>"; };
 		36E9422317F93C220008E59A /* iKFConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFConnection.m; sourceTree = "<group>"; };
+		49005A87193CEF5800A142D5 /* iKFNoteReadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNoteReadViewController.h; sourceTree = "<group>"; };
+		49005A88193CEF5800A142D5 /* iKFNoteReadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteReadViewController.m; sourceTree = "<group>"; };
+		49005A8B193CF53C00A142D5 /* iKFNoteReadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNoteReadView.h; sourceTree = "<group>"; };
+		49005A8C193CF53C00A142D5 /* iKFNoteReadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteReadView.m; sourceTree = "<group>"; };
+		49005A8E193D14F400A142D5 /* iKFCompositeNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFCompositeNoteViewController.h; sourceTree = "<group>"; };
+		49005A8F193D14F400A142D5 /* iKFCompositeNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFCompositeNoteViewController.m; sourceTree = "<group>"; };
+		49005A91193D198B00A142D5 /* iKFNoteEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNoteEditViewController.h; sourceTree = "<group>"; };
+		49005A92193D198B00A142D5 /* iKFNoteEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteEditViewController.m; sourceTree = "<group>"; };
+		49005A94193D19A600A142D5 /* iKFNoteEditViewBySource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNoteEditViewBySource.h; sourceTree = "<group>"; };
+		49005A95193D19A600A142D5 /* iKFNoteEditViewBySource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteEditViewBySource.m; sourceTree = "<group>"; };
+		49005A97193D1ABC00A142D5 /* iKFAbstractNoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFAbstractNoteView.h; sourceTree = "<group>"; };
+		49005A98193D1ABC00A142D5 /* iKFAbstractNoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFAbstractNoteView.m; sourceTree = "<group>"; };
+		49005A9A193E431800A142D5 /* new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new.png; sourceTree = "<group>"; };
+		49005A9C193E432C00A142D5 /* bin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bin.png; sourceTree = "<group>"; };
+		49005A9D193E432C00A142D5 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
+		49005A9E193E432C00A142D5 /* read.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = read.png; sourceTree = "<group>"; };
+		49005AA9193EBF1600A142D5 /* iKFAbstractNoteEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFAbstractNoteEditView.h; sourceTree = "<group>"; };
+		49005AAA193EBF1600A142D5 /* iKFAbstractNoteEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFAbstractNoteEditView.m; sourceTree = "<group>"; };
+		49005AAC193EC07800A142D5 /* iKFNoteEditViewByTinyMCE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNoteEditViewByTinyMCE.h; sourceTree = "<group>"; };
+		49005AAD193EC07800A142D5 /* iKFNoteEditViewByTinyMCE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteEditViewByTinyMCE.m; sourceTree = "<group>"; };
 		49307E00192302E50075CFC9 /* iKFConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFConnector.h; sourceTree = "<group>"; };
 		49307E01192302E50075CFC9 /* iKFConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFConnector.m; sourceTree = "<group>"; };
 		49307E031923A2A20075CFC9 /* iKFRegistration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFRegistration.h; sourceTree = "<group>"; };
@@ -119,6 +152,8 @@
 		49307E091923A3A30075CFC9 /* iKFView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFView.h; sourceTree = "<group>"; };
 		49307E0A1923A3A30075CFC9 /* iKFView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFView.m; sourceTree = "<group>"; };
 		49307E0C1923BB290075CFC9 /* iKFModels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iKFModels.h; sourceTree = "<group>"; };
+		493492E1193F919E0018A77A /* iKFCommonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFCommonView.h; sourceTree = "<group>"; };
+		493492E2193F919E0018A77A /* iKFCommonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFCommonView.m; sourceTree = "<group>"; };
 		497328C71924FF6C008E5BC6 /* iKFResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFResources.h; sourceTree = "<group>"; };
 		497328C81924FF6C008E5BC6 /* iKFResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFResources.m; sourceTree = "<group>"; };
 		49A5FBEA19257ADE00D0ACD2 /* iKFViewSelectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFViewSelectionController.h; sourceTree = "<group>"; };
@@ -181,9 +216,10 @@
 		367C449C17E9596C0092C5E5 /* iKF */ = {
 			isa = PBXGroup;
 			children = (
+				4931E7951940B53F00ECE60F /* GabageBin */,
+				36E941F317F853950008E59A /* iKF.h */,
 				497328C61924FF3C008E5BC6 /* Resources */,
 				49307DFF1923026E0075CFC9 /* Connection */,
-				36E941F817F8546A0008E59A /* infrastructure */,
 				367C44D117E9599A0092C5E5 /* UI */,
 				36E941F417F853F20008E59A /* Model */,
 				36E941E417F84F020008E59A /* icons */,
@@ -233,29 +269,9 @@
 		367C44D117E9599A0092C5E5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				36E941F017F8505A0008E59A /* iKFMainPanel.h */,
-				36E941F117F8505A0008E59A /* iKFMainPanel.m */,
-				36E941FF17F865940008E59A /* iKFLoadingView.h */,
-				36E9420017F865940008E59A /* iKFLoadingView.m */,
-				36E9420C17F87A880008E59A /* iKFMainViewController.h */,
-				36E9420D17F87A880008E59A /* iKFMainViewController.m */,
-				36E9420E17F87A880008E59A /* iKFMainViewController.xib */,
-				36E9421117F882040008E59A /* iKFNoteView.h */,
-				36E9421217F882040008E59A /* iKFNoteView.m */,
-				36E9421417F882E10008E59A /* iKFNoteIcon.h */,
-				36E9421517F882E10008E59A /* iKFNoteIcon.m */,
-				36E9421717F890FB0008E59A /* iKFNotePopupViewController.h */,
-				36E9421817F890FB0008E59A /* iKFNotePopupViewController.m */,
-				36E9421917F890FB0008E59A /* iKFNotePopupViewController.xib */,
-				36E9421C17F921A20008E59A /* iKFHandle.h */,
-				36E9421D17F921A20008E59A /* iKFHandle.m */,
-				36E9421F17F9385D0008E59A /* iKFConnectionLayerView.h */,
-				36E9422017F9385D0008E59A /* iKFConnectionLayerView.m */,
-				36E9422217F93C220008E59A /* iKFConnection.h */,
-				36E9422317F93C220008E59A /* iKFConnection.m */,
-				49A5FBEA19257ADE00D0ACD2 /* iKFViewSelectionController.h */,
-				49A5FBEB19257ADE00D0ACD2 /* iKFViewSelectionController.m */,
-				49A5FBEC19257ADE00D0ACD2 /* iKFViewSelectionController.xib */,
+				4931E7931940B4C500ECE60F /* LoginUI */,
+				49005AA2193E6E3C00A142D5 /* MainUI */,
+				49005A8A193CEF7700A142D5 /* NoteUI */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -263,6 +279,10 @@
 		36E941E417F84F020008E59A /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				49005A9C193E432C00A142D5 /* bin.png */,
+				49005A9D193E432C00A142D5 /* edit.png */,
+				49005A9E193E432C00A142D5 /* read.png */,
+				49005A9A193E431800A142D5 /* new.png */,
 				36E941E517F84F200008E59A /* delete.gif */,
 				36E941E617F84F200008E59A /* plus.gif */,
 				36E941E717F84F200008E59A /* view.gif */,
@@ -273,6 +293,9 @@
 		36E941F417F853F20008E59A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				36E941F517F8543D0008E59A /* iKFModel.h */,
+				36E941F617F8543D0008E59A /* iKFModel.m */,
+				49307E0C1923BB290075CFC9 /* iKFModels.h */,
 				36E941F917F8548C0008E59A /* iKFNote.h */,
 				36E941FA17F8548C0008E59A /* iKFNote.m */,
 				36E941FC17F855090008E59A /* iKFUser.h */,
@@ -287,15 +310,57 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		36E941F817F8546A0008E59A /* infrastructure */ = {
+		49005A8A193CEF7700A142D5 /* NoteUI */ = {
 			isa = PBXGroup;
 			children = (
-				36E941F517F8543D0008E59A /* iKFModel.h */,
-				36E941F617F8543D0008E59A /* iKFModel.m */,
-				36E941F317F853950008E59A /* iKF.h */,
-				49307E0C1923BB290075CFC9 /* iKFModels.h */,
+				36E9421717F890FB0008E59A /* iKFNotePopupViewController.h */,
+				36E9421817F890FB0008E59A /* iKFNotePopupViewController.m */,
+				36E9421917F890FB0008E59A /* iKFNotePopupViewController.xib */,
+				49005A87193CEF5800A142D5 /* iKFNoteReadViewController.h */,
+				49005A88193CEF5800A142D5 /* iKFNoteReadViewController.m */,
+				49005A8B193CF53C00A142D5 /* iKFNoteReadView.h */,
+				49005A8C193CF53C00A142D5 /* iKFNoteReadView.m */,
+				49005A8E193D14F400A142D5 /* iKFCompositeNoteViewController.h */,
+				49005A8F193D14F400A142D5 /* iKFCompositeNoteViewController.m */,
+				49005A91193D198B00A142D5 /* iKFNoteEditViewController.h */,
+				49005A92193D198B00A142D5 /* iKFNoteEditViewController.m */,
+				49005A94193D19A600A142D5 /* iKFNoteEditViewBySource.h */,
+				49005A95193D19A600A142D5 /* iKFNoteEditViewBySource.m */,
+				49005A97193D1ABC00A142D5 /* iKFAbstractNoteView.h */,
+				49005A98193D1ABC00A142D5 /* iKFAbstractNoteView.m */,
+				49005AA9193EBF1600A142D5 /* iKFAbstractNoteEditView.h */,
+				49005AAA193EBF1600A142D5 /* iKFAbstractNoteEditView.m */,
+				49005AAC193EC07800A142D5 /* iKFNoteEditViewByTinyMCE.h */,
+				49005AAD193EC07800A142D5 /* iKFNoteEditViewByTinyMCE.m */,
 			);
-			name = infrastructure;
+			name = NoteUI;
+			sourceTree = "<group>";
+		};
+		49005AA2193E6E3C00A142D5 /* MainUI */ = {
+			isa = PBXGroup;
+			children = (
+				49A5FBEA19257ADE00D0ACD2 /* iKFViewSelectionController.h */,
+				49A5FBEB19257ADE00D0ACD2 /* iKFViewSelectionController.m */,
+				49A5FBEC19257ADE00D0ACD2 /* iKFViewSelectionController.xib */,
+				36E941F017F8505A0008E59A /* iKFMainPanel.h */,
+				36E941F117F8505A0008E59A /* iKFMainPanel.m */,
+				36E941FF17F865940008E59A /* iKFLoadingView.h */,
+				36E9420017F865940008E59A /* iKFLoadingView.m */,
+				36E9420C17F87A880008E59A /* iKFMainViewController.h */,
+				36E9420D17F87A880008E59A /* iKFMainViewController.m */,
+				36E9420E17F87A880008E59A /* iKFMainViewController.xib */,
+				36E9421117F882040008E59A /* iKFNoteView.h */,
+				36E9421217F882040008E59A /* iKFNoteView.m */,
+				36E9421417F882E10008E59A /* iKFNoteIcon.h */,
+				36E9421517F882E10008E59A /* iKFNoteIcon.m */,
+				36E9421C17F921A20008E59A /* iKFHandle.h */,
+				36E9421D17F921A20008E59A /* iKFHandle.m */,
+				36E9421F17F9385D0008E59A /* iKFConnectionLayerView.h */,
+				36E9422017F9385D0008E59A /* iKFConnectionLayerView.m */,
+				36E9422217F93C220008E59A /* iKFConnection.h */,
+				36E9422317F93C220008E59A /* iKFConnection.m */,
+			);
+			name = MainUI;
 			sourceTree = "<group>";
 		};
 		49307DFF1923026E0075CFC9 /* Connection */ = {
@@ -305,6 +370,22 @@
 				49307E01192302E50075CFC9 /* iKFConnector.m */,
 			);
 			name = Connection;
+			sourceTree = "<group>";
+		};
+		4931E7931940B4C500ECE60F /* LoginUI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = LoginUI;
+			sourceTree = "<group>";
+		};
+		4931E7951940B53F00ECE60F /* GabageBin */ = {
+			isa = PBXGroup;
+			children = (
+				493492E1193F919E0018A77A /* iKFCommonView.h */,
+				493492E2193F919E0018A77A /* iKFCommonView.m */,
+			);
+			name = GabageBin;
 			sourceTree = "<group>";
 		};
 		497328C61924FF3C008E5BC6 /* Resources */ = {
@@ -394,14 +475,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49005A9F193E432C00A142D5 /* bin.png in Resources */,
+				49005A9B193E431800A142D5 /* new.png in Resources */,
 				36E941E917F84F200008E59A /* plus.gif in Resources */,
 				36E941E817F84F200008E59A /* delete.gif in Resources */,
 				36E9421017F87A880008E59A /* iKFMainViewController.xib in Resources */,
 				367C44A117E9596C0092C5E5 /* InfoPlist.strings in Resources */,
 				36E9421B17F890FB0008E59A /* iKFNotePopupViewController.xib in Resources */,
+				49005AA0193E432C00A142D5 /* edit.png in Resources */,
 				367C44A917E9596C0092C5E5 /* Default.png in Resources */,
 				367C44AB17E9596C0092C5E5 /* Default@2x.png in Resources */,
 				367C44AD17E9596C0092C5E5 /* Default-568h@2x.png in Resources */,
+				49005AA1193E432C00A142D5 /* read.png in Resources */,
 				49A5FBEE19257ADE00D0ACD2 /* iKFViewSelectionController.xib in Resources */,
 				36E941EA17F84F200008E59A /* view.gif in Resources */,
 				367C44B017E9596C0092C5E5 /* MainStoryboard.storyboard in Resources */,
@@ -439,25 +524,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49005A93193D198B00A142D5 /* iKFNoteEditViewController.m in Sources */,
 				36E941FB17F8548C0008E59A /* iKFNote.m in Sources */,
 				36E9420F17F87A880008E59A /* iKFMainViewController.m in Sources */,
 				367C44A317E9596C0092C5E5 /* main.m in Sources */,
 				36E9422417F93C220008E59A /* iKFConnection.m in Sources */,
 				36E941F717F8543D0008E59A /* iKFModel.m in Sources */,
+				49005A89193CEF5800A142D5 /* iKFNoteReadViewController.m in Sources */,
 				36E9421E17F921A20008E59A /* iKFHandle.m in Sources */,
+				493492E3193F919E0018A77A /* iKFCommonView.m in Sources */,
 				367C44A717E9596C0092C5E5 /* iKFAppDelegate.m in Sources */,
 				36E941FE17F855090008E59A /* iKFUser.m in Sources */,
+				49005A99193D1ABC00A142D5 /* iKFAbstractNoteView.m in Sources */,
 				36E9421A17F890FB0008E59A /* iKFNotePopupViewController.m in Sources */,
 				49307E051923A2A20075CFC9 /* iKFRegistration.m in Sources */,
+				49005AAB193EBF1600A142D5 /* iKFAbstractNoteEditView.m in Sources */,
 				49A5FBED19257ADE00D0ACD2 /* iKFViewSelectionController.m in Sources */,
 				36E9421617F882E10008E59A /* iKFNoteIcon.m in Sources */,
 				49307E0B1923A3A30075CFC9 /* iKFView.m in Sources */,
 				36E9422117F9385D0008E59A /* iKFConnectionLayerView.m in Sources */,
 				36E9420117F865940008E59A /* iKFLoadingView.m in Sources */,
+				49005A96193D19A600A142D5 /* iKFNoteEditViewBySource.m in Sources */,
 				497328C91924FF6C008E5BC6 /* iKFResources.m in Sources */,
 				367C44B317E9596C0092C5E5 /* iKFViewController.m in Sources */,
+				49005A90193D14F400A142D5 /* iKFCompositeNoteViewController.m in Sources */,
+				49005A8D193CF53C00A142D5 /* iKFNoteReadView.m in Sources */,
 				36E941F217F8505A0008E59A /* iKFMainPanel.m in Sources */,
 				49307E02192302E50075CFC9 /* iKFConnector.m in Sources */,
+				49005AAE193EC07800A142D5 /* iKFNoteEditViewByTinyMCE.m in Sources */,
 				49307E081923A3900075CFC9 /* iKFCommunity.m in Sources */,
 				36E9421317F882040008E59A /* iKFNoteView.m in Sources */,
 			);

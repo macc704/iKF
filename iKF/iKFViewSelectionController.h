@@ -8,7 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface iKFViewSelectionController : UIViewController
+@protocol iKFTableSelectionListener
+-(void) changed: (id) selected;
+@end
+
+@interface iKFViewSelectionController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *viewsTable;
+
+@property (weak, nonatomic) id<iKFTableSelectionListener> listener;
+
+@property NSArray* objects;
+
 @end

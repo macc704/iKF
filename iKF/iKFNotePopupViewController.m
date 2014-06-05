@@ -34,23 +34,23 @@
 }
 
 - (void) update{
-    self.textFieldTitle.text = self.note.title;
+    //self.view subviews
+    self.titleLabel.text = self.note.title;
+    [self.titleLabel setNumberOfLines:0];
+    [self.titleLabel sizeToFit];
     self.textFieldAuthor.text = [self.note.primaryAuthor getFullName];
+    [self.textFieldAuthor setNumberOfLines:0];
+    [self.textFieldAuthor sizeToFit];
     [self.webView loadHTMLString: self.note.content baseURL: nil];
-    self.textAreaContents.text = self.note.content;
-}
-
-- (void) updateToModel{
-    self.note.title = self.textFieldTitle.text;
-    self.note.content = self.textAreaContents.text;
-    if(self.connector != nil){
-        [self.connector updatenote: self.note];
-    }
-    [self.note notify];
 }
 
 - (IBAction)finishButtonPressed:(id)sender {
     [self.noteView closePopupViewer];
+}
+
+- (IBAction)editButtonPressed:(id)sender {
+    [self.noteView closePopupViewer];
+    [self.kfViewController openNoteEditController: self.note mode:@"edit"];
 }
 
 @end
