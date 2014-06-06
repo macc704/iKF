@@ -19,6 +19,11 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        let controller = KFLoginViewController(nibName: nil, bundle: nil);
+        self.presentViewController(controller, animated: true, completion: nil);
+    }
 
 
 }
