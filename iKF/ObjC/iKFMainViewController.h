@@ -13,10 +13,11 @@
 #import "iKFViewSelectionController.h"
 
 @class iKFNoteView;
+@class KFUser;
 
 @interface iKFMainViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, UIPickerViewDelegate, iKFTableSelectionListener>
 
-@property iKFUser* user;
+@property KFUser* user;
 
 //@property (weak, nonatomic) IBOutlet UIBarButtonItem *viewSelectionButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *viewSelectionButton;

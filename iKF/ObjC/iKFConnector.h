@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "iKFModels.h"
 
+@class KFUser;
+
 @interface iKFConnector : NSObject
 
 @property NSString* host;
@@ -23,7 +25,7 @@
 - (NSString*) getURL: (NSString*) urlString;
     
 - (BOOL) loginWithName: (NSString*)name password: (NSString*)password;
-- (iKFUser*) getCurrentUser;
+- (KFUser*) getCurrentUser;
 - (NSArray*) getRegistrations;
 - (BOOL) registerCommunity: (NSString*)registrationCode;
 - (BOOL) enterCommunity: (NSString*)communityId;

@@ -7,6 +7,7 @@
 //
 
 #import "iKFNote.h"
+//#import "iKF-Swift.h"
 
 static int idCounter;
 
@@ -19,7 +20,7 @@ static int idCounter;
     return self;
 }
 
-- (id) initWithAuthor: (iKFUser*) author{
+- (id) initWithAuthor: (KFUser*) author{
     [self setGuid: [NSString stringWithFormat: @"temporary-%d",idCounter]];
     idCounter++;
     self.primaryAuthor = author;

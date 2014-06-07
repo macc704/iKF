@@ -8,6 +8,7 @@
 
 #import "iKFMainViewController.h"
 #import "iKFCompositeNoteViewController.h"
+#import "iKF-Swift.h"
 
 //@interface iKFMainViewController ()
 //
@@ -123,7 +124,7 @@
     [_popController presentPopoverFromBarButtonItem: self.viewSelectionButton permittedArrowDirections: UIPopoverArrowDirectionAny animated:YES];
 }
 
-- (void) changed: (iKFView*) view{
+- (void) changed: (KFView*) view{
     _selectedRow = [_views indexOfObject: view];
     [_popController dismissPopoverAnimated:YES];
     [self updateViews];

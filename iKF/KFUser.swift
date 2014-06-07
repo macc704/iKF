@@ -13,8 +13,8 @@ class KFUser: NSObject {
     var guid = "";
     var firstName = "";
     var lastName = "";
-    
-//    - (NSString*) getFullName{
-//    return [NSString stringWithFormat: @"%@ %@", self.firstName, self.lastName];
-//    }
+
+    func getFullName() -> String{
+        return self.firstName + " " + self.lastName;
+    }
 }

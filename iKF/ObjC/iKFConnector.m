@@ -93,7 +93,7 @@ static iKFConnector* singleton;
     return YES;
 }
 
-- (iKFUser*) getCurrentUser{
+- (KFUser*) getCurrentUser{
     NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/account/currentUser", self.host]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"GET"];
@@ -108,7 +108,7 @@ static iKFConnector* singleton;
     
     id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
     id each = jsonobj;
-    iKFUser* model = [[iKFUser alloc] init];
+    KFUser* model = [[KFUser alloc] init];
     model.guid = each[@"guid"];
     model.firstName = each[@"firstName"];
     model.lastName = each[@"lastName"];
@@ -188,7 +188,7 @@ static iKFConnector* singleton;
     id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
     NSMutableArray* models = [NSMutableArray array];
     for (id each in jsonobj) {
-        iKFView* model = [[iKFView alloc] init];
+        KFView* model = [[KFView alloc] init];
         model.guid = each[@"guid"];
         model.title = each[@"title"];
         [models addObject: model];
@@ -228,7 +228,7 @@ static iKFConnector* singleton;
         CGPoint p = CGPointMake(x, y);
         model.location = p;
         
-        iKFUser* user = [[iKFUser alloc] init];
+        KFUser* user = [[KFUser alloc] init];
         user.firstName = each[@"postInfo"][@"authors"][0][@"firstName"];
         user.lastName = each[@"postInfo"][@"authors"][0][@"lastName"];
         model.primaryAuthor = user;

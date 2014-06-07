@@ -7,6 +7,7 @@
 //
 
 #import "iKFNoteView.h"
+#import "iKF-Swift.h"
 
 @implementation iKFNoteView{
     iKFMainViewController* _controller;

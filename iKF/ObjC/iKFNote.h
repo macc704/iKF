@@ -8,18 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "iKFUser.h"
+#import "iKFModel.h"
+
+@class KFUser;
 
 @interface iKFNote : iKFModel
 
 @property NSString* guid;
 @property NSString* title;
 @property NSString* content;
-@property iKFUser* primaryAuthor;
+@property KFUser* primaryAuthor;
 @property CGPoint location;
 @property iKFNote* buildsOn;
 @property NSString* refId;
 
-- (id) initWithAuthor: (iKFUser*) author;
+- (id) initWithAuthor: (KFUser*) author;
 
 @end
