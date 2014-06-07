@@ -25,7 +25,7 @@
 #import "iKFNoteReadView.h"
 #import "iKFNoteReadViewController.h"
 #import "iKFNoteView.h"
-#import "iKFRegistration.h"
+//#import "iKFRegistration.h"
 #import "iKFResources.h"
 #import "iKFUser.h"
 #import "iKFView.h"

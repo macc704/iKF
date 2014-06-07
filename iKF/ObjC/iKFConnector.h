@@ -24,7 +24,7 @@
     
 - (BOOL) loginWithName: (NSString*)name password: (NSString*)password;
 - (iKFUser*) getCurrentUser;
-- (NSMutableArray*) getRegistrations;
+- (NSArray*) getRegistrations;
 - (BOOL) registerCommunity: (NSString*)registrationCode;
 - (BOOL) enterCommunity: (NSString*)communityId;
 - (NSArray*) getViews: (NSString*)communityId;

@@ -7,6 +7,7 @@
 //
 
 #import "iKFConnector.h"
+#import "iKF-Swift.h"
 
 static iKFConnector* singleton;
 
@@ -115,7 +116,7 @@ static iKFConnector* singleton;
     return model;
 }
 
-- (NSMutableArray*) getRegistrations{
+- (NSArray*) getRegistrations{
     NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/account/registrations", self.host]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"GET"];
@@ -131,7 +132,7 @@ static iKFConnector* singleton;
     id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
     NSMutableArray* models = [NSMutableArray array];
     for (id each in jsonobj) {
-        iKFRegistration* model = [[iKFRegistration alloc] init];
+        KFRegistration* model = [[KFRegistration alloc] init];
         model.guid = each[@"guid"];
         model.communityId = each[@"sectionId"];
         model.communityName = each[@"sectionTitle"];

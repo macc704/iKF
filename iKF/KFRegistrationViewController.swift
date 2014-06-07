@@ -11,7 +11,7 @@ import UIKit
 class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     let connector = iKFConnector.getInstance();
-    var registrations = [];
+    var registrations:Array<KFRegistration> = [];
     
     @IBOutlet var registrationCodeField : UITextField
     @IBOutlet var registrationsPicker : UIPickerView
@@ -44,7 +44,7 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     /* delegate */
     
     func pickerView(pickerView: UIPickerView!, titleForRow row: Int, forComponent component: Int) -> String!{
-        let registration:iKFRegistration = self.registrations[row] as iKFRegistration;
+        let registration:KFRegistration = self.registrations[row];
         return registration.communityName + " ( as " + registration.roleName + " )";
     }
     
@@ -67,7 +67,7 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
         let mainViewController = iKFMainViewController(nibName: nil, bundle: nil);
         mainViewController.user = connector.getCurrentUser();
         self.presentViewController(mainViewController, animated: true, completion: nil);
-        let communityId = registrations[row].communityId;
+        let communityId = self.registrations[row].communityId;
         mainViewController.initServer(connector, communityId:communityId);
     }
     
@@ -77,7 +77,7 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
     func refresh(){
-        self.registrations = connector.getRegistrations();
+        self.registrations = connector.getRegistrations() as Array<KFRegistration>;
         self.registrationsPicker.reloadAllComponents();
     }
     

@@ -12,7 +12,7 @@
 //Model
 #import "iKFUser.h"
 #import "iKFNote.h"
-#import "iKFRegistration.h"
+//#import "iKFRegistration.h"
 #import "iKFCommunity.h"
 #import "iKFView.h"
 
