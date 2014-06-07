@@ -216,7 +216,7 @@ static iKFConnector* singleton;
     id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
     NSMutableDictionary* models = [NSMutableDictionary dictionary];
     for (id each in jsonobj[@"viewPostRefs"]) {
-        iKFNote* model = [[iKFNote alloc] init];
+        KFNote* model = [[KFNote alloc] initWithoutAuthor];
         model.refId = each[@"guid"];
         model.guid = each[@"postInfo"][@"guid"];
         model.title = each[@"postInfo"][@"title"];
@@ -251,7 +251,7 @@ static iKFConnector* singleton;
     return models;
 }
 
-- (BOOL) movePost: (NSString*)viewId note: (iKFNote*)note {
+- (BOOL) movePost: (NSString*)viewId note: (KFNote*)note {
     NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/movenote/%@/%@", self.host, viewId, note.refId]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"POST"];
@@ -271,7 +271,7 @@ static iKFConnector* singleton;
     return YES;
 }
 
-- (BOOL) createNote: (NSString*)viewId buildsOn: (iKFNote*)buildsonNote location: (CGPoint)p{
+- (BOOL) createNote: (NSString*)viewId buildsOn: (KFNote*)buildsonNote location: (CGPoint)p{
     NSURL *url;
     if(buildsonNote != nil){
         url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/newnote/%@/%@", self.host, viewId, buildsonNote.refId]];//!!現在はrefId!!
@@ -294,7 +294,7 @@ static iKFConnector* singleton;
     return YES;
 }
 
-- (BOOL) updatenote: (iKFNote*)note{
+- (BOOL) updatenote: (KFNote*)note{
     NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/editnote/%@", self.host, note.guid]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"POST"];

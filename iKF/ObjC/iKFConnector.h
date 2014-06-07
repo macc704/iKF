@@ -6,10 +6,11 @@
 //  Copyright (c) 2014 Yoshiaki Matsuzawa. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "iKFModels.h"
+#import <UIKit/UIKit.h>
+//#import "iKFModels.h"
 
 @class KFUser;
+@class KFNote;
 
 @interface iKFConnector : NSObject
 
@@ -33,8 +34,8 @@
 
 - (id) getPosts: (NSString*)viewid;
 
-- (BOOL) movePost: (NSString*)viewId note: (iKFNote*)note;
-- (BOOL) createNote: (NSString*)viewId buildsOn: (iKFNote*)buildsonNote location: (CGPoint)p;
-- (BOOL) updatenote: (iKFNote*)note;
+- (BOOL) movePost: (NSString*)viewId note: (KFNote*)note;
+- (BOOL) createNote: (NSString*)viewId buildsOn: (KFNote*)buildsonNote location: (CGPoint)p;
+- (BOOL) updatenote: (KFNote*)note;
 
 @end

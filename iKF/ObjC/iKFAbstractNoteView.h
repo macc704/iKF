@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iKFModels.h"
+
+@class KFNote;
 
 @interface iKFAbstractNoteView : UIView
 
 @property UIViewController* closableController;
-@property iKFNote* model;
+@property KFNote* model;
 
 -(void) setNavBarTitle: title;
 

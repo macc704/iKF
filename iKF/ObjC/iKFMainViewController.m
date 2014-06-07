@@ -182,7 +182,7 @@
 //    [self addBuildsOn: note];
 //}
 
-- (void) addNote: (iKFNote*)note{
+- (void) addNote: (KFNote*)note{
     [self removeHandle];
     iKFNoteView* noteView = [[iKFNoteView alloc] init: self note: note];
     noteView.connector = _connector;
@@ -195,7 +195,7 @@
     [_mainPanel addSubview: noteView];
 }
 
-- (void) addBuildsOn: (iKFNote*)note{
+- (void) addBuildsOn: (KFNote*)note{
     if(note.buildsOn != nil){
         iKFNoteView* fromView = _postviews[note.guid];
         iKFNoteView* toView = _postviews[note.buildsOn.guid];
@@ -204,7 +204,7 @@
     }
 }
 
-- (void) openNoteEditController: (iKFNote*)note mode: (NSString*)mode{
+- (void) openNoteEditController: (KFNote*)note mode: (NSString*)mode{
     //[((iKFNoteView*)_target) openPopupViewer];
     iKFCompositeNoteViewController* noteController = [[iKFCompositeNoteViewController alloc] init];
     if([mode isEqualToString: @"edit"]){
@@ -281,11 +281,11 @@
     
     NSString* viewId = [self currentViewId];
     self->_posts = [_connector getPosts: viewId];
-    for(iKFNote* each in [self->_posts allValues]){
+    for(KFNote* each in [self->_posts allValues]){
         //NSLog(@"%@", each);
         [self addNote: each];
     }
-    for(iKFNote* each in [self->_posts allValues]){
+    for(KFNote* each in [self->_posts allValues]){
         //NSLog(@"%@", each);
         [self addBuildsOn: each];
     }

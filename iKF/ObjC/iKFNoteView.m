@@ -20,7 +20,7 @@
     iKFNotePopupViewController* _notePopupController;
 }
 
-- (id)init: (iKFMainViewController*)controller note: (iKFNote*)note
+- (id)init: (iKFMainViewController*)controller note: (KFNote*)note
 {
     self = [super init];
 

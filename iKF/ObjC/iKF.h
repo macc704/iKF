@@ -9,7 +9,7 @@
 #ifndef iKF_iKF_h
 #define iKF_iKF_h
 
-#import "iKFModel.h"
+//#import "iKFModel.h"
 
 //View-Controller
 #import "iKFMainViewController.h"

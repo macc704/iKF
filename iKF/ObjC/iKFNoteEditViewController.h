@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "iKFAbstractNoteEditView.h"
-#import "iKFModels.h"
+
+@class KFNote;
 
 @interface iKFNoteEditViewController : UIViewController
 
 @property iKFAbstractNoteEditView* editView;
-@property iKFNote* note;
+@property KFNote* note;
 
 - (id)initWithView: (iKFAbstractNoteEditView*) editview;
 

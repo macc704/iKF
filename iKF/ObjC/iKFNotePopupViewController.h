@@ -7,18 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "iKF.h"
 #import "iKFConnector.h"
-#import "iKFModels.h"
 #import "iKFMainViewController.h"
 
 @class iKFNoteView;
 @class iKFMainViewController;
+@class KFNote;
 
 @interface iKFNotePopupViewController : UIViewController
 
 //@property iKFConnector* connector;
-@property iKFNote* note;
+@property KFNote* note;
 @property iKFNoteView* noteView;//仮
 
 @property iKFMainViewController* kfViewController;

@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iKFModels.h"
+
+
+@class KFNote;
 
 @interface iKFCompositeNoteViewController : UITabBarController
 
-- (void) setNote: (iKFNote*)note;
+- (void) setNote: (KFNote*)note;
 
 - (void) toEditMode;
 - (void) toReadMode;

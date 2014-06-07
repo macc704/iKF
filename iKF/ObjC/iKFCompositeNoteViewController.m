@@ -52,7 +52,7 @@
     self.selectedViewController = controllerC;
 }
 
-- (void) setNote: (iKFNote*)note{
+- (void) setNote: (KFNote*)note{
     //NSLog(@"setNote");
     controllerA.note = note;
     controllerB.note = note;

@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "iKF.h"
-#import "iKFModels.h"
 #import "iKFConnector.h"
 #import "iKFViewSelectionController.h"
 
 @class iKFNoteView;
 @class KFUser;
+@class KFNote;
 
 @interface iKFMainViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, UIPickerViewDelegate, iKFTableSelectionListener>
 
@@ -37,7 +37,7 @@
 - (void) createNote: (CGPoint)p buildson: (iKFNoteView*)from;
 - (void) removeNote: (iKFNoteView*) view;
 - (void) requestConnectionsRepaint;
-- (void) openNoteEditController: (iKFNote*)note mode: (NSString*)mode;
+- (void) openNoteEditController: (KFNote*)note mode: (NSString*)mode;
 
 - (void) initServer: (iKFConnector*)connector communityId: (NSString*)communityId;
 //- (void) setJSON: (id)json;

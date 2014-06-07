@@ -10,7 +10,6 @@ import UIKit
 
 class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    let connector = iKFConnector.getInstance();
     var registrations:Array<KFRegistration> = [];
     
     @IBOutlet var registrationCodeField : UITextField
@@ -56,6 +55,8 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
 
     @IBAction func enterButtonPressed(sender : AnyObject) {
+        let connector = iKFConnector.getInstance();
+        
         let row = self.registrationsPicker.selectedRowInComponent(0);
         let registrationId = registrations[row].guid;
         let enterResult = connector.enterCommunity(registrationId);
@@ -72,11 +73,13 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
     @IBAction func regsiterButtonPressed(sender : AnyObject) {
+        let connector = iKFConnector.getInstance();
         connector.registerCommunity(registrationCodeField.text);
         self.refresh();
     }
     
     func refresh(){
+        let connector = iKFConnector.getInstance();
         self.registrations = connector.getRegistrations() as Array<KFRegistration>;
         self.registrationsPicker.reloadAllComponents();
     }

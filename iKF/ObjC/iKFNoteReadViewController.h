@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "iKFNoteReadView.h"
-#import "iKFModels.h"
+
+@class KFNote;
 
 @interface iKFNoteReadViewController : UIViewController
 
 @property iKFNoteReadView* readView;
-@property iKFNote* note;
+@property KFNote* note;
 
 @end

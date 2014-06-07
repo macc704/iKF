@@ -7,7 +7,7 @@
 //
 
 #import "iKFNoteReadViewController.h"
-
+#import "iKF-Swift.h"
 
 @interface iKFNoteReadViewController ()
 

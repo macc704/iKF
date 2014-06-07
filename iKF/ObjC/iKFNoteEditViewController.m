@@ -8,6 +8,7 @@
 
 #import "iKFNoteEditViewController.h"
 #import "iKFConnector.h"
+#import "iKF-Swift.h"
 
 @interface iKFNoteEditViewController ()
 

@@ -8,14 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "iKF.h"
+
 @class iKFMainViewController;
+@class KFNote;
 
 @interface iKFNoteView : UIView <UIPopoverControllerDelegate>
 
-@property iKFNote* model;
+@property KFNote* model;
 @property iKFConnector* connector;
 
-- (id)init: (iKFMainViewController*)controller note: (iKFNote*)note;
+- (id)init: (iKFMainViewController*)controller note: (KFNote*)note;
 - (void) die;
 
 - (void) openPopupViewer;
