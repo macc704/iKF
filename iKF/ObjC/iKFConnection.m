@@ -7,13 +7,16 @@
 //
 
 #import "iKFConnection.h"
-#import "iKF.h"
+
+#import "iKFMainViewController.h"
+#import "iKFNotePopupViewController.h"
+#import "iKF-Swift.h"
 
 @implementation iKFConnection{
     
 }
 
-- (id) initFrom: (iKFNoteView*)from To: (iKFNoteView*)to{
+- (id) initFrom: (KFPostRefView*)from To: (KFPostRefView*)to{
     self = [super init];
     if(self){
         self.from = from;

@@ -16,11 +16,11 @@
 #import "iKFNoteEditViewBySource.h"
 #import "iKFNoteEditViewByTinyMCE.h"
 #import "iKFNoteEditViewController.h"
-#import "iKFNoteIcon.h"
+//#import "iKFNoteIcon.h"
 #import "iKFNotePopupViewController.h"
 #import "iKFNoteReadView.h"
 #import "iKFNoteReadViewController.h"
-#import "iKFNoteView.h"
+//#import "iKFNoteView.h"
 #import "iKFViewSelectionController.h"
 #import "iKFErrorHandler.h"
 

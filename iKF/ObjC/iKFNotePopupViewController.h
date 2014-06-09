@@ -11,14 +11,15 @@
 #import "iKFMainViewController.h"
 
 @class iKFNoteView;
-@class iKFMainViewController;
+//@class iKFMainViewController;
+@class iKFPostRefView;
 @class KFNote;
 
 @interface iKFNotePopupViewController : UIViewController
 
 //@property iKFConnector* connector;
 @property KFNote* note;
-@property iKFNoteView* noteView;//仮
+@property KFPostRefView* noteView;//仮
 
 @property iKFMainViewController* kfViewController;
 

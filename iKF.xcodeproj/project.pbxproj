@@ -23,12 +23,10 @@
 		490E75C2194111A8004E8BF7 /* iKFNoteEditViewBySource.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E7595194111A8004E8BF7 /* iKFNoteEditViewBySource.m */; };
 		490E75C3194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E7597194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.m */; };
 		490E75C4194111A8004E8BF7 /* iKFNoteEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E7599194111A8004E8BF7 /* iKFNoteEditViewController.m */; };
-		490E75C5194111A8004E8BF7 /* iKFNoteIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E759B194111A8004E8BF7 /* iKFNoteIcon.m */; };
 		490E75C6194111A8004E8BF7 /* iKFNotePopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E759D194111A8004E8BF7 /* iKFNotePopupViewController.m */; };
 		490E75C7194111A8004E8BF7 /* iKFNotePopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 490E759E194111A8004E8BF7 /* iKFNotePopupViewController.xib */; };
 		490E75C8194111A8004E8BF7 /* iKFNoteReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E75A0194111A8004E8BF7 /* iKFNoteReadView.m */; };
 		490E75C9194111A8004E8BF7 /* iKFNoteReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E75A2194111A8004E8BF7 /* iKFNoteReadViewController.m */; };
-		490E75CA194111A8004E8BF7 /* iKFNoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E75A4194111A8004E8BF7 /* iKFNoteView.m */; };
 		490E75D0194111A8004E8BF7 /* iKFViewSelectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E75B0194111A8004E8BF7 /* iKFViewSelectionController.m */; };
 		490E75D1194111A8004E8BF7 /* iKFViewSelectionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 490E75B1194111A8004E8BF7 /* iKFViewSelectionController.xib */; };
 		490E75E019411653004E8BF7 /* KFLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490E75DE19411653004E8BF7 /* KFLoginViewController.swift */; };
@@ -39,10 +37,16 @@
 		492F402A1941F2AB0038E621 /* read.png in Resources */ = {isa = PBXBuildFile; fileRef = 492F40261941F2AB0038E621 /* read.png */; };
 		492F402D1941F3600038E621 /* KFRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F402B1941F3600038E621 /* KFRegistrationViewController.swift */; };
 		492F402E1941F3600038E621 /* KFRegistrationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 492F402C1941F3600038E621 /* KFRegistrationViewController.xib */; };
+		495761A91945EEA10017A852 /* KFPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495761A81945EEA10017A852 /* KFPost.swift */; };
 		498BD1AB1942B768006217AD /* KFRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1AA1942B768006217AD /* KFRegistration.swift */; };
 		498BD1AD1942BC59006217AD /* KFUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1AC1942BC59006217AD /* KFUser.swift */; };
 		498BD1AF1942C1E0006217AD /* KFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1AE1942C1E0006217AD /* KFView.swift */; };
 		498BD1B11942C372006217AD /* KFNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1B01942C372006217AD /* KFNote.swift */; };
+		49C5590B1945EF1700FDFF32 /* KFDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5590A1945EF1700FDFF32 /* KFDrawing.swift */; };
+		49C5590D1945EF5F00FDFF32 /* KFModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5590C1945EF5F00FDFF32 /* KFModel.swift */; };
+		49C5590F1945F5D700FDFF32 /* KFReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5590E1945F5D700FDFF32 /* KFReference.swift */; };
+		49C55911194600FA00FDFF32 /* KFPostRefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C55910194600FA00FDFF32 /* KFPostRefView.swift */; };
+		49C559131946142600FDFF32 /* KFPostRefIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C559121946142600FDFF32 /* KFPostRefIconView.swift */; };
 		49C78D5A194105C2004D3404 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C78D59194105C2004D3404 /* AppDelegate.swift */; };
 		49C78D5D194105C2004D3404 /* iKF.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 49C78D5B194105C2004D3404 /* iKF.xcdatamodeld */; };
 		49C78D5F194105C2004D3404 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C78D5E194105C2004D3404 /* ViewController.swift */; };
@@ -65,7 +69,7 @@
 		4903CD8C1942159D00C698AD /* iKFErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFErrorHandler.h; sourceTree = "<group>"; };
 		4903CD8D1942159D00C698AD /* iKFErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFErrorHandler.m; sourceTree = "<group>"; };
 		490E756E1941116A004E8BF7 /* iKF-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iKF-Bridging-Header.h"; sourceTree = "<group>"; };
-		490E7573194111A8004E8BF7 /* iKF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKF.h; sourceTree = "<group>"; };
+		490E7573194111A8004E8BF7 /* iKFs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFs.h; sourceTree = "<group>"; };
 		490E7574194111A8004E8BF7 /* iKFAbstractNoteEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFAbstractNoteEditView.h; sourceTree = "<group>"; };
 		490E7575194111A8004E8BF7 /* iKFAbstractNoteEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFAbstractNoteEditView.m; sourceTree = "<group>"; };
 		490E7576194111A8004E8BF7 /* iKFAbstractNoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFAbstractNoteView.h; sourceTree = "<group>"; };
@@ -95,8 +99,6 @@
 		490E7597194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteEditViewByTinyMCE.m; sourceTree = "<group>"; };
 		490E7598194111A8004E8BF7 /* iKFNoteEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNoteEditViewController.h; sourceTree = "<group>"; };
 		490E7599194111A8004E8BF7 /* iKFNoteEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteEditViewController.m; sourceTree = "<group>"; };
-		490E759A194111A8004E8BF7 /* iKFNoteIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNoteIcon.h; sourceTree = "<group>"; };
-		490E759B194111A8004E8BF7 /* iKFNoteIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteIcon.m; sourceTree = "<group>"; };
 		490E759C194111A8004E8BF7 /* iKFNotePopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNotePopupViewController.h; sourceTree = "<group>"; };
 		490E759D194111A8004E8BF7 /* iKFNotePopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNotePopupViewController.m; sourceTree = "<group>"; };
 		490E759E194111A8004E8BF7 /* iKFNotePopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iKFNotePopupViewController.xib; sourceTree = "<group>"; };
@@ -104,8 +106,6 @@
 		490E75A0194111A8004E8BF7 /* iKFNoteReadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteReadView.m; sourceTree = "<group>"; };
 		490E75A1194111A8004E8BF7 /* iKFNoteReadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNoteReadViewController.h; sourceTree = "<group>"; };
 		490E75A2194111A8004E8BF7 /* iKFNoteReadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteReadViewController.m; sourceTree = "<group>"; };
-		490E75A3194111A8004E8BF7 /* iKFNoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNoteView.h; sourceTree = "<group>"; };
-		490E75A4194111A8004E8BF7 /* iKFNoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteView.m; sourceTree = "<group>"; };
 		490E75AF194111A8004E8BF7 /* iKFViewSelectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFViewSelectionController.h; sourceTree = "<group>"; };
 		490E75B0194111A8004E8BF7 /* iKFViewSelectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFViewSelectionController.m; sourceTree = "<group>"; };
 		490E75B1194111A8004E8BF7 /* iKFViewSelectionController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iKFViewSelectionController.xib; sourceTree = "<group>"; };
@@ -117,10 +117,16 @@
 		492F40261941F2AB0038E621 /* read.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = read.png; sourceTree = "<group>"; };
 		492F402B1941F3600038E621 /* KFRegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFRegistrationViewController.swift; sourceTree = "<group>"; };
 		492F402C1941F3600038E621 /* KFRegistrationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFRegistrationViewController.xib; sourceTree = "<group>"; };
+		495761A81945EEA10017A852 /* KFPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFPost.swift; sourceTree = "<group>"; };
 		498BD1AA1942B768006217AD /* KFRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFRegistration.swift; sourceTree = "<group>"; };
 		498BD1AC1942BC59006217AD /* KFUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFUser.swift; sourceTree = "<group>"; };
 		498BD1AE1942C1E0006217AD /* KFView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFView.swift; sourceTree = "<group>"; };
 		498BD1B01942C372006217AD /* KFNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFNote.swift; sourceTree = "<group>"; };
+		49C5590A1945EF1700FDFF32 /* KFDrawing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFDrawing.swift; sourceTree = "<group>"; };
+		49C5590C1945EF5F00FDFF32 /* KFModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFModel.swift; sourceTree = "<group>"; };
+		49C5590E1945F5D700FDFF32 /* KFReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFReference.swift; sourceTree = "<group>"; };
+		49C55910194600FA00FDFF32 /* KFPostRefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFPostRefView.swift; sourceTree = "<group>"; };
+		49C559121946142600FDFF32 /* KFPostRefIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFPostRefIconView.swift; sourceTree = "<group>"; };
 		49C78D54194105C2004D3404 /* iKF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iKF.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49C78D58194105C2004D3404 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49C78D59194105C2004D3404 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -156,7 +162,7 @@
 			children = (
 				492F40331942040C0038E621 /* Connector */,
 				492F4034194204230038E621 /* UI */,
-				490E7573194111A8004E8BF7 /* iKF.h */,
+				490E7573194111A8004E8BF7 /* iKFs.h */,
 				4903CD8C1942159D00C698AD /* iKFErrorHandler.h */,
 				4903CD8D1942159D00C698AD /* iKFErrorHandler.m */,
 			);
@@ -197,6 +203,8 @@
 		492F402F1941FAD80038E621 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				49C55910194600FA00FDFF32 /* KFPostRefView.swift */,
+				49C559121946142600FDFF32 /* KFPostRefIconView.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -226,6 +234,10 @@
 				498BD1AC1942BC59006217AD /* KFUser.swift */,
 				498BD1AE1942C1E0006217AD /* KFView.swift */,
 				498BD1B01942C372006217AD /* KFNote.swift */,
+				495761A81945EEA10017A852 /* KFPost.swift */,
+				49C5590A1945EF1700FDFF32 /* KFDrawing.swift */,
+				49C5590C1945EF5F00FDFF32 /* KFModel.swift */,
+				49C5590E1945F5D700FDFF32 /* KFReference.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -238,8 +250,6 @@
 				490E758E194111A8004E8BF7 /* iKFMainViewController.xib */,
 				490E758A194111A8004E8BF7 /* iKFMainPanel.h */,
 				490E758B194111A8004E8BF7 /* iKFMainPanel.m */,
-				490E75A3194111A8004E8BF7 /* iKFNoteView.h */,
-				490E75A4194111A8004E8BF7 /* iKFNoteView.m */,
 				490E7582194111A8004E8BF7 /* iKFConnectionLayerView.h */,
 				490E7583194111A8004E8BF7 /* iKFConnectionLayerView.m */,
 				490E7580194111A8004E8BF7 /* iKFConnection.h */,
@@ -248,8 +258,6 @@
 				490E7587194111A8004E8BF7 /* iKFHandle.m */,
 				490E7588194111A8004E8BF7 /* iKFLoadingView.h */,
 				490E7589194111A8004E8BF7 /* iKFLoadingView.m */,
-				490E759A194111A8004E8BF7 /* iKFNoteIcon.h */,
-				490E759B194111A8004E8BF7 /* iKFNoteIcon.m */,
 				490E75AF194111A8004E8BF7 /* iKFViewSelectionController.h */,
 				490E75B0194111A8004E8BF7 /* iKFViewSelectionController.m */,
 				490E75B1194111A8004E8BF7 /* iKFViewSelectionController.xib */,
@@ -455,21 +463,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				490E75C5194111A8004E8BF7 /* iKFNoteIcon.m in Sources */,
 				490E75C9194111A8004E8BF7 /* iKFNoteReadViewController.m in Sources */,
 				490E75B5194111A8004E8BF7 /* iKFCommonView.m in Sources */,
 				490E75C8194111A8004E8BF7 /* iKFNoteReadView.m in Sources */,
 				4903CD8E1942159D00C698AD /* iKFErrorHandler.m in Sources */,
 				49C78D5F194105C2004D3404 /* ViewController.swift in Sources */,
 				490E75B3194111A8004E8BF7 /* iKFAbstractNoteView.m in Sources */,
-				490E75CA194111A8004E8BF7 /* iKFNoteView.m in Sources */,
+				49C5590B1945EF1700FDFF32 /* KFDrawing.swift in Sources */,
 				490E75E019411653004E8BF7 /* KFLoginViewController.swift in Sources */,
 				490E75BB194111A8004E8BF7 /* iKFHandle.m in Sources */,
+				49C55911194600FA00FDFF32 /* KFPostRefView.swift in Sources */,
 				492F402D1941F3600038E621 /* KFRegistrationViewController.swift in Sources */,
 				490E75B7194111A8004E8BF7 /* iKFCompositeNoteViewController.m in Sources */,
 				49C78D5D194105C2004D3404 /* iKF.xcdatamodeld in Sources */,
 				490E75BE194111A8004E8BF7 /* iKFMainViewController.m in Sources */,
 				490E75B8194111A8004E8BF7 /* iKFConnection.m in Sources */,
+				495761A91945EEA10017A852 /* KFPost.swift in Sources */,
 				490E75BD194111A8004E8BF7 /* iKFMainPanel.m in Sources */,
 				498BD1AF1942C1E0006217AD /* KFView.swift in Sources */,
 				498BD1AD1942BC59006217AD /* KFUser.swift in Sources */,
@@ -478,11 +487,14 @@
 				490E75BA194111A8004E8BF7 /* iKFConnector.m in Sources */,
 				498BD1B11942C372006217AD /* KFNote.swift in Sources */,
 				490E75D0194111A8004E8BF7 /* iKFViewSelectionController.m in Sources */,
+				49C559131946142600FDFF32 /* KFPostRefIconView.swift in Sources */,
 				490E75BC194111A8004E8BF7 /* iKFLoadingView.m in Sources */,
 				490E75C6194111A8004E8BF7 /* iKFNotePopupViewController.m in Sources */,
 				490E75C4194111A8004E8BF7 /* iKFNoteEditViewController.m in Sources */,
+				49C5590F1945F5D700FDFF32 /* KFReference.swift in Sources */,
 				490E75C2194111A8004E8BF7 /* iKFNoteEditViewBySource.m in Sources */,
 				490E75C3194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.m in Sources */,
+				49C5590D1945EF5F00FDFF32 /* KFModel.swift in Sources */,
 				49C78D5A194105C2004D3404 /* AppDelegate.swift in Sources */,
 				498BD1AB1942B768006217AD /* KFRegistration.swift in Sources */,
 			);

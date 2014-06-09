@@ -7,6 +7,8 @@
 //
 
 #import "iKFNotePopupViewController.h"
+
+#import "iKFMainViewController.h"
 #import "iKF-Swift.h"
 
 @interface iKFNotePopupViewController ()
@@ -46,11 +48,12 @@
 }
 
 - (IBAction)finishButtonPressed:(id)sender {
-    [self.noteView closePopupViewer];
+    [self dismissViewControllerAnimated:true completion:nil];
+//    [self.noteView closePopupViewer];
 }
 
 - (IBAction)editButtonPressed:(id)sender {
-    [self.noteView closePopupViewer];
+//    [self.noteView closePopupViewer];
     [self.kfViewController openNoteEditController: self.note mode:@"edit"];
 }
 

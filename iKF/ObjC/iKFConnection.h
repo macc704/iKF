@@ -7,13 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "iKF.h"
+//#import "iKF.h"
+
+@class KFPostRefView;
 
 @interface iKFConnection : NSObject
 
-@property iKFNoteView* from;
-@property iKFNoteView* to;
+@property KFPostRefView* from;
+@property KFPostRefView* to;
 
-- (id) initFrom: (iKFNoteView*)from To: (iKFNoteView*)to;
+- (id) initFrom: (KFPostRefView*)from To: (KFPostRefView*)to;
     
 @end

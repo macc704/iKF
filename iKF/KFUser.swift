@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 Yoshiaki Matsuzawa. All rights reserved.
 //
 
-class KFUser: NSObject {
+class KFUser: KFModel {
 
-    var guid = "";
     var firstName = "";
     var lastName = "";
 

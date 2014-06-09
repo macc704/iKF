@@ -7,18 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iKF.h"
+//#import "iKF.h"
 
-@class iKFNoteView;
+@class KFPostRefView;
 
 @interface iKFConnectionLayerView : UIView
 
 //@property NSMutableArray* connections;
-- (void) addConnectionFrom: (iKFNoteView*)from To: (iKFNoteView*)to;
+- (void) addConnectionFrom: (KFPostRefView*)from To: (KFPostRefView*)to;
 
 - (void) requestRepaint;
 
-- (void) noteRemoved: (iKFNoteView*)removedNote;
+- (void) noteRemoved: (KFPostRefView*)removedNote;
 
 - (void) clearAllConnections;
 

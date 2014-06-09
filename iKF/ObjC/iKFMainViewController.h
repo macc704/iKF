@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iKF.h"
+//#import "iKF.h"
 #import "iKFConnector.h"
 #import "iKFViewSelectionController.h"
 
-@class iKFNoteView;
+//@class iKFNoteView;
+@class KFPostRefView;
 @class KFUser;
 @class KFNote;
 
@@ -34,14 +35,14 @@
 
 - (void) showHandle: (UIView*)view;
 - (void) createNote: (CGPoint)p;
-- (void) createNote: (CGPoint)p buildson: (iKFNoteView*)from;
-- (void) removeNote: (iKFNoteView*) view;
+- (void) createNote: (CGPoint)p buildson: (KFPostRefView*)from;
+- (void) removeNote: (KFPostRefView*) view;
 - (void) requestConnectionsRepaint;
 - (void) openNoteEditController: (KFNote*)note mode: (NSString*)mode;
 
 - (void) initServer: (iKFConnector*)connector communityId: (NSString*)communityId;
 //- (void) setJSON: (id)json;
 
-- (void) postLocationChanged: (iKFNoteView*) noteview;
+- (void) postLocationChanged: (KFPostRefView*) noteview;
 
 @end

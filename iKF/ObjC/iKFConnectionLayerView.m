@@ -8,6 +8,11 @@
 
 #import "iKFConnectionLayerView.h"
 #import "Math.h"
+#import "iKFConnection.h"
+
+#import "iKFMainViewController.h"
+#import "iKFNotePopupViewController.h"
+#import "iKF-Swift.h"
 
 @implementation iKFConnectionLayerView{
     NSMutableArray* _connections;
@@ -33,7 +38,7 @@
     [self setNeedsDisplay];
 }
 
-- (void) noteRemoved: (iKFNoteView*)removedNote{
+- (void) noteRemoved: (KFPostRefView*)removedNote{
     NSMutableArray* newConnections = [[NSMutableArray alloc] init];
     for (iKFConnection* conn in _connections){
         if(conn.from != removedNote && conn.to != removedNote){
@@ -46,7 +51,7 @@
     }
 }
 
-- (void) addConnectionFrom: (iKFNoteView*)from To: (iKFNoteView*)to{
+- (void) addConnectionFrom: (KFPostRefView*)from To: (KFPostRefView*)to{
     iKFConnection* conn = [[iKFConnection alloc] initFrom: from To: to];
     [_connections addObject: conn];
     [self requestRepaint];

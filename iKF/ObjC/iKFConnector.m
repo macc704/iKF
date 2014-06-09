@@ -7,6 +7,9 @@
 //
 
 #import "iKFConnector.h"
+
+#import "iKFNotePopupViewController.h"
+#import "iKFMainViewController.h"
 #import "iKF-Swift.h"
 
 static iKFConnector* singleton;
@@ -216,46 +219,58 @@ static iKFConnector* singleton;
     id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
     NSMutableDictionary* models = [NSMutableDictionary dictionary];
     for (id each in jsonobj[@"viewPostRefs"]) {
-        KFNote* model = [[KFNote alloc] initWithoutAuthor];
-        model.refId = each[@"guid"];
-        model.guid = each[@"postInfo"][@"guid"];
-        model.title = each[@"postInfo"][@"title"];
-        //NSLog(@"%@", each[@"postInfo"][@"title"]);
-        //NSLog(@"%@", each[@"postInfo"][@"title"]);
-        model.content = each[@"postInfo"][@"body"];
+        
+        KFReference* reference = [[KFReference alloc] init];
+
+        reference.guid = each[@"guid"];
         CGFloat x = [each[@"location"][@"point"][@"x"] floatValue];
         CGFloat y = [each[@"location"][@"point"][@"y"] floatValue];
         CGPoint p = CGPointMake(x, y);
-        model.location = p;
+        reference.location = p;
         
-        KFUser* user = [[KFUser alloc] init];
-        user.firstName = each[@"postInfo"][@"authors"][0][@"firstName"];
-        user.lastName = each[@"postInfo"][@"authors"][0][@"lastName"];
-        model.primaryAuthor = user;
+        NSDictionary* eachPost = each[@"postInfo"];
+        if([eachPost[@"postType"] isEqualToString: @"NOTE"]){
         
-        //なんでLabelIdなの?
-        NSString* labelId = each[@"guid"];
-        [models setObject: model forKey: labelId];
-        //NSLog(@"added label %@", labelId);
+            KFNote* model = [[KFNote alloc] initWithoutAuthor];
+            model.guid = eachPost[@"guid"];
+            model.title = eachPost[@"title"];
+            model.content = eachPost[@"body"];
+      
+            KFUser* user = [[KFUser alloc] init];
+            user.firstName = eachPost[@"authors"][0][@"firstName"];
+            user.lastName = eachPost[@"authors"][0][@"lastName"];
+            model.primaryAuthor = user;
+            reference.post = model;
+        }
+        else if([eachPost[@"postType"] isEqualToString: @"DRAWING"]){
+            KFDrawing* model = [[KFDrawing alloc] init];
+            model.guid = eachPost[@"guid"];
+            model.content = eachPost[@"body"];
+            reference.post = model;
+        }
         
-        //[models setObject: model forKey: model.guid];
-        //NSLog(@"added %@ %@", models[model.guid], model.guid);
+        [models setObject: reference forKey: reference.guid];
     }
+    
+//    for (id each in jsonobj[@"linkedViewReferences"]) {
+//    }
+    
+    
     for (id each in jsonobj[@"buildOns"]) {
-        NSString* toId = each[@"built"];
-        NSString* fromId = each[@"buildsOn"];
+        NSString* toRefId = each[@"built"];
+        NSString* fromRefId = each[@"buildsOn"];
         //NSLog(@"builds from %@ to %@", fromId, toId);
-        [models[fromId] setBuildsOn: models[toId]];
+        ((KFNote*)((KFReference*)models[fromRefId]).post).buildsOn = (KFNote*)((KFReference*)models[toRefId]).post;
         //NSLog(@"buildson %@", [models[fromId] buildsOn]);
     }
     return models;
 }
 
-- (BOOL) movePost: (NSString*)viewId note: (KFNote*)note {
-    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/movenote/%@/%@", self.host, viewId, note.refId]];
+- (BOOL) movePost: (NSString*)viewId note: (KFReference*)ref {
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/movenote/%@/%@", self.host, viewId, ref.guid]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"POST"];
-    NSString* formStr = [NSString stringWithFormat: @"x=%d&y=%d", (int)note.location.x, (int)note.location.y];
+    NSString* formStr = [NSString stringWithFormat: @"x=%d&y=%d", (int)ref.location.x, (int)ref.location.y];
     NSData *formdata = [formStr dataUsingEncoding:NSUTF8StringEncoding];
     [req setHTTPBody: formdata];
     NSHTTPURLResponse *res;
@@ -271,10 +286,10 @@ static iKFConnector* singleton;
     return YES;
 }
 
-- (BOOL) createNote: (NSString*)viewId buildsOn: (KFNote*)buildsonNote location: (CGPoint)p{
+- (BOOL) createNote: (NSString*)viewId buildsOn: (KFReference*)buildsonNoteRef location: (CGPoint)p{
     NSURL *url;
-    if(buildsonNote != nil){
-        url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/newnote/%@/%@", self.host, viewId, buildsonNote.refId]];//!!現在はrefId!!
+    if(buildsonNoteRef != nil){
+        url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/newnote/%@/%@", self.host, viewId, buildsonNoteRef.guid]];//!!現在はrefId!!
     }else{
         url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/newnote/%@/%@", self.host, viewId, nil]];
     }

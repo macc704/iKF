@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 Yoshiaki Matsuzawa. All rights reserved.
 //
 
-class KFRegistration: NSObject {
+class KFRegistration: KFModel {
 
-    var guid = "";
     var communityId = "";
     var communityName = "";
     var roleName = "";

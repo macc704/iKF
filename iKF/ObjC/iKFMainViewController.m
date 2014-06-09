@@ -7,7 +7,13 @@
 //
 
 #import "iKFMainViewController.h"
+#import "iKFNotePopupViewController.h"
+
 #import "iKFCompositeNoteViewController.h"
+#import "iKFHandle.h"
+#import "iKFMainPanel.h"
+#import "iKFConnectionLayerView.h"
+
 #import "iKF-Swift.h"
 
 //@interface iKFMainViewController ()
@@ -162,7 +168,7 @@
     [self createNote: p buildson: nil];
 }
 
-- (void) createNote: (CGPoint)p buildson: (iKFNoteView*)from{
+- (void) createNote: (CGPoint)p buildson: (KFPostRefView*)from{
     [self removeHandle];
     if(from != nil){
         [_connector createNote: [self currentViewId] buildsOn: from.model location: p];
@@ -182,23 +188,27 @@
 //    [self addBuildsOn: note];
 //}
 
-- (void) addNote: (KFNote*)note{
+- (void) addNote: (KFReference*)ref{
     [self removeHandle];
-    iKFNoteView* noteView = [[iKFNoteView alloc] init: self note: note];
-    noteView.connector = _connector;
+    KFPostRefView* noteView = [[KFPostRefView alloc] initWithController:self ref: ref];
     CGRect r = noteView.frame;
-    r.origin.x = note.location.x;
-    r.origin.y = note.location.y;
+    r.origin.x = ref.location.x;
+    r.origin.y = ref.location.y;
     noteView.frame = r;
     //[noteView setCenter: p];
-    [_postviews setValue: noteView forKey: note.guid];
+    [_postviews setValue: noteView forKey: ref.guid];
+    [_postviews setValue: noteView forKey: ref.post.guid];//ちょっとずる
     [_mainPanel addSubview: noteView];
 }
 
-- (void) addBuildsOn: (KFNote*)note{
+- (void) addBuildsOn: (KFReference*)ref{
+    if([ref.post class] != [KFNote class]){
+        [NSException raise:@"iKFConnectionException" format:@"Illegal Buildson"];
+    }
+    KFNote* note = ((KFNote*)ref.post);
     if(note.buildsOn != nil){
-        iKFNoteView* fromView = _postviews[note.guid];
-        iKFNoteView* toView = _postviews[note.buildsOn.guid];
+        KFPostRefView* fromView = _postviews[note.guid];
+        KFPostRefView* toView = _postviews[note.buildsOn.guid];//ちょっとずる
         //NSLog(@"%@ ; %@", toView, fromView);
         [_connectionLayer addConnectionFrom: fromView To: toView];
     }
@@ -245,13 +255,13 @@
     }
 }
 
-- (void) removeNote: (iKFNoteView*) view{
+- (void) removeNote: (KFPostRefView*) view{
     [self removeHandle];
     [view removeFromSuperview];
     [_connectionLayer noteRemoved: view];
 }
 
-- (void) postLocationChanged: (iKFNoteView*) noteview{
+- (void) postLocationChanged: (KFPostRefView*) noteview{
     if(_connector == nil){
         return;
     }
@@ -281,11 +291,11 @@
     
     NSString* viewId = [self currentViewId];
     self->_posts = [_connector getPosts: viewId];
-    for(KFNote* each in [self->_posts allValues]){
+    for(KFReference* each in [self->_posts allValues]){
         //NSLog(@"%@", each);
         [self addNote: each];
     }
-    for(KFNote* each in [self->_posts allValues]){
+    for(KFReference* each in [self->_posts allValues]){
         //NSLog(@"%@", each);
         [self addBuildsOn: each];
     }

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iKF.h"
+//#import "iKF.h"
+#import "iKFMainViewController.h"
 
 @class iKFMainViewController;
 

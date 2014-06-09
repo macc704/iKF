@@ -6,7 +6,11 @@
 //  Copyright (c) 2014 Yoshiaki Matsuzawa. All rights reserved.
 //
 
-class KFView: NSObject {
-    var guid = "";
+class KFView: KFModel {
+
     var title = "";
+    
+    func description() -> String{
+        return title;
+    }
 }

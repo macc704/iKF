@@ -18,7 +18,7 @@
 #import "iKFConnectionLayerView.h"
 #import "iKFMainPanel.h"
 #import "iKFLoadingView.h"
-#import "iKFNoteView.h"
+//#import "iKFNoteView.h"
 #import "iKFNoteIcon.h"
 #import "iKFHandle.h"
 #import "iKFConnection.h"
