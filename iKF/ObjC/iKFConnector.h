@@ -26,6 +26,9 @@
 - (BOOL) testConnectionToTheHost;
 - (NSString*) getURL: (NSString*) urlString;
 
+- (NSString*) getEditTemplate;
+- (NSString*) getReadTemplate;
+
 - (BOOL) loginWithName: (NSString*)name password: (NSString*)password;
 - (KFUser*) getCurrentUser;
 - (NSArray*) getRegistrations;

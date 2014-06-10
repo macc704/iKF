@@ -93,14 +93,17 @@
 
 - (void) handleEditTap: (UIGestureRecognizer*) recognizer{
     [_controller openNoteEditController: (KFNote*)((KFPostRefView*)_target).model.post mode:@"edit"];
+    [_controller removeHandle];
 }
 
 - (void) handleViewTap: (UIGestureRecognizer*) recognizer{
     [_controller openNoteEditController: (KFNote*)((KFPostRefView*)_target).model.post mode:@"read"];
+    [_controller removeHandle];
 }
 
 - (void) handleDeleteTap: (UIGestureRecognizer*) recognizer{
     [((KFPostRefView*)_target) die];
+    [_controller removeHandle];
 }
 
 - (void) handlePlusTap: (UIGestureRecognizer*) recognizer{
@@ -108,6 +111,7 @@
     CGPoint buttonP = [_plusButton frame].origin;
     CGPoint p = CGPointMake(objectP.x + buttonP.x, objectP.y + buttonP.y);
     [_controller createNote: p];
+    [_controller removeHandle];
 }
 
 - (void) handleBuildsonTap: (UIGestureRecognizer*) recognizer{
@@ -115,6 +119,7 @@
     CGPoint buttonP = [_plusButton frame].origin;
     CGPoint p = CGPointMake(objectP.x + buttonP.x, objectP.y + buttonP.y);
     [_controller createNote: p buildson: (KFPostRefView*)_target];
+    [_controller removeHandle];
 }
 
 - (void) handleBuildsonPan: (UIPanGestureRecognizer*)recognizer{

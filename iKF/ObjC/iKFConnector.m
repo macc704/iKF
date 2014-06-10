@@ -17,6 +17,8 @@ static iKFConnector* singleton;
 @implementation iKFConnector
 {
     NSDictionary* _views;
+    NSString* _editTemplate;
+    NSString* _readTemplate;
 }
 
 + (iKFConnector*) getInstance{
@@ -43,6 +45,20 @@ static iKFConnector* singleton;
 
 - (long) testConnectionToTheURL: (NSString*) urlString{
     return [self connectToTheURL: urlString bodyString: nil];
+}
+
+- (NSString*) getEditTemplate{
+    if(_editTemplate == nil){
+        _editTemplate = [self getURL: @"http://dl.dropboxusercontent.com/u/11409191/test/edit.html"];
+    }
+    return _editTemplate;
+}
+
+- (NSString*) getReadTemplate{
+    if(_readTemplate == nil){
+        _readTemplate = [self getURL: @"http://dl.dropboxusercontent.com/u/11409191/test/read.html"];
+    }
+    return _readTemplate;
 }
 
 - (NSString*) getURL: (NSString*) urlString{

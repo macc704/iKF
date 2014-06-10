@@ -64,8 +64,10 @@
     //NSURLRequest * req = [[NSURLRequest alloc] initWithURL:url];
     //[_webView loadRequest:req];
     
-    NSString* template = [[iKFConnector getInstance] getURL: @"http://dl.dropboxusercontent.com/u/11409191/test/test4.html"];
+    NSString* template = [[iKFConnector getInstance] getEditTemplate];
     NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:text];
+    //[_webView.scrollView setZoomScale: 1.3];
+    //[_webView scalesPageToFit];
     [_webView loadHTMLString: html baseURL:nil];
 }
 

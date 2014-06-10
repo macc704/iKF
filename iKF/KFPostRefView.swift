@@ -94,8 +94,9 @@ class KFPostRefView: UIView {
         newPopupController.contentSizeForViewInPopover = newPopupController.view.frame.size;
         self.notePopupController = newPopupController;
         
-        popoverController = UIPopoverController(contentViewController: notePopupController);
-        popoverController?.presentPopoverFromRect(self.frame, inView: self.superview, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
+        self.popoverController = UIPopoverController(contentViewController: notePopupController);
+        newPopupController.popController = self.popoverController;
+        self.popoverController?.presentPopoverFromRect(self.frame, inView: self.superview, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
     }
     
     func die(){

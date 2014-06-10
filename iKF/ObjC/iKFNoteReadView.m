@@ -7,6 +7,7 @@
 //
 
 #import "iKFNoteReadView.h"
+#import "iKFConnector.h"
 
 @implementation iKFNoteReadView{
     UIWebView* _webView;
@@ -33,7 +34,11 @@
 
 -(void) showHTML: (NSString*)textString title: (NSString*) title{
     [self setNavBarTitle: title];
-    [_webView loadHTMLString: textString baseURL:nil];
+    
+    NSString* template = [[iKFConnector getInstance] getReadTemplate];
+    NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:textString];
+    [_webView loadHTMLString: html baseURL:nil];
+    //[_webView loadHTMLString: textString baseURL:nil];
 }
 
 

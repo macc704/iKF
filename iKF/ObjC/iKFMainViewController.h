@@ -35,6 +35,8 @@
 - (IBAction)viewSelectionPressed:(id)sender;
 
 - (void) showHandle: (UIView*)view;
+- (void) removeHandle;
+
 - (void) createNote: (CGPoint)p;
 - (void) createNote: (CGPoint)p buildson: (KFPostRefView*)from;
 - (void) removeNote: (KFPostRefView*) view;

@@ -44,17 +44,18 @@
     self.textFieldAuthor.text = [self.note.primaryAuthor getFullName];
     [self.textFieldAuthor setNumberOfLines:0];
     [self.textFieldAuthor sizeToFit];
-    [self.webView loadHTMLString: self.note.content baseURL: nil];
+    
+    NSString* template = [[iKFConnector getInstance] getReadTemplate];
+    NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:self.note.content];
+    [self.webView loadHTMLString: html baseURL: nil];
 }
 
 - (IBAction)finishButtonPressed:(id)sender {
-    [[self parentViewController] dismissViewControllerAnimated:true completion:nil];
-//    [self.noteView closePopupViewer];
+    [self.popController dismissPopoverAnimated:false];
 }
 
 - (IBAction)editButtonPressed:(id)sender {
-    [self dismissViewControllerAnimated:true completion:nil];
-//    [self.noteView closePopupViewer];
+    [self.popController dismissPopoverAnimated:false];
     [self.kfViewController openNoteEditController: self.note mode:@"edit"];
 }
 

@@ -25,6 +25,7 @@
     iKFMainView* _mainPanel;
     
     UIPopoverController* _popController;
+    
     iKFHandle* _handle;
     NSDictionary* _posts;
     NSDictionary* _postviews;
