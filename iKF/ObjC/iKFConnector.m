@@ -285,11 +285,11 @@ static iKFConnector* singleton;
     [models setObject: reference forKey: reference.guid];
 }
 
-- (BOOL) movePost: (NSString*)viewId note: (KFReference*)ref {
-    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/movenote/%@/%@", self.host, viewId, ref.guid]];
+- (BOOL) movePost: (NSString*)viewId note: (KFReference*)postRef {
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/movepostref/%@/%@", self.host, viewId, postRef.guid]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"POST"];
-    NSString* formStr = [NSString stringWithFormat: @"x=%d&y=%d", (int)ref.location.x, (int)ref.location.y];
+    NSString* formStr = [NSString stringWithFormat: @"x=%d&y=%d", (int)postRef.location.x, (int)postRef.location.y];
     NSData *formdata = [formStr dataUsingEncoding:NSUTF8StringEncoding];
     [req setHTTPBody: formdata];
     NSHTTPURLResponse *res;
