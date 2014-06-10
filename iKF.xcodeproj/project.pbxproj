@@ -179,6 +179,7 @@
 		490E75D4194114A5004E8BF7 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				492C10211947557200512591 /* NoteUI */,
 				492F402F1941FAD80038E621 /* Common */,
 				490E75D5194114B1004E8BF7 /* LoginUI */,
 			);
@@ -194,6 +195,13 @@
 				492F402C1941F3600038E621 /* KFRegistrationViewController.xib */,
 			);
 			name = LoginUI;
+			sourceTree = "<group>";
+		};
+		492C10211947557200512591 /* NoteUI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = NoteUI;
 			sourceTree = "<group>";
 		};
 		492F40221941F2AB0038E621 /* images */ = {

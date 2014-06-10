@@ -332,6 +332,7 @@ static iKFConnector* singleton;
     NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/editnote/%@", self.host, note.guid]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"POST"];
+    [req setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSString* formStr = [NSString stringWithFormat: @"title=%@&body=%@", note.title, note.content];
     NSData *formdata = [formStr dataUsingEncoding:NSUTF8StringEncoding];
     [req setHTTPBody: formdata];
