@@ -10,11 +10,12 @@ import UIKit
 
 class KFNoteRefView: KFPostRefView {
 
-    var icon: KFPostRefIconView?;
+    var icon: KFPostRefIconView;
     var titleLabel: UILabel;
     var authorLabel: UILabel;
     
     init(controller: iKFMainViewController, ref: KFReference) {
+        icon = KFPostRefIconView(frame: CGRectMake(5, 5, 20, 20));
         titleLabel = UILabel(frame: CGRectMake(30, 5, 200, 20));
         authorLabel = UILabel(frame: CGRectMake(50, 25, 120, 10));
         
@@ -22,8 +23,7 @@ class KFNoteRefView: KFPostRefView {
         
         self.backgroundColor = UIColor.whiteColor();
         self.frame = CGRectMake(ref.location.x, ref.location.y, 230, 40);
-        
-        icon = KFPostRefIconView(frame: CGRectMake(5, 5, 20, 20));
+
         self.addSubview(icon);
         
         titleLabel.font = UIFont.systemFontOfSize(12);
@@ -43,6 +43,7 @@ class KFNoteRefView: KFPostRefView {
     }
     
     func update(){
+        icon.beenRead = (self.model.post as KFNote).beenRead;
         titleLabel.text = (self.model.post as KFNote).title;
         authorLabel.text = (self.model.post as KFNote).primaryAuthor?.getFullName();
     }

@@ -43,6 +43,8 @@
 {
     [super viewWillAppear:animated];
     if(self.note){
+        [[iKFConnector getInstance] readPost: self.note];
+        self.note.beenRead = true;
         //[self.readView showPage: @"http://www.google.co.jp" title: @"google"];
         [self.readView showHTML:self.note.content title:self.note.title];
     }

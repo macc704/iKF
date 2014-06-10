@@ -11,6 +11,7 @@
 
 @class KFUser;
 @class KFNote;
+@class KFPost;
 @class KFReference;
 
 @interface iKFConnector : NSObject
@@ -40,6 +41,7 @@
 - (id) getPosts: (NSString*)viewid;
 
 - (BOOL) movePost: (NSString*)viewId note: (KFReference*)ref;
+- (BOOL) readPost: (KFPost*)post;
 - (BOOL) createNote: (NSString*)viewId buildsOn: (KFReference*)buildsonNoteRef location: (CGPoint)p;
 - (BOOL) updatenote: (KFNote*)note;
 

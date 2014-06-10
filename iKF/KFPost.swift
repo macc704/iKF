@@ -11,5 +11,7 @@ import UIKit
 class KFPost: KFModel {
 
     var primaryAuthor:KFUser?;
+    var canEdit = false;
+    var beenRead = false;
     
 }

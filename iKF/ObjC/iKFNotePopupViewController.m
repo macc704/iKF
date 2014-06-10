@@ -28,6 +28,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[iKFConnector getInstance] readPost: self.note];
+    self.note.beenRead = true;
     [self update];
 }
 
