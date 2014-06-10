@@ -13,7 +13,7 @@
 
 @interface iKFCompositeNoteViewController : UITabBarController
 
-- (void) setNote: (KFNote*)note;
+- (void) setNote: (KFNote*)note andViewId: (NSString*)viewId;
 
 - (void) toEditMode;
 - (void) toReadMode;

@@ -14,9 +14,9 @@
 
 @property UIViewController* closableController;
 @property KFNote* model;
+@property UINavigationItem* navBarItem;
 
 -(void) setNavBarTitle: title;
-
 -(void) layoutContentWithRect: (CGRect) rect;
 
 @end

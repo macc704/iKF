@@ -93,7 +93,7 @@ static iKFConnector* singleton;
         //[NSException raise:@"iKFConnectionException" format:@"at loginWithName."];
         return NO;
     }
-
+    
     return YES;
 }
 
@@ -143,7 +143,7 @@ static iKFConnector* singleton;
         model.roleName = each[@"roleInfo"][@"name"];
         [models addObject: model];
     }
-
+    
     return models;
 }
 
@@ -199,7 +199,7 @@ static iKFConnector* singleton;
         [models addObject: model];
         [_views setValue:model forKey:model.guid];//create cash
     }
-
+    
     return models;
 }
 
@@ -286,7 +286,7 @@ static iKFConnector* singleton;
 }
 
 - (BOOL) movePost: (NSString*)viewId note: (KFReference*)postRef {
-    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/movepostref/%@/%@", self.host, viewId, postRef.guid]];
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/updatePostref/%@/%@", self.host, viewId, postRef.guid]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"POST"];
     NSString* formStr = [NSString stringWithFormat: @"x=%d&y=%d", (int)postRef.location.x, (int)postRef.location.y];
@@ -308,9 +308,9 @@ static iKFConnector* singleton;
 - (BOOL) createNote: (NSString*)viewId buildsOn: (KFReference*)buildsonNoteRef location: (CGPoint)p{
     NSURL *url;
     if(buildsonNoteRef != nil){
-        url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/newnote/%@/%@", self.host, viewId, buildsonNoteRef.guid]];//!!現在はrefId!!
+        url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/createNote/%@/%@", self.host, viewId, buildsonNoteRef.guid]];//!!現在はrefId!!
     }else{
-        url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/newnote/%@/%@", self.host, viewId, nil]];
+        url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/createNote/%@/%@", self.host, viewId, nil]];
     }
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"POST"];
@@ -329,7 +329,7 @@ static iKFConnector* singleton;
 }
 
 - (BOOL) updatenote: (KFNote*)note{
-    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/editnote/%@", self.host, note.guid]];
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/updateNote/%@", self.host, note.guid]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"POST"];
     [req setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
@@ -345,6 +345,53 @@ static iKFConnector* singleton;
     }
     
     return YES;
+}
+
+- (NSArray*) getScaffolds: (NSString*)viewId {
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/getScaffolds/%@", self.host, viewId]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+    NSHTTPURLResponse *res;
+    NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+    
+    if([res statusCode] != 200){
+        [NSException raise:@"iKFConnectionException" format:@"at getScaffolds."];
+        return NO;
+    }
+    
+    id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
+    NSMutableArray* models = [[NSMutableArray alloc] init];
+    for (id scaffoldJ in jsonobj) {
+        KFScaffold* scaffold = [[KFScaffold alloc] init];
+        scaffold.guid = scaffoldJ[@"guid"];
+        scaffold.title = scaffoldJ[@"title"];
+        for (id supportJ in scaffoldJ[@"supports"]) {
+            KFSupport* support = [[KFSupport alloc] init];
+            support.guid = supportJ[@"guid"];
+            support.title = supportJ[@"text"];
+            [scaffold addSupport: support];
+        }
+        [models addObject:scaffold];
+    }
+    return models;
+    
+    //    [
+    //     {
+    //         "guid": "8bd3faac-0f94-4d1e-ae72-f32c2bc857f5",
+    //         "title": "Theory Building",
+    //         "supports": [
+    //                      {
+    //                          "guid": "dcc8d697-36b9-487f-9c38-601c0e99b415",
+    //                          "text": "I need to understand",
+    //                          "scaffoldGuid": "8bd3faac-0f94-4d1e-ae72-f32c2bc857f5",
+    //                          "markedForDelete": false
+    //                      },
+    //                      {
+    //                          "guid": "2bcea3d2-a797-497a-a641-1f74defb899e",
+    //                          "text": "Putting our knowledge together",
+    //                          "scaffoldGuid": "8bd3faac-0f94-4d1e-ae72-f32c2bc857f5",
+    //                          "markedForDelete": false
+    //                      },
+
 }
 
 

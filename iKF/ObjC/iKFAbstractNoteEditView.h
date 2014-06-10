@@ -11,6 +11,9 @@
 
 @interface iKFAbstractNoteEditView : iKFAbstractNoteView
 
+@property UIBarButtonItem* scaffoldButton;
+@property NSString* viewId;
+
 -(void) setText: text title: title;
 
 -(NSString*)getText;

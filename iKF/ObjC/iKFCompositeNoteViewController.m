@@ -52,11 +52,12 @@
     self.selectedViewController = controllerC;
 }
 
-- (void) setNote: (KFNote*)note{
-    //NSLog(@"setNote");
+- (void) setNote: (KFNote*)note andViewId: (NSString*)viewId{
     controllerA.note = note;
     controllerB.note = note;
     controllerC.note = note;
+    controllerB.editView.viewId = viewId;
+    controllerC.editView.viewId = viewId;
 }
 
 @end

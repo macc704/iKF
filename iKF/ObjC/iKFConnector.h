@@ -25,13 +25,14 @@
 - (BOOL) testConnectionToGoogle;
 - (BOOL) testConnectionToTheHost;
 - (NSString*) getURL: (NSString*) urlString;
-    
+
 - (BOOL) loginWithName: (NSString*)name password: (NSString*)password;
 - (KFUser*) getCurrentUser;
 - (NSArray*) getRegistrations;
 - (BOOL) registerCommunity: (NSString*)registrationCode;
 - (BOOL) enterCommunity: (NSString*)communityId;
 - (NSArray*) getViews: (NSString*)communityId;
+- (NSArray*) getScaffolds: (NSString*)viewId;
 
 - (id) getPosts: (NSString*)viewid;
 

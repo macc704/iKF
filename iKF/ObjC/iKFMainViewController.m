@@ -250,7 +250,7 @@
     }else if([mode isEqualToString: @"read"]){
         [noteController toReadMode];
     }
-    [noteController setNote: note];
+    [noteController setNote: note andViewId: [self currentViewId]];
     [self presentViewController: noteController animated:YES completion: nil];
 }
 

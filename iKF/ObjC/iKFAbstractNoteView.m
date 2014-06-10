@@ -10,7 +10,6 @@
 
 @implementation iKFAbstractNoteView{
     UINavigationBar* _headerView;
-    UINavigationItem* _navBarItem;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -20,14 +19,14 @@
         //header
         _headerView = [[UINavigationBar alloc] init];
         [self addSubview: _headerView];
-        _navBarItem= [[UINavigationItem alloc] initWithTitle:@"Title"];
+        self.navBarItem = [[UINavigationItem alloc] initWithTitle:@"Title"];
         UIBarButtonItem* closeButton = [[UIBarButtonItem alloc]
                                         initWithTitle:@"Close"
                                         style:UIBarButtonItemStyleBordered
                                         target:self
                                         action:@selector(closePressed)];
-        _navBarItem.rightBarButtonItem = closeButton;
-        [_headerView pushNavigationItem:_navBarItem animated:NO];
+        self.navBarItem.leftBarButtonItem = closeButton;
+        [_headerView pushNavigationItem:self.navBarItem animated:NO];
     }
     return self;
 }
@@ -39,7 +38,7 @@
 }
 
 -(void) setNavBarTitle: title{
-    _navBarItem.title = title;
+    self.navBarItem.title = title;
 }
 
 -(void) layoutSubviews {

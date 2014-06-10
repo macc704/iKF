@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iKFAbstractNoteView.h"
+#import "iKFAbstractNoteEditView.h"
 
-@interface iKFNoteEditViewByTinyMCE : iKFAbstractNoteView
+@interface iKFNoteEditViewByTinyMCE : iKFAbstractNoteEditView
 
 @end
