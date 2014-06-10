@@ -48,11 +48,12 @@
 }
 
 - (IBAction)finishButtonPressed:(id)sender {
-    [self dismissViewControllerAnimated:true completion:nil];
+    [[self parentViewController] dismissViewControllerAnimated:true completion:nil];
 //    [self.noteView closePopupViewer];
 }
 
 - (IBAction)editButtonPressed:(id)sender {
+    [self dismissViewControllerAnimated:true completion:nil];
 //    [self.noteView closePopupViewer];
     [self.kfViewController openNoteEditController: self.note mode:@"edit"];
 }

@@ -11,7 +11,7 @@
 
 #import "iKFCompositeNoteViewController.h"
 #import "iKFHandle.h"
-#import "iKFMainPanel.h"
+#import "iKFMainView.h"
 #import "iKFConnectionLayerView.h"
 
 #import "iKF-Swift.h"
@@ -21,8 +21,9 @@
 //@end
 
 @implementation iKFMainViewController{
-    iKFMainPanel* _mainPanel;
-    iKFConnectionLayerView* _connectionLayer;
+    
+    iKFMainView* _mainPanel;
+    
     UIPopoverController* _popController;
     iKFHandle* _handle;
     NSDictionary* _posts;
@@ -50,14 +51,10 @@
     _views = [[NSMutableArray alloc] init];
     //self.viewchooser.delegate = self;
     
-    _mainPanel = [[iKFMainPanel alloc] init];
-    _mainPanel.frame = CGRectMake(0, 0, 3000, 4000);
+    _mainPanel = [[iKFMainView alloc] init];
+    [_mainPanel setSizeWithWidth:4000 height:3000];
     [self.scrollView addSubview: _mainPanel];
     self.scrollView.contentSize = _mainPanel.frame.size;
-    
-    _connectionLayer = [[iKFConnectionLayerView alloc] init];
-    [_mainPanel addSubview: _connectionLayer];
-    _connectionLayer.frame = _mainPanel.frame;
     
     //スクロールの拡大縮小の設定
     self.scrollView.delegate = self;
@@ -131,8 +128,13 @@
 }
 
 - (void) changed: (KFView*) view{
-    _selectedRow = [_views indexOfObject: view];
     [_popController dismissPopoverAnimated:YES];
+    [self setKFView: view];
+}
+
+- (void) setKFView: (KFView*) view{
+    _selectedRow = [_views indexOfObject: view];
+    //NSLog(@"%d", _selectedRow);
     [self updateViews];
 }
 
@@ -189,8 +191,12 @@
 //}
 
 - (void) addNote: (KFReference*)ref{
+    if([ref.post class] != [KFNote class]){
+        [NSException raise:@"iKFConnectionException" format:@"Illegal addNote"];
+    }
+    
     [self removeHandle];
-    KFPostRefView* noteView = [[KFPostRefView alloc] initWithController:self ref: ref];
+    KFNoteRefView* noteView = [[KFNoteRefView alloc] initWithController:self ref: ref];
     CGRect r = noteView.frame;
     r.origin.x = ref.location.x;
     r.origin.y = ref.location.y;
@@ -198,7 +204,29 @@
     //[noteView setCenter: p];
     [_postviews setValue: noteView forKey: ref.guid];
     [_postviews setValue: noteView forKey: ref.post.guid];//ちょっとずる
-    [_mainPanel addSubview: noteView];
+    [_mainPanel.noteLayer addSubview: noteView];
+}
+
+- (void) addDrawing: (KFReference*)ref{
+    if([ref.post class] != [KFDrawing class]){
+        [NSException raise:@"iKFConnectionException" format:@"Illegal addDrawing"];
+    }
+    
+    [self removeHandle];
+    KFDrawingRefView* noteView = [[KFDrawingRefView alloc] initWithController:self ref: ref];
+    //[_postviews setValue: noteView forKey: ref.guid];
+    //[_postviews setValue: noteView forKey: ref.post.guid];//ちょっとずる
+    [_mainPanel.drawingLayer addSubview: noteView];
+}
+
+- (void) addViewRef: (KFReference*)ref{
+    if([ref.post class] != [KFView class]){
+        [NSException raise:@"iKFConnectionException" format:@"Illegal addDrawing"];
+    }
+    
+    [self removeHandle];
+    KFViewRefView* noteView = [[KFViewRefView alloc] initWithController:self ref: ref];
+    [_mainPanel.noteLayer addSubview: noteView];
 }
 
 - (void) addBuildsOn: (KFReference*)ref{
@@ -210,7 +238,7 @@
         KFPostRefView* fromView = _postviews[note.guid];
         KFPostRefView* toView = _postviews[note.buildsOn.guid];//ちょっとずる
         //NSLog(@"%@ ; %@", toView, fromView);
-        [_connectionLayer addConnectionFrom: fromView To: toView];
+        [_mainPanel.connectionLayer addConnectionFrom: fromView To: toView];
     }
 }
 
@@ -228,7 +256,7 @@
 
 
 - (void) requestConnectionsRepaint{
-    [_connectionLayer requestRepaint];
+    [_mainPanel.connectionLayer requestRepaint];
 }
 
 - (void) showHandle: (UIView*) view{
@@ -258,7 +286,7 @@
 - (void) removeNote: (KFPostRefView*) view{
     [self removeHandle];
     [view removeFromSuperview];
-    [_connectionLayer noteRemoved: view];
+    [_mainPanel.connectionLayer noteRemoved: view];
 }
 
 - (void) postLocationChanged: (KFPostRefView*) noteview{
@@ -293,11 +321,21 @@
     self->_posts = [_connector getPosts: viewId];
     for(KFReference* each in [self->_posts allValues]){
         //NSLog(@"%@", each);
-        [self addNote: each];
+        if([each.post class] == [KFNote class]){
+            [self addNote: each];
+        }else if([each.post class] == [KFDrawing class]){
+            [self addDrawing: each];
+        }else if([each.post class] == [KFView class]){
+            [self addViewRef: each];
+        }else{
+            [NSException raise:@"iKFException" format: @"unknown type%@", [each.post class]];
+        }
     }
     for(KFReference* each in [self->_posts allValues]){
         //NSLog(@"%@", each);
-        [self addBuildsOn: each];
+        if([each.post class] == [KFNote class]){
+            [self addBuildsOn: each];
+        }
     }
 }
 
@@ -307,22 +345,8 @@
 
 - (void) clearViews{
     _postviews = [[NSMutableDictionary alloc] init];
-    
-    //mainPanelにconnectionLayerも含まれるのでけしてはだめ
-    //[self removeChildren: _mainPanel];
-    for (UIView* subview in _mainPanel.subviews) {
-        if(subview != _connectionLayer){
-            [subview removeFromSuperview];
-        }
-    }
-    [_connectionLayer clearAllConnections];
+    [_mainPanel clearViews];
 }
-
-//- (void) removeChildren: (UIView*)view{
-//    for (UIView* subview in view.subviews) {
-//        [subview removeFromSuperview];
-//    }
-//}
 
 //*********************************
 //for picker

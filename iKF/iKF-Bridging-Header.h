@@ -11,7 +11,7 @@
 #import "iKFConnector.h"
 #import "iKFHandle.h"
 #import "iKFLoadingView.h"
-#import "iKFMainPanel.h"
+#import "iKFMainView.h"
 #import "iKFMainViewController.h"
 #import "iKFNoteEditViewBySource.h"
 #import "iKFNoteEditViewByTinyMCE.h"

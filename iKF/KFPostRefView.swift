@@ -13,35 +13,15 @@ class KFPostRefView: UIView {
     var mainController: iKFMainViewController;
     
     var model: KFReference;
-
-    var icon: KFPostRefIconView?;
-    var titleLabel: UILabel;
-    var authorLabel: UILabel;
-    
+   
     init(controller: iKFMainViewController, ref: KFReference) {
         mainController = controller;
         self.model = ref;
-        titleLabel = UILabel(frame: CGRectMake(30, 5, 200, 20));
-        authorLabel = UILabel(frame: CGRectMake(50, 25, 120, 10));
         
         super.init(frame: CGRectMake(0,0,0,0));
-        
-        self.backgroundColor = UIColor.whiteColor();
-        self.frame = CGRectMake(0, 0, 230, 40);
-        
-        icon = KFPostRefIconView(frame: CGRectMake(5, 5, 20, 20));
-        self.addSubview(icon);
-
-        titleLabel.font = UIFont.systemFontOfSize(12);
-        self.addSubview(titleLabel);
-        
-        authorLabel.font = UIFont.systemFontOfSize(10);
-        self.addSubview(authorLabel);
-        
-        model.attach(self, selector: "noteChanged");
-        self.update();
-        
-        
+    }
+    
+    func bindEvents(){
         //Pan
         self.addGestureRecognizer(UIPanGestureRecognizer(target:self, action:"handlePanning:"));
         
@@ -49,23 +29,13 @@ class KFPostRefView: UIView {
         let recognizerSingleTap = UITapGestureRecognizer(target:self, action:"handleSingleTap:");
         recognizerSingleTap.numberOfTapsRequired = 1;
         self.addGestureRecognizer(recognizerSingleTap);
-
+        
         //Double Tap
         let recognizerDoubleTap = UITapGestureRecognizer(target:self, action:"handleDoubleTap:");
         recognizerDoubleTap.numberOfTapsRequired = 2;
         self.addGestureRecognizer(recognizerDoubleTap);
         
         recognizerSingleTap.requireGestureRecognizerToFail(recognizerDoubleTap);
-    }
-
-    
-    func noteChanged(){
-        self.update();
-    }
-        
-    func update(){
-        titleLabel.text = (self.model.post as KFNote).title;
-        authorLabel.text = (self.model.post as KFNote).primaryAuthor?.getFullName();
     }
             
     func handlePanning(recognizer: UIPanGestureRecognizer){
@@ -102,8 +72,7 @@ class KFPostRefView: UIView {
     
     func removeShadow(){
         self.layer.shadowOpacity = 0.0;
-    }
-    
+    }    
     
     func handleSingleTap(recognizer: UIGestureRecognizer){
         self.openPopupViewer();

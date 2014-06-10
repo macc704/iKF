@@ -8,10 +8,12 @@
 
 import UIKit
 
-class KFModel: NSObject {
+class KFModel: NSObject{
 
     var guid = "";
-
+    
+    init(){
+    }
     
     func attach(observer:AnyObject, selector:Selector){
         NSNotificationCenter.defaultCenter().addObserver(observer, selector: selector, name: "CHANGED", object: self);
@@ -20,6 +22,19 @@ class KFModel: NSObject {
     func notify(){
         NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "CHANGED", object: self));
     }
+
+    override func isEqual(object: AnyObject!) -> Bool{
+        if let model = object as? KFModel{
+            return guid == model.guid;
+        }else{
+            return false;
+        }
+    }
+    
+//    override func hash() -> UInt{
+//        return 3;
+//    }
+    
 
 }
 

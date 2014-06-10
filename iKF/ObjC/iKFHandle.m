@@ -33,7 +33,7 @@
         CGRect targetFrame = [target frame];
         [self setFrame: CGRectMake(targetFrame.origin.x - SIZE, targetFrame.origin.y - SIZE, targetFrame.size.width + SIZE*2, targetFrame.size.height + SIZE*2)];
         
-        if([_target class] == [KFPostRefView class]){
+        if([_target class] == [KFNoteRefView class]){
             {
                 UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"edit.png"]];
                 [button setFrame: CGRectMake(SIZE + targetFrame.size.width/2 - SIZE/2, 0, SIZE, SIZE)];
@@ -92,11 +92,11 @@
 }
 
 - (void) handleEditTap: (UIGestureRecognizer*) recognizer{
-    [_controller openNoteEditController: ((KFPostRefView*)_target).model mode:@"edit"];
+    [_controller openNoteEditController: (KFNote*)((KFPostRefView*)_target).model.post mode:@"edit"];
 }
 
 - (void) handleViewTap: (UIGestureRecognizer*) recognizer{
-    [_controller openNoteEditController: ((KFPostRefView*)_target).model mode:@"read"];
+    [_controller openNoteEditController: (KFNote*)((KFPostRefView*)_target).model.post mode:@"read"];
 }
 
 - (void) handleDeleteTap: (UIGestureRecognizer*) recognizer{

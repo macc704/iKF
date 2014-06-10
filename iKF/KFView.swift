@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Yoshiaki Matsuzawa. All rights reserved.
 //
 
-class KFView: KFModel {
+class KFView: KFPost {
 
     var title = "";
     

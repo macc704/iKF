@@ -16,7 +16,7 @@ static iKFConnector* singleton;
 
 @implementation iKFConnector
 {
-    
+    NSDictionary* _views;
 }
 
 + (iKFConnector*) getInstance{
@@ -33,6 +33,7 @@ static iKFConnector* singleton;
 - (id) initWithHost: (NSString*)host{
     id x = [self init];
     self.host = host;
+    _views = [[NSDictionary alloc] init];
     return x;
 }
 
@@ -189,13 +190,16 @@ static iKFConnector* singleton;
     
     //[self printContents: bodyData];
     id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
+    _views = [[NSMutableDictionary alloc] init];//create cash
     NSMutableArray* models = [NSMutableArray array];
     for (id each in jsonobj) {
         KFView* model = [[KFView alloc] init];
         model.guid = each[@"guid"];
         model.title = each[@"title"];
         [models addObject: model];
+        [_views setValue:model forKey:model.guid];//create cash
     }
+
     return models;
 }
 
@@ -219,41 +223,12 @@ static iKFConnector* singleton;
     id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
     NSMutableDictionary* models = [NSMutableDictionary dictionary];
     for (id each in jsonobj[@"viewPostRefs"]) {
-        
-        KFReference* reference = [[KFReference alloc] init];
-
-        reference.guid = each[@"guid"];
-        CGFloat x = [each[@"location"][@"point"][@"x"] floatValue];
-        CGFloat y = [each[@"location"][@"point"][@"y"] floatValue];
-        CGPoint p = CGPointMake(x, y);
-        reference.location = p;
-        
-        NSDictionary* eachPost = each[@"postInfo"];
-        if([eachPost[@"postType"] isEqualToString: @"NOTE"]){
-        
-            KFNote* model = [[KFNote alloc] initWithoutAuthor];
-            model.guid = eachPost[@"guid"];
-            model.title = eachPost[@"title"];
-            model.content = eachPost[@"body"];
-      
-            KFUser* user = [[KFUser alloc] init];
-            user.firstName = eachPost[@"authors"][0][@"firstName"];
-            user.lastName = eachPost[@"authors"][0][@"lastName"];
-            model.primaryAuthor = user;
-            reference.post = model;
-        }
-        else if([eachPost[@"postType"] isEqualToString: @"DRAWING"]){
-            KFDrawing* model = [[KFDrawing alloc] init];
-            model.guid = eachPost[@"guid"];
-            model.content = eachPost[@"body"];
-            reference.post = model;
-        }
-        
-        [models setObject: reference forKey: reference.guid];
+        [self scanPostRef:each models:models];
     }
     
-//    for (id each in jsonobj[@"linkedViewReferences"]) {
-//    }
+    for (id each in jsonobj[@"linkedViewReferences"]) {
+        [self scanPostRef:each models:models];
+    }
     
     
     for (id each in jsonobj[@"buildOns"]) {
@@ -264,6 +239,50 @@ static iKFConnector* singleton;
         //NSLog(@"buildson %@", [models[fromId] buildsOn]);
     }
     return models;
+}
+
+- (void)scanPostRef:(id)each models:(NSMutableDictionary *)models {
+    KFReference* reference = [[KFReference alloc] init];
+    
+    reference.guid = each[@"guid"];
+    CGFloat x = [each[@"location"][@"point"][@"x"] floatValue];
+    CGFloat y = [each[@"location"][@"point"][@"y"] floatValue];
+    CGPoint p = CGPointMake(x, y);
+    reference.location = p;
+    
+    if(each[@"viewReferenceId"] != nil){
+        //KFView* model = [[KFView alloc] init];
+        NSString* guid = each[@"viewReferenceId"];
+        KFView* model = _views[guid];
+        reference.post = model;
+        [models setObject: reference forKey: reference.guid];
+        return;
+    }
+    
+    NSDictionary* eachPost = each[@"postInfo"];
+    if([eachPost[@"postType"] isEqualToString: @"NOTE"]){
+        KFNote* model = [[KFNote alloc] initWithoutAuthor];
+        model.guid = eachPost[@"guid"];
+        model.title = eachPost[@"title"];
+        model.content = eachPost[@"body"];
+        
+        KFUser* user = [[KFUser alloc] init];
+        user.firstName = eachPost[@"authors"][0][@"firstName"];
+        user.lastName = eachPost[@"authors"][0][@"lastName"];
+        model.primaryAuthor = user;
+        reference.post = model;
+    }
+    else if([eachPost[@"postType"] isEqualToString: @"DRAWING"]){
+        KFDrawing* model = [[KFDrawing alloc] init];
+        model.guid = eachPost[@"guid"];
+        model.content = eachPost[@"body"];
+        reference.post = model;
+    }else{
+        NSLog(@"Warning: unsupported type= %@", eachPost[@"postType"]);
+        return;
+    }
+    
+    [models setObject: reference forKey: reference.guid];
 }
 
 - (BOOL) movePost: (NSString*)viewId note: (KFReference*)ref {

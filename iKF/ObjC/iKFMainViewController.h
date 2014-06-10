@@ -15,6 +15,7 @@
 @class KFPostRefView;
 @class KFUser;
 @class KFNote;
+@class KFView;
 
 @interface iKFMainViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, UIPickerViewDelegate, iKFTableSelectionListener>
 
@@ -40,6 +41,8 @@
 - (void) requestConnectionsRepaint;
 - (void) openNoteEditController: (KFNote*)note mode: (NSString*)mode;
 
+- (void) setKFView: (KFView*) view;
+    
 - (void) initServer: (iKFConnector*)connector communityId: (NSString*)communityId;
 //- (void) setJSON: (id)json;
 
