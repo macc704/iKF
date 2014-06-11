@@ -58,8 +58,7 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
         let connector = iKFConnector.getInstance();
         
         let row = self.registrationsPicker.selectedRowInComponent(0);
-        let registrationId = registrations[row].guid;
-        let enterResult = connector.enterCommunity(registrationId);
+        let enterResult = connector.enterCommunity(registrations[row]);
         if(enterResult == false){
             //alert
             return;

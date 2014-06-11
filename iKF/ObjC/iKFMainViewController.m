@@ -69,7 +69,7 @@
     recognizerTap.numberOfTapsRequired = 1;
     [_mainPanel addGestureRecognizer: recognizerTap];
     
-    [self update];
+    [self updateViews];
 }
 
 - (void) handleTap: (UIGestureRecognizer*)recognizer{
@@ -150,8 +150,10 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    _mainPanel.backgroundColor=[UIColor colorWithPatternImage: image];
+    //_mainPanel.backgroundColor=[UIColor colorWithPatternImage: image];
     [_popController dismissPopoverAnimated:YES];
+    [[iKFConnector getInstance] createPicture:image onView:[self currentViewId] location:CGPointMake(50, 50)];
+    [self update];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

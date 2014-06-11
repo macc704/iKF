@@ -10,13 +10,15 @@ import UIKit
 
 class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     
+    let ref: KFReference;
     var webView:UIWebView;
     var svgwidth:CGFloat = CGFloat(100.0);
     var svgheight:CGFloat = CGFloat(100.0);
     
     init(controller: iKFMainViewController, ref: KFReference) {
-        let a = 0.0;
+        self.ref = ref;
         webView = UIWebView();
+        
         super.init(controller: controller, ref: ref);
 
         self.bindEvents();
@@ -33,9 +35,9 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
         webView.scrollView.bounces = false;
         self.addSubview(webView);
         
-
-        //println("a=" + drawing.content);
-        webView.loadHTMLString(drawing.content, baseURL: nil);
+        let baseURLStr = "http://" + iKFConnector.getInstance().host;
+        let baseURL = NSURL(string: baseURLStr);
+        webView.loadHTMLString(drawing.content, baseURL: baseURL);
     }
     
   
@@ -47,9 +49,13 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     }
     
     override func handleSingleTap(recognizer: UIGestureRecognizer){
+        let drawing = ref.post as KFDrawing;
+        println("drawing svg="+drawing.content);
     }
     
     override func handleDoubleTap(recognizer: UIGestureRecognizer){
+        let drawing = ref.post as KFDrawing;
+        println("drawing svg="+drawing.content);
     }
 
     /*

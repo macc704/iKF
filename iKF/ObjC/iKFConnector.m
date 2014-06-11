@@ -16,6 +16,7 @@ static iKFConnector* singleton;
 
 @implementation iKFConnector
 {
+    KFRegistration* _registration;
     NSDictionary* _views;
     NSString* _editTemplate;
     NSString* _readTemplate;
@@ -175,11 +176,12 @@ static iKFConnector* singleton;
         [NSException raise:@"iKFConnectionException" format:@"at registerCommunity."];
         return NO;
     }
+    
     return YES;
 }
 
-- (BOOL) enterCommunity: (NSString*)communityId{
-    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/account/selectSection/%@", self.host, communityId]];
+- (BOOL) enterCommunity: (KFRegistration*)registration{
+    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/account/selectSection/%@", self.host, registration.guid]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"GET"];
     NSHTTPURLResponse *res = nil;
@@ -190,6 +192,8 @@ static iKFConnector* singleton;
         [NSException raise:@"iKFConnectionException" format:@"at enterCommunity."];
         return NO;
     }
+    
+    _registration = registration;
     return YES;
 }
 
@@ -438,6 +442,114 @@ static iKFConnector* singleton;
     //                          "markedForDelete": false
     //                      },
 
+}
+
+- (BOOL) createPicture: (UIImage*)image onView:(NSString*)viewId location:(CGPoint)p{
+    NSData* imageData = UIImagePNGRepresentation(image);
+    NSString* filename = [NSString stringWithFormat: @"%@.jpg", [self generateRandomString:8]];
+    id jsonobj = [self sendAttachment:imageData mime:@"image/jpeg" filename: filename];
+    if(jsonobj == nil){
+        return NO;
+    }
+    
+    int w = (int)image.size.width;
+    int h = (int)image.size.height;
+    NSString* attachmentURL = jsonobj[@"url"];
+    NSMutableString* svg = [[NSMutableString alloc] init];
+    [svg appendFormat: @"<svg width=\"%d\" height=\"%d\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">", w, h];
+    [svg appendFormat: @"<g id=\"group\">"];
+    [svg appendFormat: @"<title>Layer 1</title>"];
+    [svg appendFormat: @"<image xlink:href=\"/%@\" id=\"svg_5\" x=\"0\" y=\"0\" width=\"%d\" height=\"%d\" />", attachmentURL, w, h];
+    [svg appendFormat: @"</g></svg>"];
+    
+    return [self createDrawing:viewId svg:svg location:p];
+}
+
+
+- (id) sendAttachment: (NSData*)data mime: (NSString*)mime filename: (NSString*) filename{
+    // generate url
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/file/easyUpload/%@", self.host, _registration.communityId]];
+    
+    // generate form boundary
+    NSString* formBoundary = [NSString stringWithFormat:@"----FormBoundary%@", [self generateRandomString:16]];
+    NSString *path = [NSString stringWithFormat: @"C\\fakepath\\%@", filename];
+    
+    // generate post body
+    NSMutableData* postbody = [[NSMutableData alloc] init];
+    [postbody appendData:[[NSString stringWithFormat:@"--%@\n", formBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postbody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"upload\"; filename=\"%@\"\n", filename ] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postbody appendData:[[NSString stringWithFormat:@"Content-Type: %@\n\n", mime] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postbody appendData:data];
+    [postbody appendData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [postbody appendData:[[NSString stringWithFormat:@"--%@\n", formBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postbody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"name\"\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postbody appendData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [postbody appendData:[[NSString stringWithFormat:@"%@", path] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postbody appendData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [postbody appendData:[[NSString stringWithFormat:@"--%@--\n", formBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    // generate req
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+    [req setHTTPMethod: @"POST"];
+    [req setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", formBoundary] forHTTPHeaderField:@"Content-Type"];
+    [req setHTTPBody: postbody];
+    [req setValue: [NSString stringWithFormat: @"%d", [postbody length] ] forHTTPHeaderField:@"Content-Length"];
+
+    // send request
+    NSHTTPURLResponse *res;
+    NSData* bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+    if([res statusCode] != 200){
+        //[NSException raise:@"iKFConnectionException" format:@"at createNoted"];
+        return nil;
+    }
+
+    id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
+    return jsonobj;
+    // {"size":"1309004","url":"kforum_uploads/a6748b4d-5491-459d-9a4d-e3b43d430985/hoge.jpg"}
+}
+
+- (BOOL) createDrawing: (NSString*)viewId svg: (NSString*)svg location: (CGPoint)p{
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/createDrawing/%@", self.host, viewId]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+    [req setHTTPMethod: @"POST"];
+    NSString* formStr = [NSString stringWithFormat: @"svg=%@&x=%d&y=%d", svg, (int)p.x, (int)p.y];
+    NSData *formdata = [formStr dataUsingEncoding:NSUTF8StringEncoding];
+    [req setHTTPBody: formdata];
+    NSHTTPURLResponse *res;
+    [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+    
+    if([res statusCode] != 200){
+        //[NSException raise:@"iKFConnectionException" format:@"at createNoted"];
+        return NO;
+    }
+    
+    return YES;
+}
+
+
+- (void) debugPrint: (NSData*) bodyData{
+    NSString *bodyString = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", bodyString);
+}
+
+// http://kelp.phate.org/2012/06/post-picture-to-google-image-search.html
+-(NSString *)generateRandomString: (int)len {
+    static const char randomSeedCharArray[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
+        'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+        'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    char *result;   // result with c-string
+    result = malloc(len + 1);
+    
+    for (int index = 0; index < len; index++) {
+        result[index] = randomSeedCharArray[arc4random() % sizeof(randomSeedCharArray)];
+    }
+    result[len] = '\0';
+    
+    // result NSString
+    NSString *resultString = [NSString stringWithCString:result encoding:NSUTF8StringEncoding];
+    free(result);
+    return resultString;
 }
 
 

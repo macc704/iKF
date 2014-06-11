@@ -13,6 +13,7 @@
 @class KFNote;
 @class KFPost;
 @class KFReference;
+@class KFRegistration;
 
 @interface iKFConnector : NSObject
 
@@ -34,7 +35,7 @@
 - (KFUser*) getCurrentUser;
 - (NSArray*) getRegistrations;
 - (BOOL) registerCommunity: (NSString*)registrationCode;
-- (BOOL) enterCommunity: (NSString*)communityId;
+- (BOOL) enterCommunity: (KFRegistration*)registration;
 - (NSArray*) getViews: (NSString*)communityId;
 - (NSArray*) getScaffolds: (NSString*)viewId;
 
@@ -44,5 +45,8 @@
 - (BOOL) readPost: (KFPost*)post;
 - (BOOL) createNote: (NSString*)viewId buildsOn: (KFReference*)buildsonNoteRef location: (CGPoint)p;
 - (BOOL) updatenote: (KFNote*)note;
+
+- (BOOL) createPicture: (UIImage*)image onView:(NSString*)viewId location:(CGPoint)p;
+
 
 @end
