@@ -10,6 +10,7 @@ import UIKit
 
 class KFScaffoldingTableViewController: UITableViewController {
     
+    var noteEditView:iKFAbstractNoteEditView?;
     var scaffolds = Array<KFScaffold>();
     
     init(style: UITableViewStyle) {
@@ -62,6 +63,23 @@ class KFScaffoldingTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView!, titleForHeaderInSection section: Int) -> String! {
         return self.scaffolds[section].title;
+    }
+    
+    override func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!){
+        if(self.noteEditView? != nil){
+            let title = scaffolds[indexPath.section].supports[indexPath.row].title;
+            let supportId = scaffolds[indexPath.section].supports[indexPath.row].guid;
+            let uniqueId = String(Int(NSDate.date().timeIntervalSince1970));
+            let template = iKFConnector.getInstance().getURL("https://dl.dropboxusercontent.com/u/11409191/ikf/scaffoldtag.txt");
+            var insertString = template;
+            insertString = insertString.stringByReplacingOccurrencesOfString("%SUPPORTID%", withString: supportId, options: nil, range: nil);
+            insertString = insertString.stringByReplacingOccurrencesOfString("%UNIQUEID%", withString: uniqueId, options: nil, range: nil);
+            insertString = insertString.stringByReplacingOccurrencesOfString("%TITLE%", withString: title, options: nil, range: nil);
+            insertString = insertString.stringByReplacingOccurrencesOfString("\r", withString: "", options: nil, range: nil);
+            insertString = insertString.stringByReplacingOccurrencesOfString("\n", withString: "", options: nil, range: nil);
+            self.noteEditView?.insertText(insertString);
+        }
+        self.dismissModalViewControllerAnimated(false);
     }
     
     /*

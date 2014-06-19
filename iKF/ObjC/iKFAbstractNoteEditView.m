@@ -8,6 +8,7 @@
 
 #import "iKFAbstractNoteEditView.h"
 
+#import "iKFAbstractNoteEditView.h"
 #import "iKFMainViewController.h"
 #import "iKFNotePopupViewController.h"
 #import "iKF-Swift.h"
@@ -36,9 +37,13 @@
         return;
     }
     KFScaffoldingTableViewController* controller = [[KFScaffoldingTableViewController alloc] initWithNibName:nil bundle:nil];
+    controller.noteEditView = self;
     controller.scaffolds = [[iKFConnector getInstance] getScaffolds: self.viewId];
     popController = [[UIPopoverController alloc] initWithContentViewController:controller];
     [popController presentPopoverFromBarButtonItem:self.scaffoldButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+}
+
+-(void) insertText: text{
 }
 
 -(void) setText: text title: title{

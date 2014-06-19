@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Yoshiaki Matsuzawa. All rights reserved.
 //
 
+
 #import "iKFNoteEditViewByTinyMCE.h"
 #import "iKFConnector.h"
 
@@ -56,6 +57,11 @@
     return self;
 }
 
+-(void) insertText: text{
+    //NSLog(@"%@", text);
+    [_webView stringByEvaluatingJavaScriptFromString: [NSString stringWithFormat: @"tinymce.activeEditor.insertContent('%@')", text]];
+}
+
 -(void) setText: text title: title{
     [self setNavBarTitle: @"Edit"];
     [_titleView setText: title];
@@ -72,7 +78,8 @@
 }
 
 -(NSString*)getText{
-    NSString* text = [_webView stringByEvaluatingJavaScriptFromString:@"getHTML();"];
+    NSString* text = [_webView stringByEvaluatingJavaScriptFromString:@"tinymce.activeEditor.getContent();"];
+    //NSLog(@"getText: %@", text);
     return text;
 }
 

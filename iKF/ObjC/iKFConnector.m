@@ -8,6 +8,7 @@
 
 #import "iKFConnector.h"
 
+#import "iKFAbstractNoteEditView.h"
 #import "iKFNotePopupViewController.h"
 #import "iKFMainViewController.h"
 #import "iKF-Swift.h"
@@ -49,16 +50,16 @@ static iKFConnector* singleton;
 }
 
 - (NSString*) getEditTemplate{
-    if(_editTemplate == nil){
-        _editTemplate = [self getURL: @"http://dl.dropboxusercontent.com/u/11409191/test/edit.html"];
-    }
+    //if(_editTemplate == nil){
+        _editTemplate = [self getURL: @"http://dl.dropboxusercontent.com/u/11409191/ikf/edit.html"];
+    //}
     return _editTemplate;
 }
 
 - (NSString*) getReadTemplate{
-    if(_readTemplate == nil){
-        _readTemplate = [self getURL: @"http://dl.dropboxusercontent.com/u/11409191/test/read.html"];
-    }
+    //if(_readTemplate == nil){
+        _readTemplate = [self getURL: @"http://dl.dropboxusercontent.com/u/11409191/ikf/read.html"];
+    //}
     return _readTemplate;
 }
 
@@ -146,7 +147,8 @@ static iKFConnector* singleton;
     NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
     
     if([res statusCode] != 200){
-        [NSException raise:@"iKFConnectionException" format:@"at regsitrations."];
+        NSLog(@"error happening in getRegistrations() code=%d", [res statusCode]);
+        //[NSException raise:@"iKFConnectionException" format:@"at regsitrations."];
         return NO;
     }
     
@@ -383,7 +385,10 @@ static iKFConnector* singleton;
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"POST"];
     [req setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    NSString* formStr = [NSString stringWithFormat: @"title=%@&body=%@", note.title, note.content];
+    NSString* title = [self escapeString: note.title];
+    NSString* body = [self escapeString: note.content];
+    //NSLog(@"%@", body);
+    NSString* formStr = [NSString stringWithFormat: @"title=%@&body=%@", title, body];
     NSData *formdata = [formStr dataUsingEncoding:NSUTF8StringEncoding];
     [req setHTTPBody: formdata];
     NSHTTPURLResponse *res;
@@ -395,6 +400,15 @@ static iKFConnector* singleton;
     }
     
     return YES;
+}
+
+- (NSString*) escapeString: unescaped{
+    return (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                              NULL,
+                                                              (CFStringRef)unescaped,
+                                                              NULL,
+                                                              (CFStringRef)@"!*'();:@&=+$,/?%#[]\" ",
+                                                              kCFStringEncodingUTF8));
 }
 
 - (NSArray*) getScaffolds: (NSString*)viewId {

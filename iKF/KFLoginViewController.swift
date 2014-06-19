@@ -10,7 +10,7 @@ import UIKit
 
 class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate {
     
-    var servers = ["132.203.154.41:8080", "128.100.72.137:8080", "localhost:8080", "192.168.43.97:8080", "138.51.177.33:8080", "no server"];
+    var servers = ["132.203.154.41:8080", "128.100.72.137:8080", "localhost:8080", "192.168.43.97:8080", "138.51.179.228:8080", "no server"];
     
     @IBOutlet var passwordField : UITextField
     @IBOutlet var usernameField : UITextField
@@ -25,7 +25,6 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
         serverPicker.dataSource = self;
         serverPicker.delegate = self;
-        
         
         self.usernameField.text = "ikit";
         self.passwordField.text = "pass";

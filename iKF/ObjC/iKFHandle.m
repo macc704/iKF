@@ -9,6 +9,7 @@
 #import "iKFHandle.h"
 #import "iKFCompositeNoteViewController.h"
 
+#import "iKFAbstractNoteEditView.h"
 #import "iKFMainViewController.h"
 #import "iKFNotePopupViewController.h"
 #import "iKF-Swift.h"

@@ -15,6 +15,7 @@
 @property NSString* viewId;
 
 -(void) setText: text title: title;
+-(void) insertText: text;
 
 -(NSString*)getText;
 -(NSString*)getTitle;
