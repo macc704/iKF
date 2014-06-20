@@ -8,9 +8,10 @@
 
 #import "iKFNoteReadView.h"
 #import "iKFConnector.h"
+#import "iKFWebView.h"
 
 @implementation iKFNoteReadView{
-    UIWebView* _webView;
+
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -18,9 +19,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         //web
-        _webView = [[UIWebView alloc] init];
-        _webView.scrollView.scrollEnabled = TRUE;
-        [self addSubview: _webView];
+        self._webView = [[iKFWebView alloc] init];
+        self._webView.scrollView.scrollEnabled = TRUE;
+        [self addSubview: self._webView];
     }
     return self;
 }
@@ -29,7 +30,7 @@
     [self setNavBarTitle: title];
     NSURL* url = [[NSURL alloc] initWithString: urlString];
     NSURLRequest * req = [[NSURLRequest alloc] initWithURL:url];
-    [_webView loadRequest:req];
+    [self._webView loadRequest:req];
 }
 
 -(void) showHTML: (NSString*)textString title: (NSString*) title{
@@ -37,14 +38,14 @@
     
     NSString* template = [[iKFConnector getInstance] getReadTemplate];
     NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:textString];
-    [_webView loadHTMLString: html baseURL:nil];
+    [self._webView loadHTMLString: html baseURL:nil];
     //[_webView loadHTMLString: textString baseURL:nil];
 }
 
 
 -(void) layoutContentWithRect: (CGRect) rect{
     CGRect newRect = CGRectMake(rect.origin.x+20, rect.origin.y+20, rect.size.width-40, rect.size.height-40);
-    _webView.frame = newRect;
+    self._webView.frame = newRect;
 }
 
 /*

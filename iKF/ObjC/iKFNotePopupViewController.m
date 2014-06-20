@@ -7,6 +7,7 @@
 //
 
 #import "iKFNotePopupViewController.h"
+#import "iKFWebView.h"
 
 #import "iKFAbstractNoteEditView.h"
 #import "iKFMainViewController.h"
@@ -40,6 +41,7 @@
 }
 
 - (void) update{
+    ((iKFWebView*)self.webView).kfModel = self.note;
     //self.view subviews
     self.titleLabel.text = self.note.title;
     [self.titleLabel setNumberOfLines:0];
@@ -51,6 +53,9 @@
     NSString* template = [[iKFConnector getInstance] getReadTemplate];
     NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:self.note.content];
     [self.webView loadHTMLString: html baseURL: nil];
+    
+    self.note.beenRead = true;
+    [self.note notify];
 }
 
 - (IBAction)finishButtonPressed:(id)sender {

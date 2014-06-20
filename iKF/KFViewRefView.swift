@@ -9,15 +9,22 @@
 import UIKit
 
 class KFViewRefView: KFPostRefView {
-
-    let titleLabel:UILabel;
     
     init(controller: iKFMainViewController, ref: KFReference) {
-        titleLabel = UILabel(frame: CGRectMake(0, 0, 200, 20));
         super.init(controller: controller, ref: ref);
-        self.backgroundColor = UIColor.blueColor();
+
         self.frame = CGRectMake(ref.location.x, ref.location.y, 230, 40);
+        //self.backgroundColor = UIColor.blueColor();
+        self.backgroundColor = UIColor.clearColor();
         
+        //icon
+        let icon = UIImageView(image: UIImage(named: "viewlink.png"));
+        icon.frame = CGRectMake(5, 5, 20, 20);
+        self.addSubview(icon);
+        
+        //label
+        let titleLabel = UILabel(frame: CGRectMake(35, 5, 200, 20));
+        titleLabel.font = UIFont.systemFontOfSize(12);
         let view = ref.post as KFView;
         titleLabel.text = view.title;
         self.addSubview(titleLabel);

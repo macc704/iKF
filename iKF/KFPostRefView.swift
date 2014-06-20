@@ -60,7 +60,11 @@ class KFPostRefView: UIView {
         }
     }
     
+    var savedBackgroundColor:UIColor?;
+    
     func makeShadow(){
+        self.savedBackgroundColor = self.backgroundColor;
+        self.backgroundColor = UIColor.whiteColor();
         self.layer.shadowColor = UIColor.blackColor().CGColor;
         self.layer.shadowOpacity = 0.7;
         self.layer.shadowOffset = CGSizeMake(10.0, 10.0);
@@ -71,6 +75,7 @@ class KFPostRefView: UIView {
     }
     
     func removeShadow(){
+        self.backgroundColor = savedBackgroundColor;
         self.layer.shadowOpacity = 0.0;
     }    
     

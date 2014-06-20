@@ -37,7 +37,7 @@
         if([_target class] == [KFNoteRefView class]){
             {
                 UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"edit.png"]];
-                [button setFrame: CGRectMake(SIZE + targetFrame.size.width/2 - SIZE/2, 0, SIZE, SIZE)];
+                [button setFrame: CGRectMake((self.frame.size.width - SIZE)/2 , 0, SIZE, SIZE)];
                 [self addSubview: button];
                 button.userInteractionEnabled = YES;
                 UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
@@ -47,13 +47,13 @@
             }
             {
                 UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"read.png"]];
-                [button setFrame: CGRectMake(SIZE + targetFrame.size.width , 0, SIZE, SIZE)];
+                [button setFrame: CGRectMake(self.frame.size.width - SIZE , 0, SIZE, SIZE)];
                 [self addSubview: button];
                 button.userInteractionEnabled = YES;
-                UITapGestureRecognizer* a = [[UITapGestureRecognizer alloc]
+                UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
                                              initWithTarget: self  action: @selector(handleViewTap:)];
-                a.numberOfTapsRequired = 1;
-                [button addGestureRecognizer: a];
+                gesture.numberOfTapsRequired = 1;
+                [button addGestureRecognizer: gesture];
             }
             
             {
@@ -61,10 +61,21 @@
                 [button setFrame: CGRectMake(0 , 0, SIZE, SIZE)];
                 [self addSubview: button];
                 button.userInteractionEnabled = YES;
-                UITapGestureRecognizer* b = [[UITapGestureRecognizer alloc]
+                UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
                                              initWithTarget: self  action: @selector(handleDeleteTap:)];
-                b.numberOfTapsRequired = 1;
-                [button addGestureRecognizer: b];
+                gesture.numberOfTapsRequired = 1;
+                [button addGestureRecognizer: gesture];
+            }
+            
+            {
+                UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"clip.png"]];
+                [button setFrame: CGRectMake((self.frame.size.width - SIZE)*3/4, 0, SIZE, SIZE)];
+                [self addSubview: button];
+                button.userInteractionEnabled = YES;
+                UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
+                                             initWithTarget: self  action: @selector(handleClipTap:)];
+                gesture.numberOfTapsRequired = 1;
+                [button addGestureRecognizer: gesture];
             }
             
             {
@@ -73,8 +84,8 @@
                 [_plusButton setFrame: CGRectMake(0 , SIZE + targetFrame.size.height, SIZE, SIZE)];
                 [self addSubview: _plusButton];
                 _plusButton.userInteractionEnabled = YES;
-                UIPanGestureRecognizer* d = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(handleBuildsonPan:)];
-                [_plusButton addGestureRecognizer: d];
+                UIPanGestureRecognizer* gesture = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(handleBuildsonPan:)];
+                [_plusButton addGestureRecognizer: gesture];
             }
         }else{
             {
@@ -82,10 +93,10 @@
                 [_plusButton setFrame: CGRectMake(SIZE + targetFrame.size.width , 0, SIZE, SIZE)];
                 [self addSubview: _plusButton];
                 _plusButton.userInteractionEnabled = YES;
-                UITapGestureRecognizer* a = [[UITapGestureRecognizer alloc]
+                UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
                                              initWithTarget: self  action: @selector(handlePlusTap:)];
-                a.numberOfTapsRequired = 1;
-                [_plusButton addGestureRecognizer: a];
+                gesture.numberOfTapsRequired = 1;
+                [_plusButton addGestureRecognizer: gesture];
             }
         }
     }
@@ -112,6 +123,20 @@
     CGPoint buttonP = [_plusButton frame].origin;
     CGPoint p = CGPointMake(objectP.x + buttonP.x, objectP.y + buttonP.y);
     [_controller createNote: p];
+    [_controller removeHandle];
+}
+
+- (void) handleClipTap: (UIGestureRecognizer*) recognizer{
+    KFNoteRefView* noteref = (KFNoteRefView*)_target;
+    KFNote* post = (KFNote*)noteref.model.post;
+    UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = post.title;
+    NSMutableDictionary* dic = [NSMutableDictionary dictionaryWithDictionary: [pasteboard items][0]];
+    [dic setValue: post.guid forKey: @"kfmodel.guid"];
+    pasteboard.items = @[dic];
+    //[dic setValue: self.kfModel.guid forKey: @"kfmodel.guid"];
+    
+    [KFAppUtils showAlert: @"Notification" msg: [NSString stringWithFormat: @"Cliped Post \"%@\"", post.title ]];
     [_controller removeHandle];
 }
 

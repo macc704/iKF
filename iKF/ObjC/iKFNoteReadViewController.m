@@ -7,6 +7,7 @@
 //
 
 #import "iKFNoteReadViewController.h"
+#import "iKFWebView.h"
 
 #import "iKFAbstractNoteEditView.h"
 #import "iKFNotePopupViewController.h"
@@ -44,6 +45,7 @@
 {
     [super viewWillAppear:animated];
     if(self.note){
+        self.readView._webView.kfModel = self.note;
         [[iKFConnector getInstance] readPost: self.note];
         self.note.beenRead = true;
         //[self.readView showPage: @"http://www.google.co.jp" title: @"google"];

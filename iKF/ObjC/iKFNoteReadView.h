@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "iKFAbstractNoteView.h"
+#import "iKFWebView.h"
 
 @interface iKFNoteReadView : iKFAbstractNoteView
+
+@property iKFWebView* _webView;
 
 -(void) showPage: (NSString*)urlString title: (NSString*) title;
 -(void) showHTML: (NSString*)textString title: (NSString*) title;

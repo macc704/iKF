@@ -9,13 +9,14 @@
 
 #import "iKFNoteEditViewByTinyMCE.h"
 #import "iKFConnector.h"
+#import "iKFWebView.h"
 
 @implementation iKFNoteEditViewByTinyMCE{
     UIView* _containerView;
     UILabel* _titleLabel;
     UITextField* _titleView;
     UILabel* _sourceLabel;
-    UIWebView* _webView;
+    iKFWebView* _webView;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -46,15 +47,19 @@
             [_sourceLabel setFont:[UIFont systemFontOfSize:24]];
             [_containerView addSubview:_sourceLabel];
             
-            _webView
-            = [[UIWebView alloc] init];
-            //[_sourceView setFont:[UIFont systemFontOfSize:24]];
+            _webView = [[iKFWebView alloc] init];
+            _webView.pasteAsReferenceTarget = self;
+            //_webView.scrollView.scrollEnabled = FALSE;
             [_webView.layer setBorderColor:[UIColor blackColor].CGColor];
             [_webView.layer setBorderWidth:1.0];
             [_containerView addSubview:_webView];
         }
     }
     return self;
+}
+
+- (void) pasteAsReference: (NSString*)text{
+    [self insertText:text];
 }
 
 -(void) insertText: text{

@@ -23,6 +23,7 @@
 //#import "iKFNoteView.h"
 #import "iKFViewSelectionController.h"
 #import "iKFErrorHandler.h"
+#import "iKFWebView.h"
 
 //#import "iKFViewController.h"
 //#import "iKFViewController.h"

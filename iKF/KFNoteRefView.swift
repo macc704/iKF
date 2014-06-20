@@ -16,12 +16,13 @@ class KFNoteRefView: KFPostRefView {
     
     init(controller: iKFMainViewController, ref: KFReference) {
         icon = KFPostRefIconView(frame: CGRectMake(5, 5, 20, 20));
-        titleLabel = UILabel(frame: CGRectMake(30, 5, 200, 20));
+        titleLabel = UILabel(frame: CGRectMake(35, 5, 200, 20));
         authorLabel = UILabel(frame: CGRectMake(50, 25, 120, 10));
         
         super.init(controller: controller, ref: ref);
         
-        self.backgroundColor = UIColor.whiteColor();
+        //self.backgroundColor = UIColor.whiteColor();
+        self.backgroundColor = UIColor.clearColor();
         self.frame = CGRectMake(ref.location.x, ref.location.y, 230, 40);
 
         self.addSubview(icon);
@@ -32,7 +33,7 @@ class KFNoteRefView: KFPostRefView {
         authorLabel.font = UIFont.systemFontOfSize(10);
         self.addSubview(authorLabel);
         
-        model.attach(self, selector: "noteChanged");
+        model.post?.attach(self, selector: "noteChanged");
         self.update();
         
         bindEvents();
@@ -44,6 +45,7 @@ class KFNoteRefView: KFPostRefView {
     
     func update(){
         icon.beenRead = (self.model.post as KFNote).beenRead;
+        icon.update();
         titleLabel.text = (self.model.post as KFNote).title;
         authorLabel.text = (self.model.post as KFNote).primaryAuthor?.getFullName();
     }

@@ -41,31 +41,23 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         connector.host = servers[serverPicker.selectedRowInComponent(0)];
         let googleTest = connector.testConnectionToGoogle();
         if(googleTest == false){
-            self.showAlert("Connection Error", msg: "Internet Connection Failed");
+            KFAppUtils.showAlert("Connection Error", msg: "Internet Connection Failed");
             return;
         }
         
         let hostTest = connector.testConnectionToTheHost();
         if(hostTest == false){
-            self.showAlert("Connection Error", msg: "Connection Failed to the Selected Host");
+            KFAppUtils.showAlert("Connection Error", msg: "Connection Failed to the Selected Host");
             return;
         }
         
         let loginResult = connector.loginWithName(self.usernameField.text, password:self.passwordField.text);
         if(loginResult == false){
-            self.showAlert("Login Error", msg: "Login Failed");
+            KFAppUtils.showAlert("Login Error", msg: "Login Failed");
             return;
         }
         let registrationViewController = KFRegistrationViewController(nibName: nil, bundle: nil);
         self.presentViewController(registrationViewController, animated: true, completion: nil);
-    }
-    
-    func showAlert(title:String, msg:String){
-        var alertView = UIAlertView();
-        alertView.addButtonWithTitle("OK");
-        alertView.title = title;
-        alertView.message = msg;
-        alertView.show();
     }
     
     //    func alertView(alertView: UIAlertView!, clickedButtonAtIndex buttonIndex: Int){

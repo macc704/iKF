@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "iKFAbstractNoteEditView.h"
+#import "iKFWebView.h"
 
-@interface iKFNoteEditViewByTinyMCE : iKFAbstractNoteEditView
+@interface iKFNoteEditViewByTinyMCE : iKFAbstractNoteEditView <iKFCanPasteReference>
 
 -(void) insertText: text;
 
