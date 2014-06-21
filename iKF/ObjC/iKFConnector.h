@@ -24,6 +24,7 @@
     
 //- (id) initWithHost: (NSString*)host;
 
+- (NSURL*) getBaseURL;
 - (BOOL) testConnectionToGoogle;
 - (BOOL) testConnectionToTheHost;
 - (NSString*) getURL: (NSString*) urlString;
@@ -39,6 +40,7 @@
 - (NSArray*) getViews: (NSString*)communityId;
 - (NSArray*) getScaffolds: (NSString*)viewId;
 
+- (NSString*) getNoteAsHTML: (KFPost*)post;
 - (id) getPosts: (NSString*)viewid;
 
 - (BOOL) movePost: (NSString*)viewId note: (KFReference*)ref;

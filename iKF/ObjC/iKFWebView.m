@@ -72,7 +72,7 @@
         return;
     }
     
-    NSString* pasteString = [NSString stringWithFormat: @"<h2>\"%@\"(guid=%@)</h2>", [UIPasteboard generalPasteboard].string, guid];
+    NSString* pasteString = [NSString stringWithFormat: @"<kf:postreference postId=\"%@\">%@</kf:postreference>", guid, [UIPasteboard generalPasteboard].string];
     [self.pasteAsReferenceTarget pasteAsReference: pasteString];
 }
 

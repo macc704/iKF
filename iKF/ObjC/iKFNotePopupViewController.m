@@ -50,9 +50,10 @@
     [self.textFieldAuthor setNumberOfLines:0];
     [self.textFieldAuthor sizeToFit];
     
-    NSString* template = [[iKFConnector getInstance] getReadTemplate];
-    NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:self.note.content];
-    [self.webView loadHTMLString: html baseURL: nil];
+    //NSString* template = [[iKFConnector getInstance] getReadTemplate];
+    //NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:self.note.content];
+    NSString* html = [[iKFConnector getInstance] getNoteAsHTML: self.note];
+    [self.webView loadHTMLString: html baseURL: [[iKFConnector getInstance] getBaseURL]];
     
     self.note.beenRead = true;
     [self.note notify];

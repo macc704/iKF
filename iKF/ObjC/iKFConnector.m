@@ -41,6 +41,12 @@ static iKFConnector* singleton;
     return x;
 }
 
+- (NSURL*) getBaseURL{
+    NSString* baseURLStr = [NSString stringWithFormat: @"http://%@/", [iKFConnector getInstance].host ];
+    NSURL* baseURL = [[NSURL alloc] initWithString:baseURLStr];
+    return baseURL;
+}
+
 - (BOOL) testConnectionToTheHost{
     return [self testConnectionToTheURL: [NSString stringWithFormat: @"http://%@/", self.host]] == 200;
 }
@@ -69,7 +75,7 @@ static iKFConnector* singleton;
     if(status == 200){
         return str;
     }else{
-        [NSException raise:@"iKFConnectionException" format:@"getURL() error"];
+        [self handleError: @"getURL"];
         return nil;
     }
 }
@@ -91,7 +97,7 @@ static iKFConnector* singleton;
     }else if(error != nil){
         return [error code];
     }else{
-        [NSException raise:@"iKFConnectionException" format:@"Neither res nor error."];
+        [self handleError: @"Neither res nor error."];
     }
     return 0;
 }
@@ -108,7 +114,7 @@ static iKFConnector* singleton;
     [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
     
     if([res statusCode] != 200){
-        //[NSException raise:@"iKFConnectionException" format:@"at loginWithName."];
+        [self handleError: @"login() failed"];
         return NO;
     }
     
@@ -124,8 +130,8 @@ static iKFConnector* singleton;
     NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
     
     if([res statusCode] != 200){
-        [NSException raise:@"iKFConnectionException" format:@"at currentUser."];
-        return NO;
+        [self handleError: @"at currentUser"];
+        return nil;
     }
     
     id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
@@ -147,9 +153,8 @@ static iKFConnector* singleton;
     NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
     
     if([res statusCode] != 200){
-        NSLog(@"error happening in getRegistrations() code=%d", [res statusCode]);
-        //[NSException raise:@"iKFConnectionException" format:@"at regsitrations."];
-        return NO;
+        [self handleError: [NSString stringWithFormat: @"error happening in getRegistrations() code=%d", [res statusCode] ]];
+        return nil;
     }
     
     id jsonobj = [NSJSONSerialization JSONObjectWithData: bodyData options:NSJSONReadingAllowFragments error:nil];
@@ -175,7 +180,7 @@ static iKFConnector* singleton;
     [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
     
     if([res statusCode] != 200){
-        [NSException raise:@"iKFConnectionException" format:@"at registerCommunity."];
+        [self handleError: @"at registerCommunity"];
         return NO;
     }
     
@@ -191,12 +196,16 @@ static iKFConnector* singleton;
     [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
     
     if([res statusCode] != 200){
-        [NSException raise:@"iKFConnectionException" format:@"at enterCommunity."];
+        [self handleError: @"at currentUser"];
         return NO;
     }
     
     _registration = registration;
     return YES;
+}
+
+- (void) handleError: (NSString*)msg{
+    NSLog(@"iKFConnectionError - %@", msg);
 }
 
 - (NSArray*) getViews: (NSString*)communityId {
@@ -206,8 +215,8 @@ static iKFConnector* singleton;
     NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
     
     if([res statusCode] != 200){
-        [NSException raise:@"iKFConnectionException" format:@"at getViews."];
-        return NO;
+        [self handleError: @"at getViews."];
+        return nil;
     }
     
     //[self printContents: bodyData];
@@ -233,8 +242,8 @@ static iKFConnector* singleton;
     //[self printContents: bodyData];
     
     if([res statusCode] != 200){
-        [NSException raise:@"iKFConnectionException" format:@"at getPosts."];
-        return NO;
+        [self handleError: @"at getPosts."];
+        return nil;
     }
     
     //NSString *bodyString = [[NSString alloc] initWithData:bodyData encoding:NSUTF32StringEncoding];
@@ -334,11 +343,28 @@ static iKFConnector* singleton;
     
     //NSLog(@"%d", [res statusCode]);
     if([res statusCode] != 200){
-        [NSException raise:@"iKFConnectionException" format:@"at movePost."];
+        [self handleError: @"at movePost."];
         return NO;
     }
     
     return YES;
+}
+
+- (NSString*) getNoteAsHTML: (KFPost*)post {
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/getNoteAsHTML/%@", self.host, post.guid]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+    [req setHTTPMethod: @"GET"];
+    NSHTTPURLResponse *res;
+    NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+    NSString* bodyString = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
+
+    if([res statusCode] != 200){
+        //[NSException raise:@"iKFConnectionException" format:@"at getNoteAsHTML."];
+
+        return nil;
+    }
+    
+    return bodyString;
 }
 
 - (BOOL) readPost: (KFPost*)post {
@@ -350,7 +376,7 @@ static iKFConnector* singleton;
     
     //NSLog(@"%d", [res statusCode]);
     if([res statusCode] != 200){
-        [NSException raise:@"iKFConnectionException" format:@"at readPost."];
+        [self handleError: @"at readPost."];
         return NO;
     }
     
@@ -373,7 +399,7 @@ static iKFConnector* singleton;
     [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
     
     if([res statusCode] != 200){
-        [NSException raise:@"iKFConnectionException" format:@"at createNoted"];
+        [self handleError: @"at createNoted"];
         return NO;
     }
     
@@ -395,7 +421,7 @@ static iKFConnector* singleton;
     [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
     
     if([res statusCode] != 200){
-        [NSException raise:@"iKFConnectionException" format:@"at createNoted"];
+        [self handleError: @"at createNoted"];
         return NO;
     }
     
@@ -418,7 +444,7 @@ static iKFConnector* singleton;
     NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
     
     if([res statusCode] != 200){
-        [NSException raise:@"iKFConnectionException" format:@"at getScaffolds."];
+        [self handleError: @"at getScaffolds."];
         return nil;
     }
     

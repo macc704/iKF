@@ -77,8 +77,6 @@
     
     NSString* template = [[iKFConnector getInstance] getEditTemplate];
     NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:text];
-    //[_webView.scrollView setZoomScale: 1.3];
-    //[_webView scalesPageToFit];
     [_webView loadHTMLString: html baseURL:nil];
 }
 

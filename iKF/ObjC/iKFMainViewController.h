@@ -33,6 +33,7 @@
 - (IBAction)notePlusButtonPressed:(id)sender;
 - (IBAction)updateButtonPressed:(id)sender;
 - (IBAction)viewSelectionPressed:(id)sender;
+- (IBAction)updateButtonPressed:(id)sender;
 
 - (void) showHandle: (UIView*)view;
 - (void) removeHandle;

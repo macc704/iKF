@@ -9,7 +9,6 @@
                 <outlet property="bgButton" destination="TQh-E2-PYs" id="5Me-tA-CB3"/>
                 <outlet property="navigationBar" destination="9As-43-h3W" id="Bdk-8r-pcZ"/>
                 <outlet property="scrollView" destination="cbm-qR-1q1" id="BC0-fL-lGR"/>
-                <outlet property="updateButton" destination="HBl-u9-Wa0" id="3xP-U6-izG"/>
                 <outlet property="view" destination="2" id="3"/>
                 <outlet property="viewSelectionButton" destination="DNC-P1-nwk" id="rfn-PJ-Bqo"/>
             </connections>
@@ -25,7 +24,7 @@
                 <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ls1-tu-bgD">
                     <rect key="frame" x="0.0" y="20" width="768" height="45"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="45" id="fst-eO-nHb"/>
+                        <constraint firstAttribute="height" constant="45" id="fDH-18-j1F"/>
                     </constraints>
                     <items>
                         <navigationItem title="iKF" id="9As-43-h3W">
@@ -55,33 +54,26 @@
                                 <action selector="notePlusButtonPressed:" destination="-1" id="Nml-Au-ZYB"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" id="NgE-77-oxR">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HBl-u9-Wa0">
-                                <rect key="frame" x="101" y="6" width="73" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Update">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="updateButtonPressed:" destination="-1" eventType="touchUpInside" id="qKv-WR-7nC"/>
-                                </connections>
-                            </button>
+                        <barButtonItem title="update" id="Cyd-bb-szl">
+                            <connections>
+                                <action selector="updateButtonPressed:" destination="-1" id="TkT-S8-TPj"/>
+                            </connections>
                         </barButtonItem>
                     </items>
                 </toolbar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Ls1-tu-bgD" firstAttribute="trailing" secondItem="cbm-qR-1q1" secondAttribute="trailing" id="3QP-89-Jli"/>
-                <constraint firstItem="cbm-qR-1q1" firstAttribute="trailing" secondItem="3Vt-2V-64h" secondAttribute="trailing" id="4VB-Sa-1xH"/>
-                <constraint firstItem="Ls1-tu-bgD" firstAttribute="leading" secondItem="cbm-qR-1q1" secondAttribute="leading" id="CGH-8p-YzD"/>
-                <constraint firstItem="cbm-qR-1q1" firstAttribute="leading" secondItem="3Vt-2V-64h" secondAttribute="leading" id="LyX-zs-RLy"/>
-                <constraint firstAttribute="trailing" secondItem="cbm-qR-1q1" secondAttribute="trailing" id="P3G-j6-nHe"/>
-                <constraint firstItem="3Vt-2V-64h" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="dko-pN-X3r"/>
-                <constraint firstItem="cbm-qR-1q1" firstAttribute="top" secondItem="2" secondAttribute="top" constant="64" id="fLc-2T-gsc"/>
-                <constraint firstItem="3Vt-2V-64h" firstAttribute="top" secondItem="cbm-qR-1q1" secondAttribute="bottom" id="nvy-eq-h4V"/>
-                <constraint firstItem="Ls1-tu-bgD" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" id="vn3-nX-KBb"/>
-                <constraint firstAttribute="bottom" secondItem="3Vt-2V-64h" secondAttribute="bottom" id="xse-b3-w4o"/>
+                <constraint firstItem="3Vt-2V-64h" firstAttribute="top" secondItem="cbm-qR-1q1" secondAttribute="bottom" id="17z-Wf-3bu"/>
+                <constraint firstItem="cbm-qR-1q1" firstAttribute="top" secondItem="2" secondAttribute="top" constant="64" id="FfM-ro-orb"/>
+                <constraint firstItem="cbm-qR-1q1" firstAttribute="leading" secondItem="Ls1-tu-bgD" secondAttribute="leading" id="M6E-zX-S5Z"/>
+                <constraint firstItem="cbm-qR-1q1" firstAttribute="trailing" secondItem="Ls1-tu-bgD" secondAttribute="trailing" id="TBE-uZ-9Ex"/>
+                <constraint firstItem="3Vt-2V-64h" firstAttribute="trailing" secondItem="cbm-qR-1q1" secondAttribute="trailing" id="Tjb-y6-ov1"/>
+                <constraint firstAttribute="bottom" secondItem="3Vt-2V-64h" secondAttribute="bottom" id="beU-DW-cmm"/>
+                <constraint firstAttribute="trailing" secondItem="Ls1-tu-bgD" secondAttribute="trailing" id="c34-fL-5mr"/>
+                <constraint firstItem="3Vt-2V-64h" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="ema-3P-aaT"/>
+                <constraint firstItem="cbm-qR-1q1" firstAttribute="leading" secondItem="3Vt-2V-64h" secondAttribute="leading" id="nfq-zf-Pjs"/>
+                <constraint firstItem="Ls1-tu-bgD" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" id="p9e-t9-fB6"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
