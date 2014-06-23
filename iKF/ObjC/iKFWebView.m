@@ -50,9 +50,10 @@
     NSString* guid = [self getValue: @"kfmodel.guid"];
     NSString* pasteString;
     if ([[self getValue: @"kfmodel"] isEqualToString: @"contentreference"]){
-        pasteString = [NSString stringWithFormat: @"<kf:contentreference postId=\"%@\">%@</kf:contentreference>", guid, [UIPasteboard generalPasteboard].string];
+        pasteString = [NSString stringWithFormat: @"<kf-content-reference class=\"mceNonEditable\" postid=\"%@\">%@</kf-content-reference>", guid, [UIPasteboard generalPasteboard].string];
     }else{//assume postreference
-        pasteString = [NSString stringWithFormat: @"<kf:postreference postId=\"%@\">%@</kf:postreference>", guid, [UIPasteboard generalPasteboard].string];
+        pasteString = [NSString stringWithFormat: @"<kf-post-reference class=\"mceNonEditable\" postid=\"%@\">%@</kf-post-reference>", guid, [UIPasteboard generalPasteboard].string];
+        NSLog(@"%@", pasteString);
     }
     [self.pasteAsReferenceTarget pasteAsReference: pasteString];
 }
