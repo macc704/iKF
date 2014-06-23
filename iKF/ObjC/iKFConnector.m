@@ -351,7 +351,7 @@ static iKFConnector* singleton;
 }
 
 - (NSString*) getNoteAsHTML: (KFPost*)post {
-    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/getNoteAsHTML/%@", self.host, post.guid]];
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/getNoteAsHTMLwJS/%@", self.host, post.guid]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"GET"];
     NSHTTPURLResponse *res;

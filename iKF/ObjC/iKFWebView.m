@@ -31,48 +31,29 @@
 
 - (BOOL) canPerformAction:(SEL)action withSender:(id)sender
 {
-    //NSLog(@"can perform action");
-    if( action == @selector(onPasteAsReference:)){
-        if (self.pasteAsReferenceTarget != nil && [self hasReference]){
-            return YES;
-        }else{
-            return NO;
-        }
+    if(action == @selector(onPasteAsReference:)){
+        return [self canPerformPasteAsReference];
     }
     
     return [super canPerformAction:action withSender:sender];
 }
 
-- (BOOL) hasReference{
-    return [self getGuidFromPasteboard] != nil;
-}
-
-- (NSString*) getGuidFromPasteboard{
-    UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
-    if(pasteboard.numberOfItems < 0){
-        return nil;
-    }
-    NSData* guidData = [[pasteboard items][0] valueForKey: @"kfmodel.guid"];
-    if (guidData == nil){
-        return nil;
-    }
-    NSString* guid = [[NSString alloc] initWithData:guidData encoding:NSUTF8StringEncoding];
-    return guid;
+- (BOOL) canPerformPasteAsReference{
+    return self.pasteAsReferenceTarget != nil && ([self getValue: @"kfmodel.guid"] != nil);
 }
 
 - (void) onPasteAsReference: (UIMenuController*) sender{
-    //NSLog(@"paste as reference");
-    
-    if (self.pasteAsReferenceTarget == nil){
+    if (![self canPerformPasteAsReference]){
         return;
     }
     
-    NSString* guid = [self getGuidFromPasteboard];
-    if(guid == nil){
-        return;
+    NSString* guid = [self getValue: @"kfmodel.guid"];
+    NSString* pasteString;
+    if ([[self getValue: @"kfmodel"] isEqualToString: @"contentreference"]){
+        pasteString = [NSString stringWithFormat: @"<kf:contentreference postId=\"%@\">%@</kf:contentreference>", guid, [UIPasteboard generalPasteboard].string];
+    }else{//assume postreference
+        pasteString = [NSString stringWithFormat: @"<kf:postreference postId=\"%@\">%@</kf:postreference>", guid, [UIPasteboard generalPasteboard].string];
     }
-    
-    NSString* pasteString = [NSString stringWithFormat: @"<kf:postreference postId=\"%@\">%@</kf:postreference>", guid, [UIPasteboard generalPasteboard].string];
     [self.pasteAsReferenceTarget pasteAsReference: pasteString];
 }
 
@@ -83,10 +64,32 @@
     UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
     
     if(self.kfModel != nil && pasteboard.numberOfItems > 0){
-        NSMutableDictionary* dic = [NSMutableDictionary dictionaryWithDictionary: [pasteboard items][0]];
-        [dic setValue: self.kfModel.guid forKey: @"kfmodel.guid"];
-        pasteboard.items = @[dic];
+        [self setValue: @"contentreference" forKey: @"kfmodel"];
+        [self setValue: self.kfModel.guid forKey: @"kfmodel.guid"];
     }
+}
+
+- (NSString*) getValue: (NSString*) key {
+    UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
+    if(pasteboard.numberOfItems < 0){
+        return nil;
+    }
+    NSData* data = [[pasteboard items][0] valueForKey: key];
+    if (data == nil){
+        return nil;
+    }
+    NSString* dataStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return dataStr;
+}
+
+- (void) setValue: (NSString*)value forKey: (NSString*) key{
+    UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
+    if(pasteboard.numberOfItems < 0){
+        return;
+    }
+    NSMutableDictionary* newdic = [NSMutableDictionary dictionaryWithDictionary: [pasteboard items][0]];
+    [newdic setValue: value forKey: key];
+    pasteboard.items = @[newdic];
 }
 
 // This was overriden by javascript on tinyMCE -- yoshiaki
@@ -95,12 +98,12 @@
 //}
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect
+ {
+ // Drawing code
+ }
+ */
 
 @end
