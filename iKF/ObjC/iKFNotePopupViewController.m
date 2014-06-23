@@ -27,9 +27,11 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+//- (void)viewDidLoad
+//{
+//    [super viewDidLoad];
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [[iKFConnector getInstance] readPost: self.note];
     self.note.beenRead = true;
     [self update];
