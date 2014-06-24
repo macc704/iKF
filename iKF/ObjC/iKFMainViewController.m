@@ -29,7 +29,7 @@
     
     iKFHandle* _handle;
     NSDictionary* _posts;
-    NSDictionary* _postviews;
+    NSDictionary* _postRefViews;
     iKFConnector* _connector;
     NSString* _communityId;
     NSArray* _views;
@@ -37,6 +37,11 @@
     NSInteger _selectedRow;
     
     bool _threadActive;
+    
+    NSString* _cometVersion;
+    
+    //reuse
+    NSDictionary* _reusebox;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -51,7 +56,7 @@
 {
     [super viewDidLoad];
     
-    _postviews = [[NSMutableDictionary alloc] init];
+    _postRefViews = [[NSMutableDictionary alloc] init];
     _views = [[NSMutableArray alloc] init];
     //self.viewchooser.delegate = self;
     
@@ -80,13 +85,13 @@
     dispatch_queue_t sub_queue = dispatch_queue_create("sub_queue", 0);
     dispatch_async(sub_queue, ^{
         NSString* viewId = [self currentViewId];
-        NSString* version = @"-1";
+        _cometVersion = @"-1";
         while(true){
             if(!([viewId isEqualToString: [self currentViewId]])){
                 viewId = [self currentViewId];
-                version = @"-1";
+                _cometVersion = @"-1";
             }
-            NSString* newVersion = [[iKFConnector getInstance] getNextViewVersionAsync: viewId currentVersion: version];
+            NSString* newVersion = [[iKFConnector getInstance] getNextViewVersionAsync: viewId currentVersion: _cometVersion];
             if(_threadActive == false){
                 break;
             }
@@ -95,15 +100,24 @@
                 break;
             }
             NSLog(@"newVersion=%@", newVersion);
-            if(!([newVersion isEqualToString: version])){
-                version = newVersion;
+            if(!([newVersion isEqualToString: _cometVersion])){
+                _cometVersion = newVersion;
+                NSLog(@"refresh request");
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self updateViews];
+                    [self updateViewsComet];
                 });
+                [NSThread sleepForTimeInterval:2.0f];
+                NSLog(@"wake up");
             }
         }
         NSLog(@"comet stopped");
     });
+}
+
+- (void) incrementCometVersion{
+    int v = _cometVersion.integerValue;
+    v++;
+    _cometVersion = [NSString stringWithFormat:@"%d", v];
 }
 
 - (void) handleTap: (UIGestureRecognizer*)recognizer{
@@ -238,14 +252,22 @@
     }
     
     [self removeHandle];
-    KFNoteRefView* noteView = [[KFNoteRefView alloc] initWithController:self ref: ref];
+    
+    KFNoteRefView* noteView;
+    if(_reusebox != nil && _reusebox[ref.guid] != nil ){
+        noteView = _reusebox[ref.guid];
+        noteView.model = ref;
+        [noteView update];
+    }else{
+        noteView = [[KFNoteRefView alloc] initWithController:self ref: ref];
+    }
     CGRect r = noteView.frame;
     r.origin.x = ref.location.x;
     r.origin.y = ref.location.y;
     noteView.frame = r;
     //[noteView setCenter: p];
-    [_postviews setValue: noteView forKey: ref.guid];
-    [_postviews setValue: noteView forKey: ref.post.guid];//ちょっとずる
+    [_postRefViews setValue: noteView forKey: ref.guid];
+    [_postRefViews setValue: noteView forKey: ref.post.guid];//ちょっとずる
     [_mainPanel.noteLayer addSubview: noteView];
 }
 
@@ -255,15 +277,23 @@
     }
     
     [self removeHandle];
-    KFDrawingRefView* noteView = [[KFDrawingRefView alloc] initWithController:self ref: ref];
+    KFDrawingRefView* postRefView;
+    if(_reusebox != nil && _reusebox[ref.guid] != nil ){
+        postRefView = _reusebox[ref.guid];
+        postRefView.model = ref;
+        postRefView.frame = CGRectMake(ref.location.x, ref.location.y, postRefView.frame.size.width, postRefView.frame.size.height);
+    }else{
+        postRefView = [[KFDrawingRefView alloc] initWithController:self ref: ref];
+    }
+    [_postRefViews setValue: postRefView forKey: ref.guid];
     //[_postviews setValue: noteView forKey: ref.guid];
     //[_postviews setValue: noteView forKey: ref.post.guid];//ちょっとずる
-    [_mainPanel.drawingLayer addSubview: noteView];
+    [_mainPanel.drawingLayer addSubview: postRefView];
 }
 
 - (void) addViewRef: (KFReference*)ref{
     if([ref.post class] != [KFView class]){
-        [NSException raise:@"iKFConnectionException" format:@"Illegal addDrawing"];
+        [NSException raise:@"iKFConnectionException" format:@"Illegal ViewRef"];
     }
     
     [self removeHandle];
@@ -277,8 +307,8 @@
     }
     KFNote* note = ((KFNote*)ref.post);
     if(note.buildsOn != nil){
-        KFPostRefView* fromView = _postviews[note.guid];
-        KFPostRefView* toView = _postviews[note.buildsOn.guid];//ちょっとずる
+        KFPostRefView* fromView = _postRefViews[note.guid];
+        KFPostRefView* toView = _postRefViews[note.buildsOn.guid];//ちょっとずる
         //NSLog(@"%@ ; %@", toView, fromView);
         [_mainPanel.connectionLayer addConnectionFrom: fromView To: toView];
     }
@@ -353,6 +383,12 @@
     [self startComet];
 }
 
+- (void) updateViewsComet{
+    _reusebox = _postRefViews;
+    [self updateViews];
+    _reusebox = [[NSMutableDictionary alloc] init];
+}
+
 - (void) updateViews{
     if(_connector == nil){
         return;
@@ -387,7 +423,7 @@
 }
 
 - (void) clearViews{
-    _postviews = [[NSMutableDictionary alloc] init];
+    _postRefViews = [[NSMutableDictionary alloc] init];
     [_mainPanel clearViews];
 }
 
