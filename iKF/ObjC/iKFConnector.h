@@ -49,6 +49,7 @@
 - (BOOL) updatenote: (KFNote*)note;
 
 - (BOOL) createPicture: (UIImage*)image onView:(NSString*)viewId location:(CGPoint)p;
+- (NSString*) getNextViewVersionAsync: (NSString*)viewId currentVersion: (NSString*) currentVersion;
 
 
 @end

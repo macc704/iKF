@@ -566,6 +566,21 @@ static iKFConnector* singleton;
     return YES;
 }
 
+- (NSString*) getNextViewVersionAsync: (NSString*)viewId currentVersion: (NSString*) currentVersion{
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/getNextViewVersionAsync/%@/%@", self.host, viewId, currentVersion]];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+    [req setHTTPMethod: @"GET"];
+    NSHTTPURLResponse *res;
+    NSData *bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:nil];
+    
+    if([res statusCode] != 200){
+        [self handleError: @"at getNextViewVersionAsync."];
+        return nil;
+    }
+    
+    NSString* bodyString = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
+    return bodyString;
+}
 
 - (void) debugPrint: (NSData*) bodyData{
     NSString *bodyString = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];

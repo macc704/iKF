@@ -35,6 +35,8 @@
     NSArray* _views;
     //NSString* _viewId;
     NSInteger _selectedRow;
+    
+    bool _threadActive;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -73,6 +75,37 @@
     [self updateViews];
 }
 
+- (void) startComet{
+    _threadActive = true;
+    dispatch_queue_t sub_queue = dispatch_queue_create("sub_queue", 0);
+    dispatch_async(sub_queue, ^{
+        NSString* viewId = [self currentViewId];
+        NSString* version = @"-1";
+        while(true){
+            if(!([viewId isEqualToString: [self currentViewId]])){
+                viewId = [self currentViewId];
+                version = @"-1";
+            }
+            NSString* newVersion = [[iKFConnector getInstance] getNextViewVersionAsync: viewId currentVersion: version];
+            if(_threadActive == false){
+                break;
+            }
+            if(newVersion == nil){
+                NSLog(@"error at newVersion");
+                break;
+            }
+            NSLog(@"newVersion=%@", newVersion);
+            if(!([newVersion isEqualToString: version])){
+                version = newVersion;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self updateViews];
+                });
+            }
+        }
+        NSLog(@"comet stopped");
+    });
+}
+
 - (void) handleTap: (UIGestureRecognizer*)recognizer{
     if(_handle){
         [self removeHandle];
@@ -90,6 +123,10 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    _threadActive = false;
+}
+
 //スクロールの拡大縮小の設定
 - (UIView*) viewForZoomingInScrollView: (UIScrollView*)aScrollView {
     return _mainPanel;
@@ -101,6 +138,7 @@
 }
 
 - (IBAction)backButtonPressed:(id)sender {
+    _threadActive = false;
     [self dismissViewControllerAnimated: YES completion: NULL];
 }
 
@@ -312,6 +350,7 @@
     //[_viewchooser reloadAllComponents];
 
     [self updateViews];
+    [self startComet];
 }
 
 - (void) updateViews{
