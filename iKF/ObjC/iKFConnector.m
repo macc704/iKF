@@ -84,6 +84,7 @@ static iKFConnector* singleton;
     NSURL* url = [NSURL URLWithString: urlString];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"GET"];
+    [req setTimeoutInterval: 12.0];
     NSHTTPURLResponse *res = nil;
     NSError *error = nil;
     if(bodyString != nil){

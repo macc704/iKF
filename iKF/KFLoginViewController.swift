@@ -36,28 +36,44 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     @IBAction func loginButtonPressed(sender : AnyObject) {
+//        let queue = dispatch_queue_create("sub_queue", 0);
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         
+        let loading = iKFLoadingView();
+
+        dispatch_async(queue){
+            dispatch_async(dispatch_get_main_queue()){
+                loading.show(self);
+            }
+            let res = self.login();
+            dispatch_async(dispatch_get_main_queue()){
+                loading.hide();
+                if(res.result == true){
+                    let registrationViewController = KFRegistrationViewController(nibName: nil, bundle: nil);
+                    self.presentViewController(registrationViewController, animated: true, completion: nil);
+                }else{
+                    KFAppUtils.showAlert("ConnectionError", msg: res.errorMsg!);
+                }
+            }
+        }
+    }
+    
+    func login() -> (result: Bool, errorMsg: String?) {
         var connector = iKFConnector.getInstance();
         connector.host = servers[serverPicker.selectedRowInComponent(0)];
         let googleTest = connector.testConnectionToGoogle();
         if(googleTest == false){
-            KFAppUtils.showAlert("Connection Error", msg: "Internet Connection Failed");
-            return;
+            return (false, "Internet Connection Failed");
         }
-        
         let hostTest = connector.testConnectionToTheHost();
         if(hostTest == false){
-            KFAppUtils.showAlert("Connection Error", msg: "Connection Failed to the Selected Host");
-            return;
+            return (false, "Connection Failed to the Selected Host");
         }
-        
         let loginResult = connector.loginWithName(self.usernameField.text, password:self.passwordField.text);
         if(loginResult == false){
-            KFAppUtils.showAlert("Login Error", msg: "Login Failed");
-            return;
+            return (false, "Login Failed");
         }
-        let registrationViewController = KFRegistrationViewController(nibName: nil, bundle: nil);
-        self.presentViewController(registrationViewController, animated: true, completion: nil);
+        return (true, nil);
     }
     
     //    func alertView(alertView: UIAlertView!, clickedButtonAtIndex buttonIndex: Int){
