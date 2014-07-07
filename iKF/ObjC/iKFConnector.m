@@ -21,6 +21,7 @@ static iKFConnector* singleton;
     NSDictionary* _views;
     NSString* _editTemplate;
     NSString* _readTemplate;
+    NSString* _mobileJS;
 }
 
 + (iKFConnector*) getInstance{
@@ -55,17 +56,24 @@ static iKFConnector* singleton;
     return [self connectToTheURL: urlString bodyString: nil];
 }
 
+- (NSString*) getMobileJS{
+    if(_mobileJS == nil){
+        _mobileJS = [self getURL: @"https://dl.dropboxusercontent.com/u/11409191/ikf/kfmobile.js"];
+    }
+    return _mobileJS;
+}
+
 - (NSString*) getEditTemplate{
-    //if(_editTemplate == nil){
+    if(_editTemplate == nil){
         _editTemplate = [self getURL: @"http://dl.dropboxusercontent.com/u/11409191/ikf/edit.html"];
-    //}
+    }
     return _editTemplate;
 }
 
 - (NSString*) getReadTemplate{
-    //if(_readTemplate == nil){
+    if(_readTemplate == nil){
         _readTemplate = [self getURL: @"http://dl.dropboxusercontent.com/u/11409191/ikf/read.html"];
-    //}
+    }
     return _readTemplate;
 }
 
@@ -567,8 +575,9 @@ static iKFConnector* singleton;
     return YES;
 }
 
-- (NSString*) getNextViewVersionAsync: (NSString*)viewId currentVersion: (NSString*) currentVersion{
-    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/getNextViewVersionAsync/%@/%@", self.host, viewId, currentVersion]];
+- (int) getNextViewVersionAsync: (NSString*)viewId currentVersion: (int) currentVersion{
+    NSString* currentVersionStr = [NSString stringWithFormat:@"%d", currentVersion];
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/getNextViewVersionAsync/%@/%@", self.host, viewId, currentVersionStr]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
     [req setHTTPMethod: @"GET"];
     NSHTTPURLResponse *res;
@@ -576,11 +585,11 @@ static iKFConnector* singleton;
     
     if([res statusCode] != 200){
         [self handleError: @"at getNextViewVersionAsync."];
-        return nil;
+        return -1;
     }
     
     NSString* bodyString = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
-    return bodyString;
+    return bodyString.intValue;
 }
 
 - (void) debugPrint: (NSData*) bodyData{

@@ -11,6 +11,7 @@
 @interface iKFLoadingView : UIView
 
 - (void) show: (UIViewController*)controller;
+- (void) showOnView: (UIView*)view;
 - (void) hide;
     
 @end

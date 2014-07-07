@@ -39,6 +39,16 @@ UIActivityIndicatorView* _indicator;
     [_indicator startAnimating];
 }
 
+- (void) showOnView: (UIView*)view{
+    CGRect rect = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height);
+    self.frame = rect;
+    [_indicator setCenter:CGPointMake(rect.size.width / 2, rect.size.height / 2)];
+    [view addSubview: self];
+    
+    // ぐるぐる開始
+    [_indicator startAnimating];
+}
+
 - (void) hide{
     // ぐるぐる停止
     [_indicator stopAnimating];

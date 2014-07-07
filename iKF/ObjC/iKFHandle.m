@@ -145,7 +145,7 @@
     CGPoint buttonP = [_plusButton frame].origin;
     CGPoint p = CGPointMake(objectP.x + buttonP.x, objectP.y + buttonP.y);
     [_controller createNote: p buildson: (KFPostRefView*)_target];
-    [_controller removeHandle];
+//    [_controller removeHandle];
 }
 
 - (void) handleBuildsonPan: (UIPanGestureRecognizer*)recognizer{

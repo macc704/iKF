@@ -32,10 +32,17 @@
 //    [super viewDidLoad];
 - (void)viewDidAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [[iKFConnector getInstance] readPost: self.note];
+
+    dispatch_queue_t sub_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(sub_queue, ^{
+        [[iKFConnector getInstance] readPost: self.note];
+    });
+
     self.note.beenRead = true;
     [self update];
 }
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -52,10 +59,20 @@
     [self.textFieldAuthor setNumberOfLines:0];
     [self.textFieldAuthor sizeToFit];
     
+    //v1
     //NSString* template = [[iKFConnector getInstance] getReadTemplate];
     //NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:self.note.content];
-    NSString* html = [[iKFConnector getInstance] getNoteAsHTML: self.note];
-    [self.webView loadHTMLString: html baseURL: [[iKFConnector getInstance] getBaseURL]];
+    
+    //v2
+    //NSString* html = [[iKFConnector getInstance] getNoteAsHTML: self.note];
+    //[self.webView loadHTMLString: html baseURL: [[iKFConnector getInstance] getBaseURL]];
+    
+    //v3
+    NSString* mobileJS = [[iKFConnector getInstance] getMobileJS];
+    [((iKFWebView*)self.webView) stringByEvaluatingJavaScriptFromString: mobileJS];
+    NSString* template = [[iKFConnector getInstance] getReadTemplate];
+    NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:self.note.content];
+    [self.webView loadHTMLString: html baseURL:[[iKFConnector getInstance] getBaseURL]];
     
     self.note.beenRead = true;
     [self.note notify];

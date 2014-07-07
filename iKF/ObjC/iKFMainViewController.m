@@ -14,6 +14,7 @@
 #import "iKFHandle.h"
 #import "iKFMainView.h"
 #import "iKFConnectionLayerView.h"
+#import "iKFConnector.h"
 
 #import "iKF-Swift.h"
 
@@ -36,9 +37,10 @@
     //NSString* _viewId;
     NSInteger _selectedRow;
     
-    bool _threadActive;
-    
-    NSString* _cometVersion;
+    bool _initialized;
+    //bool _cometActive;
+    int _cometThreadNumber;
+    int _cometVersion;
     
     //reuse
     NSDictionary* _reusebox;
@@ -55,6 +57,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _initialized = false;
+    _cometThreadNumber = 0;
     
     _postRefViews = [[NSMutableDictionary alloc] init];
     _views = [[NSMutableArray alloc] init];
@@ -77,47 +81,75 @@
     recognizerTap.numberOfTapsRequired = 1;
     [_mainPanel addGestureRecognizer: recognizerTap];
     
-    [self updateViews];
+    //[self updateViews];
 }
 
-- (void) startComet{
-    _threadActive = true;
-    dispatch_queue_t sub_queue = dispatch_queue_create("sub_queue", 0);
+- (void)viewWillAppear:(BOOL)animated{
+    if(_initialized){
+        _cometThreadNumber++;
+        [self startComet: _cometThreadNumber];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    _cometThreadNumber++;
+}
+
+- (void) go:(KFRegistration *)registration{
+    self->_connector = [iKFConnector getInstance];
+    self->_user = [_connector getCurrentUser];
+    self->_communityId = registration.communityId;
+
+    dispatch_queue_t sub_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(sub_queue, ^{
+        bool enterResult = [_connector enterCommunity: registration];
+        if(enterResult == false){
+            //alert
+            return;
+        }
+        
+        _views = [_connector getViews: _communityId];
+        _selectedRow = 0;
+        //[_viewchooser reloadAllComponents];
+        
+        //[self updateViews];
+        _initialized = true;
+        
+        _cometThreadNumber++;
+        [self startComet: _cometThreadNumber];
+    });
+}
+
+- (void) startComet: (int)threadNumber{
+    //    dispatch_queue_t sub_queue = dispatch_queue_create("sub_queue", 0);
+    dispatch_queue_t sub_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(sub_queue, ^{
         NSString* viewId = [self currentViewId];
-        _cometVersion = @"-1";
+        _cometVersion = -1;
         while(true){
             if(!([viewId isEqualToString: [self currentViewId]])){
                 viewId = [self currentViewId];
-                _cometVersion = @"-1";
+                _cometVersion = -1;
             }
-            NSString* newVersion = [[iKFConnector getInstance] getNextViewVersionAsync: viewId currentVersion: _cometVersion];
-            if(_threadActive == false){
+            int newVersion = [[iKFConnector getInstance] getNextViewVersionAsync: viewId currentVersion: _cometVersion];
+            if(threadNumber != _cometThreadNumber){
                 break;
             }
-            if(newVersion == nil){
+            if(newVersion == -1){
                 NSLog(@"error at newVersion");
                 break;
             }
-            NSLog(@"newVersion=%@", newVersion);
-            if(!([newVersion isEqualToString: _cometVersion])){
+            NSLog(@"newVersion=%d", newVersion);
+            if(newVersion > _cometVersion){
                 _cometVersion = newVersion;
                 NSLog(@"refresh request");
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self updateViewsComet];
-                });
+                [self refreshAllPostsAsync];
                 [NSThread sleepForTimeInterval:2.0f];
                 NSLog(@"wake up");
             }
         }
-        NSLog(@"comet stopped");
+        NSLog(@"comet stopped number=%d", threadNumber);
     });
-}
-
-- (void) incrementCometVersion{
-    int v = _cometVersion.integerValue;
-    v++;
-    _cometVersion = [NSString stringWithFormat:@"%d", v];
 }
 
 - (void) handleTap: (UIGestureRecognizer*)recognizer{
@@ -137,10 +169,6 @@
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    _threadActive = false;
-}
-
 //スクロールの拡大縮小の設定
 - (UIView*) viewForZoomingInScrollView: (UIScrollView*)aScrollView {
     return _mainPanel;
@@ -152,7 +180,7 @@
 }
 
 - (IBAction)backButtonPressed:(id)sender {
-    _threadActive = false;
+    _cometThreadNumber++;
     [self dismissViewControllerAnimated: YES completion: NULL];
 }
 
@@ -165,7 +193,7 @@
 }
 
 - (IBAction)updateButtonPressed:(id)sender {
-    [self updateViews];
+    [self refreshAllPostsAsync];
 }
 
 - (IBAction)viewSelectionPressed:(id)sender {
@@ -189,7 +217,9 @@
 - (void) setKFView: (KFView*) view{
     _selectedRow = [_views indexOfObject: view];
     //NSLog(@"%d", _selectedRow);
-    [self updateViews];
+    //[self refreshAllPostsAsync];
+    _cometThreadNumber++;
+    [self startComet: _cometThreadNumber];
 }
 
 - (void) setBgFromLibrary{
@@ -233,7 +263,7 @@
     }else{
         [_connector createNote: [self currentViewId] buildsOn: nil location: p];
     }
-    [self updateViews];
+    //[self updateViews];
 }
 
 // local version
@@ -368,36 +398,38 @@
     
     [noteview.model setLocation: noteview.frame.origin];
     NSString* viewId = [_views[_selectedRow] guid];
-    [_connector movePost: viewId note: noteview.model];
+    
+    dispatch_queue_t sub_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(sub_queue, ^{
+        _cometVersion++;
+        [_connector movePost: viewId note: noteview.model];
+    });
 }
 
-- (void) initServer: (iKFConnector*)connector communityId: (NSString*)communityId{
-    self->_connector = connector;
-    self->_communityId = communityId;
-    
-    _views = [_connector getViews: _communityId];
-    _selectedRow = 0;
-    //[_viewchooser reloadAllComponents];
-
-    [self updateViews];
-    [self startComet];
+- (void) refreshAllPostsSync{
+    NSDictionary* newPosts = [self retrievePosts];
+    [self refreshPosts: newPosts];
 }
 
-- (void) updateViewsComet{
-    _reusebox = _postRefViews;
-    [self updateViews];
-    _reusebox = [[NSMutableDictionary alloc] init];
+- (void) refreshAllPostsAsync{
+    dispatch_queue_t sub_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(sub_queue, ^{
+        NSDictionary* newPosts = [self retrievePosts];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshPosts: newPosts];
+        });
+    });
 }
 
-- (void) updateViews{
-    if(_connector == nil){
-        return;
-    }
-    
-    [self clearViews];
-    
+- (NSDictionary*)retrievePosts{
     NSString* viewId = [self currentViewId];
-    self->_posts = [_connector getPosts: viewId];
+    return [_connector getPosts: viewId];
+}
+
+- (void) refreshPosts: (NSDictionary*) newPosts {
+    _reusebox = _postRefViews;
+    [self clearViews];
+    self->_posts = newPosts;
     for(KFReference* each in [self->_posts allValues]){
         //NSLog(@"%@", each);
         if([each.post class] == [KFNote class]){
@@ -416,6 +448,7 @@
             [self addBuildsOn: each];
         }
     }
+    _reusebox = [[NSMutableDictionary alloc] init];
 }
 
 - (NSString*) currentViewId{

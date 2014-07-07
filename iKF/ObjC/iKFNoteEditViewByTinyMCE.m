@@ -10,6 +10,11 @@
 #import "iKFNoteEditViewByTinyMCE.h"
 #import "iKFConnector.h"
 #import "iKFWebView.h"
+#import "iKFLoadingView.h"
+
+static iKFWebView* globalEditWebView;
+static iKFLoadingView* globalLoadingView;
+static bool loaded;
 
 @implementation iKFNoteEditViewByTinyMCE{
     UIView* _containerView;
@@ -47,7 +52,18 @@
             [_sourceLabel setFont:[UIFont systemFontOfSize:24]];
             [_containerView addSubview:_sourceLabel];
             
-            _webView = [[iKFWebView alloc] init];
+            if (globalEditWebView == nil){
+                globalEditWebView = [[iKFWebView alloc] init];
+                loaded = false;
+            }else{
+                if(globalLoadingView !=nil){
+                    [globalLoadingView hide];
+                    globalLoadingView = nil;
+                }
+                [globalEditWebView removeFromSuperview];
+            }
+            _webView = globalEditWebView;
+            _webView.delegate = self;
             _webView.pasteAsReferenceTarget = self;
             //_webView.scrollView.scrollEnabled = FALSE;
             [_webView.layer setBorderColor:[UIColor blackColor].CGColor];
@@ -67,22 +83,55 @@
     [_webView stringByEvaluatingJavaScriptFromString: [NSString stringWithFormat: @"tinymce.activeEditor.insertContent('%@')", text]];
 }
 
+NSString* cashe;
+
 -(void) setText: text title: title{
+    cashe = text;
     [self setNavBarTitle: @"Edit"];
     [_titleView setText: title];
-    
+
+    //1
     //NSURL* url = [[NSURL alloc] initWithString: @"http://dl.dropboxusercontent.com/u/11409191/test/test4.html"];
     //NSURLRequest * req = [[NSURLRequest alloc] initWithURL:url];
     //[_webView loadRequest:req];
     
-    NSString* template = [[iKFConnector getInstance] getEditTemplate];
-    NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:text];
-    [_webView loadHTMLString: html baseURL:nil];
+    //2
+    //NSString* template = [[iKFConnector getInstance] getEditTemplate];
+    //NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:text];
+    //[_webView loadHTMLString: html baseURL:nil];
+
+    //v3
+    if(!loaded){
+        globalLoadingView = [[iKFLoadingView alloc] init];
+        [globalLoadingView showOnView: _webView];
+        NSString* template = [[iKFConnector getInstance] getEditTemplate];
+        NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:text];
+        [_webView loadHTMLString: html baseURL:nil];
+    }else{
+        [_webView stringByEvaluatingJavaScriptFromString: [NSString stringWithFormat: @"tinymce.activeEditor.setContent('%@')", text]];
+    }
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    if(globalLoadingView !=nil){
+        [globalLoadingView hide];
+        globalLoadingView = nil;
+    }
+    if(!loaded){
+        loaded = true;
+    }
 }
 
 -(NSString*)getText{
+    if(!loaded){
+        return cashe;
+    }
     NSString* text = [_webView stringByEvaluatingJavaScriptFromString:@"tinymce.activeEditor.getContent();"];
     //NSLog(@"getText: %@", text);
+    //    if(text == nil || text.length == 0){
+    //        return cashe;
+    //    }
     return text;
 }
 

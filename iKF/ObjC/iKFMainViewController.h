@@ -46,7 +46,7 @@
 
 - (void) setKFView: (KFView*) view;
     
-- (void) initServer: (iKFConnector*)connector communityId: (NSString*)communityId;
+- (void) go:(KFRegistration*)registration;
 //- (void) setJSON: (id)json;
 
 - (void) postLocationChanged: (KFPostRefView*) noteview;

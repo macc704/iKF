@@ -55,20 +55,11 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
 
     @IBAction func enterButtonPressed(sender : AnyObject) {
-        let connector = iKFConnector.getInstance();
-        
-        let row = self.registrationsPicker.selectedRowInComponent(0);
-        let enterResult = connector.enterCommunity(registrations[row]);
-        if(enterResult == false){
-            //alert
-            return;
-        }
-        
         let mainViewController = iKFMainViewController(nibName: nil, bundle: nil);
-        mainViewController.user = connector.getCurrentUser();
         self.presentViewController(mainViewController, animated: true, completion: nil);
-        let communityId = self.registrations[row].communityId;
-        mainViewController.initServer(connector, communityId:communityId);
+
+        let row = self.registrationsPicker.selectedRowInComponent(0);
+        mainViewController.go(self.registrations[row]);
     }
     
     @IBAction func regsiterButtonPressed(sender : AnyObject) {

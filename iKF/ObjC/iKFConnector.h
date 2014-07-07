@@ -29,6 +29,7 @@
 - (BOOL) testConnectionToTheHost;
 - (NSString*) getURL: (NSString*) urlString;
 
+- (NSString*) getMobileJS;
 - (NSString*) getEditTemplate;
 - (NSString*) getReadTemplate;
 
@@ -49,7 +50,7 @@
 - (BOOL) updatenote: (KFNote*)note;
 
 - (BOOL) createPicture: (UIImage*)image onView:(NSString*)viewId location:(CGPoint)p;
-- (NSString*) getNextViewVersionAsync: (NSString*)viewId currentVersion: (NSString*) currentVersion;
+- (int) getNextViewVersionAsync: (NSString*)viewId currentVersion: (int) currentVersion;
 
 
 @end
