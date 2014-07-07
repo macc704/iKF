@@ -79,7 +79,7 @@ class KFScaffoldingTableViewController: UITableViewController {
             insertString = insertString.stringByReplacingOccurrencesOfString("\n", withString: "", options: nil, range: nil);
             self.noteEditView?.insertText(insertString);
         }
-        self.dismissModalViewControllerAnimated(false);
+        self.dismissViewControllerAnimated(false, completion: nil);
     }
     
     /*

@@ -96,7 +96,7 @@ class KFPostRefView: UIView {
         newPopupController.note = (self.model.post as KFNote);
 
         newPopupController.kfViewController = mainController;
-        newPopupController.contentSizeForViewInPopover = newPopupController.view.frame.size;
+        newPopupController.preferredContentSize = newPopupController.view.frame.size;
         self.notePopupController = newPopupController;
         
         self.popoverController = UIPopoverController(contentViewController: notePopupController);

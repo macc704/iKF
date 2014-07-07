@@ -51,7 +51,7 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
     @IBAction func backButtonPressed(sender : AnyObject) {
-        self.dismissModalViewControllerAnimated(true);
+        self.dismissViewControllerAnimated(false, completion: nil);
     }
 
     @IBAction func enterButtonPressed(sender : AnyObject) {

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13D65" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KFRegistrationViewController" customModule="iKF" customModuleProvider="target">
@@ -13,11 +14,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+            <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UJC-wR-EXi">
-                    <rect key="frame" x="0.0" y="22" width="480" height="44"/>
+                    <rect key="frame" x="0.0" y="22" width="1024" height="44"/>
                     <items>
                         <navigationItem title="Your Community" id="WiK-8O-uzw">
                             <barButtonItem key="leftBarButtonItem" title="&lt;Back" id="rlW-S2-v8T">
@@ -104,9 +105,11 @@
                 <constraint firstItem="ypR-75-JU3" firstAttribute="leading" secondItem="kKg-ko-RIR" secondAttribute="trailing" constant="18" id="uBz-Nu-Xws"/>
                 <constraint firstItem="ypR-75-JU3" firstAttribute="trailing" secondItem="wqS-Ka-1Md" secondAttribute="trailing" id="zW7-JH-fss"/>
             </constraints>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="AbstractSizeClassScreen[default]"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics">
+                <size key="portraitSize" width="768" height="1024"/>
+                <size key="landscapeSize" width="1024" height="768"/>
+            </simulatedScreenMetrics>
         </view>
     </objects>
 </document>
