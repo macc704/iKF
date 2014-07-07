@@ -53,8 +53,8 @@
         pasteString = [NSString stringWithFormat: @"<kf-content-reference class=\"mceNonEditable\" postid=\"%@\">%@</kf-content-reference>", guid, [UIPasteboard generalPasteboard].string];
     }else{//assume postreference
         pasteString = [NSString stringWithFormat: @"<kf-post-reference class=\"mceNonEditable\" postid=\"%@\">%@</kf-post-reference>", guid, [UIPasteboard generalPasteboard].string];
-        NSLog(@"%@", pasteString);
     }
+    NSLog(@"pasteString=%@", pasteString);
     [self.pasteAsReferenceTarget pasteAsReference: pasteString];
 }
 
