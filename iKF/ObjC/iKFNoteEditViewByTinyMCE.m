@@ -80,7 +80,10 @@ static bool loaded;
 
 -(void) insertText: text{
     //NSLog(@"%@", text);
-    [_webView stringByEvaluatingJavaScriptFromString: [NSString stringWithFormat: @"tinymce.activeEditor.insertContent('%@')", text]];
+    NSString* insertString = text;
+    insertString = [insertString stringByReplacingOccurrencesOfString: @"\r" withString: @""];
+    insertString = [insertString stringByReplacingOccurrencesOfString: @"\n" withString: @""];
+    [_webView stringByEvaluatingJavaScriptFromString: [NSString stringWithFormat: @"tinymce.activeEditor.insertContent('%@')", insertString]];
 }
 
 NSString* cashe;

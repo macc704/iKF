@@ -75,8 +75,8 @@ class KFScaffoldingTableViewController: UITableViewController {
             insertString = insertString.stringByReplacingOccurrencesOfString("%SUPPORTID%", withString: supportId, options: nil, range: nil);
             insertString = insertString.stringByReplacingOccurrencesOfString("%UNIQUEID%", withString: uniqueId, options: nil, range: nil);
             insertString = insertString.stringByReplacingOccurrencesOfString("%TITLE%", withString: title, options: nil, range: nil);
-            insertString = insertString.stringByReplacingOccurrencesOfString("\r", withString: "", options: nil, range: nil);
-            insertString = insertString.stringByReplacingOccurrencesOfString("\n", withString: "", options: nil, range: nil);
+            //insertString = insertString.stringByReplacingOccurrencesOfString("\r", withString: "", options: nil, range: nil);
+            //insertString = insertString.stringByReplacingOccurrencesOfString("\n", withString: "", options: nil, range: nil);
             self.noteEditView?.insertText(insertString);
         }
         self.dismissViewControllerAnimated(false, completion: nil);
