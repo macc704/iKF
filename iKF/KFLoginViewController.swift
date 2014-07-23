@@ -12,9 +12,9 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     var servers = ["132.203.154.41:8080", "rooibos.cs.inf.shizuoka.ac.jp", "128.100.72.137:8080", "localhost:8080", "192.168.43.97:8080", "138.51.179.228:8080", "no server"];
     
-    @IBOutlet var passwordField : UITextField
-    @IBOutlet var usernameField : UITextField
-    @IBOutlet var serverPicker : UIPickerView
+    @IBOutlet var passwordField : UITextField!
+    @IBOutlet var usernameField : UITextField!
+    @IBOutlet var serverPicker : UIPickerView!
     
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)

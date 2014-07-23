@@ -12,8 +12,8 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
 
     var registrations:Array<KFRegistration> = [];
     
-    @IBOutlet var registrationCodeField : UITextField
-    @IBOutlet var registrationsPicker : UIPickerView
+    @IBOutlet var registrationCodeField : UITextField!
+    @IBOutlet var registrationsPicker : UIPickerView!
     
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
