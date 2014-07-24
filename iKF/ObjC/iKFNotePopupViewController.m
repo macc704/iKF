@@ -35,7 +35,7 @@
 
     dispatch_queue_t sub_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(sub_queue, ^{
-        [[iKFConnector getInstance] readPost: self.note];
+        [[KFService getInstance] readPost: self.note];
     });
 
     self.note.beenRead = true;
@@ -68,11 +68,13 @@
     //[self.webView loadHTMLString: html baseURL: [[iKFConnector getInstance] getBaseURL]];
     
     //v3
-    NSString* mobileJS = [[iKFConnector getInstance] getMobileJS];
+    NSString* mobileJS = [[KFService getInstance] getMobileJS];
     [((iKFWebView*)self.webView) stringByEvaluatingJavaScriptFromString: mobileJS];
-    NSString* template = [[iKFConnector getInstance] getReadTemplate];
+    NSString* template = [[KFService getInstance] getReadTemplate];
     NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:self.note.content];
-    [self.webView loadHTMLString: html baseURL:[[iKFConnector getInstance] getBaseURL]];
+    NSString* baseURLStr = [[KFService getInstance] getHostURL];
+    NSURL* baseURL = [[NSURL alloc] initWithString:baseURLStr];
+    [self.webView loadHTMLString: html baseURL: baseURL];
     
     self.note.beenRead = true;
     [self.note notify];

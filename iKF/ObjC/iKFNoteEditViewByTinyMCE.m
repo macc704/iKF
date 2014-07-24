@@ -11,6 +11,7 @@
 #import "iKFConnector.h"
 #import "iKFWebView.h"
 #import "iKFLoadingView.h"
+#import "iKF-Swift.h"
 
 static iKFWebView* globalEditWebView;
 static iKFLoadingView* globalLoadingView;
@@ -107,7 +108,7 @@ NSString* cashe;
     if(!loaded){
         globalLoadingView = [[iKFLoadingView alloc] init];
         [globalLoadingView showOnView: _webView];
-        NSString* template = [[iKFConnector getInstance] getEditTemplate];
+        NSString* template = [[KFService getInstance] getEditTemplate];
         NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:text];
         [_webView loadHTMLString: html baseURL:nil];
     }else{

@@ -75,6 +75,8 @@
 		49C78D62194105C2004D3404 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49C78D60194105C2004D3404 /* Main.storyboard */; };
 		49C78D64194105C2004D3404 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49C78D63194105C2004D3404 /* Images.xcassets */; };
 		49C78D70194105C2004D3404 /* iKFTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C78D6F194105C2004D3404 /* iKFTests.swift */; };
+		49EEFF071981627600F78F16 /* KFNetworkUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EEFF061981627600F78F16 /* KFNetworkUtil.swift */; };
+		49EEFF0C1981974500F78F16 /* iKFJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EEFF0B1981974500F78F16 /* iKFJSONScanner.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +184,9 @@
 		49C78D69194105C2004D3404 /* iKFTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iKFTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		49C78D6E194105C2004D3404 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49C78D6F194105C2004D3404 /* iKFTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iKFTests.swift; sourceTree = "<group>"; };
+		49EEFF061981627600F78F16 /* KFNetworkUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFNetworkUtil.swift; sourceTree = "<group>"; };
+		49EEFF0A1981974500F78F16 /* iKFJSONScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFJSONScanner.h; sourceTree = "<group>"; };
+		49EEFF0B1981974500F78F16 /* iKFJSONScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFJSONScanner.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,6 +287,8 @@
 			children = (
 				490E7584194111A8004E8BF7 /* iKFConnector.h */,
 				490E7585194111A8004E8BF7 /* iKFConnector.m */,
+				49EEFF0A1981974500F78F16 /* iKFJSONScanner.h */,
+				49EEFF0B1981974500F78F16 /* iKFJSONScanner.m */,
 			);
 			name = Connector;
 			sourceTree = "<group>";
@@ -302,6 +309,7 @@
 				49842F7319805ACB0012900B /* KFHttpResponse.swift */,
 				49842F7519805AE20012900B /* KFHttpRequest.swift */,
 				49842F7719805AFC0012900B /* KFHttpConnection.swift */,
+				49EEFF061981627600F78F16 /* KFNetworkUtil.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -575,6 +583,7 @@
 				490E75BE194111A8004E8BF7 /* iKFMainViewController.m in Sources */,
 				49C5591919462FB700FDFF32 /* KFDrawingRefView.swift in Sources */,
 				494DE5A4195488DD0053F9DF /* KFAppUtils.swift in Sources */,
+				49EEFF0C1981974500F78F16 /* iKFJSONScanner.m in Sources */,
 				49842F7219805A3D0012900B /* KFService.swift in Sources */,
 				490E75B8194111A8004E8BF7 /* iKFConnection.m in Sources */,
 				495761A91945EEA10017A852 /* KFPost.swift in Sources */,
@@ -595,6 +604,7 @@
 				490E75C4194111A8004E8BF7 /* iKFNoteEditViewController.m in Sources */,
 				49C5590F1945F5D700FDFF32 /* KFReference.swift in Sources */,
 				490E75C2194111A8004E8BF7 /* iKFNoteEditViewBySource.m in Sources */,
+				49EEFF071981627600F78F16 /* KFNetworkUtil.swift in Sources */,
 				49842F7619805AE20012900B /* KFHttpRequest.swift in Sources */,
 				492C10291947563300512591 /* KFSupport.swift in Sources */,
 				490E75C3194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.m in Sources */,

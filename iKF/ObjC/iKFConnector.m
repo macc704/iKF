@@ -24,7 +24,7 @@ static iKFConnector* singleton;
     NSString* _mobileJS;
 }
 
-+ (iKFConnector*) getInstance{
++ (iKFConnector*) getInstance2{
     if(singleton == nil){
         singleton = [[iKFConnector alloc] init];
     }
@@ -32,7 +32,7 @@ static iKFConnector* singleton;
 }
 
 - (BOOL) testConnectionToGoogle{
-    return [[iKFConnector getInstance] testConnectionToTheURL: @"http://www.google.com/"] == 200;
+    return [self testConnectionToTheURL: @"http://www.google.com/"] == 200;
 }
 
 - (id) initWithHost: (NSString*)host{
@@ -43,7 +43,7 @@ static iKFConnector* singleton;
 }
 
 - (NSURL*) getBaseURL{
-    NSString* baseURLStr = [NSString stringWithFormat: @"http://%@/", [iKFConnector getInstance].host ];
+    NSString* baseURLStr = [NSString stringWithFormat: @"http://%@/", self.host];
     NSURL* baseURL = [[NSURL alloc] initWithString:baseURLStr];
     return baseURL;
 }
@@ -90,7 +90,7 @@ static iKFConnector* singleton;
 
 - (long) connectToTheURL: (NSString*) urlString bodyString: (NSString**)bodyString{
     KFService* service = [KFService getInstance];
-    KFHttpResponse* res = [service connectToTheURL: urlString];
+    KFHttpResponse* res = [service test: urlString];
     if([res getStatusCode] == 200 && bodyString != nil){
         *bodyString = [res getBodyAsString];
     }
@@ -120,6 +120,7 @@ static iKFConnector* singleton;
 //    return 0;
 //}
 
+//worked
 - (BOOL) loginWithName: (NSString*)name password: (NSString*)password{
     NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/account/userLogin", self.host]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
@@ -139,6 +140,7 @@ static iKFConnector* singleton;
     return YES;
 }
 
+//worked
 - (KFUser*) getCurrentUser{
     NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/account/currentUser", self.host]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
@@ -162,6 +164,8 @@ static iKFConnector* singleton;
     return model;
 }
 
+
+//worked
 - (NSArray*) getRegistrations{
     NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/account/registrations", self.host]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
@@ -189,6 +193,7 @@ static iKFConnector* singleton;
     return models;
 }
 
+//worked
 - (BOOL) registerCommunity: (NSString*)registrationCode{
     NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/register/%@", self.host, registrationCode]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
@@ -205,6 +210,7 @@ static iKFConnector* singleton;
     return YES;
 }
 
+//worked
 - (BOOL) enterCommunity: (KFRegistration*)registration{
     NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/account/selectSection/%@", self.host, registration.guid]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
@@ -222,10 +228,12 @@ static iKFConnector* singleton;
     return YES;
 }
 
+//worked
 - (void) handleError: (NSString*)msg{
     NSLog(@"iKFConnectionError - %@", msg);
 }
 
+//worked
 - (NSArray*) getViews: (NSString*)communityId {
     NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/content/getSectionViews/%@", self.host, communityId]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
@@ -252,6 +260,7 @@ static iKFConnector* singleton;
     return models;
 }
 
+//worked
 - (NSDictionary*) getPosts: (NSString*)viewId {
     NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/content/getView/%@", self.host, viewId]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
@@ -290,6 +299,7 @@ static iKFConnector* singleton;
     return models;
 }
 
+//moved
 - (void)scanPostRef:(id)each models:(NSMutableDictionary *)models {
     KFReference* reference = [[KFReference alloc] init];
     
@@ -348,6 +358,7 @@ static iKFConnector* singleton;
     [models setObject: reference forKey: reference.guid];
 }
 
+//worked
 - (BOOL) movePost: (NSString*)viewId note: (KFReference*)postRef {
     NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/updatePostref/%@/%@", self.host, viewId, postRef.guid]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
@@ -385,6 +396,8 @@ static iKFConnector* singleton;
     return bodyString;
 }
 
+
+//worked
 - (BOOL) readPost: (KFPost*)post {
     NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/readPost/%@", self.host, post.guid]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
@@ -401,6 +414,7 @@ static iKFConnector* singleton;
     return YES;
 }
 
+//worked
 - (BOOL) createNote: (NSString*)viewId buildsOn: (KFReference*)buildsonNoteRef location: (CGPoint)p{
     NSURL *url;
     if(buildsonNoteRef != nil){
@@ -424,6 +438,8 @@ static iKFConnector* singleton;
     return YES;
 }
 
+
+//worked
 - (BOOL) updatenote: (KFNote*)note{
     NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/updateNote/%@", self.host, note.guid]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
@@ -446,6 +462,7 @@ static iKFConnector* singleton;
     return YES;
 }
 
+//worked
 - (NSString*) escapeString: unescaped{
     return (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
                                                               NULL,
@@ -455,6 +472,7 @@ static iKFConnector* singleton;
                                                               kCFStringEncodingUTF8));
 }
 
+//worked
 - (NSArray*) getScaffolds: (NSString*)viewId {
     NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/mobile/getScaffolds/%@", self.host, viewId]];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];

@@ -31,7 +31,6 @@
     iKFHandle* _handle;
     NSDictionary* _posts;
     NSDictionary* _postRefViews;
-    iKFConnector* _connector;
     NSString* _communityId;
     NSArray* _views;
     //NSString* _viewId;
@@ -96,19 +95,18 @@
 }
 
 - (void) go:(KFRegistration *)registration{
-    self->_connector = [iKFConnector getInstance];
-    self->_user = [_connector getCurrentUser];
+    self->_user = [[KFService getInstance] getCurrentUser];
     self->_communityId = registration.communityId;
 
     dispatch_queue_t sub_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(sub_queue, ^{
-        bool enterResult = [_connector enterCommunity: registration];
+        bool enterResult = [[KFService getInstance] enterCommunity: registration];
         if(enterResult == false){
             //alert
             return;
         }
         
-        _views = [_connector getViews: _communityId];
+        _views = [[KFService getInstance] getViews: _communityId];
         _selectedRow = 0;
         //[_viewchooser reloadAllComponents];
         
@@ -131,7 +129,7 @@
                 viewId = [self currentViewId];
                 _cometVersion = -1;
             }
-            int newVersion = [[iKFConnector getInstance] getNextViewVersionAsync: viewId currentVersion: _cometVersion];
+            int newVersion = [[KFService getInstance] getNextViewVersionAsync: viewId currentVersion: _cometVersion];
             if(threadNumber != _cometThreadNumber){
                 break;
             }
@@ -235,7 +233,7 @@
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     //_mainPanel.backgroundColor=[UIColor colorWithPatternImage: image];
     [_popController dismissPopoverAnimated:YES];
-    [[iKFConnector getInstance] createPicture:image onView:[self currentViewId] location:CGPointMake(50, 50)];
+    [[iKFConnector getInstance2] createPicture:image onView:[self currentViewId] location:CGPointMake(50, 50)];
     [self update];
 }
 
@@ -258,12 +256,7 @@
 
 - (void) createNote: (CGPoint)p buildson: (KFPostRefView*)from{
     [self removeHandle];
-    if(from != nil){
-        [_connector createNote: [self currentViewId] buildsOn: from.model location: p];
-    }else{
-        [_connector createNote: [self currentViewId] buildsOn: nil location: p];
-    }
-    //[self updateViews];
+    [[KFService getInstance] createNote: [self currentViewId] buildsOn: from.model location: p];
 }
 
 // local version
@@ -392,7 +385,7 @@
 }
 
 - (void) postLocationChanged: (KFPostRefView*) noteview{
-    if(_connector == nil){
+    if([KFService getInstance] == nil){
         return;
     }
     
@@ -402,7 +395,7 @@
     dispatch_queue_t sub_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(sub_queue, ^{
         _cometVersion++;
-        [_connector movePost: viewId note: noteview.model];
+        [[KFService getInstance] movePostRef: viewId postRef: noteview.model];
     });
 }
 
@@ -423,7 +416,7 @@
 
 - (NSDictionary*)retrievePosts{
     NSString* viewId = [self currentViewId];
-    return [_connector getPosts: viewId];
+    return [[KFService getInstance] getPosts: viewId];
 }
 
 - (void) refreshPosts: (NSDictionary*) newPosts {
@@ -459,46 +452,5 @@
     _postRefViews = [[NSMutableDictionary alloc] init];
     [_mainPanel clearViews];
 }
-
-//*********************************
-//for picker
-//*********************************
-
-- (void) pickerView: (UIPickerView*)pView didSelectRow:(NSInteger) row  inComponent: (NSInteger)component {
-    _selectedRow = row;
-}
-
-- (NSInteger) numberOfComponentsInPickerView: (UIPickerView *)pView {
-    return 1;
-}
-
-- (NSInteger) pickerView: (UIPickerView*)pView numberOfRowsInComponent: (NSInteger)rowCount {
-    return [_views count];
-}
-
-- (NSString*) pickerView: (UIPickerView*)pView titleForRow: (NSInteger)rowCount forComponent:(NSInteger) comp {
-    return [_views[rowCount] title];
-}
-
-
-
-
-
-//- (void) setJSON: (id)json{
-//    //    NSLog(@"%@", json[0][@"postInfo"][@"title"]);
-//    for (id post in json) {
-//        NSString* title = post[@"postInfo"][@"title"];
-//        NSString* body = post[@"postInfo"][@"body"];
-//        CGFloat x = [post[@"location"][@"point"][@"x"] floatValue];
-//        CGFloat y = [post[@"location"][@"point"][@"y"] floatValue];
-//        CGPoint p = CGPointMake(x, y);
-//        iKFUser* user = [[iKFUser alloc] init];
-//        user.firstName = post[@"postInfo"][@"authors"][0][@"firstName"];
-//        user.lastName = post[@"postInfo"][@"authors"][0][@"lastName"];
-//        [self addNote0: p title: title body: body user: user];
-//    }
-//    //NSLog(@"%@", [json[0] description]);
-//}
-
 
 @end

@@ -20,13 +20,13 @@
 @property NSString* host;
 //@property NSMutableArray* registrations;
 
-+ (iKFConnector*) getInstance;
++ (iKFConnector*) getInstance2;
     
 //- (id) initWithHost: (NSString*)host;
 
 - (NSURL*) getBaseURL;
-- (BOOL) testConnectionToGoogle;
-- (BOOL) testConnectionToTheHost;
+//- (BOOL) testConnectionToGoogle;
+//- (BOOL) testConnectionToTheHost;
 - (NSString*) getURL: (NSString*) urlString;
 
 - (NSString*) getMobileJS;

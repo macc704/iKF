@@ -17,7 +17,7 @@
 @class KFNote;
 @class KFView;
 
-@interface iKFMainViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, UIPickerViewDelegate, iKFTableSelectionListener>
+@interface iKFMainViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate>
 
 @property KFUser* user;
 

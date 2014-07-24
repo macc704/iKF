@@ -15,20 +15,270 @@ class KFService: NSObject {
         return instance;
     }
     
-    private var host:String?
+    private var host:String?;
+    private var baseURL:String?;
+    
+    private var jsonScanner:iKFJSONScanner?;
+    
+    //cache
+    private var views = [String: KFView]();
+    private var editTemplate:String?;
+    private var readTemplate:String?;
+    private var mobileJS:String?;
     
     private init(){
     }
     
     func initialize(host:String){
         self.host = host;
+        self.baseURL = String(format: "http://%@/kforum/", host);
+        
+        self.jsonScanner = iKFJSONScanner();
+        
+        self.views = [String: KFView]();
+        self.editTemplate = nil;
+        self.readTemplate = nil;
+        self.mobileJS = nil;
     }
     
-    func connectToTheURL(urlString:String) -> KFHttpResponse{
+    func getHost() -> String{
+        return self.host!;
+    }
+    
+    func getHostURL() -> String{
+        return String(format: "http://%@/", host!);
+    }
+    
+    func testConnectionToGoogle() -> Bool{
+        return self.test("http://www.google.com/").getStatusCode() == 200;
+    }
+    
+    func testConnectionToTheHost() -> Bool{
+        return self.test(self.baseURL!).getStatusCode() == 200;
+    }
+    
+    func test(urlString:String) -> KFHttpResponse{
         let req = KFHttpRequest(urlString: urlString, method: "GET");
         req.nsRequest.timeoutInterval = 12.0;
         let res = KFHttpConnection.connect(req);
         return res;
     }
     
+    func getMobileJS() -> String{
+        if(mobileJS == nil){
+            mobileJS = getURL("https://dl.dropboxusercontent.com/u/11409191/ikf/kfmobile.js");
+        }
+        return mobileJS!;
+    }
+    
+    func getEditTemplate() -> String{
+        if(editTemplate == nil){
+            editTemplate = getURL("http://dl.dropboxusercontent.com/u/11409191/ikf/edit.html");
+        }
+        return editTemplate!;
+    }
+    
+    func getReadTemplate() -> String{
+        if(readTemplate == nil){
+            readTemplate = getURL("http://dl.dropboxusercontent.com/u/11409191/ikf/read.html");
+        }
+        return readTemplate!;
+    }
+    
+    func getURL(urlString:String) -> String?{
+        let req = KFHttpRequest(urlString: urlString, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            return nil;
+        }
+        return res.getBodyAsString();
+    }
+    
+    func login(userName:String, password:String) -> Bool{
+        let url = self.baseURL! + "rest/account/userLogin";
+        let req = KFHttpRequest(urlString: url, method: "POST");
+        req.addParam("userName", value: userName);
+        req.addParam("password", value: password);
+        let res = KFHttpConnection.connect(req);
+        return res.getStatusCode() == 200;
+    }
+    
+    func getCurrentUser() -> KFUser{
+        let url = self.baseURL! + "rest/account/currentUser";
+        let req = KFHttpRequest(urlString: url, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in currentUser() code=%d", res.getStatusCode()));
+            return KFUser();
+        }
+        
+        let json: AnyObject = res.getBodyAsJSON();
+        let each = json as NSDictionary;
+        let model = KFUser();
+        model.guid = each["guid"] as String;
+        model.firstName = each["firstName"] as String;
+        model.lastName = each["lastName"] as String;
+        
+        return model;
+    }
+    
+    func registerCommunity(registrationCode:String) -> Bool{
+        let url = self.baseURL! + "rest/mobile/register/" + registrationCode;
+        let req = KFHttpRequest(urlString: url, method: "POST");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in registerCommunity() code=%d", res.getStatusCode()));
+            return false;
+        }
+        return true;
+    }
+    
+    func getRegistrations() -> [KFRegistration]{
+        let url = self.baseURL! + "rest/account/registrations";
+        let req = KFHttpRequest(urlString: url, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in getRegistrations() code=%d", res.getStatusCode()));
+            return [];
+        }
+        return jsonScanner!.scanRegistrations(res.getBodyAsJSON()) as  [KFRegistration];
+    }
+    
+    func enterCommunity(registration:KFRegistration) -> Bool{
+        let url = self.baseURL! + "rest/account/selectSection/" + registration.guid;
+        let req = KFHttpRequest(urlString: url, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in enterCommunity() code=%d", res.getStatusCode()));
+            return false;
+        }
+        return true;
+    }
+    
+    func getViews(communityId:String) -> [KFView]{
+        let url = self.baseURL! + "rest/content/getSectionViews/" + communityId;
+        let req = KFHttpRequest(urlString: url, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in getViews() code=%d", res.getStatusCode()));
+            return [];
+        }
+        return jsonScanner!.scanViews(res.getBodyAsJSON()) as  [KFView];
+    }
+    
+    func getPosts(viewId:String) -> [String: KFReference]{
+        let url = self.baseURL! + "rest/content/getView/" + viewId;
+        let req = KFHttpRequest(urlString: url, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in getPosts() code=%d", res.getStatusCode()));
+            return [:];
+        }
+        let json: AnyObject = res.getBodyAsJSON();
+        return jsonScanner!.scanPosts(res.getBodyAsJSON()) as [String: KFReference];
+    }
+    
+    func movePostRef(viewId:String, postRef:KFReference) -> Bool{
+        let url = self.baseURL! + "rest/mobile/updatePostref/" + viewId + "/" + postRef.guid;
+        let req = KFHttpRequest(urlString: url, method: "POST");
+        req.addParam("x", value: String(Int(postRef.location.x)));
+        req.addParam("y", value: String(Int(postRef.location.y)));
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in movePostRef() code=%d", res.getStatusCode()));
+            return false;
+        }
+        return true;
+    }
+    
+    func getNoteAsHTML(post:KFPost) -> String{
+        let url = self.baseURL! + "rest/mobile/getNoteAsHTMLwJS/" + post.guid;
+        let req = KFHttpRequest(urlString: url, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in getNoteAsHTML() code=%d", res.getStatusCode()));
+            return "";
+        }
+        return req.getBodyAsString();
+    }
+    
+    func readPost(post:KFPost) -> Bool{
+        let url = self.baseURL! + "rest/mobile/readPost/" + post.guid;
+        let req = KFHttpRequest(urlString: url, method: "POST");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in readPost() code=%d", res.getStatusCode()));
+            return false;
+        }
+        return true;
+    }
+    
+    func createNote(viewId:String, buildsOn:KFReference?, location:CGPoint) -> Bool{
+        var url = self.baseURL! + "rest/mobile/createNote/" + viewId + "/";
+        if(buildsOn){
+            url += buildsOn!.guid;//currently refId is used!
+        }
+        let req = KFHttpRequest(urlString: url, method: "POST");
+        req.addParam("x", value: String(Int(location.x)));
+        req.addParam("y", value: String(Int(location.y)));
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in createNote() code=%d", res.getStatusCode()));
+            return false;
+        }
+        return true;
+    }
+    
+    func updateNote(note:KFNote)->Bool{
+        var url = self.baseURL! + "rest/mobile/updateNote/" + note.guid;
+        let req = KFHttpRequest(urlString: url, method: "POST");
+        req.addParam("title", value: note.title);
+        req.addParam("body", value: note.content);
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in updateNote() code=%d", res.getStatusCode()));
+            return false;
+        }
+        return true;
+    }
+    
+    func getScaffolds(viewId:String) -> [KFScaffold]{
+        var url = self.baseURL! + "rest/mobile/getScaffolds/" + viewId;
+        let req = KFHttpRequest(urlString: url, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in getScaffolds() code=%d", res.getStatusCode()));
+            return [];
+        }
+        return jsonScanner!.scanScaffolds(res.getBodyAsJSON()) as [KFScaffold];
+    }
+    
+    func getNextViewVersionAsync(viewId:String, currentVersion:Int) -> Int{
+        var url = self.baseURL! + "rest/mobile/getNextViewVersionAsync/" + viewId + "/" + String(currentVersion);
+        let req = KFHttpRequest(urlString: url, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in getNextViewVersionAsync() code=%d", res.getStatusCode()));
+            return -1;
+        }
+        return res.getBodyAsString().toInt()!;
+    }
+    
+    func handleError(msg:String){
+        println("KFService: Error: " + msg);
+    }
+    
 }
+
+// JSON on Swift requires painful code, so I decided to stay this part on Obj-C
+//    let json: AnyObject = res.getBodyAsJSON();
+//    var models = [KFRegistration]();
+//    for each in (json as Array<NSDictionary>) {
+//    var model = KFRegistration();
+//    model.guid = each["guid"] as String;
+//    model.communityId = each["sectionId"] as String;
+//    model.communityName = each["sectionTitle"] as String;
+//    model.roleName = (each["roleInfo"] as NSDictionary)["name"] as String;
+//    models.append(model);
+//    }
+//    return models;

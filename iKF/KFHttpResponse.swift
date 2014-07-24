@@ -17,24 +17,23 @@ class KFHttpResponse: NSObject {
     init(){
     }
     
-    func getBodyAsString() -> NSString {
-        if(bodyData == nil){
-            return "";
-        }
-        var bodyString = NSString(data: bodyData, encoding:NSUTF8StringEncoding);
-        if(bodyString == nil){
-            return "";
-        }
-        return bodyString;
-    }
-    
     func getStatusCode() -> Int{
+        if(error != nil){
+            return error!.code;
+        }
         if(res != nil){
             return res!.statusCode;
-        }else if(error != nil){
-            return error!.code;
-        }else{
-            return -1;
         }
+        return -1;
+    }
+    
+    func getBodyAsString() -> String {
+        return KFNetworkUtil.dataToString(bodyData);
+    }
+    
+    func getBodyAsJSON() -> AnyObject{
+        var error: NSError?
+        let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(bodyData, options: NSJSONReadingOptions.AllowFragments, error: &error);
+        return json;
     }
 }

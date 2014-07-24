@@ -63,14 +63,14 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
     @IBAction func regsiterButtonPressed(sender : AnyObject) {
-        let connector = iKFConnector.getInstance();
-        connector.registerCommunity(registrationCodeField.text);
+        let service = KFService.getInstance();
+        service.registerCommunity(registrationCodeField.text);
         self.refresh();
     }
     
-    func refresh(){
-        let connector = iKFConnector.getInstance();
-        self.registrations = connector.getRegistrations() as Array<KFRegistration>;
+    private func refresh(){
+        let service = KFService.getInstance();
+        self.registrations = service.getRegistrations();
         self.registrationsPicker.reloadAllComponents();
     }
     

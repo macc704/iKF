@@ -34,7 +34,7 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
         webView.scrollView.bounces = false;
         self.addSubview(webView);
         
-        let baseURLStr = "http://" + iKFConnector.getInstance().host;
+        let baseURLStr = "http://" + KFService.getInstance().getHost();
         let baseURL = NSURL(string: baseURLStr);
         webView.loadHTMLString(drawing.content, baseURL: baseURL);
     }

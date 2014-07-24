@@ -66,7 +66,7 @@
     if(dirty){
         self.note.title = newTitle;
         self.note.content = newContent;
-        [[iKFConnector getInstance] updatenote: self.note];
+        [[KFService getInstance] updateNote: self.note];
         [self.note notify];
     }
 }

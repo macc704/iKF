@@ -25,5 +25,7 @@
 #import "iKFErrorHandler.h"
 #import "iKFWebView.h"
 
+#import "iKFJSONScanner.h"
+
 //#import "iKFViewController.h"
 //#import "iKFViewController.h"
