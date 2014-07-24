@@ -52,6 +52,10 @@
 		495FAFA519547D4D00D147BA /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = 495FAFA019547D4D00D147BA /* resize.png */; };
 		495FAFA619547D4D00D147BA /* rotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 495FAFA119547D4D00D147BA /* rotation.png */; };
 		495FAFA719547D4D00D147BA /* viewlink.png in Resources */ = {isa = PBXBuildFile; fileRef = 495FAFA219547D4D00D147BA /* viewlink.png */; };
+		49842F7219805A3D0012900B /* KFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49842F7119805A3D0012900B /* KFService.swift */; };
+		49842F7419805ACB0012900B /* KFHttpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49842F7319805ACB0012900B /* KFHttpResponse.swift */; };
+		49842F7619805AE20012900B /* KFHttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49842F7519805AE20012900B /* KFHttpRequest.swift */; };
+		49842F7819805AFC0012900B /* KFHttpConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49842F7719805AFC0012900B /* KFHttpConnection.swift */; };
 		498BD1AB1942B768006217AD /* KFRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1AA1942B768006217AD /* KFRegistration.swift */; };
 		498BD1AD1942BC59006217AD /* KFUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1AC1942BC59006217AD /* KFUser.swift */; };
 		498BD1AF1942C1E0006217AD /* KFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1AE1942C1E0006217AD /* KFView.swift */; };
@@ -150,6 +154,10 @@
 		495FAFA019547D4D00D147BA /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resize.png; sourceTree = "<group>"; };
 		495FAFA119547D4D00D147BA /* rotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotation.png; sourceTree = "<group>"; };
 		495FAFA219547D4D00D147BA /* viewlink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewlink.png; sourceTree = "<group>"; };
+		49842F7119805A3D0012900B /* KFService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFService.swift; sourceTree = "<group>"; };
+		49842F7319805ACB0012900B /* KFHttpResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFHttpResponse.swift; sourceTree = "<group>"; };
+		49842F7519805AE20012900B /* KFHttpRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFHttpRequest.swift; sourceTree = "<group>"; };
+		49842F7719805AFC0012900B /* KFHttpConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFHttpConnection.swift; sourceTree = "<group>"; };
 		498BD1AA1942B768006217AD /* KFRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFRegistration.swift; sourceTree = "<group>"; };
 		498BD1AC1942BC59006217AD /* KFUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFUser.swift; sourceTree = "<group>"; };
 		498BD1AE1942C1E0006217AD /* KFView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFView.swift; sourceTree = "<group>"; };
@@ -287,6 +295,17 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
+		49842F6419803FA50012900B /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				49842F7119805A3D0012900B /* KFService.swift */,
+				49842F7319805ACB0012900B /* KFHttpResponse.swift */,
+				49842F7519805AE20012900B /* KFHttpRequest.swift */,
+				49842F7719805AFC0012900B /* KFHttpConnection.swift */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
 		498BD1A91942B73C006217AD /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -378,6 +397,7 @@
 		49C78D56194105C2004D3404 /* iKF */ = {
 			isa = PBXGroup;
 			children = (
+				49842F6419803FA50012900B /* Network */,
 				490E756E1941116A004E8BF7 /* iKF-Bridging-Header.h */,
 				490E7572194111A8004E8BF7 /* ObjC */,
 				498BD1A91942B73C006217AD /* Model */,
@@ -555,6 +575,7 @@
 				490E75BE194111A8004E8BF7 /* iKFMainViewController.m in Sources */,
 				49C5591919462FB700FDFF32 /* KFDrawingRefView.swift in Sources */,
 				494DE5A4195488DD0053F9DF /* KFAppUtils.swift in Sources */,
+				49842F7219805A3D0012900B /* KFService.swift in Sources */,
 				490E75B8194111A8004E8BF7 /* iKFConnection.m in Sources */,
 				495761A91945EEA10017A852 /* KFPost.swift in Sources */,
 				490E75BD194111A8004E8BF7 /* iKFMainView.m in Sources */,
@@ -566,12 +587,15 @@
 				498BD1B11942C372006217AD /* KFNote.swift in Sources */,
 				490E75D0194111A8004E8BF7 /* iKFViewSelectionController.m in Sources */,
 				49C559131946142600FDFF32 /* KFPostRefIconView.swift in Sources */,
+				49842F7419805ACB0012900B /* KFHttpResponse.swift in Sources */,
+				49842F7819805AFC0012900B /* KFHttpConnection.swift in Sources */,
 				49B938471946A52600BD9C0D /* iKFLayerView.m in Sources */,
 				490E75BC194111A8004E8BF7 /* iKFLoadingView.m in Sources */,
 				490E75C6194111A8004E8BF7 /* iKFNotePopupViewController.m in Sources */,
 				490E75C4194111A8004E8BF7 /* iKFNoteEditViewController.m in Sources */,
 				49C5590F1945F5D700FDFF32 /* KFReference.swift in Sources */,
 				490E75C2194111A8004E8BF7 /* iKFNoteEditViewBySource.m in Sources */,
+				49842F7619805AE20012900B /* KFHttpRequest.swift in Sources */,
 				492C10291947563300512591 /* KFSupport.swift in Sources */,
 				490E75C3194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.m in Sources */,
 				49C5590D1945EF5F00FDFF32 /* KFModel.swift in Sources */,

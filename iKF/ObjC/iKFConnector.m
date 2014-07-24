@@ -89,27 +89,36 @@ static iKFConnector* singleton;
 }
 
 - (long) connectToTheURL: (NSString*) urlString bodyString: (NSString**)bodyString{
-    NSURL* url = [NSURL URLWithString: urlString];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
-    [req setHTTPMethod: @"GET"];
-    [req setTimeoutInterval: 12.0];
-    NSHTTPURLResponse *res = nil;
-    NSError *error = nil;
-    if(bodyString != nil){
-        NSData* bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
-        *bodyString = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
-    }else{
-        [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
+    KFService* service = [KFService getInstance];
+    KFHttpResponse* res = [service connectToTheURL: urlString];
+    if([res getStatusCode] == 200 && bodyString != nil){
+        *bodyString = [res getBodyAsString];
     }
-    if(res != nil){
-        return [res statusCode];
-    }else if(error != nil){
-        return [error code];
-    }else{
-        [self handleError: @"Neither res nor error."];
-    }
-    return 0;
+    return [res getStatusCode];
 }
+
+//- (long) connectToTheURL: (NSString*) urlString bodyString: (NSString**)bodyString{
+//    NSURL* url = [NSURL URLWithString: urlString];
+//    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL: url];
+//    [req setHTTPMethod: @"GET"];
+//    [req setTimeoutInterval: 12.0];
+//    NSHTTPURLResponse *res = nil;
+//    NSError *error = nil;
+//    if(bodyString != nil){
+//        NSData* bodyData = [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
+//        *bodyString = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
+//    }else{
+//        [NSURLConnection sendSynchronousRequest:req returningResponse:&res error:&error];
+//    }
+//    if(res != nil){
+//        return [res statusCode];
+//    }else if(error != nil){
+//        return [error code];
+//    }else{
+//        [self handleError: @"Neither res nor error."];
+//    }
+//    return 0;
+//}
 
 - (BOOL) loginWithName: (NSString*)name password: (NSString*)password{
     NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@/kforum/rest/account/userLogin", self.host]];
