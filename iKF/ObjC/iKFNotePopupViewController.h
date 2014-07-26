@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iKFConnector.h"
+//#import "iKFConnector.h"
 #import "iKFMainViewController.h"
 
 @class iKFNoteView;

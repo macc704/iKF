@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 //#import "iKF.h"
-#import "iKFConnector.h"
+//#import "iKFConnector.h"
 #import "iKFViewSelectionController.h"
 
 //@class iKFNoteView;
@@ -16,6 +16,7 @@
 @class KFUser;
 @class KFNote;
 @class KFView;
+@class KFRegistration;
 
 @interface iKFMainViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate>
 

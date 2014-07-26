@@ -20,5 +20,6 @@
 - (NSArray*) scanViews: (id)jsonobj;
 - (NSDictionary*) scanPosts: (id)jsonobj;
 - (NSArray*) scanScaffolds:(id)jsonobj;
+- (NSString*) generateRandomString: (int)len;
 
 @end

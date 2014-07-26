@@ -29,8 +29,8 @@ class KFHttpRequest: NSObject {
     
     public func updateParams(){
         if(params.count <= 0){
-            nsRequest.setValue(nil, forHTTPHeaderField:"Content-Type");
-            nsRequest.HTTPBody = nil;
+            //nsRequest.setValue(nil, forHTTPHeaderField:"Content-Type");
+            //nsRequest.HTTPBody = nil;
             return;
         }
         

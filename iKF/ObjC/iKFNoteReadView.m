@@ -7,7 +7,7 @@
 //
 
 #import "iKFNoteReadView.h"
-#import "iKFConnector.h"
+//#import "iKFConnector.h"
 #import "iKFWebView.h"
 #import "iKF-Swift.h"
 

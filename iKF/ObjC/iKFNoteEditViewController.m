@@ -7,7 +7,7 @@
 //
 
 #import "iKFNoteEditViewController.h"
-#import "iKFConnector.h"
+//#import "iKFConnector.h"
 
 #import "iKFAbstractNoteEditView.h"
 #import "iKFMainViewController.h"

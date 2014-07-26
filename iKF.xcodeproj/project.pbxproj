@@ -14,7 +14,6 @@
 		490E75B7194111A8004E8BF7 /* iKFCompositeNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E757F194111A8004E8BF7 /* iKFCompositeNoteViewController.m */; };
 		490E75B8194111A8004E8BF7 /* iKFConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E7581194111A8004E8BF7 /* iKFConnection.m */; };
 		490E75B9194111A8004E8BF7 /* iKFConnectionLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E7583194111A8004E8BF7 /* iKFConnectionLayerView.m */; };
-		490E75BA194111A8004E8BF7 /* iKFConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E7585194111A8004E8BF7 /* iKFConnector.m */; };
 		490E75BB194111A8004E8BF7 /* iKFHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E7587194111A8004E8BF7 /* iKFHandle.m */; };
 		490E75BC194111A8004E8BF7 /* iKFLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E7589194111A8004E8BF7 /* iKFLoadingView.m */; };
 		490E75BD194111A8004E8BF7 /* iKFMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E758B194111A8004E8BF7 /* iKFMainView.m */; };
@@ -105,8 +104,6 @@
 		490E7581194111A8004E8BF7 /* iKFConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFConnection.m; sourceTree = "<group>"; };
 		490E7582194111A8004E8BF7 /* iKFConnectionLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFConnectionLayerView.h; sourceTree = "<group>"; };
 		490E7583194111A8004E8BF7 /* iKFConnectionLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFConnectionLayerView.m; sourceTree = "<group>"; };
-		490E7584194111A8004E8BF7 /* iKFConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFConnector.h; sourceTree = "<group>"; };
-		490E7585194111A8004E8BF7 /* iKFConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFConnector.m; sourceTree = "<group>"; };
 		490E7586194111A8004E8BF7 /* iKFHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFHandle.h; sourceTree = "<group>"; };
 		490E7587194111A8004E8BF7 /* iKFHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFHandle.m; sourceTree = "<group>"; };
 		490E7588194111A8004E8BF7 /* iKFLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFLoadingView.h; sourceTree = "<group>"; };
@@ -285,8 +282,6 @@
 		492F40331942040C0038E621 /* Connector */ = {
 			isa = PBXGroup;
 			children = (
-				490E7584194111A8004E8BF7 /* iKFConnector.h */,
-				490E7585194111A8004E8BF7 /* iKFConnector.m */,
 				49EEFF0A1981974500F78F16 /* iKFJSONScanner.h */,
 				49EEFF0B1981974500F78F16 /* iKFJSONScanner.m */,
 			);
@@ -592,7 +587,6 @@
 				498BD1AD1942BC59006217AD /* KFUser.swift in Sources */,
 				490E75B2194111A8004E8BF7 /* iKFAbstractNoteEditView.m in Sources */,
 				490E75B9194111A8004E8BF7 /* iKFConnectionLayerView.m in Sources */,
-				490E75BA194111A8004E8BF7 /* iKFConnector.m in Sources */,
 				498BD1B11942C372006217AD /* KFNote.swift in Sources */,
 				490E75D0194111A8004E8BF7 /* iKFViewSelectionController.m in Sources */,
 				49C559131946142600FDFF32 /* KFPostRefIconView.swift in Sources */,

@@ -14,7 +14,7 @@
 #import "iKFHandle.h"
 #import "iKFMainView.h"
 #import "iKFConnectionLayerView.h"
-#import "iKFConnector.h"
+//#import "iKFConnector.h"
 
 #import "iKF-Swift.h"
 
@@ -233,7 +233,7 @@
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     //_mainPanel.backgroundColor=[UIColor colorWithPatternImage: image];
     [_popController dismissPopoverAnimated:YES];
-    [[iKFConnector getInstance2] createPicture:image onView:[self currentViewId] location:CGPointMake(50, 50)];
+    [[KFService getInstance] createPicture:image viewId: [self currentViewId] location:CGPointMake(50, 50)];
     [self update];
 }
 

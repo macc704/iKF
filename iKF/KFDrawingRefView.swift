@@ -12,11 +12,16 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     
     //let ref: KFReference;
     var webView:UIWebView;
-    var svgwidth:CGFloat = CGFloat(100.0);
-    var svgheight:CGFloat = CGFloat(100.0);
+    var svgwidth = CGFloat(100.0);
+    var svgheight = CGFloat(100.0);
+    var rotation = CGFloat(0.0);
+    var scaleX = CGFloat(1.0);
+    var scaleY = CGFloat(1.0);
     
     init(controller: iKFMainViewController, ref: KFReference) {
         webView = UIWebView();
+//        web.backgroundColor = [UIColor clearColor];
+        webView.userInteractionEnabled = false;
         
         super.init(controller: controller, ref: ref);
 
@@ -47,14 +52,54 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
         }
     }
     
+    func kfSetSize(width:CGFloat, height:CGFloat){
+        kfSetScale(width/svgwidth, newScaleY: height/svgheight);
+    }
+    
+    func kfSetScale(newScaleX:CGFloat, newScaleY:CGFloat){
+        scaleX = newScaleX;
+        if(scaleX < 0.05){
+            scaleX = 0.05;
+        }
+        scaleY = newScaleY;
+        if(scaleY < 0.05){
+            scaleY = 0.05;
+        }
+        let newWidth = scaleX * svgwidth;
+        let newHeight = scaleY * svgheight;
+        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, newWidth,newHeight);
+        webView.transform = CGAffineTransformMakeScale(self.scaleX, self.scaleY);
+        
+        //let rotatedWidth = cos(rotation)*newWidth + sin(rotation)*newHeight;
+        //let rotatedHeight = cos(rotation)*newHeight + sin(rotation)*newWidth;
+        //webView.frame = CGRectMake(0, 0, rotatedHeight, rotatedWidth);
+        webView.frame = CGRectMake(0, 0, newWidth, newHeight);
+        updateTransform();
+    }
+    
+    func kfSetRotation(newRotation:CGFloat){
+        self.rotation = newRotation;
+        updateTransform();
+    }
+    
+    private func updateTransform(){
+        let scaleT = CGAffineTransformMakeScale(self.scaleX, self.scaleY);
+        let rotationT = CGAffineTransformMakeRotation(self.rotation);
+        webView.transform = CGAffineTransformConcat(rotationT, scaleT);
+    }
+    
     override func handleSingleTap(recognizer: UIGestureRecognizer){
         let drawing = model.post as KFDrawing;
         println("drawing svg="+drawing.content);
     }
     
+//    override func handleDoubleTap(recognizer: UIGestureRecognizer){
+//        let drawing = model.post as KFDrawing;
+//        println("drawing svg="+drawing.content);
+//    }
+    
     override func handleDoubleTap(recognizer: UIGestureRecognizer){
-        let drawing = model.post as KFDrawing;
-        println("drawing svg="+drawing.content);
+        mainController.showHandle(self);
     }
 
     /*

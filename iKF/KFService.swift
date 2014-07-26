@@ -21,6 +21,7 @@ class KFService: NSObject {
     private var jsonScanner:iKFJSONScanner?;
     
     //cache
+    private var currentRegistration:KFRegistration?;
     private var views = [String: KFView]();
     private var editTemplate:String?;
     private var readTemplate:String?;
@@ -152,6 +153,7 @@ class KFService: NSObject {
             handleError(String(format: "in enterCommunity() code=%d", res.getStatusCode()));
             return false;
         }
+        self.currentRegistration = registration;
         return true;
     }
     
@@ -230,7 +232,7 @@ class KFService: NSObject {
     }
     
     func updateNote(note:KFNote)->Bool{
-        var url = self.baseURL! + "rest/mobile/updateNote/" + note.guid;
+        let url = self.baseURL! + "rest/mobile/updateNote/" + note.guid;
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("title", value: note.title);
         req.addParam("body", value: note.content);
@@ -243,7 +245,7 @@ class KFService: NSObject {
     }
     
     func getScaffolds(viewId:String) -> [KFScaffold]{
-        var url = self.baseURL! + "rest/mobile/getScaffolds/" + viewId;
+        let url = self.baseURL! + "rest/mobile/getScaffolds/" + viewId;
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
@@ -254,7 +256,7 @@ class KFService: NSObject {
     }
     
     func getNextViewVersionAsync(viewId:String, currentVersion:Int) -> Int{
-        var url = self.baseURL! + "rest/mobile/getNextViewVersionAsync/" + viewId + "/" + String(currentVersion);
+        let url = self.baseURL! + "rest/mobile/getNextViewVersionAsync/" + viewId + "/" + String(currentVersion);
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
@@ -262,6 +264,87 @@ class KFService: NSObject {
             return -1;
         }
         return res.getBodyAsString().toInt()!;
+    }
+    
+    func createPicture(image:UIImage, viewId:String, location:CGPoint) -> Bool{
+        let imageData = UIImagePNGRepresentation(image);
+        let filenameBase = jsonScanner?.generateRandomString(8);
+        let filename = filenameBase! + ".png";
+        
+        let jsonobj:AnyObject? = self.sendAttachment(imageData, mime: "image/png", filename: filename);
+        if(!jsonobj){
+            return false;
+        }
+        
+        let w = Int(image.size.width);
+        let h = Int(image.size.height);
+        let attachmentURL = ((jsonobj! as NSDictionary)["url"]) as String;
+        var svg = NSMutableString();
+        svg.appendFormat("<svg width=\"%d\" height=\"%d\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">", w, h);
+        svg.appendFormat("<g id=\"group\">");
+        svg.appendFormat("<title>Layer 1</title>");
+        svg.appendFormat("<image xlink:href=\"/%@\" id=\"svg_5\" x=\"0\" y=\"0\" width=\"%d\" height=\"%d\" />", attachmentURL, w, h);
+        svg.appendFormat("</g></svg>");
+
+        let drawingResult = self.createDrawing(viewId, svg: svg, location: location);
+        
+        return drawingResult;
+    }
+    
+    private func sendAttachment(data:NSData, mime:String, filename:String) -> AnyObject!{
+        // generate url
+        let url = self.baseURL! + "rest/file/easyUpload/" + currentRegistration!.communityId;
+        
+        // generate form boundary
+        let key = jsonScanner?.generateRandomString(16);
+        let formBoundary = "----FormBoundary" + key!;
+        let path = "C\\fakepath\\" + filename;
+        
+        // generate post body
+        let postbody = NSMutableData();
+        postbody.appendData(stringData(String(format:"--%@\n", formBoundary)));
+        postbody.appendData(stringData(String(format:"Content-Disposition: form-data; name=\"upload\"; filename=\"%@\"\n", filename)));
+        postbody.appendData(stringData(String(format:"Content-Type: %@\n\n", mime)));
+        postbody.appendData(data);
+        postbody.appendData(stringData(String(format:"\n")));
+        postbody.appendData(stringData(String(format:"--%@\n", formBoundary)));
+        postbody.appendData(stringData(String(format:"Content-Disposition: form-data; name=\"name\"\n")));
+        postbody.appendData(stringData(String(format:"\n")));
+        postbody.appendData(stringData(String(format:"%@", path)));
+        postbody.appendData(stringData(String(format:"\n")));
+        postbody.appendData(stringData(String(format:"--%@--\n", formBoundary)));
+        
+        // generate req
+        let req = KFHttpRequest(urlString: url, method: "POST");
+        req.nsRequest.setValue(String(format:"multipart/form-data; boundary=%@", formBoundary), forHTTPHeaderField: "Content-Type");
+        req.nsRequest.setValue(String(postbody.length), forHTTPHeaderField: "Content-Length");
+        req.nsRequest.HTTPBody = postbody;
+        
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in sendAttachment() code=%d", res.getStatusCode()));
+            return nil;
+        }
+        
+        return res.getBodyAsJSON();
+    }
+    
+    private func stringData(text:String) -> NSData{
+        return text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!;
+    }
+    
+    private func createDrawing(viewId:String, svg:String, location:CGPoint) -> Bool{
+        let url = self.baseURL! + "rest/mobile/createDrawing/" + viewId;
+        let req = KFHttpRequest(urlString: url, method: "POST");
+        req.addParam("x", value: String(Int(location.x)));
+        req.addParam("y", value: String(Int(location.y)));
+        req.addParam("svg", value: svg);
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in createDrawing() code=%d", res.getStatusCode()));
+            return false;
+        }
+        return true;
     }
     
     func handleError(msg:String){

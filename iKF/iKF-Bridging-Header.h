@@ -8,7 +8,7 @@
 #import "iKFCompositeNoteViewController.h"
 #import "iKFConnection.h"
 #import "iKFConnectionLayerView.h"
-#import "iKFConnector.h"
+//#import "iKFConnector.h"
 #import "iKFHandle.h"
 #import "iKFLoadingView.h"
 #import "iKFMainView.h"

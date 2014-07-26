@@ -14,16 +14,20 @@
 #import "iKFNotePopupViewController.h"
 #import "iKF-Swift.h"
 
+static int SIZE = 40;
+
 @implementation iKFHandle{
     iKFMainViewController* _controller;
     UIView* _target;
     
     UIImageView* _plusButton;
+    UIImageView* _resizeButton;
+    UIImageView* _moveButton;
+    UIImageView* _rotateButton;
 }
 
 - (id)init: (iKFMainViewController*)controller target: (UIView*)target;
 {
-    int SIZE = 40;
 
     //self = [super initWithFrame:frame];
     self = [super init];
@@ -33,6 +37,41 @@
         //[self setBackgroundColor: [UIColor yellowColor]];
         CGRect targetFrame = [target frame];
         [self setFrame: CGRectMake(targetFrame.origin.x - SIZE, targetFrame.origin.y - SIZE, targetFrame.size.width + SIZE*2, targetFrame.size.height + SIZE*2)];
+        
+        if([_target class] == [KFDrawingRefView class]){
+            {
+                UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"resize.png"]];
+                [button setFrame: CGRectMake(self.frame.size.width - SIZE , self.frame.size.height - SIZE, SIZE, SIZE)];
+                [self addSubview: button];
+                _resizeButton = button;
+                button.userInteractionEnabled = YES;
+                UIPanGestureRecognizer* gesture = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(handleResize:)];
+                [button addGestureRecognizer: gesture];
+
+            }
+            
+            {
+                UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"move.png"]];
+                [button setFrame: CGRectMake((self.frame.size.width - SIZE)/2 , 0, SIZE, SIZE)];
+                [self addSubview: button];
+                _moveButton = button;
+                button.userInteractionEnabled = YES;
+                UIPanGestureRecognizer* gesture = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(handleMove:)];
+                [button addGestureRecognizer: gesture];
+                
+            }
+            
+            {
+                UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"rotation.png"]];
+                [button setFrame: CGRectMake(0, self.frame.size.height - SIZE, SIZE, SIZE)];
+                [self addSubview: button];
+                _rotateButton = button;
+                button.userInteractionEnabled = YES;
+                UIPanGestureRecognizer* gesture = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(handleRotate:)];
+                [button addGestureRecognizer: gesture];
+                
+            }
+        }
         
         if([_target class] == [KFNoteRefView class]){
             {
@@ -87,18 +126,20 @@
                 UIPanGestureRecognizer* gesture = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(handleBuildsonPan:)];
                 [_plusButton addGestureRecognizer: gesture];
             }
-        }else{
-            {
-                _plusButton = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"new.png"]];
-                [_plusButton setFrame: CGRectMake(SIZE + targetFrame.size.width , 0, SIZE, SIZE)];
-                [self addSubview: _plusButton];
-                _plusButton.userInteractionEnabled = YES;
-                UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
-                                             initWithTarget: self  action: @selector(handlePlusTap:)];
-                gesture.numberOfTapsRequired = 1;
-                [_plusButton addGestureRecognizer: gesture];
-            }
         }
+        
+//        else{
+//            {
+//                _plusButton = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"new.png"]];
+//                [_plusButton setFrame: CGRectMake(SIZE + targetFrame.size.width , 0, SIZE, SIZE)];
+//                [self addSubview: _plusButton];
+//                _plusButton.userInteractionEnabled = YES;
+//                UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
+//                                             initWithTarget: self  action: @selector(handlePlusTap:)];
+//                gesture.numberOfTapsRequired = 1;
+//                [_plusButton addGestureRecognizer: gesture];
+//            }
+//        }
     }
     return self;
 }
@@ -165,6 +206,90 @@
         //        [self removeShadow];
     }
 }
+
+- (void) handleResize: (UIPanGestureRecognizer*)recognizer{
+    KFDrawingRefView* drawingTarget = (KFDrawingRefView*)_target;
+    //int x = drawingTarget.frame.origin.x;
+    //int y = drawingTarget.frame.origin.y;
+    if(recognizer.state == UIGestureRecognizerStateBegan){
+        //        [[self superview] bringSubviewToFront:self];
+        //        [self makeShadow];
+    }
+    if(recognizer.state == UIGestureRecognizerStateChanged){
+        CGPoint location = [recognizer translationInView: _resizeButton];
+        CGPoint movePoint = CGPointMake(_resizeButton.center.x+location.x, _resizeButton.center.y+location.y);
+        _resizeButton.center = movePoint;
+        [recognizer setTranslation: CGPointZero inView: _resizeButton];
+        CGFloat w = _resizeButton.frame.origin.x - SIZE;
+        CGFloat h = _resizeButton.frame.origin.y - SIZE;
+        [drawingTarget kfSetSize:w height:h];
+//        _resizeButton.frame.origin
+    }
+    if(recognizer.state == UIGestureRecognizerStateEnded){
+        //[self handleBuildsonTap: nil];
+        //        [_controller requestConnectionsRepaint];
+        //        [self removeShadow];
+        //[_controller removeHandle];
+        [_controller showHandle: drawingTarget];
+    }
+}
+
+- (void) handleMove: (UIPanGestureRecognizer*)recognizer{
+    KFDrawingRefView* drawingTarget = (KFDrawingRefView*)_target;
+
+//    if(recognizer.state == UIGestureRecognizerStateChanged){
+//        CGPoint location = [recognizer translationInView: _moveButton];
+//        CGPoint movePoint = CGPointMake(_moveButton.center.x+location.x, _moveButton.center.y+location.y);
+//        _moveButton.center = movePoint;
+//        //[recognizer setTranslation: CGPointZero inView: _moveButton];//tmp
+//    }
+    if(recognizer.state == UIGestureRecognizerStateChanged){
+        CGPoint location = [recognizer translationInView: self];
+        CGPoint movePoint = CGPointMake(self.center.x+location.x, self.center.y+location.y);
+        self.center = movePoint;
+        //[recognizer setTranslation: CGPointZero inView: _moveButton];//tmp
+    }
+    [drawingTarget handlePanning: recognizer];//tmp
+}
+
+- (void) handleRotate: (UIPanGestureRecognizer*)recognizer{
+    KFDrawingRefView* drawingTarget = (KFDrawingRefView*)_target;
+    
+    if(recognizer.state == UIGestureRecognizerStateChanged){
+
+        CGPoint location = [recognizer translationInView: _rotateButton];
+        CGPoint movePoint = CGPointMake(_rotateButton.center.x+location.x, _rotateButton.center.y+location.y);
+        _rotateButton.center = movePoint;
+        [recognizer setTranslation: CGPointZero inView: _rotateButton];
+        
+        float fw = self.frame.size.width;
+        float fh = self.frame.size.height;
+        CGPoint org = CGPointMake(fw/2, fh/2);
+        
+        //http://kappdesign.blog.fc2.com/blog-entry-18.html
+        // make difference then reverse y axis
+        float x = movePoint.x - org.x;
+        float y = -(movePoint.y - org.y);
+       // NSLog(@"atan2f degree：%f", (M_PI_2 - atan2f(fh,fw))*360/(2*M_PI));
+        // radian
+        float radian = atan2f(y, x) + (M_PI_2 + (M_PI_2 - atan2f(fh,fw)));
+        int degree = (int)(radian *360 /(2*M_PI));
+        int a = degree % 90;
+        if(-5 < a && a < 0){
+            degree = degree + a;
+        }else if(0 < a && a < 5){
+            degree = degree - a;
+        }
+        radian = ((float)degree)* (2*M_PI) / 360;
+//        drawingTarget.transform = CGAffineTransformMakeRotation(-radian);
+        //NSLog(@"radian：%f　degree：%f", radian, degree);
+        [drawingTarget kfSetRotation: -radian];
+    }
+    if(recognizer.state == UIGestureRecognizerStateEnded){
+        [_controller showHandle: drawingTarget];
+    }
+}
+
 
 
 /*
