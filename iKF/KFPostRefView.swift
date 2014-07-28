@@ -105,6 +105,6 @@ class KFPostRefView: UIView {
     }
     
     func die(){
-       self.mainController.removeNote(self);
+       self.mainController.deletePostRef(self);
     }
 }

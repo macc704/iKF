@@ -144,6 +144,9 @@
                 [self refreshAllPostsAsync];
                 [NSThread sleepForTimeInterval:2.0f];
                 NSLog(@"wake up");
+            }else if(newVersion < _cometVersion){
+                NSLog(@"ERROR: newVersion < cometVersion");
+                _cometVersion = newVersion;
             }
         }
         NSLog(@"comet stopped number=%d", threadNumber);
@@ -378,10 +381,16 @@
     }
 }
 
-- (void) removeNote: (KFPostRefView*) view{
+- (void) deletePostRef: (KFPostRefView*) ref{
     [self removeHandle];
-    [view removeFromSuperview];
-    [_mainPanel.connectionLayer noteRemoved: view];
+    [ref removeFromSuperview];
+    [_mainPanel.connectionLayer noteRemoved: ref];
+    NSString* viewId = [_views[_selectedRow] guid];
+    dispatch_queue_t sub_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(sub_queue, ^{
+        _cometVersion++;
+        [[KFService getInstance] deletePostRef:viewId postRef:ref.model];
+    });
 }
 
 - (void) postLocationChanged: (KFPostRefView*) noteview{

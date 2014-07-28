@@ -181,13 +181,24 @@ class KFService: NSObject {
     }
     
     func movePostRef(viewId:String, postRef:KFReference) -> Bool{
-        let url = self.baseURL! + "rest/mobile/updatePostref/" + viewId + "/" + postRef.guid;
+        let url = self.baseURL! + "rest/mobile/updatePostRef/" + viewId + "/" + postRef.guid;
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("x", value: String(Int(postRef.location.x)));
         req.addParam("y", value: String(Int(postRef.location.y)));
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
             handleError(String(format: "in movePostRef() code=%d", res.getStatusCode()));
+            return false;
+        }
+        return true;
+    }
+    
+    func deletePostRef(viewId:String, postRef:KFReference) -> Bool{
+        let url = self.baseURL! + "rest/mobile/deletePostRef/" + viewId + "/" + postRef.guid;
+        let req = KFHttpRequest(urlString: url, method: "POST");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError(String(format: "in deletePostRef() code=%d", res.getStatusCode()));
             return false;
         }
         return true;
@@ -216,13 +227,13 @@ class KFService: NSObject {
     }
     
     func createNote(viewId:String, buildsOn:KFReference?, location:CGPoint) -> Bool{
-        var url = self.baseURL! + "rest/mobile/createNote/" + viewId + "/";
-        if(buildsOn){
-            url += buildsOn!.guid;//currently refId is used!
-        }
+        let url = self.baseURL! + "rest/mobile/createNote/" + viewId;
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("x", value: String(Int(location.x)));
         req.addParam("y", value: String(Int(location.y)));
+        if(buildsOn){
+            req.addParam("buildsOnNoteId", value: buildsOn!.guid);
+        }
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
             handleError(String(format: "in createNote() code=%d", res.getStatusCode()));

@@ -41,7 +41,7 @@
 
 - (void) createNote: (CGPoint)p;
 - (void) createNote: (CGPoint)p buildson: (KFPostRefView*)from;
-- (void) removeNote: (KFPostRefView*) view;
+- (void) deletePostRef: (KFPostRefView*) view;
 - (void) requestConnectionsRepaint;
 - (void) openNoteEditController: (KFNote*)note mode: (NSString*)mode;
 
