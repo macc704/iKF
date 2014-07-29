@@ -177,6 +177,7 @@ class KFService: NSObject {
             return [:];
         }
         let json: AnyObject = res.getBodyAsJSON();
+        //println(res.getBodyAsJSON())
         return jsonScanner!.scanPosts(res.getBodyAsJSON()) as [String: KFReference];
     }
     

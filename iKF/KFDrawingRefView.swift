@@ -90,7 +90,7 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     
     override func handleSingleTap(recognizer: UIGestureRecognizer){
         let drawing = model.post as KFDrawing;
-        println("drawing svg="+drawing.content);
+        //println("drawing svg="+drawing.content);
     }
     
 //    override func handleDoubleTap(recognizer: UIGestureRecognizer){

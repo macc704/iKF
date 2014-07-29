@@ -73,6 +73,19 @@ static int SIZE = 40;
             }
         }
         
+        if([_target class] == [KFNoteRefView class] || [_target class] == [KFDrawingRefView class] || [_target class] == [KFViewRefView class]){
+            {
+                UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"bin.png"]];
+                [button setFrame: CGRectMake(0 , 0, SIZE, SIZE)];
+                [self addSubview: button];
+                button.userInteractionEnabled = YES;
+                UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
+                                                   initWithTarget: self  action: @selector(handleDeleteTap:)];
+                gesture.numberOfTapsRequired = 1;
+                [button addGestureRecognizer: gesture];
+            }
+        }
+        
         if([_target class] == [KFNoteRefView class]){
             {
                 UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"edit.png"]];
@@ -95,16 +108,7 @@ static int SIZE = 40;
                 [button addGestureRecognizer: gesture];
             }
             
-            {
-                UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"bin.png"]];
-                [button setFrame: CGRectMake(0 , 0, SIZE, SIZE)];
-                [self addSubview: button];
-                button.userInteractionEnabled = YES;
-                UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
-                                             initWithTarget: self  action: @selector(handleDeleteTap:)];
-                gesture.numberOfTapsRequired = 1;
-                [button addGestureRecognizer: gesture];
-            }
+
             
             {
                 UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"clip.png"]];
