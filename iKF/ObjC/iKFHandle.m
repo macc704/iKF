@@ -95,6 +95,15 @@ static int SIZE = 40;
                 [button addGestureRecognizer: gesture];
                 
             }
+            
+            {
+                UIRotationGestureRecognizer* gesture = [[UIRotationGestureRecognizer alloc] initWithTarget: self action: @selector(handleRotation:)];
+                [self addGestureRecognizer: gesture];
+            }
+            {
+                UIPinchGestureRecognizer* gesture = [[UIPinchGestureRecognizer alloc] initWithTarget: self action: @selector(handlePinch:)];
+                [self addGestureRecognizer: gesture];
+            }
         }
         
         if([_target class] == [KFNoteRefView class] || [_target class] == [KFDrawingRefView class] || [_target class] == [KFViewRefView class]){
@@ -352,7 +361,45 @@ static int SIZE = 40;
     }
 }
 
+CGFloat initialRotation;
 
+- (void) handleRotation: (UIRotationGestureRecognizer*)recognizer{
+    KFDrawingRefView* drawingTarget = (KFDrawingRefView*)_target;
+    
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        initialRotation = drawingTarget.rotation;
+    }
+    
+    if(recognizer.state == UIGestureRecognizerStateChanged){
+        CGFloat rotation = [recognizer rotation];
+        CGFloat newRotation = initialRotation + rotation;
+        [drawingTarget kfSetRotation: newRotation];
+    }
+}
+
+CGFloat initialScale;
+
+- (void) handlePinch : (UIPinchGestureRecognizer *)recognizer {
+    KFDrawingRefView* drawingTarget = (KFDrawingRefView*)_target;
+
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        initialScale = drawingTarget.scaleX;
+//        currentTransForm = imgView.transform;
+        // currentTransFormは、フィールド変数。imgViewは画像を表示するUIImageView型のフィールド変数。
+    }
+    
+    if(recognizer.state == UIGestureRecognizerStateChanged){
+        CGFloat scale = [recognizer scale];
+        CGFloat newScale = initialScale * scale;
+        [drawingTarget kfSetScale: newScale newScaleY:newScale];
+    }
+    // ピンチジェスチャー発生時から、どれだけ拡大率が変化したかを取得する
+    // 2本の指の距離が離れた場合には、1以上の値、近づいた場合には、1以下の値が取得できる
+    //    CGFloat scale = [sender scale];
+    
+    // ピンチジェスチャー開始時からの拡大率の変化を、imgViewのアフィン変形の状態に設定する事で、拡大する。
+    //    imgView.transform = CGAffineTransformConcat(currentTransForm, CGAffineTransformMakeScale(scale, scale));
+}
 
 /*
  // Only override drawRect: if you perform custom drawing.
