@@ -283,7 +283,7 @@
     if(_reusebox != nil && _reusebox[ref.guid] != nil ){
         noteView = _reusebox[ref.guid];
         noteView.model = ref;
-        [noteView update];
+        [noteView updateFromModel];
     }else{
         noteView = [[KFNoteRefView alloc] initWithController:self ref: ref];
     }
@@ -311,6 +311,7 @@
     }else{
         postRefView = [[KFDrawingRefView alloc] initWithController:self ref: ref];
     }
+    [postRefView updateFromModel];
     [_postRefViews setValue: postRefView forKey: ref.guid];
     //[_postviews setValue: noteView forKey: ref.guid];
     //[_postviews setValue: noteView forKey: ref.post.guid];//ちょっとずる

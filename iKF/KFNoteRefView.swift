@@ -34,16 +34,16 @@ class KFNoteRefView: KFPostRefView {
         self.addSubview(authorLabel);
         
         model.post?.attach(self, selector: "noteChanged");
-        self.update();
+        self.updateFromModel();
         
         bindEvents();
     }
 
     func noteChanged(){
-        self.update();
+        self.updateFromModel();
     }
     
-    func update(){
+    func updateFromModel(){
         icon.beenRead = (self.model.post as KFNote).beenRead;
         icon.update();
         titleLabel.text = (self.model.post as KFNote).title;

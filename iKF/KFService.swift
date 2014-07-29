@@ -186,8 +186,10 @@ class KFService: NSObject {
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("x", value: String(Int(postRef.location.x)));
         req.addParam("y", value: String(Int(postRef.location.y)));
-        req.addParam("width", value: String(postRef.width));
-        req.addParam("height", value: String(postRef.height));
+        println(postRef.width);
+        println(postRef.height);
+        req.addParam("width", value: String(Int(postRef.width)));
+        req.addParam("height", value: String(Int(postRef.height)));
         req.addParam("rotation", value: "\(Double(postRef.rotation))");
         req.addParam("display", value: String(Int(postRef.displayFlags)));
         let res = KFHttpConnection.connect(req);

@@ -76,6 +76,8 @@
 		49C78D70194105C2004D3404 /* iKFTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C78D6F194105C2004D3404 /* iKFTests.swift */; };
 		49EEFF071981627600F78F16 /* KFNetworkUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EEFF061981627600F78F16 /* KFNetworkUtil.swift */; };
 		49EEFF0C1981974500F78F16 /* iKFJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EEFF0B1981974500F78F16 /* iKFJSONScanner.m */; };
+		49F1A902198842E900BA261F /* anchor.png in Resources */ = {isa = PBXBuildFile; fileRef = 49F1A900198842E900BA261F /* anchor.png */; };
+		49F1A903198842E900BA261F /* anchornot.png in Resources */ = {isa = PBXBuildFile; fileRef = 49F1A901198842E900BA261F /* anchornot.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +186,8 @@
 		49EEFF061981627600F78F16 /* KFNetworkUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFNetworkUtil.swift; sourceTree = "<group>"; };
 		49EEFF0A1981974500F78F16 /* iKFJSONScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFJSONScanner.h; sourceTree = "<group>"; };
 		49EEFF0B1981974500F78F16 /* iKFJSONScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFJSONScanner.m; sourceTree = "<group>"; };
+		49F1A900198842E900BA261F /* anchor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anchor.png; sourceTree = "<group>"; };
+		49F1A901198842E900BA261F /* anchornot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anchornot.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +254,8 @@
 		492F40221941F2AB0038E621 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				49F1A900198842E900BA261F /* anchor.png */,
+				49F1A901198842E900BA261F /* anchornot.png */,
 				495FAF9E19547D4D00D147BA /* note.png */,
 				495FAF9F19547D4D00D147BA /* notex.png */,
 				495FAFA019547D4D00D147BA /* resize.png */,
@@ -523,8 +529,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				495FAFA719547D4D00D147BA /* viewlink.png in Resources */,
+				49F1A902198842E900BA261F /* anchor.png in Resources */,
 				492F402E1941F3600038E621 /* KFRegistrationViewController.xib in Resources */,
 				495FAFA519547D4D00D147BA /* resize.png in Resources */,
+				49F1A903198842E900BA261F /* anchornot.png in Resources */,
 				495FAFA319547D4D00D147BA /* note.png in Resources */,
 				492C1025194755FE00512591 /* KFScaffoldingTableViewController.xib in Resources */,
 				495FAF9919547D1400D147BA /* clip.png in Resources */,

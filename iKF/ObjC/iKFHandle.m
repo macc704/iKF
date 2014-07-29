@@ -39,6 +39,30 @@ static int SIZE = 40;
         [self setFrame: CGRectMake(targetFrame.origin.x - SIZE, targetFrame.origin.y - SIZE, targetFrame.size.width + SIZE*2, targetFrame.size.height + SIZE*2)];
         
         if([_target class] == [KFDrawingRefView class]){
+            KFPostRefView* postRef = (KFPostRefView*)_target;
+            if([postRef.model isLocked]){
+                {
+                    UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"anchornot.png"]];
+                    [button setFrame: CGRectMake((self.frame.size.width - SIZE) , 0, SIZE, SIZE)];
+                    [self addSubview: button];
+                    button.userInteractionEnabled = YES;
+                    UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
+                                                       initWithTarget: self  action: @selector(unlock:)];
+                    gesture.numberOfTapsRequired = 1;
+                    [button addGestureRecognizer: gesture];
+                }
+            }else{
+                {
+                    UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"anchor.png"]];
+                    [button setFrame: CGRectMake((self.frame.size.width - SIZE) , 0, SIZE, SIZE)];
+                    [self addSubview: button];
+                    button.userInteractionEnabled = YES;
+                    UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
+                                                       initWithTarget: self  action: @selector(lock:)];
+                    gesture.numberOfTapsRequired = 1;
+                    [button addGestureRecognizer: gesture];
+                }
+            }
             {
                 UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"resize.png"]];
                 [button setFrame: CGRectMake(self.frame.size.width - SIZE , self.frame.size.height - SIZE, SIZE, SIZE)];
@@ -50,18 +74,7 @@ static int SIZE = 40;
 
             }
             
-            {
-                UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"edit.png"]];
-                [button setFrame: CGRectMake((self.frame.size.width - SIZE) , 0, SIZE, SIZE)];
-                [self addSubview: button];
-                button.userInteractionEnabled = YES;
-                UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
-                                                   initWithTarget: self  action: @selector(handleOpenMenuTap:)];
-                gesture.numberOfTapsRequired = 1;
-                [button addGestureRecognizer: gesture];
-            }
-            
-            {
+            if(![postRef.model isLocked]){
                 UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"move.png"]];
                 [button setFrame: CGRectMake((self.frame.size.width - SIZE)/2 , 0, SIZE, SIZE)];
                 [self addSubview: button];
@@ -182,11 +195,26 @@ static int SIZE = 40;
     [_controller removeHandle];
 }
 
-- (void) handleOpenMenuTap: (UIGestureRecognizer*) recognizer{
+//- (void) handleOpenMenuTap: (UIGestureRecognizer*) recognizer{
+//    KFPostRefView* drawingTarget = (KFPostRefView*)_target;
+//    bool locked = [drawingTarget.model isLocked];
+//    [[drawingTarget model] setLocked: !locked];
+//    [_controller updatePostRef: drawingTarget.model];
+//}
+
+- (void) lock: (UIGestureRecognizer*) recognizer{
     KFPostRefView* drawingTarget = (KFPostRefView*)_target;
-    bool locked = [drawingTarget.model isLocked];
-    [[drawingTarget model] setLocked: !locked];
+    [drawingTarget.model setLocked: true];
+    [drawingTarget updatePanEventBinding];
     [_controller updatePostRef: drawingTarget.model];
+    [_controller removeHandle];
+}
+- (void) unlock: (UIGestureRecognizer*) recognizer{
+    KFPostRefView* drawingTarget = (KFPostRefView*)_target;
+    [drawingTarget.model setLocked: false];
+    [drawingTarget updatePanEventBinding];
+    [_controller updatePostRef: drawingTarget.model];
+    [_controller removeHandle];
 }
 
 - (void) handleClipTap: (UIGestureRecognizer*) recognizer{
@@ -252,6 +280,12 @@ static int SIZE = 40;
         //        [_controller requestConnectionsRepaint];
         //        [self removeShadow];
         //[_controller removeHandle];
+        drawingTarget.model.width = drawingTarget.svgwidth * drawingTarget.scaleX;
+        drawingTarget.model.height = drawingTarget.svgheight * drawingTarget.scaleY;
+        drawingTarget.model.rotation = drawingTarget.rotation;
+        [drawingTarget.model setShowInPlace: true];
+        [_controller updatePostRef: drawingTarget.model];
+        
         [_controller showHandle: drawingTarget];
     }
 }
@@ -308,6 +342,12 @@ static int SIZE = 40;
         [drawingTarget kfSetRotation: -radian];
     }
     if(recognizer.state == UIGestureRecognizerStateEnded){
+        drawingTarget.model.width = drawingTarget.svgwidth * drawingTarget.scaleX;
+        drawingTarget.model.height = drawingTarget.svgheight * drawingTarget.scaleY;
+        drawingTarget.model.rotation = drawingTarget.rotation;
+        [drawingTarget.model setShowInPlace: true];
+        [_controller updatePostRef: drawingTarget.model];
+        
         [_controller showHandle: drawingTarget];
     }
 }

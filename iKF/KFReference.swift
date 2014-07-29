@@ -16,9 +16,9 @@ class KFReference: KFModel {
     
     var post:KFPost?;
     var location = CGPoint(x:0, y:0);
-    var width = Int(0);
-    var height = Int(0);
-    var rotation = Double(0);
+    var width = CGFloat(0);
+    var height = CGFloat(0);
+    var rotation = CGFloat(0);
     var displayFlags = Int(0);
     
     init(){
@@ -45,6 +45,18 @@ class KFReference: KFModel {
             displayFlags = displayFlags | LOCKED_BIT;
         }else{
             displayFlags = displayFlags & ~LOCKED_BIT;
+        }
+    }
+    
+    func isShowInPlace() -> Bool{
+        return displayFlags & SHOWINPLACE_BIT == SHOWINPLACE_BIT;
+    }
+    
+    func setShowInPlace(showInPlace:Bool){
+        if(showInPlace){
+            displayFlags = displayFlags | SHOWINPLACE_BIT;
+        }else{
+            displayFlags = displayFlags & ~SHOWINPLACE_BIT;
         }
     }
 

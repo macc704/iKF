@@ -13,19 +13,20 @@ class KFPostRefView: UIView {
     var mainController: iKFMainViewController;
     
     var model: KFReference;
+    private var panGesture:UIPanGestureRecognizer?;
    
     init(controller: iKFMainViewController, ref: KFReference) {
         mainController = controller;
         self.model = ref;
-        
+
         super.init(frame: CGRectMake(0,0,0,0));
     }
     
+    
+    
     func bindEvents(){
         //Pan
-        if(!self.model.isLocked()){
-            self.addGestureRecognizer(UIPanGestureRecognizer(target:self, action:"handlePanning:"));
-        }
+        updatePanEventBinding();
         
         //Single Tap
         let recognizerSingleTap = UITapGestureRecognizer(target:self, action:"handleSingleTap:");
@@ -39,7 +40,17 @@ class KFPostRefView: UIView {
         
         recognizerSingleTap.requireGestureRecognizerToFail(recognizerDoubleTap);
     }
-            
+    
+    func updatePanEventBinding(){
+        if(!self.model.isLocked() && self.panGesture == nil){
+            self.panGesture = UIPanGestureRecognizer(target:self, action:"handlePanning:");
+            self.addGestureRecognizer(self.panGesture);
+        }else if(self.model.isLocked() && self.panGesture != nil){
+            self.removeGestureRecognizer(panGesture);
+            self.panGesture = nil;
+        }
+    }
+    
     func handlePanning(recognizer: UIPanGestureRecognizer){
         switch(recognizer.state){
         case .Began:

@@ -42,6 +42,19 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
         let baseURLStr = "http://" + KFService.getInstance().getHost();
         let baseURL = NSURL(string: baseURLStr);
         webView.loadHTMLString(drawing.content, baseURL: baseURL);
+        
+
+        //println(model.width);
+        //println(model.height);
+        //println(model.rotation);
+    }
+    
+    func updateFromModel(){
+        self.updatePanEventBinding();
+        if(model.isShowInPlace()){
+            kfSetSize(model.width, height: model.height);
+            kfSetRotation(model.rotation);
+        }
     }
     
   
