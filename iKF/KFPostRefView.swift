@@ -23,7 +23,9 @@ class KFPostRefView: UIView {
     
     func bindEvents(){
         //Pan
-        self.addGestureRecognizer(UIPanGestureRecognizer(target:self, action:"handlePanning:"));
+        if(!self.model.isLocked()){
+            self.addGestureRecognizer(UIPanGestureRecognizer(target:self, action:"handlePanning:"));
+        }
         
         //Single Tap
         let recognizerSingleTap = UITapGestureRecognizer(target:self, action:"handleSingleTap:");

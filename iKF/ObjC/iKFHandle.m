@@ -51,6 +51,17 @@ static int SIZE = 40;
             }
             
             {
+                UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"edit.png"]];
+                [button setFrame: CGRectMake((self.frame.size.width - SIZE) , 0, SIZE, SIZE)];
+                [self addSubview: button];
+                button.userInteractionEnabled = YES;
+                UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc]
+                                                   initWithTarget: self  action: @selector(handleOpenMenuTap:)];
+                gesture.numberOfTapsRequired = 1;
+                [button addGestureRecognizer: gesture];
+            }
+            
+            {
                 UIImageView* button = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"move.png"]];
                 [button setFrame: CGRectMake((self.frame.size.width - SIZE)/2 , 0, SIZE, SIZE)];
                 [self addSubview: button];
@@ -169,6 +180,13 @@ static int SIZE = 40;
     CGPoint p = CGPointMake(objectP.x + buttonP.x, objectP.y + buttonP.y);
     [_controller createNote: p];
     [_controller removeHandle];
+}
+
+- (void) handleOpenMenuTap: (UIGestureRecognizer*) recognizer{
+    KFPostRefView* drawingTarget = (KFPostRefView*)_target;
+    bool locked = [drawingTarget.model isLocked];
+    [[drawingTarget model] setLocked: !locked];
+    [_controller updatePostRef: drawingTarget.model];
 }
 
 - (void) handleClipTap: (UIGestureRecognizer*) recognizer{

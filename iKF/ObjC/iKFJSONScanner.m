@@ -81,6 +81,12 @@
         reference.post = model;
         [models setObject: reference forKey: reference.guid];
         return;
+    }else{//normal postinfo
+        //NSLog(@"%@", each[@"display"]);
+        reference.displayFlags = [each[@"display"] intValue];
+        reference.width = (int)(each[@"width"]);
+        reference.height = (int)(each[@"height"]);
+        reference.rotation = [each[@"rotation"] doubleValue];
     }
     
     NSDictionary* eachPost = each[@"postInfo"];

@@ -13,6 +13,7 @@
 
 //@class iKFNoteView;
 @class KFPostRefView;
+@class KFReference;
 @class KFUser;
 @class KFNote;
 @class KFView;
@@ -44,6 +45,7 @@
 - (void) deletePostRef: (KFPostRefView*) view;
 - (void) requestConnectionsRepaint;
 - (void) openNoteEditController: (KFNote*)note mode: (NSString*)mode;
+- (void) updatePostRef: (KFReference*) ref;
 
 - (void) setKFView: (KFView*) view;
     

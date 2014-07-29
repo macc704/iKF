@@ -399,12 +399,17 @@
     }
     
     [noteview.model setLocation: noteview.frame.origin];
-    NSString* viewId = [_views[_selectedRow] guid];
+
     
+    [self updatePostRef: noteview.model];
+}
+
+- (void) updatePostRef: (KFReference*) ref{
+    NSString* viewId = [_views[_selectedRow] guid];
     dispatch_queue_t sub_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(sub_queue, ^{
         _cometVersion++;
-        [[KFService getInstance] movePostRef: viewId postRef: noteview.model];
+        [[KFService getInstance] updatePostRef: viewId postRef: ref];
     });
 }
 
@@ -433,6 +438,10 @@
     [self clearViews];
     self->_posts = newPosts;
     for(KFReference* each in [self->_posts allValues]){
+        if([each isHidden]){
+            continue;
+        }
+        
         //NSLog(@"%@", each);
         if([each.post class] == [KFNote class]){
             [self addNote: each];

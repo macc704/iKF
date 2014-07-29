@@ -181,14 +181,18 @@ class KFService: NSObject {
         return jsonScanner!.scanPosts(res.getBodyAsJSON()) as [String: KFReference];
     }
     
-    func movePostRef(viewId:String, postRef:KFReference) -> Bool{
+    func updatePostRef(viewId:String, postRef:KFReference) -> Bool{
         let url = self.baseURL! + "rest/mobile/updatePostRef/" + viewId + "/" + postRef.guid;
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("x", value: String(Int(postRef.location.x)));
         req.addParam("y", value: String(Int(postRef.location.y)));
+        req.addParam("width", value: String(postRef.width));
+        req.addParam("height", value: String(postRef.height));
+        req.addParam("rotation", value: "\(Double(postRef.rotation))");
+        req.addParam("display", value: String(Int(postRef.displayFlags)));
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in movePostRef() code=%d", res.getStatusCode()));
+            handleError(String(format: "in updatePostRef() code=%d", res.getStatusCode()));
             return false;
         }
         return true;
