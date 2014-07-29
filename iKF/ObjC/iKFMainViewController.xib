@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
     </dependencies>
     <objects>
@@ -44,7 +45,12 @@
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Vt-2V-64h">
                     <rect key="frame" x="0.0" y="980" width="768" height="44"/>
                     <items>
-                        <barButtonItem title="bg" id="TQh-E2-PYs">
+                        <barButtonItem title="update" id="Cyd-bb-szl">
+                            <connections>
+                                <action selector="updateButtonPressed:" destination="-1" id="TkT-S8-TPj"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem title="image+" id="TQh-E2-PYs">
                             <connections>
                                 <action selector="bgButtonPressed:" destination="-1" id="3jA-0j-oak"/>
                             </connections>
@@ -52,11 +58,6 @@
                         <barButtonItem title="note+" id="Cfc-9S-wSP">
                             <connections>
                                 <action selector="notePlusButtonPressed:" destination="-1" id="Nml-Au-ZYB"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem title="update" id="Cyd-bb-szl">
-                            <connections>
-                                <action selector="updateButtonPressed:" destination="-1" id="TkT-S8-TPj"/>
                             </connections>
                         </barButtonItem>
                     </items>
