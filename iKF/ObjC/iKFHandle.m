@@ -285,16 +285,7 @@ static int SIZE = 40;
 //        _resizeButton.frame.origin
     }
     if(recognizer.state == UIGestureRecognizerStateEnded){
-        //[self handleBuildsonTap: nil];
-        //        [_controller requestConnectionsRepaint];
-        //        [self removeShadow];
-        //[_controller removeHandle];
-        drawingTarget.model.width = drawingTarget.svgwidth * drawingTarget.scaleX;
-        drawingTarget.model.height = drawingTarget.svgheight * drawingTarget.scaleY;
-        drawingTarget.model.rotation = drawingTarget.rotation;
-        [drawingTarget.model setShowInPlace: true];
-        [_controller updatePostRef: drawingTarget.model];
-        
+        [self updateToServer];
         [_controller showHandle: drawingTarget];
     }
 }
@@ -335,30 +326,27 @@ static int SIZE = 40;
         // make difference then reverse y axis
         float x = movePoint.x - org.x;
         float y = -(movePoint.y - org.y);
-       // NSLog(@"atan2f degree：%f", (M_PI_2 - atan2f(fh,fw))*360/(2*M_PI));
-        // radian
         float radian = atan2f(y, x) + (M_PI_2 + (M_PI_2 - atan2f(fh,fw)));
-        int degree = (int)(radian *360 /(2*M_PI));
-        int a = degree % 90;
-        if(-5 < a && a < 0){
-            degree = degree + a;
-        }else if(0 < a && a < 5){
-            degree = degree - a;
-        }
-        radian = ((float)degree)* (2*M_PI) / 360;
-//        drawingTarget.transform = CGAffineTransformMakeRotation(-radian);
-        //NSLog(@"radian：%f　degree：%f", radian, degree);
+        // NSLog(@"atan2f degree：%f", (M_PI_2 - atan2f(fh,fw))*360/(2*M_PI));
+        radian = [self adjust: radian];
         [drawingTarget kfSetRotation: -radian];
     }
     if(recognizer.state == UIGestureRecognizerStateEnded){
-        drawingTarget.model.width = drawingTarget.svgwidth * drawingTarget.scaleX;
-        drawingTarget.model.height = drawingTarget.svgheight * drawingTarget.scaleY;
-        drawingTarget.model.rotation = drawingTarget.rotation;
-        [drawingTarget.model setShowInPlace: true];
-        [_controller updatePostRef: drawingTarget.model];
-        
+        [self updateToServer];
         [_controller showHandle: drawingTarget];
     }
+}
+
+- (CGFloat) adjust:(CGFloat)radian{
+    int degree = (int)(radian *360 /(2*M_PI));
+    int a = degree % 90;
+    if(-5 < a && a < 0){
+        degree = degree + a;
+    }else if(0 < a && a < 5){
+        degree = degree - a;
+    }
+    radian = ((float)degree)* (2*M_PI) / 360;
+    return radian;
 }
 
 CGFloat initialRotation;
@@ -373,32 +361,47 @@ CGFloat initialRotation;
     if(recognizer.state == UIGestureRecognizerStateChanged){
         CGFloat rotation = [recognizer rotation];
         CGFloat newRotation = initialRotation + rotation;
+        newRotation = [self adjust: newRotation];
         [drawingTarget kfSetRotation: newRotation];
+    }
+    if(recognizer.state == UIGestureRecognizerStateEnded){
+        [self updateToServer];
+        [_controller showHandle: drawingTarget];
     }
 }
 
 CGFloat initialScale;
+CGPoint initialCenter;
 
 - (void) handlePinch : (UIPinchGestureRecognizer *)recognizer {
     KFDrawingRefView* drawingTarget = (KFDrawingRefView*)_target;
 
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         initialScale = drawingTarget.scaleX;
-//        currentTransForm = imgView.transform;
-        // currentTransFormは、フィールド変数。imgViewは画像を表示するUIImageView型のフィールド変数。
+        initialCenter = drawingTarget.center;
     }
     
     if(recognizer.state == UIGestureRecognizerStateChanged){
         CGFloat scale = [recognizer scale];
         CGFloat newScale = initialScale * scale;
         [drawingTarget kfSetScale: newScale newScaleY:newScale];
+        drawingTarget.center = initialCenter;
     }
-    // ピンチジェスチャー発生時から、どれだけ拡大率が変化したかを取得する
-    // 2本の指の距離が離れた場合には、1以上の値、近づいた場合には、1以下の値が取得できる
-    //    CGFloat scale = [sender scale];
-    
-    // ピンチジェスチャー開始時からの拡大率の変化を、imgViewのアフィン変形の状態に設定する事で、拡大する。
-    //    imgView.transform = CGAffineTransformConcat(currentTransForm, CGAffineTransformMakeScale(scale, scale));
+    if(recognizer.state == UIGestureRecognizerStateEnded){
+        [self updateToServer];
+        [_controller showHandle: drawingTarget];
+    }
+}
+
+- (void) updateToServer{
+    KFDrawingRefView* drawingTarget = (KFDrawingRefView*)_target;
+    KFReference* model = drawingTarget.model;
+    model.location = drawingTarget.frame.origin;
+    model.width = drawingTarget.svgwidth * drawingTarget.scaleX;
+    model.height = drawingTarget.svgheight * drawingTarget.scaleY;
+    model.rotation = drawingTarget.rotation;
+    [model setShowInPlace: true];
+    [_controller updatePostRef: drawingTarget.model];
 }
 
 /*

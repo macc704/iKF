@@ -43,6 +43,8 @@
     
     //reuse
     NSDictionary* _reusebox;
+    
+    KFImagePicker* imagePicker;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -81,6 +83,7 @@
     [_mainPanel addGestureRecognizer: recognizerTap];
     
     //[self updateViews];
+    imagePicker = [[KFImagePicker alloc] initWithMainController: self];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -186,7 +189,7 @@
 }
 
 - (IBAction)bgButtonPressed:(id)sender {
-    [self setBgFromLibrary];
+    [imagePicker openImagePicker:self.bgButton viewId: [self currentViewId]];
 }
 
 - (IBAction)notePlusButtonPressed:(id)sender {
@@ -223,27 +226,7 @@
     [self startComet: _cometThreadNumber];
 }
 
-- (void) setBgFromLibrary{
-    UIImagePickerController* imagePicker = [[UIImagePickerController alloc] init];
-    [imagePicker setSourceType: UIImagePickerControllerSourceTypePhotoLibrary];
-    imagePicker.delegate = self;
-    _popController = [[UIPopoverController alloc] initWithContentViewController: imagePicker];
-    [_popController presentPopoverFromBarButtonItem: self.bgButton permittedArrowDirections: UIPopoverArrowDirectionAny animated:YES];
-}
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    //_mainPanel.backgroundColor=[UIColor colorWithPatternImage: image];
-    [_popController dismissPopoverAnimated:YES];
-    [[KFService getInstance] createPicture:image viewId: [self currentViewId] location:CGPointMake(50, 50)];
-    [self update];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [_popController dismissPopoverAnimated:YES];
-}
 
 //- (IBAction)viewSelectionPressed:(id)sender{
 //    

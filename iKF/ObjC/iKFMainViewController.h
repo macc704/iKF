@@ -46,6 +46,7 @@
 - (void) requestConnectionsRepaint;
 - (void) openNoteEditController: (KFNote*)note mode: (NSString*)mode;
 - (void) updatePostRef: (KFReference*) ref;
+- (void) update;
 
 - (void) setKFView: (KFView*) view;
     

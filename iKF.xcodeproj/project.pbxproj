@@ -51,6 +51,8 @@
 		495FAFA519547D4D00D147BA /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = 495FAFA019547D4D00D147BA /* resize.png */; };
 		495FAFA619547D4D00D147BA /* rotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 495FAFA119547D4D00D147BA /* rotation.png */; };
 		495FAFA719547D4D00D147BA /* viewlink.png in Resources */ = {isa = PBXBuildFile; fileRef = 495FAFA219547D4D00D147BA /* viewlink.png */; };
+		497C26E619888627007CCEED /* KFHalo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C26E519888627007CCEED /* KFHalo.swift */; };
+		497C26E9198889D7007CCEED /* KFImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C26E8198889D7007CCEED /* KFImagePicker.swift */; };
 		49842F7219805A3D0012900B /* KFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49842F7119805A3D0012900B /* KFService.swift */; };
 		49842F7419805ACB0012900B /* KFHttpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49842F7319805ACB0012900B /* KFHttpResponse.swift */; };
 		49842F7619805AE20012900B /* KFHttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49842F7519805AE20012900B /* KFHttpRequest.swift */; };
@@ -155,6 +157,8 @@
 		495FAFA019547D4D00D147BA /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resize.png; sourceTree = "<group>"; };
 		495FAFA119547D4D00D147BA /* rotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotation.png; sourceTree = "<group>"; };
 		495FAFA219547D4D00D147BA /* viewlink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viewlink.png; sourceTree = "<group>"; };
+		497C26E519888627007CCEED /* KFHalo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFHalo.swift; sourceTree = "<group>"; };
+		497C26E8198889D7007CCEED /* KFImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFImagePicker.swift; sourceTree = "<group>"; };
 		49842F7119805A3D0012900B /* KFService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFService.swift; sourceTree = "<group>"; };
 		49842F7319805ACB0012900B /* KFHttpResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFHttpResponse.swift; sourceTree = "<group>"; };
 		49842F7519805AE20012900B /* KFHttpRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFHttpRequest.swift; sourceTree = "<group>"; };
@@ -224,6 +228,7 @@
 		490E75D4194114A5004E8BF7 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				497C26E719888639007CCEED /* MainUI */,
 				492C10211947557200512591 /* NoteUI */,
 				492F402F1941FAD80038E621 /* Common */,
 				490E75D5194114B1004E8BF7 /* LoginUI */,
@@ -301,6 +306,15 @@
 				49C00EBA1942628A0044A1C1 /* mainUI */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		497C26E719888639007CCEED /* MainUI */ = {
+			isa = PBXGroup;
+			children = (
+				497C26E519888627007CCEED /* KFHalo.swift */,
+				497C26E8198889D7007CCEED /* KFImagePicker.swift */,
+			);
+			name = MainUI;
 			sourceTree = "<group>";
 		};
 		49842F6419803FA50012900B /* Network */ = {
@@ -582,6 +596,7 @@
 				4950F71F1953213A002BFB89 /* iKFWebView.m in Sources */,
 				492F402D1941F3600038E621 /* KFRegistrationViewController.swift in Sources */,
 				490E75B7194111A8004E8BF7 /* iKFCompositeNoteViewController.m in Sources */,
+				497C26E619888627007CCEED /* KFHalo.swift in Sources */,
 				49C78D5D194105C2004D3404 /* iKF.xcdatamodeld in Sources */,
 				490E75BE194111A8004E8BF7 /* iKFMainViewController.m in Sources */,
 				49C5591919462FB700FDFF32 /* KFDrawingRefView.swift in Sources */,
@@ -614,6 +629,7 @@
 				49B938441946404000BD9C0D /* KFViewRefView.swift in Sources */,
 				49C78D5A194105C2004D3404 /* AppDelegate.swift in Sources */,
 				492C10271947562800512591 /* KFScaffold.swift in Sources */,
+				497C26E9198889D7007CCEED /* KFImagePicker.swift in Sources */,
 				498BD1AB1942B768006217AD /* KFRegistration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
