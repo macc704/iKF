@@ -24,16 +24,16 @@ class KFImageSizeSelectionViewController: UIViewController {
     
     var image:UIImage?{
     didSet{
-        if(imageView){
-            imageView.image = self.image;
-        }
+        updateImageInfo();
     }
     }
     
     var point = CGPoint(x:50, y:50);
     
     @IBOutlet weak var labelSize: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
+    //    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageContainer: UIView!
+    private let imageView = UIImageView();
     @IBOutlet weak var button1: UIButton!
     @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var button3: UIButton!
@@ -48,7 +48,34 @@ class KFImageSizeSelectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //layout has not finished
+        
+        self.imageContainer.addSubview(imageView);
+        updateImageInfo();
+    }
+    
+    private func updateImageInfo(){
+        if(imageContainer){
+            let imgWidth = self.image!.size.width;
+            let imgHeight = self.image!.size.height;
+            labelSize.text = "\(imgWidth) x \(imgHeight)";
+            if(imgWidth < imgHeight * 1.5){//portrait
+                let viewHeight:CGFloat = imageContainer.frame.size.height;
+                let viewWidth:CGFloat = viewHeight * (imgWidth/imgHeight);
+                let y:CGFloat = 0.0;
+                let x:CGFloat = (imageContainer.frame.size.width - viewWidth) / 2.0;
+                imageView.frame = CGRect(x: x, y: y, width: viewWidth, height: viewHeight);
+            }else{//landscape
+                let viewWidth:CGFloat = imageContainer.frame.size.width;
+                let viewHeight:CGFloat = viewWidth * (imgHeight/imgWidth);
+                let x:CGFloat = 0.0;
+                let y:CGFloat = (imageContainer.frame.size.height - viewHeight) / 2.0;
+                imageView.frame = CGRect(x: x, y: y, width: viewWidth, height: viewHeight);
+            }
+            imageView.image = self.image;
+            imageContainer.addSubview(imageView);
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -57,17 +84,6 @@ class KFImageSizeSelectionViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         //layout has finished
-        if(imageView){
-            let width = self.image!.size.width;
-            let height = self.image!.size.height;
-            labelSize.text = "\(width) x \(height)";
-            let center = imageView.center;
-            let viewHeight = imageView.frame.size.height;
-            let viewWidth = viewHeight * (width/height);
-            imageView.frame = CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight);
-            imageView.center = center;
-            imageView.image = self.image;
-        }
     }
     
     override func didReceiveMemoryWarning() {

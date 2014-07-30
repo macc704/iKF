@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
     </dependencies>
     <objects>
@@ -10,7 +9,7 @@
                 <outlet property="button1" destination="Pc3-k1-1hF" id="cFa-da-8vS"/>
                 <outlet property="button2" destination="vHc-Mc-sx4" id="F2I-3g-Z04"/>
                 <outlet property="button3" destination="7zd-ox-bTR" id="acf-hr-ZPS"/>
-                <outlet property="imageView" destination="4xg-z0-AJH" id="OI1-6O-KAu"/>
+                <outlet property="imageContainer" destination="rAI-18-xDj" id="pMm-0g-mez"/>
                 <outlet property="labelSize" destination="KRQ-vk-ksJ" id="naU-DT-dik"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -38,9 +37,6 @@
                         <action selector="button2Pressed:" destination="-1" eventType="touchUpInside" id="QWG-rK-coP"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4xg-z0-AJH">
-                    <rect key="frame" x="133" y="119" width="502" height="267"/>
-                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tvk-0d-0yN">
                     <rect key="frame" x="360" y="766" width="48" height="30"/>
                     <state key="normal" title="Cancel">
@@ -83,6 +79,10 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rAI-18-xDj">
+                    <rect key="frame" x="153" y="101" width="462" height="287"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
