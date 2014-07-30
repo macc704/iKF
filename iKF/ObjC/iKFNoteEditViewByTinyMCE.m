@@ -10,11 +10,11 @@
 #import "iKFNoteEditViewByTinyMCE.h"
 //#import "iKFConnector.h"
 #import "iKFWebView.h"
-#import "iKFLoadingView.h"
+//#import "iKFLoadingView.h"
 #import "iKF-Swift.h"
 
 static iKFWebView* globalEditWebView;
-static iKFLoadingView* globalLoadingView;
+static KFLoadingView* globalLoadingView;
 static bool loaded;
 
 @implementation iKFNoteEditViewByTinyMCE{
@@ -106,7 +106,7 @@ NSString* cashe;
 
     //v3
     if(!loaded){
-        globalLoadingView = [[iKFLoadingView alloc] init];
+        globalLoadingView = [[KFLoadingView alloc] init];
         [globalLoadingView showOnView: _webView];
         NSString* template = [[KFService getInstance] getEditTemplate];
         NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:text];

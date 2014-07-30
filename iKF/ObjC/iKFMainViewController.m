@@ -12,7 +12,6 @@
 #import "iKFAbstractNoteEditView.h"
 #import "iKFCompositeNoteViewController.h"
 #import "iKFHandle.h"
-#import "iKFMainView.h"
 #import "iKFConnectionLayerView.h"
 //#import "iKFConnector.h"
 
@@ -24,7 +23,7 @@
 
 @implementation iKFMainViewController{
     
-    iKFMainView* _mainPanel;
+    KFCanvasView* _mainPanel;
     
     UIPopoverController* _popController;
     
@@ -65,7 +64,7 @@
     _views = [[NSMutableArray alloc] init];
     //self.viewchooser.delegate = self;
     
-    _mainPanel = [[iKFMainView alloc] init];
+    _mainPanel = [[KFCanvasView alloc] init];
     [_mainPanel setSizeWithWidth:4000 height:3000];
     [self.scrollView addSubview: _mainPanel];
     self.scrollView.contentSize = _mainPanel.frame.size;
@@ -207,16 +206,15 @@
 
 - (void) showSelection{
     //iKFViewSelectionController* controller = [[iKFViewSelectionController alloc] init];
-    iKFViewSelectionController* controller = [[iKFViewSelectionController alloc] initWithNibName:nil bundle:nil];
-    controller.objects = _views;
-    controller.listener = self;
+    KFViewSelectionController* controller = [[KFViewSelectionController alloc] initWithNibName:nil bundle:nil];
+    controller.views = _views;
+//    func a(view:KFView){
+//        [_popController dismissPopoverAnimated:YES];
+//        [self setKFView: view];
+//    }
+//    controller.selectedHandler = a;
     _popController = [[UIPopoverController alloc] initWithContentViewController: controller];
     [_popController presentPopoverFromBarButtonItem: self.viewSelectionButton permittedArrowDirections: UIPopoverArrowDirectionAny animated:YES];
-}
-
-- (void) changed: (KFView*) view{
-    [_popController dismissPopoverAnimated:YES];
-    [self setKFView: view];
 }
 
 - (void) setKFView: (KFView*) view{
