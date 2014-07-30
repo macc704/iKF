@@ -19,13 +19,14 @@
 @class KFView;
 @class KFRegistration;
 
-@interface iKFMainViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate>
+@interface iKFMainViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property KFUser* user;
 
 //@property (weak, nonatomic) IBOutlet UIBarButtonItem *viewSelectionButton;
+@property (weak, nonatomic) IBOutlet UIView *scrollViewContainer;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *viewSelectionButton;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+//@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *bgButton;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBar;
 @property (weak, nonatomic) IBOutlet UIButton *updateButton;

@@ -8,7 +8,10 @@
 
 import UIKit
 
-class KFCanvasView: UIView {
+class KFCanvasView: UIView, UIScrollViewDelegate{
+    
+    let scrollView = UIScrollView();
+    let layerContainerView = UIView();
     
     let noteLayer = KFLayerView();
     let connectionLayer = iKFConnectionLayerView();
@@ -16,20 +19,33 @@ class KFCanvasView: UIView {
     
     init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.drawingLayer.userInteractionEnabled = true;
+
+        //basic structure
+        self.addSubview(scrollView);
+        scrollView.addSubview(layerContainerView);
+        scrollView.delegate = self;
         
         //add layers by reversed order
-        self.addSubview(self.drawingLayer);
-        self.addSubview(connectionLayer);
-        self.addSubview(self.noteLayer);
+        self.drawingLayer.userInteractionEnabled = true;
+        layerContainerView.addSubview(self.drawingLayer);
+        layerContainerView.addSubview(connectionLayer);
+        layerContainerView.addSubview(self.noteLayer);
     }
     
-    func setSizeWithWidth(width:CGFloat, height:CGFloat){
-        self.frame = CGRectMake(0, 0, width, height);
-        self.drawingLayer.frame = self.frame;
-        self.connectionLayer.frame = self.frame;
-        self.noteLayer.frame = self.frame;
+    func setSize(size:CGSize){
+        self.frame.size = size;
+        self.scrollView.frame.size = size;
+    }
+    
+    func setCanvasSize(width:CGFloat, height:CGFloat){
+        layerContainerView.frame = CGRectMake(0, 0, width, height);
+        drawingLayer.frame = layerContainerView.frame;
+        connectionLayer.frame = layerContainerView.frame;
+        noteLayer.frame = layerContainerView.frame;
+        
+        scrollView.contentSize = layerContainerView.frame.size;
+        scrollView.maximumZoomScale = 4.0;
+        scrollView.minimumZoomScale = 0.4;
     }
     
     func clearViews(){
@@ -42,6 +58,12 @@ class KFCanvasView: UIView {
         for subview in view.subviews {
             subview.removeFromSuperview();
         }
+    }
+    
+    /* Scrollling (only one method) */
+    
+    func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView! {
+        return layerContainerView;
     }
     
     /*

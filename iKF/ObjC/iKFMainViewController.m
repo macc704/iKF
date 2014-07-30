@@ -65,21 +65,23 @@
     //self.viewchooser.delegate = self;
     
     _mainPanel = [[KFCanvasView alloc] init];
-    [_mainPanel setSizeWithWidth:4000 height:3000];
-    [self.scrollView addSubview: _mainPanel];
-    self.scrollView.contentSize = _mainPanel.frame.size;
-    
-    //スクロールの拡大縮小の設定
-    self.scrollView.delegate = self;
-    self.scrollView.maximumZoomScale = 4.0;
-    self.scrollView.minimumZoomScale = 0.4;
+    [_mainPanel setSize: self.scrollViewContainer.frame.size];
+    [_mainPanel setCanvasSize: 4000 height:3000];
+    [self.scrollViewContainer addSubview: _mainPanel];
+//    [self.scrollView addSubview: _mainPanel];
+//    self.scrollView.contentSize = _mainPanel.frame.size;
+//    
+//    //スクロールの拡大縮小の設定
+//    self.scrollView.delegate = self;
+//    self.scrollView.maximumZoomScale = 4.0;
+//    self.scrollView.minimumZoomScale = 0.4;
     
     //Tap
     //Double Tap
-    UITapGestureRecognizer* recognizerTap = [[UITapGestureRecognizer alloc]
-                                             initWithTarget: self  action: @selector(handleTap:)];
-    recognizerTap.numberOfTapsRequired = 1;
-    [_mainPanel addGestureRecognizer: recognizerTap];
+//    UITapGestureRecognizer* recognizerTap = [[UITapGestureRecognizer alloc]
+//                                             initWithTarget: self  action: @selector(handleTap:)];
+//    recognizerTap.numberOfTapsRequired = 1;
+//    [_mainPanel addGestureRecognizer: recognizerTap];
     
     //[self updateViews];
     imagePicker = [[KFImagePicker alloc] initWithMainController: self];
@@ -156,16 +158,16 @@
 }
 
 
-- (void) handleTap: (UIGestureRecognizer*)recognizer{
-    if(_handle){
-        [self removeHandle];
-    }else{
-        UIView* view = [[UIView alloc] init];
-        CGPoint p = [recognizer locationInView: _mainPanel];
-        view.frame = CGRectMake(p.x, p.y, 60, 20);
-        [self showHandle: view];
-    }
-}
+//- (void) handleTap: (UIGestureRecognizer*)recognizer{
+//    if(_handle){
+//        [self removeHandle];
+//    }else{
+//        UIView* view = [[UIView alloc] init];
+//        CGPoint p = [recognizer locationInView: _mainPanel];
+//        view.frame = CGRectMake(p.x, p.y, 60, 20);
+//        [self showHandle: view];
+//    }
+//}
 
 - (void) update{
     if(self.user){
@@ -173,10 +175,10 @@
     }
 }
 
-//スクロールの拡大縮小の設定
-- (UIView*) viewForZoomingInScrollView: (UIScrollView*)aScrollView {
-    return _mainPanel;
-}
+////スクロールの拡大縮小の設定
+//- (UIView*) viewForZoomingInScrollView: (UIScrollView*)aScrollView {
+//    return _mainPanel;
+//}
 
 - (void)didReceiveMemoryWarning
 {
