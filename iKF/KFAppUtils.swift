@@ -16,4 +16,23 @@ class KFAppUtils: NSObject {
         alertView.message = msg;
         alertView.show();
     }
+    
+    class func asyncExecWithLoadingView(onView:UIView, execute:()->(), onFinish:(()->())?){
+        //        let queue = dispatch_queue_create("sub_queue", 0);
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        let loading = iKFLoadingView();
+        
+        dispatch_async(queue){
+            dispatch_async(dispatch_get_main_queue()){
+                loading.showOnView(onView);
+            }
+            execute();
+            dispatch_async(dispatch_get_main_queue()){
+                loading.hide();
+                if(onFinish){
+                    onFinish!();
+                }
+            }
+        }
+    }
 }

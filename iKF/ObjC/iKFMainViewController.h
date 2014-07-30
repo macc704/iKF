@@ -49,6 +49,7 @@
 - (void) update;
 
 - (void) setKFView: (KFView*) view;
+- (KFView*) getCurrentView;
     
 - (void) go:(KFRegistration*)registration;
 //- (void) setJSON: (id)json;

@@ -156,6 +156,7 @@
     });
 }
 
+
 - (void) handleTap: (UIGestureRecognizer*)recognizer{
     if(_handle){
         [self removeHandle];
@@ -447,7 +448,11 @@
 }
 
 - (NSString*) currentViewId{
-    return [_views[_selectedRow] guid];
+    return [[self getCurrentView] guid];
+}
+
+- (KFView*) getCurrentView{
+    return _views[_selectedRow];
 }
 
 - (void) clearViews{

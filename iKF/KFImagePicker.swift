@@ -10,7 +10,7 @@ import UIKit
 
 class KFImagePicker: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    let mainController:iKFMainViewController;
+    private let mainController:iKFMainViewController;
     var popController:UIPopoverController?;
     var viewId:String?
     
@@ -31,21 +31,24 @@ class KFImagePicker: NSObject, UINavigationControllerDelegate, UIImagePickerCont
     /* UIImagePickerControllerDelegate */
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!){
         let image:UIImage = info[UIImagePickerControllerOriginalImage] as UIImage;
-        KFService.getInstance().createPicture(image, viewId: self.viewId!, location: CGPoint(x:50, y:50));
+        
+        let sizeSelectionController = KFImageSizeSelectionViewController(mainController: mainController);
+        sizeSelectionController.image = image;
+        sizeSelectionController.modalPresentationStyle = UIModalPresentationStyle.FullScreen;
+        sizeSelectionController.modalTransitionStyle = UIModalTransitionStyle.CoverVertical;
+        //        func callback(scale:CGFloat){
+        //            KFService.getInstance().createPicture(image, viewId: self.viewId!, location: CGPoint(x:50, y:50));
+        //            self.mainController.update();
+        //        }
+        //        sizeSelectionController.setButtonPressHandler(callback);        
         popController?.dismissPopoverAnimated(true);
-        self.mainController.update();
+        mainController.presentViewController(sizeSelectionController, animated: true, completion: nil);
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController!){
         popController?.dismissPopoverAnimated(true);
     }
     
-    func scaleImage(original:UIImage, newSize:CGSize) -> UIImage{
-        UIGraphicsBeginImageContext(newSize);
-        original.drawInRect(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height));
-        let newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        return newImage;
-    }
+
     
 }

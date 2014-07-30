@@ -61,6 +61,8 @@
 		498BD1AD1942BC59006217AD /* KFUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1AC1942BC59006217AD /* KFUser.swift */; };
 		498BD1AF1942C1E0006217AD /* KFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1AE1942C1E0006217AD /* KFView.swift */; };
 		498BD1B11942C372006217AD /* KFNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1B01942C372006217AD /* KFNote.swift */; };
+		499DE6E419894A3000BA2209 /* KFImageSizeSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499DE6E219894A3000BA2209 /* KFImageSizeSelectionViewController.swift */; };
+		499DE6E519894A3000BA2209 /* KFImageSizeSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 499DE6E319894A3000BA2209 /* KFImageSizeSelectionViewController.xib */; };
 		49B938441946404000BD9C0D /* KFViewRefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B938431946404000BD9C0D /* KFViewRefView.swift */; };
 		49B938471946A52600BD9C0D /* iKFLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B938461946A52600BD9C0D /* iKFLayerView.m */; };
 		49C5590B1945EF1700FDFF32 /* KFDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5590A1945EF1700FDFF32 /* KFDrawing.swift */; };
@@ -167,6 +169,8 @@
 		498BD1AC1942BC59006217AD /* KFUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFUser.swift; sourceTree = "<group>"; };
 		498BD1AE1942C1E0006217AD /* KFView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFView.swift; sourceTree = "<group>"; };
 		498BD1B01942C372006217AD /* KFNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFNote.swift; sourceTree = "<group>"; };
+		499DE6E219894A3000BA2209 /* KFImageSizeSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFImageSizeSelectionViewController.swift; sourceTree = "<group>"; };
+		499DE6E319894A3000BA2209 /* KFImageSizeSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFImageSizeSelectionViewController.xib; sourceTree = "<group>"; };
 		49B938431946404000BD9C0D /* KFViewRefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFViewRefView.swift; sourceTree = "<group>"; };
 		49B938451946A52600BD9C0D /* iKFLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFLayerView.h; sourceTree = "<group>"; };
 		49B938461946A52600BD9C0D /* iKFLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFLayerView.m; sourceTree = "<group>"; };
@@ -313,6 +317,8 @@
 			children = (
 				497C26E519888627007CCEED /* KFHalo.swift */,
 				497C26E8198889D7007CCEED /* KFImagePicker.swift */,
+				499DE6E219894A3000BA2209 /* KFImageSizeSelectionViewController.swift */,
+				499DE6E319894A3000BA2209 /* KFImageSizeSelectionViewController.xib */,
 			);
 			name = MainUI;
 			sourceTree = "<group>";
@@ -551,6 +557,7 @@
 				492C1025194755FE00512591 /* KFScaffoldingTableViewController.xib in Resources */,
 				495FAF9919547D1400D147BA /* clip.png in Resources */,
 				49C78D62194105C2004D3404 /* Main.storyboard in Resources */,
+				499DE6E519894A3000BA2209 /* KFImageSizeSelectionViewController.xib in Resources */,
 				495FAFA619547D4D00D147BA /* rotation.png in Resources */,
 				492F402A1941F2AB0038E621 /* read.png in Resources */,
 				492F40281941F2AB0038E621 /* edit.png in Resources */,
@@ -621,6 +628,7 @@
 				490E75C4194111A8004E8BF7 /* iKFNoteEditViewController.m in Sources */,
 				49C5590F1945F5D700FDFF32 /* KFReference.swift in Sources */,
 				490E75C2194111A8004E8BF7 /* iKFNoteEditViewBySource.m in Sources */,
+				499DE6E419894A3000BA2209 /* KFImageSizeSelectionViewController.swift in Sources */,
 				49EEFF071981627600F78F16 /* KFNetworkUtil.swift in Sources */,
 				49842F7619805AE20012900B /* KFHttpRequest.swift in Sources */,
 				492C10291947563300512591 /* KFSupport.swift in Sources */,

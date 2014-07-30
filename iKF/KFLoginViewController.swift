@@ -36,26 +36,23 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     @IBAction func loginButtonPressed(sender : AnyObject) {
-//        let queue = dispatch_queue_create("sub_queue", 0);
-        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        //        let queue = dispatch_queue_create("sub_queue", 0);
+        var res:(result: Bool, errorMsg: String?)?;
         
-        let loading = iKFLoadingView();
-
-        dispatch_async(queue){
-            dispatch_async(dispatch_get_main_queue()){
-                loading.show(self);
-            }
-            let res = self.login();
-            dispatch_async(dispatch_get_main_queue()){
-                loading.hide();
-                if(res.result == true){
-                    let registrationViewController = KFRegistrationViewController(nibName: nil, bundle: nil);
-                    self.presentViewController(registrationViewController, animated: true, completion: nil);
-                }else{
-                    KFAppUtils.showAlert("ConnectionError", msg: res.errorMsg!);
-                }
+        func execute(){
+            res = self.login();
+        }
+        
+        func onFinish(){
+            if(res!.result == true){
+                let registrationViewController = KFRegistrationViewController(nibName: nil, bundle: nil);
+                self.presentViewController(registrationViewController, animated: true, completion: nil);
+            }else{
+                KFAppUtils.showAlert("ConnectionError", msg: res!.errorMsg!);
             }
         }
+        
+        KFAppUtils.asyncExecWithLoadingView(self.view, execute: execute, onFinish: onFinish);
     }
     
     func login() -> (result: Bool, errorMsg: String?) {        

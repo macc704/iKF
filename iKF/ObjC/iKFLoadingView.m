@@ -29,14 +29,7 @@ UIActivityIndicatorView* _indicator;
 }
 
 - (void) show: (UIViewController*)controller{
-    // 画面の中心に配置
-    CGRect rect = controller.view.frame;
-    self.frame = rect;
-    [_indicator setCenter:CGPointMake(rect.size.width / 2, rect.size.height / 2)];
-    [controller.view addSubview: self];
-    
-    // ぐるぐる開始
-    [_indicator startAnimating];
+    [self showOnView: controller.view];
 }
 
 - (void) showOnView: (UIView*)view{
