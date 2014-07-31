@@ -10,11 +10,11 @@ import UIKit
 
 class KFImagePicker: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    private let mainController:iKFMainViewController;
-    var popController:UIPopoverController?;
-    var viewId:String?
+    private let mainController:KFCanvasViewController;
+    private var popController:UIPopoverController?;
+    private var viewId:String?
     
-    init(mainController:iKFMainViewController){
+    init(mainController:KFCanvasViewController){
         self.mainController = mainController;
     }
     

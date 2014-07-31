@@ -10,13 +10,13 @@ import UIKit
 
 class KFHttpConnection: NSObject {
     class func connect(req: KFHttpRequest) -> KFHttpResponse{
-        debug(String(format: "URL='%@'", req.nsRequest.URL));
+        KFAppUtils.debug("URL='\(req.nsRequest.URL)'");
         
         req.updateParams();
         var res :NSURLResponse?
         var error :NSError?
         
-        debug(String(format: "requestBody='%@'", req.getBodyAsString()));
+        KFAppUtils.debug("requestBody='\(req.getBodyAsString())'");
         
         let bodyData = NSURLConnection.sendSynchronousRequest(req.nsRequest, returningResponse: &res, error: &error);
         let kfres = KFHttpResponse();
@@ -24,11 +24,8 @@ class KFHttpConnection: NSObject {
         kfres.error = error;
         kfres.bodyData = bodyData;
         
-        debug(String(format: "statusCode='%d'", kfres.getStatusCode()));
+        KFAppUtils.debug("statusCode='\(kfres.getStatusCode())'");
         return kfres;
     }
     
-    private class func debug(text:String){
-        println("Debug: connect() " + text);
-    }
 }

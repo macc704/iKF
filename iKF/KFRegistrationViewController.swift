@@ -14,6 +14,7 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     @IBOutlet var registrationCodeField : UITextField!
     @IBOutlet var registrationsPicker : UIPickerView!
+    @IBOutlet weak var navBar: UINavigationBar!
     
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -23,7 +24,8 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
         super.viewDidLoad()
         self.registrationsPicker.dataSource = self;
         self.registrationsPicker.delegate = self;
-        self.refresh();
+        self.navBar.topItem.title = "Hello, " + KFService.getInstance().getCurrentUser().getFullName();
+        self.refreshRegistrations();
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,10 +67,10 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBAction func regsiterButtonPressed(sender : AnyObject) {
         let service = KFService.getInstance();
         service.registerCommunity(registrationCodeField.text);
-        self.refresh();
+        self.refreshRegistrations();
     }
     
-    private func refresh(){
+    private func refreshRegistrations(){
         let service = KFService.getInstance();
         self.registrations = service.getRegistrations();
         self.registrationsPicker.reloadAllComponents();

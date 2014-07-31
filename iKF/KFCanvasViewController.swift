@@ -13,8 +13,12 @@ class KFCanvasViewController: UIViewController {
     @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet weak var canvasContainer: UIView!
     
+    @IBOutlet weak var viewsButton: UIBarButtonItem!
+    @IBOutlet weak var imageAddButton: UIBarButtonItem!
+    
     private var canvasView = KFCanvasView();
-    private var halo:iKFHandle?;
+    private var imagePicker:KFImagePicker?;
+    
     
     private var user:KFUser?;
     private var registration:KFRegistration?;
@@ -25,18 +29,41 @@ class KFCanvasViewController: UIViewController {
     private var reusableRefViews:[String: KFPostRefView] = [:];
     
     private var initialized = false;
-    private var cometThreadNumber = 0;
-    private var cometVersion = 0;
+    private var cometThreadNumber:Int = 0;
+    private var cometVersion:Int = 0;
     
     init() {
         super.init(nibName: nil, bundle: nil)
+        self.imagePicker = KFImagePicker(mainController: self);
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        canvasView.setSize(canvasContainer.frame.size);
+        //canvasView.setSize(canvasContainer.frame.size);//moved to viewDidAppear and rotation
         canvasView.setCanvasSize(4000, height:3000);
         canvasContainer.addSubview(canvasView);
+    }
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        canvasView.setSize(canvasContainer.frame.size);
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated);
+        if(self.initialized){
+            self.cometThreadNumber++;
+            self.startComet(self.cometThreadNumber);
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated);
+        canvasView.setSize(canvasContainer.frame.size);
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated);
+        self.cometThreadNumber++;
     }
     
     func go(registration:KFRegistration){
@@ -50,10 +77,11 @@ class KFCanvasViewController: UIViewController {
             }
             
             self.views = KFService.getInstance().getViews(registration.communityId);
-            self.setCurrentView(self.views[0]);
             self.initialized = true;
-            self.cometThreadNumber++;
-            self.startComet(self.cometThreadNumber);
+            self.setCurrentView(self.views[0]);
+            //set current view do below
+            //self.cometThreadNumber++;
+            //self.startComet(self.cometThreadNumber);
             })
     }
     
@@ -131,22 +159,12 @@ class KFCanvasViewController: UIViewController {
     }
     
     func showHalo(view:UIView){
-        self.hideHalo();
-        
-        self.halo = iKFHandle(controller: self, target: view);
-        self.halo!.alpha = 0.0;
-        self.canvasView.addSubview(self.halo);
-        func animation(){
-            halo!.alpha = 1.0;
-        }
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: animation, completion: nil);
+        let halo = iKFHandle(controller: self, target: view);
+        self.canvasView.showHalo(halo);
     }
     
     func hideHalo(){
-        if(self.halo){
-            self.halo!.removeFromSuperview();
-            self.halo = nil;
-        }
+        self.canvasView.hideHalo();
     }
     
     private func createNote(){
@@ -204,7 +222,16 @@ class KFCanvasViewController: UIViewController {
     //    }
     
     func setCurrentView(view:KFView){
+        if(self.currentView == view){
+            return;//already the view
+        }
+        
         self.currentView = view;
+        KFAppUtils.executeInGUIThread({
+            self.navBar.topItem.title = self.currentView!.title;
+            });
+        self.cometThreadNumber++;
+        self.startComet(self.cometThreadNumber);
     }
     
     func getCurrentView() -> KFView{
@@ -294,6 +321,20 @@ class KFCanvasViewController: UIViewController {
         self.canvasView.clearViews();
     }
     
+    private func showViewSelection(){
+        let viewSelectionController = KFViewSelectionController();
+        viewSelectionController.views = self.views;
+        let popController = UIPopoverController(contentViewController: viewSelectionController);
+        func handler(view:KFView){
+            popController.dismissPopoverAnimated(true);
+            self.setCurrentView(view);
+        }
+        viewSelectionController.selectedHandler = handler;
+        popController.presentPopoverFromBarButtonItem(self.viewsButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
+    }
+    
+    /* event handlers */
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -303,16 +344,15 @@ class KFCanvasViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil);
     }
     
+    @IBAction func viewsButtonPressed(sender: AnyObject) {
+        self.showViewSelection();
+    }
+    
     @IBAction func updatePressed(sender: AnyObject) {
     }
     
-    @IBAction func noteAddPressed(sender: AnyObject) {
-    }
-    
     @IBAction func imageAddPressed(sender: AnyObject) {
-    }
-    
-    @IBAction func viewLinkAddPressed(sender: AnyObject) {
+        self.imagePicker!.openImagePicker(imageAddButton, viewId: self.getCurrentView().guid);
     }
     
     /*

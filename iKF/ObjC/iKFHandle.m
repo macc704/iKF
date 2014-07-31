@@ -10,7 +10,7 @@
 #import "iKFCompositeNoteViewController.h"
 
 #import "iKFAbstractNoteEditView.h"
-#import "iKFMainViewController.h"
+//#import "iKFMainViewController.h"
 #import "iKFNotePopupViewController.h"
 #import "iKF-Swift.h"
 
@@ -401,7 +401,7 @@ CGPoint initialCenter;
     model.height = drawingTarget.svgheight * drawingTarget.scaleY;
     model.rotation = drawingTarget.rotation;
     [model setShowInPlace: true];
-    [_controller updatePostRef: drawingTarget.model];
+    [_controller updatePostRef: drawingTarget];
 }
 
 /*

@@ -26,6 +26,7 @@ class KFService: NSObject {
     private var editTemplate:String?;
     private var readTemplate:String?;
     private var mobileJS:String?;
+    private var currentUser:KFUser?;
     
     private init(){
     }
@@ -36,10 +37,13 @@ class KFService: NSObject {
         
         self.jsonScanner = iKFJSONScanner();
         
+        //clear cache
+        self.currentRegistration = nil;
         self.views = [String: KFView]();
         self.editTemplate = nil;
         self.readTemplate = nil;
         self.mobileJS = nil;
+        self.currentUser = nil;
     }
     
     func getHost() -> String{
@@ -105,12 +109,19 @@ class KFService: NSObject {
     }
     
     func getCurrentUser() -> KFUser{
+        if(currentUser == nil){
+            refreshCurrentUser();
+        }
+        return self.currentUser!;
+    }
+    
+    func refreshCurrentUser() -> Bool{
         let url = self.baseURL! + "rest/account/currentUser";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
             handleError(String(format: "in currentUser() code=%d", res.getStatusCode()));
-            return KFUser();
+            return false;
         }
         
         let json: AnyObject = res.getBodyAsJSON();
@@ -120,7 +131,8 @@ class KFService: NSObject {
         model.firstName = each["firstName"] as String;
         model.lastName = each["lastName"] as String;
         
-        return model;
+        self.currentUser = model;
+        return true;
     }
     
     func registerCommunity(registrationCode:String) -> Bool{
@@ -186,8 +198,8 @@ class KFService: NSObject {
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("x", value: String(Int(postRef.location.x)));
         req.addParam("y", value: String(Int(postRef.location.y)));
-        println(postRef.width);
-        println(postRef.height);
+        //println(postRef.width);
+        //println(postRef.height);
         req.addParam("width", value: String(Int(postRef.width)));
         req.addParam("height", value: String(Int(postRef.height)));
         req.addParam("rotation", value: "\(Double(postRef.rotation))");
@@ -366,7 +378,7 @@ class KFService: NSObject {
     }
     
     func handleError(msg:String){
-        println("KFService: Error: " + msg);
+        KFAppUtils.debug("KFService: Error: " + msg);
     }
 
     

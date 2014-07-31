@@ -10,7 +10,7 @@ import UIKit
 
 class KFImageSizeSelectionViewController: UIViewController {
     
-    private let mainController:iKFMainViewController;
+    private let mainController:KFCanvasViewController;
     
     //    private var image:UIImage?{
     //    get{
@@ -41,7 +41,7 @@ class KFImageSizeSelectionViewController: UIViewController {
     
     //private var handler: ((CGFloat) -> ())?
     
-    init(mainController:iKFMainViewController){
+    init(mainController:KFCanvasViewController){
         self.mainController = mainController;
         super.init(nibName: nil, bundle: nil)
     }
@@ -122,7 +122,7 @@ class KFImageSizeSelectionViewController: UIViewController {
         }
         
         func onFinish(){
-            self.mainController.update();
+            //self.mainController.update();
             self.dismissViewControllerAnimated(true, completion: nil);
         }
         

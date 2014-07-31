@@ -70,6 +70,10 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         if(loginResult == false){
             return (false, "Login Failed");
         }
+        let userResult = service.refreshCurrentUser();
+        if(userResult == false){
+            return (false, "getUser() Failed");
+        }
         return (true, nil);
     }
     

@@ -10,12 +10,14 @@ import UIKit
 
 class KFCanvasView: UIView, UIScrollViewDelegate{
     
-    let scrollView = UIScrollView();
-    let layerContainerView = UIView();
+    private let scrollView = UIScrollView();
+    private let layerContainerView = UIView();
     
     let noteLayer = KFLayerView();
     let connectionLayer = iKFConnectionLayerView();
     let drawingLayer = KFLayerView();
+    
+    private var halo:iKFHandle?;
     
     init() {
         super.init(frame: KFAppUtils.DEFAULT_RECT());
@@ -30,6 +32,11 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         layerContainerView.addSubview(self.drawingLayer);
         layerContainerView.addSubview(connectionLayer);
         layerContainerView.addSubview(self.noteLayer);
+        
+        //halo disappear
+        let recognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:");
+        recognizer.numberOfTapsRequired = 1;
+        layerContainerView.addGestureRecognizer(recognizer);
     }
     
     func setSize(size:CGSize){
@@ -57,6 +64,35 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     private func removeChildren(view:UIView){
         for subview in view.subviews {
             subview.removeFromSuperview();
+        }
+    }
+    
+    /* halo management */
+    
+    func handleSingleTap(recognizer: UIGestureRecognizer){
+        if(halo){
+            hideHalo();
+        }else{
+            //showhalo
+        }
+    }
+    
+    func showHalo(newHalo:iKFHandle){
+        self.hideHalo();
+        
+        self.halo = newHalo;
+        self.halo!.alpha = 0.0;
+        self.layerContainerView.addSubview(self.halo);
+        func animation(){
+            self.halo!.alpha = 1.0;
+        }
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: animation, completion: nil);
+    }
+    
+    func hideHalo(){
+        if(self.halo){
+            self.halo!.removeFromSuperview();
+            self.halo = nil;
         }
     }
     

@@ -16,6 +16,10 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
     var views:[KFView] = [];
     var selectedHandler:((KFView)->())?;
     
+    init(){
+        super.init(nibName: nil, bundle: nil);
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

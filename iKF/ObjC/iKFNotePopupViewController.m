@@ -10,7 +10,7 @@
 #import "iKFWebView.h"
 
 #import "iKFAbstractNoteEditView.h"
-#import "iKFMainViewController.h"
+//#import "iKFMainViewController.h"
 #import "iKF-Swift.h"
 
 @interface iKFNotePopupViewController ()

@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 //#import "iKFConnector.h"
-#import "iKFMainViewController.h"
+//#import "iKFMainViewController.h"
 
-@class iKFNoteView;
+//@class iKFNoteView;
 @class KFCanvasViewController;
-@class iKFPostRefView;
+@class KFPostRefView;
 @class KFNote;
 
 @interface iKFNotePopupViewController : UIViewController

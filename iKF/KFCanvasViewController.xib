@@ -1,49 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KFCanvasViewController" customModule="iKF" customModuleProvider="target">
             <connections>
                 <outlet property="canvasContainer" destination="lAP-Yn-aQA" id="kLc-JF-HhL"/>
+                <outlet property="imageAddButton" destination="YGj-lG-dCN" id="gQg-VX-61e"/>
                 <outlet property="navBar" destination="2Yo-JF-yLy" id="EUw-ep-sv5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewsButton" destination="F4e-6v-8ew" id="2Je-WG-RvU"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+            <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Yo-JF-yLy">
-                    <rect key="frame" x="0.0" y="22" width="768" height="44"/>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Yo-JF-yLy">
+                    <rect key="frame" x="0.0" y="22" width="1024" height="44"/>
                     <items>
-                        <navigationItem title="Title" id="JXq-p4-uZV">
+                        <navigationItem id="JXq-p4-uZV">
                             <barButtonItem key="leftBarButtonItem" title=" &lt; Exit" id="yHZ-dx-XZc">
                                 <connections>
                                     <action selector="exitPressed:" destination="-1" id="V9F-zP-NW8"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem key="rightBarButtonItem" title="Item" id="F4e-6v-8ew"/>
+                            <barButtonItem key="rightBarButtonItem" title="Views" id="F4e-6v-8ew">
+                                <connections>
+                                    <action selector="viewsButtonPressed:" destination="-1" id="WZO-eV-lcP"/>
+                                </connections>
+                            </barButtonItem>
                         </navigationItem>
                     </items>
                 </navigationBar>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lAP-Yn-aQA">
-                    <rect key="frame" x="0.0" y="66" width="768" height="924"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lAP-Yn-aQA">
+                    <rect key="frame" x="0.0" y="66" width="1024" height="658"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sqk-mv-Do0">
-                    <rect key="frame" x="0.0" y="980" width="768" height="44"/>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sqk-mv-Do0">
+                    <rect key="frame" x="0.0" y="724" width="1024" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="akJ-lm-QeU"/>
+                    </constraints>
                     <items>
                         <barButtonItem title="Update" id="roO-yp-1oE">
                             <connections>
                                 <action selector="updatePressed:" destination="-1" id="gHI-oi-9E1"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem title="Note+" id="8NY-UG-bKL">
-                            <connections>
-                                <action selector="noteAddPressed:" destination="-1" id="o6j-2W-FiU"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem title="Image+" id="YGj-lG-dCN">
@@ -51,16 +56,23 @@
                                 <action selector="imageAddPressed:" destination="-1" id="KI4-ud-2OF"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem title="ViewLink+" id="yZs-aH-GKM">
-                            <connections>
-                                <action selector="viewLinkAddPressed:" destination="-1" id="vk6-CF-Tmn"/>
-                            </connections>
-                        </barButtonItem>
                     </items>
                 </toolbar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+            <constraints>
+                <constraint firstItem="2Yo-JF-yLy" firstAttribute="leading" secondItem="lAP-Yn-aQA" secondAttribute="leading" id="3BD-Uc-SsX"/>
+                <constraint firstItem="lAP-Yn-aQA" firstAttribute="top" secondItem="2Yo-JF-yLy" secondAttribute="bottom" id="7iU-bg-iZ7"/>
+                <constraint firstItem="Sqk-mv-Do0" firstAttribute="top" secondItem="lAP-Yn-aQA" secondAttribute="bottom" id="Hce-TZ-X0l"/>
+                <constraint firstAttribute="bottom" secondItem="Sqk-mv-Do0" secondAttribute="bottom" constant="-1" id="Kr2-Gb-4o6"/>
+                <constraint firstItem="Sqk-mv-Do0" firstAttribute="trailing" secondItem="lAP-Yn-aQA" secondAttribute="trailing" id="P9V-Tp-BFy"/>
+                <constraint firstItem="2Yo-JF-yLy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="22" id="k0V-qV-BSM"/>
+                <constraint firstItem="2Yo-JF-yLy" firstAttribute="trailing" secondItem="lAP-Yn-aQA" secondAttribute="trailing" id="kyl-z4-6YD"/>
+                <constraint firstAttribute="trailing" secondItem="lAP-Yn-aQA" secondAttribute="trailing" id="pVS-t4-gdx"/>
+                <constraint firstItem="Sqk-mv-Do0" firstAttribute="leading" secondItem="lAP-Yn-aQA" secondAttribute="leading" id="sIO-Sh-ziu"/>
+                <constraint firstItem="2Yo-JF-yLy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="uQp-Jc-VFe"/>
+            </constraints>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics">
                 <size key="portraitSize" width="768" height="1024"/>
                 <size key="landscapeSize" width="1024" height="768"/>
