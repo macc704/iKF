@@ -159,7 +159,7 @@ class KFCanvasViewController: UIViewController {
     }
     
     func showHalo(view:UIView){
-        let halo = iKFHandle(controller: self, target: view);
+        let halo = KFHalo(controller: self, target: view);
         self.canvasView.showHalo(halo);
     }
     
@@ -325,12 +325,22 @@ class KFCanvasViewController: UIViewController {
         let viewSelectionController = KFViewSelectionController();
         viewSelectionController.views = self.views;
         let popController = UIPopoverController(contentViewController: viewSelectionController);
-        func handler(view:KFView){
+        viewSelectionController.selectedHandler = {(view:KFView) in
             popController.dismissPopoverAnimated(true);
             self.setCurrentView(view);
         }
-        viewSelectionController.selectedHandler = handler;
         popController.presentPopoverFromBarButtonItem(self.viewsButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
+    }
+    
+    func openNoteEditController(note:KFNote, mode:String){
+        let noteController = iKFCompositeNoteViewController();
+        if(mode == "edit"){
+            noteController.toEditMode();
+        }else if(mode == "read"){
+            noteController.toReadMode();
+        }
+        noteController.setNote(note, andViewId: self.getCurrentView().guid);
+        self.presentViewController(noteController, animated: true, completion: nil);
     }
     
     /* event handlers */

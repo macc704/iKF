@@ -115,7 +115,7 @@ class KFPostRefView: UIView {
         self.popoverController?.presentPopoverFromRect(self.frame, inView: self.superview, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
     }
     
-    func die(){
-       self.mainController.deletePostRef(self);
-    }
+//    func die(){
+//       
+//    }
 }

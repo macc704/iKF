@@ -17,7 +17,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     let connectionLayer = iKFConnectionLayerView();
     let drawingLayer = KFLayerView();
     
-    private var halo:iKFHandle?;
+    private var halo:KFHalo?;
     
     init() {
         super.init(frame: KFAppUtils.DEFAULT_RECT());
@@ -77,7 +77,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         }
     }
     
-    func showHalo(newHalo:iKFHandle){
+    func showHalo(newHalo:KFHalo){
         self.hideHalo();
         
         self.halo = newHalo;
