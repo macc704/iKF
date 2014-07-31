@@ -43,11 +43,16 @@ class KFNoteRefView: KFPostRefView {
         self.updateFromModel();
     }
     
-    func updateFromModel(){
+    override func updateFromModel(){
+        super.updateFromModel();
         icon.beenRead = (self.model.post as KFNote).beenRead;
         icon.update();
         titleLabel.text = (self.model.post as KFNote).title;
         authorLabel.text = (self.model.post as KFNote).primaryAuthor?.getFullName();
+    }
+    
+    override func tapA(){
+        self.mainController.openPost(self);
     }
     
     /*

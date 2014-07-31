@@ -98,13 +98,11 @@ class KFCanvasViewController: UIViewController {
         if(self.reusableRefViews[ref.guid] != nil ){
             postRefView = reusableRefViews[ref.guid] as? KFNoteRefView;
             postRefView!.model = ref;
-            postRefView?.updateFromModel();
         }else{
             postRefView = KFNoteRefView(controller: self, ref: ref);
         }
         
-        let r = postRefView!.frame;
-        postRefView!.frame = CGRect(x: ref.location.x, y: ref.location.y, width: r.size.width, height: r.size.height);
+        postRefView?.updateFromModel();
         postRefViews[ref.guid] = postRefView;
         postRefViews[ref.post!.guid] = postRefView;//ちょっとずる
         canvasView.noteLayer.addSubview(postRefView);
@@ -126,8 +124,7 @@ class KFCanvasViewController: UIViewController {
         }else{
             postRefView = KFDrawingRefView(controller: self, ref: ref);
         }
-        let r = postRefView!.frame;
-        postRefView!.frame = CGRect(x: ref.location.x, y: ref.location.y, width: r.size.width, height: r.size.height);
+
         postRefView?.updateFromModel();
         postRefViews[ref.guid] = postRefView;
         //postRefViews[ref.post!.guid] = postRefView;//ちょっとずる
@@ -342,6 +339,27 @@ class KFCanvasViewController: UIViewController {
         noteController.setNote(note, andViewId: self.getCurrentView().guid);
         self.presentViewController(noteController, animated: true, completion: nil);
     }
+    
+    func openPost(postRefView:KFPostRefView){
+        
+    }
+    
+    //    var notePopupController: iKFNotePopupViewController?;
+    //    var popoverController: UIPopoverController?;
+    //
+    //    //これはkfMainへ移動すること
+    //    func openPopupViewer(){
+    //        let newPopupController = iKFNotePopupViewController();
+    //        newPopupController.note = (self.model.post as KFNote);
+    //
+    //        newPopupController.kfViewController = mainController;
+    //        newPopupController.preferredContentSize = newPopupController.view.frame.size;
+    //        self.notePopupController = newPopupController;
+    //
+    //        self.popoverController = UIPopoverController(contentViewController: notePopupController);
+    //        newPopupController.popController = self.popoverController;
+    //        self.popoverController?.presentPopoverFromRect(self.frame, inView: self.superview, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
+    //    }
     
     /* event handlers */
     

@@ -20,11 +20,11 @@ class KFLoadingView: UIView {
     init(){
         super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100));
         
-        // 雰囲気出すために背景を黒く半透明する
+        // fun-iki dasutame black transparent color
         self.backgroundColor = UIColor.blackColor();
         self.alpha = 0.5;
         
-        // でっかいグルグル
+        // big guruguru
         indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.WhiteLarge;
         self.addSubview(indicator);
     }
@@ -35,15 +35,15 @@ class KFLoadingView: UIView {
         indicator.center = self.center;
         view.addSubview(self);
     
-        // ぐるぐる開始
+        // guruguru start
         indicator.startAnimating();
     }
     
     func hide(){
-        // ぐるぐる停止
+        // guruguru stop
         indicator.stopAnimating();
     
-        //　削除
+        //　delete
         self.removeFromSuperview();
     }
 

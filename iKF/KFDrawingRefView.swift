@@ -20,13 +20,13 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     
     init(controller: KFCanvasViewController, ref: KFReference) {
         webView = UIWebView();
-//        web.backgroundColor = [UIColor clearColor];
+        //        web.backgroundColor = [UIColor clearColor];
         webView.userInteractionEnabled = false;
         
         super.init(controller: controller, ref: ref);
-
+        
         self.bindEvents();
-
+        
         let drawing = model.post as KFDrawing;
         let data = drawing.content.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true);
         let parser = NSXMLParser(data: data);
@@ -43,21 +43,12 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
         let baseURL = NSURL(string: baseURLStr);
         webView.loadHTMLString(drawing.content, baseURL: baseURL);
         
-
+        
         //println(model.width);
         //println(model.height);
         //println(model.rotation);
     }
     
-    func updateFromModel(){
-        self.updatePanEventBinding();
-        if(model.isShowInPlace()){
-            kfSetSize(model.width, height: model.height);
-            kfSetRotation(model.rotation);
-        }
-    }
-    
-  
     func parser(parser: NSXMLParser!, didStartElement elementName: String!, namespaceURI: String!, qualifiedName qName: String!, attributes attributeDict: NSDictionary!){
         if(elementName == "svg"){
             svgwidth =  CGFloat((attributeDict["width"] as String).bridgeToObjectiveC().floatValue);
@@ -90,6 +81,24 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
         updateTransform();
     }
     
+    override func updateToModel() {
+        super.updateToModel();
+        model.location = self.frame.origin;
+        model.width = self.svgwidth * self.scaleX;
+        model.height = self.svgheight * self.scaleY;
+        model.rotation = self.rotation;
+        model.setShowInPlace(true);
+    }
+    
+    override func updateFromModel(){
+        super.updateFromModel();
+        self.updatePanEventBinding();
+        if(model.isShowInPlace()){
+            kfSetSize(model.width, height: model.height);
+            kfSetRotation(model.rotation);
+        }
+    }
+    
     func kfSetRotation(newRotation:CGFloat){
         self.rotation = newRotation;
         updateTransform();
@@ -101,27 +110,27 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
         webView.transform = CGAffineTransformConcat(rotationT, scaleT);
     }
     
-    override func handleSingleTap(recognizer: UIGestureRecognizer){
-        let drawing = model.post as KFDrawing;
-        //println("drawing svg="+drawing.content);
-    }
+    //    override func handleSingleTap(recognizer: UIGestureRecognizer){
+    //        let drawing = model.post as KFDrawing;
+    //        //println("drawing svg="+drawing.content);
+    //    }
     
-//    override func handleDoubleTap(recognizer: UIGestureRecognizer){
-//        let drawing = model.post as KFDrawing;
-//        println("drawing svg="+drawing.content);
-//    }
+    //    func handleDoubleTap(recognizer: UIGestureRecognizer){
+    //        //        let drawing = model.post as KFDrawing;
+    //        //        println("drawing svg="+drawing.content);
+    //    }
     
-    override func handleDoubleTap(recognizer: UIGestureRecognizer){
-        mainController.showHalo(self);
-    }
-
+    //    override func handleDoubleTap(recognizer: UIGestureRecognizer){
+    //        mainController.showHalo(self);
+    //    }
+    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func drawRect(rect: CGRect)
     {
-        // Drawing code
+    // Drawing code
     }
     */
-
+    
 }

@@ -78,6 +78,14 @@ class KFHalo: UIView {
         setLock(false);
     }
     
+    private func setLock(lock:Bool){
+        let postTarget = target as KFPostRefView;
+        postTarget.model.setLocked(lock);
+        postTarget.updatePanEventBinding();
+        controller?.updatePostRef(postTarget);
+        controller?.hideHalo();
+    }
+    
     func handleEdit(recognizer:UIGestureRecognizer){
         controller?.openNoteEditController((target as KFPostRefView).model.post as KFNote, mode: "edit");
         controller?.hideHalo();
@@ -134,14 +142,6 @@ class KFHalo: UIView {
         button.center = movePoint;
         recognizer.setTranslation(CGPointZero, inView: button);
         return movePoint;
-    }
-    
-    private func setLock(lock:Bool){
-        let postTarget = target as KFPostRefView;
-        postTarget.model.setLocked(lock);
-        postTarget.updatePanEventBinding();
-        controller?.updatePostRef(postTarget);
-        controller?.hideHalo();
     }
     
     func handleMove(recognizer:UIPanGestureRecognizer){
@@ -271,12 +271,7 @@ class KFHalo: UIView {
     
     private func updateToServer(){
         let drawingTarget = target as KFDrawingRefView;
-        let model = drawingTarget.model;
-        model.location = drawingTarget.frame.origin;
-        model.width = drawingTarget.svgwidth * drawingTarget.scaleX;
-        model.height = drawingTarget.svgheight * drawingTarget.scaleY;
-        model.rotation = drawingTarget.rotation;
-        model.setShowInPlace(true);
+        drawingTarget.updateToModel();
         controller?.updatePostRef(drawingTarget);
     }
     

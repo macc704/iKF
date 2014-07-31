@@ -9,16 +9,15 @@
 import UIKit
 
 class KFPostRefView: UIView {
-
-    var mainController: KFCanvasViewController;
     
+    var mainController: KFCanvasViewController;
     var model: KFReference;
     private var panGesture:UIPanGestureRecognizer?;
-   
+    
     init(controller: KFCanvasViewController, ref: KFReference) {
-        mainController = controller;
+        self.mainController = controller;
         self.model = ref;
-
+        
         super.init(frame: CGRectMake(0,0,0,0));
     }
     
@@ -71,7 +70,7 @@ class KFPostRefView: UIView {
         }
     }
     
-    var savedBackgroundColor:UIColor?;
+    private var savedBackgroundColor:UIColor?;
     
     func makeShadow(){
         self.savedBackgroundColor = self.backgroundColor;
@@ -88,34 +87,32 @@ class KFPostRefView: UIView {
     func removeShadow(){
         self.backgroundColor = savedBackgroundColor;
         self.layer.shadowOpacity = 0.0;
-    }    
-    
-    func handleSingleTap(recognizer: UIGestureRecognizer){
-        self.openPopupViewer();
     }
-                            
-    func handleDoubleTap(recognizer: UIGestureRecognizer){
+    
+    final func handleSingleTap(recognizer: UIGestureRecognizer){
+        self.tapA();
+    }
+    
+    final func handleDoubleTap(recognizer: UIGestureRecognizer){
+        self.tapB();
+    }
+    
+    func tapA(){
+    }
+    
+    final func tapB(){
         mainController.showHalo(self);
     }
-
-    var notePopupController: iKFNotePopupViewController?;
-    var popoverController: UIPopoverController?;
     
-    //これはkfMainへ移動すること
-    func openPopupViewer(){
-        let newPopupController = iKFNotePopupViewController();
-        newPopupController.note = (self.model.post as KFNote);
-
-        newPopupController.kfViewController = mainController;
-        newPopupController.preferredContentSize = newPopupController.view.frame.size;
-        self.notePopupController = newPopupController;
-        
-        self.popoverController = UIPopoverController(contentViewController: notePopupController);
-        newPopupController.popController = self.popoverController;
-        self.popoverController?.presentPopoverFromRect(self.frame, inView: self.superview, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
+    func updateToModel(){        
     }
     
-//    func die(){
-//       
-//    }
+    func updateFromModel(){
+        let r = self.frame;
+        self.frame = CGRect(x: model.location.x, y: model.location.y, width: r.size.width, height: r.size.height);
+    }
+    
+    //    func die(){
+    //
+    //    }
 }

@@ -32,12 +32,12 @@ class KFViewRefView: KFPostRefView {
         bindEvents();
     }
     
-    override func handleSingleTap(recognizer: UIGestureRecognizer){
-        self.mainController.setCurrentView(self.model.post as KFView);
-    }
+//    override func handleSingleTap(recognizer: UIGestureRecognizer){
+//        mainController.showHalo(self);
+//    }
     
-    override func handleDoubleTap(recognizer: UIGestureRecognizer){
-        mainController.showHalo(self);
+    override func tapA() {
+        self.mainController.setCurrentView(self.model.post as KFView);
     }
 
     /*

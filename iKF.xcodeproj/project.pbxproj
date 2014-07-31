@@ -219,8 +219,8 @@
 				4903CD8D1942159D00C698AD /* iKFErrorHandler.m */,
 				4950F71D1953213A002BFB89 /* iKFWebView.h */,
 				4950F71E1953213A002BFB89 /* iKFWebView.m */,
-				490E7583194111A8004E8BF7 /* iKFConnectionLayerView.m */,
 				490E7582194111A8004E8BF7 /* iKFConnectionLayerView.h */,
+				490E7583194111A8004E8BF7 /* iKFConnectionLayerView.m */,
 			);
 			path = ObjC;
 			sourceTree = "<group>";
