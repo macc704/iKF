@@ -8,11 +8,6 @@
 
 #import "iKFConnectionLayerView.h"
 #import "Math.h"
-#import "iKFConnection.h"
-
-#import "iKFAbstractNoteEditView.h"
-//#import "iKFMainViewController.h"
-#import "iKFNotePopupViewController.h"
 #import "iKF-Swift.h"
 
 @implementation iKFConnectionLayerView{
@@ -41,7 +36,7 @@
 
 - (void) noteRemoved: (KFPostRefView*)removedNote{
     NSMutableArray* newConnections = [[NSMutableArray alloc] init];
-    for (iKFConnection* conn in _connections){
+    for (KFConnectionViewModel* conn in _connections){
         if(conn.from != removedNote && conn.to != removedNote){
             [newConnections addObject: conn];
         }
@@ -53,7 +48,7 @@
 }
 
 - (void) addConnectionFrom: (KFPostRefView*)from To: (KFPostRefView*)to{
-    iKFConnection* conn = [[iKFConnection alloc] initFrom: from To: to];
+    KFConnectionViewModel* conn = [[KFConnectionViewModel alloc] initFrom: from to: to];
     [_connections addObject: conn];
     [self requestRepaint];
 }
@@ -69,9 +64,9 @@
     CGContextSetStrokeColorWithColor(context, [UIColor blueColor].CGColor);
     CGContextSetLineWidth(context, 2.0);
     
-    for(iKFConnection* conn in _connections){
-        CGPoint fromP = conn.from.center;
-        //        CGPoint toP = conn.to.center;
+    for(KFConnectionViewModel* conn in _connections){
+        //CGPoint fromP = conn.from.center;
+        CGPoint fromP = [self createChopBoxAnchorFrom: conn.to To: conn.from];
         CGPoint toP = [self createChopBoxAnchorFrom: conn.from To: conn.to];
         CGContextMoveToPoint(context, fromP.x, fromP.y);
         CGContextAddLineToPoint(context, toP.x, toP.y);

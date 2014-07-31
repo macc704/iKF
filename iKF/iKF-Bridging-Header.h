@@ -6,7 +6,7 @@
 #import "iKFAbstractNoteView.h"
 #import "iKFCommonView.h"
 #import "iKFCompositeNoteViewController.h"
-#import "iKFConnection.h"
+//#import "iKFConnection.h"
 #import "iKFConnectionLayerView.h"
 //#import "iKFConnector.h"
 #import "iKFHandle.h"
