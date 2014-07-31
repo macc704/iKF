@@ -14,7 +14,7 @@ class KFNoteRefView: KFPostRefView {
     var titleLabel: UILabel;
     var authorLabel: UILabel;
     
-    init(controller: iKFMainViewController, ref: KFReference) {
+    init(controller: KFCanvasViewController, ref: KFReference) {
         icon = KFPostRefIconView(frame: CGRectMake(5, 5, 20, 20));
         titleLabel = UILabel(frame: CGRectMake(35, 5, 200, 20));
         authorLabel = UILabel(frame: CGRectMake(50, 25, 120, 10));

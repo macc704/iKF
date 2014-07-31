@@ -17,8 +17,8 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     let connectionLayer = iKFConnectionLayerView();
     let drawingLayer = KFLayerView();
     
-    init(frame: CGRect) {
-        super.init(frame: frame)
+    init() {
+        super.init(frame: KFAppUtils.DEFAULT_RECT());
 
         //basic structure
         self.addSubview(scrollView);

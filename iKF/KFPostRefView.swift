@@ -10,19 +10,17 @@ import UIKit
 
 class KFPostRefView: UIView {
 
-    var mainController: iKFMainViewController;
+    var mainController: KFCanvasViewController;
     
     var model: KFReference;
     private var panGesture:UIPanGestureRecognizer?;
    
-    init(controller: iKFMainViewController, ref: KFReference) {
+    init(controller: KFCanvasViewController, ref: KFReference) {
         mainController = controller;
         self.model = ref;
 
         super.init(frame: CGRectMake(0,0,0,0));
     }
-    
-    
     
     func bindEvents(){
         //Pan
@@ -97,7 +95,7 @@ class KFPostRefView: UIView {
     }
                             
     func handleDoubleTap(recognizer: UIGestureRecognizer){
-        mainController.showHandle(self);
+        mainController.showHalo(self);
     }
 
     var notePopupController: iKFNotePopupViewController?;

@@ -10,7 +10,7 @@ import UIKit
 
 class KFViewRefView: KFPostRefView {
     
-    init(controller: iKFMainViewController, ref: KFReference) {
+    init(controller: KFCanvasViewController, ref: KFReference) {
         super.init(controller: controller, ref: ref);
 
         self.frame = CGRectMake(ref.location.x, ref.location.y, 230, 40);
@@ -33,11 +33,11 @@ class KFViewRefView: KFPostRefView {
     }
     
     override func handleSingleTap(recognizer: UIGestureRecognizer){
-        self.mainController.setKFView(self.model.post as KFView);
+        self.mainController.setCurrentView(self.model.post as KFView);
     }
     
     override func handleDoubleTap(recognizer: UIGestureRecognizer){
-        mainController.showHandle(self);
+        mainController.showHalo(self);
     }
 
     /*

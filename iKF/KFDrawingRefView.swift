@@ -18,7 +18,7 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     var scaleX = CGFloat(1.0);
     var scaleY = CGFloat(1.0);
     
-    init(controller: iKFMainViewController, ref: KFReference) {
+    init(controller: KFCanvasViewController, ref: KFReference) {
         webView = UIWebView();
 //        web.backgroundColor = [UIColor clearColor];
         webView.userInteractionEnabled = false;
@@ -112,7 +112,7 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
 //    }
     
     override func handleDoubleTap(recognizer: UIGestureRecognizer){
-        mainController.showHandle(self);
+        mainController.showHalo(self);
     }
 
     /*

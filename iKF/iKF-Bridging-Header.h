@@ -12,7 +12,7 @@
 #import "iKFHandle.h"
 //#import "iKFLoadingView.h"
 //#import "iKFMainView.h"
-#import "iKFMainViewController.h"
+//#import "iKFMainViewController.h"
 #import "iKFNoteEditViewBySource.h"
 #import "iKFNoteEditViewByTinyMCE.h"
 #import "iKFNoteEditViewController.h"

@@ -11,7 +11,7 @@
 #import "iKFMainViewController.h"
 
 @class iKFNoteView;
-//@class iKFMainViewController;
+@class KFCanvasViewController;
 @class iKFPostRefView;
 @class KFNote;
 
@@ -21,7 +21,7 @@
 @property KFNote* note;
 @property KFPostRefView* noteView;//仮
 
-@property iKFMainViewController* kfViewController;
+@property KFCanvasViewController* kfViewController;
 @property UIPopoverController* popController;
 
 @property (weak, nonatomic) IBOutlet UILabel *textFieldAuthor;

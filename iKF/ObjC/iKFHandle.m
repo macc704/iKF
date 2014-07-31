@@ -17,7 +17,7 @@
 static int SIZE = 40;
 
 @implementation iKFHandle{
-    iKFMainViewController* _controller;
+    KFCanvasViewController* _controller;
     UIView* _target;
     
     UIImageView* _plusButton;
@@ -26,7 +26,7 @@ static int SIZE = 40;
     UIImageView* _rotateButton;
 }
 
-- (id)init: (iKFMainViewController*)controller target: (UIView*)target;
+- (id)initWithController: (KFCanvasViewController*)controller target: (UIView*)target;
 {
 
     //self = [super initWithFrame:frame];
@@ -182,18 +182,18 @@ static int SIZE = 40;
 }
 
 - (void) handleEditTap: (UIGestureRecognizer*) recognizer{
-    [_controller openNoteEditController: (KFNote*)((KFPostRefView*)_target).model.post mode:@"edit"];
-    [_controller removeHandle];
+//    [_controller openNoteEditController: (KFNote*)((KFPostRefView*)_target).model.post mode:@"edit"];
+//    [_controller removeHandle];
 }
 
 - (void) handleViewTap: (UIGestureRecognizer*) recognizer{
-    [_controller openNoteEditController: (KFNote*)((KFPostRefView*)_target).model.post mode:@"read"];
-    [_controller removeHandle];
+//    [_controller openNoteEditController: (KFNote*)((KFPostRefView*)_target).model.post mode:@"read"];
+//    [_controller removeHandle];
 }
 
 - (void) handleDeleteTap: (UIGestureRecognizer*) recognizer{
     [((KFPostRefView*)_target) die];
-    [_controller removeHandle];
+    [_controller hideHalo];
 }
 
 - (void) handlePlusTap: (UIGestureRecognizer*) recognizer{
@@ -201,7 +201,7 @@ static int SIZE = 40;
     CGPoint buttonP = [_plusButton frame].origin;
     CGPoint p = CGPointMake(objectP.x + buttonP.x, objectP.y + buttonP.y);
     [_controller createNote: p];
-    [_controller removeHandle];
+    [_controller hideHalo];
 }
 
 //- (void) handleOpenMenuTap: (UIGestureRecognizer*) recognizer{
@@ -215,15 +215,15 @@ static int SIZE = 40;
     KFPostRefView* drawingTarget = (KFPostRefView*)_target;
     [drawingTarget.model setLocked: true];
     [drawingTarget updatePanEventBinding];
-    [_controller updatePostRef: drawingTarget.model];
-    [_controller removeHandle];
+    [_controller updatePostRef: drawingTarget];
+    [_controller hideHalo];
 }
 - (void) unlock: (UIGestureRecognizer*) recognizer{
     KFPostRefView* drawingTarget = (KFPostRefView*)_target;
     [drawingTarget.model setLocked: false];
     [drawingTarget updatePanEventBinding];
-    [_controller updatePostRef: drawingTarget.model];
-    [_controller removeHandle];
+    [_controller updatePostRef: drawingTarget];
+    [_controller hideHalo];
 }
 
 - (void) handleClipTap: (UIGestureRecognizer*) recognizer{
@@ -237,14 +237,14 @@ static int SIZE = 40;
     //[dic setValue: self.kfModel.guid forKey: @"kfmodel.guid"];
     
     [KFAppUtils showAlert: @"Notification" msg: [NSString stringWithFormat: @"Cliped Post \"%@\"", post.title ]];
-    [_controller removeHandle];
+    [_controller hideHalo];
 }
 
 - (void) handleBuildsonTap: (UIGestureRecognizer*) recognizer{
     CGPoint objectP = [_target frame].origin;
     CGPoint buttonP = [_plusButton frame].origin;
     CGPoint p = CGPointMake(objectP.x + buttonP.x, objectP.y + buttonP.y);
-    [_controller createNote: p buildson: (KFPostRefView*)_target];
+    [_controller createNote: p buildsOn: (KFPostRefView*)_target];
 //    [_controller removeHandle];
 }
 
@@ -286,7 +286,7 @@ static int SIZE = 40;
     }
     if(recognizer.state == UIGestureRecognizerStateEnded){
         [self updateToServer];
-        [_controller showHandle: drawingTarget];
+        [_controller showHalo: drawingTarget];
     }
 }
 
@@ -333,7 +333,7 @@ static int SIZE = 40;
     }
     if(recognizer.state == UIGestureRecognizerStateEnded){
         [self updateToServer];
-        [_controller showHandle: drawingTarget];
+        [_controller showHalo: drawingTarget];
     }
 }
 
@@ -366,7 +366,7 @@ CGFloat initialRotation;
     }
     if(recognizer.state == UIGestureRecognizerStateEnded){
         [self updateToServer];
-        [_controller showHandle: drawingTarget];
+        [_controller showHalo: drawingTarget];
     }
 }
 
@@ -389,7 +389,7 @@ CGPoint initialCenter;
     }
     if(recognizer.state == UIGestureRecognizerStateEnded){
         [self updateToServer];
-        [_controller showHandle: drawingTarget];
+        [_controller showHalo: drawingTarget];
     }
 }
 

@@ -55,11 +55,11 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
 
     @IBAction func enterButtonPressed(sender : AnyObject) {
-        let mainViewController = iKFMainViewController(nibName: nil, bundle: nil);
-        self.presentViewController(mainViewController, animated: true, completion: nil);
+        let canvasViewController = KFCanvasViewController();
+        self.presentViewController(canvasViewController, animated: true, completion: nil);
 
         let row = self.registrationsPicker.selectedRowInComponent(0);
-        mainViewController.go(self.registrations[row]);
+        canvasViewController.go(self.registrations[row]);
     }
     
     @IBAction func regsiterButtonPressed(sender : AnyObject) {

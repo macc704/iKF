@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 //#import "iKF.h"
-#import "iKFMainViewController.h"
+//#import "iKFMainViewController.h"
 
-@class iKFMainViewController;
+@class KFCanvasViewController;
 
 @interface iKFHandle : UIView
 
-- (id)init: (iKFMainViewController*)controller target: (UIView*)target;
+- (id)initWithController: (KFCanvasViewController*)controller target: (UIView*)target;
 
 @end

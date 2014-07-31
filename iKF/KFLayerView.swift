@@ -11,7 +11,7 @@ import UIKit
 class KFLayerView: UIView {
 
     init() {
-        super.init(frame: CGRectMake(0, 0, 100, 100));
+        super.init(frame: KFAppUtils.DEFAULT_RECT());
         self.backgroundColor = UIColor.clearColor();
     }
     

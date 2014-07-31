@@ -344,7 +344,7 @@
 
 - (void) showHandle: (UIView*) view{
     [self removeHandle];
-    _handle = [[iKFHandle alloc] init: self target: view];
+    _handle = [[iKFHandle alloc] initWithController:self target: view];
     
     [_handle setAlpha: 0];
     [_mainPanel addSubview: _handle];

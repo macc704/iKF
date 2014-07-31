@@ -86,7 +86,7 @@
 
 - (IBAction)editButtonPressed:(id)sender {
     [self.popController dismissPopoverAnimated:false];
-    [self.kfViewController openNoteEditController: self.note mode:@"edit"];
+    //[self.kfViewController openNoteEditController: self.note mode:@"edit"];
 }
 
 @end
