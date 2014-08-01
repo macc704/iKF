@@ -29,7 +29,7 @@ class KFViewRefView: KFPostRefView {
         titleLabel.text = view.title;
         self.addSubview(titleLabel);
         
-        bindEvents();
+        //bindEvents();
     }
     
 //    override func handleSingleTap(recognizer: UIGestureRecognizer){

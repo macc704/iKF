@@ -11,15 +11,23 @@ import UIKit
 class KFHalo: UIView {
     
     private var controller:KFCanvasViewController?;
-    private var target:UIView?;
+    private var target:UIView;
+    private var size:CGFloat;
     
-    init(controller:KFCanvasViewController, target:UIView, size:CGFloat = 40){
+    init(controller:KFCanvasViewController?, target:UIView, size:CGFloat = 40){
+        self.target = target;
+        self.size = size;
         super.init(frame: KFAppUtils.DEFAULT_RECT());
         self.controller = controller;
-        self.target = target;
-        
+        self.initializeSizeAndHandles();
+    }
+    
+    private func initializeSizeAndHandles(){
+        for view in self.subviews{
+            view.removeFromSuperview();
+        }
         let locator = KFHaloLocator(halo: self, size: size);
-        let targetFrame = target.frame;
+        let targetFrame = self.target.frame;
         self.frame = CGRect(x:targetFrame.origin.x - size, y:targetFrame.origin.y - size, width:targetFrame.size.width + size*2, height:targetFrame.size.height + size*2);
         
         if(target is KFPostRefView){
@@ -50,6 +58,12 @@ class KFHalo: UIView {
             installHaloHandle("edit.png", locator: locator.TOP(), tap: "handleEdit:", pan: nil);
             installHaloHandle("clip.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleClip:", pan: nil);
             installHaloHandle("new.png", locator: locator.BOTTOM_LEFT(), tap: nil, pan: "handleBuildsOn:");
+        }
+        
+        if(target is KFWebView || target is KFWebBrowserView){
+            installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMoveWeb:");            
+            installHaloHandle("resize.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: "handlePanResizeWeb:");
+            installHaloHandle("new", locator: locator.BOTTOM_LEFT(), tap: nil, pan: "handleAnchorWeb:");
         }
     }
     
@@ -135,6 +149,29 @@ class KFHalo: UIView {
         }
     }
     
+    func handleAnchorWeb(recognizer:UIPanGestureRecognizer){
+        switch(recognizer.state){
+        case .Began:
+            break;
+        case .Changed:
+            moveHandle(recognizer);
+            break;
+        case .Ended:
+            let webbrowser = target as KFWebBrowserView;
+            let url = webbrowser.getURL();
+            let title = webbrowser.getTitle();
+            let button = recognizer.view;
+            let objectP = webbrowser.frame.origin;
+            let buttonP = button.frame.origin;
+            let p = CGPoint(x:objectP.x + buttonP.x, y:objectP.y + buttonP.y);
+            controller?.createWebNote(p, url: url, title: title);
+            self.initializeSizeAndHandles();
+            break;
+        default:
+            break;
+        }
+    }
+    
     private func moveHandle(recognizer:UIPanGestureRecognizer) -> CGPoint{
         let button = recognizer.view;
         let location = recognizer.translationInView(button);
@@ -164,6 +201,27 @@ class KFHalo: UIView {
         postTarget.handlePanning(recognizer);
     }
     
+    func handleMoveWeb(recognizer:UIPanGestureRecognizer){
+        switch(recognizer.state){
+        case .Began:
+            break;
+        case .Changed:
+            let location = recognizer.translationInView(self);
+            let movePoint = CGPoint(x:self.center.x+location.x, y:self.center.y+location.y);
+            self.center = movePoint;
+            
+            //let location = recognizer.translationInView(self);
+            let movePoint2 = CGPointMake(target.center.x+location.x, target.center.y+location.y);
+            target.center = movePoint2;
+            recognizer.setTranslation(CGPointZero, inView:target);
+            break;
+        case .Ended:
+            break;
+        default:
+            break;
+        }
+    }
+
     func handlePanResize(recognizer:UIPanGestureRecognizer){
         let drawingTarget = target as KFDrawingRefView;
         
@@ -180,6 +238,26 @@ class KFHalo: UIView {
         case .Ended:
             self.updateToServer();
             controller?.showHalo(drawingTarget);
+            break;
+        default:
+            break;
+        }
+    }
+    
+    func handlePanResizeWeb(recognizer:UIPanGestureRecognizer){
+        switch(recognizer.state){
+        case .Began:
+            break;
+        case .Changed:
+            let button = recognizer.view;
+            moveHandle(recognizer);
+            let w = button.frame.origin.x - button.frame.size.width;
+            let h = button.frame.origin.y - button.frame.size.height;
+            let newRect:CGRect = CGRectMake(target.frame.origin.x, target.frame.origin.y, w, h);
+            target.frame = newRect;
+            break;
+        case .Ended:
+            self.initializeSizeAndHandles();
             break;
         default:
             break;

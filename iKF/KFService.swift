@@ -245,11 +245,13 @@ class KFService: NSObject {
         return true;
     }
     
-    func createNote(viewId:String, buildsOn:KFReference?, location:CGPoint) -> Bool{
+    func createNote(viewId:String, buildsOn:KFReference? = nil, location:CGPoint, title:String = "NewNote", body:String = "") -> Bool{
         let url = self.baseURL! + "rest/mobile/createNote/" + viewId;
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("x", value: String(Int(location.x)));
         req.addParam("y", value: String(Int(location.y)));
+        req.addParam("title", value: title);
+        req.addParam("body", value: body);
         if(buildsOn){
             req.addParam("buildsOnNoteId", value: buildsOn!.guid);
         }
@@ -315,7 +317,7 @@ class KFService: NSObject {
         svg.appendFormat("<title>Layer 1</title>");
         svg.appendFormat("<image xlink:href=\"/%@\" id=\"svg_5\" x=\"0\" y=\"0\" width=\"%d\" height=\"%d\" />", attachmentURL, w, h);
         svg.appendFormat("</g></svg>");
-
+        
         let drawingResult = self.createDrawing(viewId, svg: svg, location: location);
         
         return drawingResult;
@@ -380,7 +382,7 @@ class KFService: NSObject {
     func handleError(msg:String){
         KFAppUtils.debug("KFService: Error: " + msg);
     }
-
+    
     
 }
 

@@ -10,9 +10,10 @@ import UIKit
 
 class KFCanvasView: UIView, UIScrollViewDelegate{
     
-    private let scrollView = UIScrollView();
+    let scrollView = UIScrollView();
     private let layerContainerView = UIView();
-    
+
+    let windowsLayer = KFLayerView();
     let noteLayer = KFLayerView();
     let connectionLayer = iKFConnectionLayerView();
     let drawingLayer = KFLayerView();
@@ -28,10 +29,11 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         scrollView.delegate = self;
         
         //add layers by reversed order
-        self.drawingLayer.userInteractionEnabled = true;
+        //self.drawingLayer.userInteractionEnabled = true;
         layerContainerView.addSubview(self.drawingLayer);
         layerContainerView.addSubview(connectionLayer);
         layerContainerView.addSubview(self.noteLayer);
+        layerContainerView.addSubview(self.windowsLayer);
         
         //halo disappear
         let recognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:");
@@ -49,6 +51,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         drawingLayer.frame = layerContainerView.frame;
         connectionLayer.frame = layerContainerView.frame;
         noteLayer.frame = layerContainerView.frame;
+        windowsLayer.frame = layerContainerView.frame;
         
         scrollView.contentSize = layerContainerView.frame.size;
         scrollView.maximumZoomScale = 4.0;

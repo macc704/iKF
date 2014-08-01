@@ -15,6 +15,10 @@ class KFModel: NSObject{
     init(){
     }
     
+    func detach(observer:AnyObject){
+        NSNotificationCenter.defaultCenter().removeObserver(observer, name: "CHANGED", object: self);
+    }
+    
     func attach(observer:AnyObject, selector:Selector){
         NSNotificationCenter.defaultCenter().addObserver(observer, selector: selector, name: "CHANGED", object: self);
     }

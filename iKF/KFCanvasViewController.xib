@@ -55,6 +55,11 @@
                                 <action selector="imageAddPressed:" destination="-1" id="KI4-ud-2OF"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem title="Browser" id="cNd-8o-IMy">
+                            <connections>
+                                <action selector="browserAddPressed:" destination="-1" id="KMC-Rg-DLD"/>
+                            </connections>
+                        </barButtonItem>
                     </items>
                 </toolbar>
             </subviews>

@@ -19,9 +19,11 @@ class KFPostRefView: UIView {
         self.model = ref;
         
         super.init(frame: CGRectMake(0,0,0,0));
+        
+        bindEvents();
     }
     
-    func bindEvents(){
+    private func bindEvents(){
         //Pan
         updatePanEventBinding();
         
@@ -89,18 +91,18 @@ class KFPostRefView: UIView {
         self.layer.shadowOpacity = 0.0;
     }
     
-    final func handleSingleTap(recognizer: UIGestureRecognizer){
+    func handleSingleTap(recognizer: UIGestureRecognizer){
         self.tapA();
     }
     
-    final func handleDoubleTap(recognizer: UIGestureRecognizer){
+    func handleDoubleTap(recognizer: UIGestureRecognizer){
         self.tapB();
     }
     
     func tapA(){
     }
     
-    final func tapB(){
+    func tapB(){
         mainController.showHalo(self);
     }
     
@@ -109,7 +111,7 @@ class KFPostRefView: UIView {
     
     func updateFromModel(){
         let r = self.frame;
-        self.frame = CGRect(x: model.location.x, y: model.location.y, width: r.size.width, height: r.size.height);
+        self.frame = CGRectMake(model.location.x, model.location.y, r.size.width, r.size.height);
     }
     
     //    func die(){

@@ -181,6 +181,18 @@ class KFCanvasViewController: UIViewController {
             });
     }
     
+    func createWebNote(p:CGPoint, url:String, title:String){
+        self.hideHalo();
+        let viewId = self.getCurrentView().guid;
+        KFAppUtils.executeInBackThread({
+            var body = "<html><head>";
+            body = body + "<meta http-equiv='refresh' content='0; URL="+url+"'>";
+            body = body + "</head></html>";
+            KFService.getInstance().createNote(viewId, location: p, title:title, body: body);
+            return;
+            });
+    }
+    
     func deletePostRef(refView:KFPostRefView){
         self.hideHalo();
         
@@ -341,25 +353,25 @@ class KFCanvasViewController: UIViewController {
     }
     
     func openPost(postRefView:KFPostRefView){
-        
+        openPopupViewer(postRefView);
     }
     
-    //    var notePopupController: iKFNotePopupViewController?;
-    //    var popoverController: UIPopoverController?;
+    private var notePopupController: iKFNotePopupViewController?;
+    private var popoverController: UIPopoverController?;
+    
     //
-    //    //これはkfMainへ移動すること
-    //    func openPopupViewer(){
-    //        let newPopupController = iKFNotePopupViewController();
-    //        newPopupController.note = (self.model.post as KFNote);
-    //
-    //        newPopupController.kfViewController = mainController;
-    //        newPopupController.preferredContentSize = newPopupController.view.frame.size;
-    //        self.notePopupController = newPopupController;
-    //
-    //        self.popoverController = UIPopoverController(contentViewController: notePopupController);
-    //        newPopupController.popController = self.popoverController;
-    //        self.popoverController?.presentPopoverFromRect(self.frame, inView: self.superview, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
-    //    }
+    func openPopupViewer(postRefView:KFPostRefView){
+        let newPopupController = iKFNotePopupViewController();
+        newPopupController.note = (postRefView.model.post as KFNote);
+        
+        newPopupController.kfViewController = self;
+        newPopupController.preferredContentSize = newPopupController.view.frame.size;
+        self.notePopupController = newPopupController;
+        
+        self.popoverController = UIPopoverController(contentViewController: notePopupController);
+        newPopupController.popController = self.popoverController;
+        self.popoverController?.presentPopoverFromRect(postRefView.frame, inView: postRefView.superview, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
+    }
     
     /* event handlers */
     
@@ -381,6 +393,18 @@ class KFCanvasViewController: UIViewController {
     
     @IBAction func imageAddPressed(sender: AnyObject) {
         self.imagePicker!.openImagePicker(imageAddButton, viewId: self.getCurrentView().guid);
+    }
+    
+    @IBAction func browserAddPressed(sender: AnyObject) {
+        let browser = KFWebBrowserView();
+        let scrollX = self.canvasView.scrollView.contentOffset.x;
+        let scrollY = self.canvasView.scrollView.contentOffset.y;
+        browser.frame = CGRectMake(scrollX + 50, scrollY + 50, 500, 500);
+        browser.setURL("http://www.google.com");
+        self.canvasView.windowsLayer.addSubview(browser);
+        browser.doubleTapHandler = {
+            self.showHalo(browser);
+        }
     }
     
     /*

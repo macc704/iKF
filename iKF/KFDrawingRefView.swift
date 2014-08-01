@@ -25,8 +25,6 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
         
         super.init(controller: controller, ref: ref);
         
-        self.bindEvents();
-        
         let drawing = model.post as KFDrawing;
         let data = drawing.content.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true);
         let parser = NSXMLParser(data: data);

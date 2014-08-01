@@ -9,59 +9,63 @@
 import UIKit
 
 class KFNoteRefView: KFPostRefView {
-
-    var icon: KFPostRefIconView;
-    var titleLabel: UILabel;
-    var authorLabel: UILabel;
+    
+    var refView:UIView?;
+    
+    var attachedTo:KFPost?;
     
     init(controller: KFCanvasViewController, ref: KFReference) {
-        icon = KFPostRefIconView(frame: CGRectMake(5, 5, 20, 20));
-        titleLabel = UILabel(frame: CGRectMake(35, 5, 200, 20));
-        authorLabel = UILabel(frame: CGRectMake(50, 25, 120, 10));
-        
         super.init(controller: controller, ref: ref);
-        
-        //self.backgroundColor = UIColor.whiteColor();
-        self.backgroundColor = UIColor.clearColor();
-        self.frame = CGRectMake(ref.location.x, ref.location.y, 230, 40);
-
-        self.addSubview(icon);
-        
-        titleLabel.font = UIFont.systemFontOfSize(12);
-        self.addSubview(titleLabel);
-        
-        authorLabel.font = UIFont.systemFontOfSize(10);
-        self.addSubview(authorLabel);
-        
-        model.post?.attach(self, selector: "noteChanged");
-        self.updateFromModel();
-        
-        bindEvents();
+        //bindEvents();
     }
-
+    
+    //    override func hitTest(point: CGPoint, withEvent event: UIEvent!) -> UIView! {
+    //        let hitView = super.hitTest(point, withEvent: event);
+    //        if(hitView == self){
+    //            return nil;
+    //        }else{
+    //            return hitView;
+    //        }
+    //    }
+    
     func noteChanged(){
         self.updateFromModel();
     }
     
     override func updateFromModel(){
         super.updateFromModel();
-        icon.beenRead = (self.model.post as KFNote).beenRead;
-        icon.update();
-        titleLabel.text = (self.model.post as KFNote).title;
-        authorLabel.text = (self.model.post as KFNote).primaryAuthor?.getFullName();
+        if(attachedTo != nil && attachedTo != model.post){
+            model.post?.detach(self);
+        }
+        if(attachedTo == nil){
+            model.post!.attach(self, selector: "noteChanged");
+            self.attachedTo = model.post;
+        }
+        
+        if(refView is KFLabelNoteRefView && self.model.isShowInPlace()){
+            refView = nil;
+        }
+        if(refView is KFInPlaceNoteRefView && !self.model.isShowInPlace()){
+            refView = nil;
+        }
+        if(refView == nil){
+            if(self.model.isShowInPlace()){
+                
+            }else{
+                refView = KFLabelNoteRefView(ref: model);
+            }
+            self.addSubview(refView);
+        }
+        
+        if(refView is KFLabelNoteRefView){
+            (refView? as KFLabelNoteRefView).updateFromModel();
+        }
+        
+        self.frame.size = refView!.frame.size;
     }
     
     override func tapA(){
         self.mainController.openPost(self);
     }
     
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect)
-    {
-        // Drawing code
-    }
-    */
-
 }
