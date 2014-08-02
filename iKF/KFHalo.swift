@@ -52,10 +52,10 @@ class KFHalo: UIView {
         if(target is KFDrawingRefView){
             let drawing = target as KFDrawingRefView;
             if(drawing.model.isLocked()){
-                installHaloHandle("anchornot.png", locator: locator.TOP_RIGHT(), tap: "handleUnlock:", pan: nil);
+                installHaloHandle("unlock.png", locator: locator.TOP_RIGHT(), tap: "handleUnlock:", pan: nil);
             }
             else{
-                installHaloHandle("anchor.png", locator: locator.TOP_RIGHT(), tap: "handleLock:", pan: nil);
+                installHaloHandle("lock.png", locator: locator.TOP_RIGHT(), tap: "handleLock:", pan: nil);
             }
             installHaloHandle("resize.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: "handlePanResize:");
             installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMove:");
