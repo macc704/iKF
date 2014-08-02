@@ -12,12 +12,14 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     
     private let scrollView = UIScrollView();
     private let layerContainerView = UIView();
-    
     let windowsLayer = iKFLayerView();
     let noteLayer = iKFLayerView();
     let connectionLayer = iKFConnectionLayerView();
     let drawingLayer = iKFLayerView();
     
+    var doubleTapHandler:((CGPoint)->())?;
+    
+    private var popoverController:UIPopoverController?;
     private var halo:KFHalo?;
     
     init() {
@@ -39,9 +41,15 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         layerContainerView.addSubview(self.windowsLayer);
         
         //halo disappear
-        let recognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:");
-        recognizer.numberOfTapsRequired = 1;
-        layerContainerView.addGestureRecognizer(recognizer);
+        let singleRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:");
+        singleRecognizer.numberOfTapsRequired = 1;
+        layerContainerView.addGestureRecognizer(singleRecognizer);
+        
+        let doubleRecognizer = UITapGestureRecognizer(target: self, action: "handleDoubleTap:");
+        doubleRecognizer.numberOfTapsRequired = 2;
+        layerContainerView.addGestureRecognizer(doubleRecognizer);
+        
+        singleRecognizer.requireGestureRecognizerToFail(doubleRecognizer);
     }
     
     func setSize(size:CGSize){
@@ -72,8 +80,13 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
             subview.removeFromSuperview();
         }
     }
-    
+
     /* halo management */
+    
+    func handleDoubleTap(recognizer: UIGestureRecognizer){
+        let loc = recognizer.locationInView(layerContainerView);
+        self.doubleTapHandler?(loc);
+    }
     
     func handleSingleTap(recognizer: UIGestureRecognizer){
         if(halo){
@@ -89,10 +102,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         self.halo = newHalo;
         self.halo!.alpha = 0.0;
         self.layerContainerView.addSubview(self.halo);
-        func animation(){
-            self.halo!.alpha = 1.0;
-        }
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: animation, completion: nil);
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {self.halo!.alpha = 1.0}, completion: nil);
     }
     
     func hideHalo(){
@@ -101,6 +111,17 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
             self.halo = nil;
         }
     }
+    
+    /* popover management */
+    
+    func openInPopover(locView:UIView, controller:UIViewController) -> UIPopoverController{
+        self.popoverController?.dismissPopoverAnimated(false);
+        self.popoverController = UIPopoverController(contentViewController: controller);
+        self.popoverController!.presentPopoverFromRect(locView.frame, inView: locView.superview, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
+        return self.popoverController!;
+    }
+    
+    /* Scrollling */
     
     func translateToCanvas(fromViewP:CGPoint) -> CGPoint{
         let offset = scrollView.contentOffset;
@@ -116,7 +137,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         self.scrollView.canCancelContentTouches = true;
     }
     
-    /* Scrollling (only one method) */
+    /* Scrollling Enabling (only one method) */
     
     func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView! {
         return layerContainerView;

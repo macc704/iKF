@@ -11,20 +11,18 @@ import UIKit
 class KFImagePicker: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     private let mainController:KFCanvasViewController;
-    private var popController:UIPopoverController?;
-    private var viewId:String?
+    var popController:UIPopoverController?;
     
     init(mainController:KFCanvasViewController){
         self.mainController = mainController;
     }
     
-    func openImagePicker(fromButton:UIBarButtonItem, viewId:String){
-        self.viewId = viewId;
+    func createImagePicker() -> UIImagePickerController{
+        //self.viewId = viewId;
         let imagePicker = UIImagePickerController();
         imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
         imagePicker.delegate = self;
-        popController = UIPopoverController(contentViewController: imagePicker);
-        popController?.presentPopoverFromBarButtonItem(fromButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
+        return imagePicker;
     }
     
     

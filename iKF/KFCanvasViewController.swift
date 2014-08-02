@@ -17,8 +17,8 @@ class KFCanvasViewController: UIViewController {
     @IBOutlet weak var imageAddButton: UIBarButtonItem!
     
     private var canvasView = KFCanvasView();
-    private var imagePicker:KFImagePicker?;
-    
+    private let creationToolView = KFCreationToolView(frame: CGRect(x:0, y:0, width:120, height:30));
+    private var imagePickerManager:KFImagePicker?;
     
     private var user:KFUser?;
     private var registration:KFRegistration?;
@@ -34,13 +34,17 @@ class KFCanvasViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.imagePicker = KFImagePicker(mainController: self);
+        imagePickerManager = KFImagePicker(mainController:self);
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //canvasView.setSize(canvasContainer.frame.size);//moved to viewDidAppear and rotation
         canvasView.setCanvasSize(4000, height:3000);
+        canvasView.doubleTapHandler = {p in
+            self.creationToolView.center = p;
+            self.showHalo(self.creationToolView);
+        };
         canvasContainer.addSubview(canvasView);
     }
     
@@ -124,7 +128,7 @@ class KFCanvasViewController: UIViewController {
         }else{
             postRefView = KFDrawingRefView(controller: self, ref: ref);
         }
-
+        
         postRefView?.updateFromModel();
         postRefViews[ref.guid] = postRefView;
         //postRefViews[ref.post!.guid] = postRefView;//ちょっとずる
@@ -356,21 +360,33 @@ class KFCanvasViewController: UIViewController {
         openPopupViewer(postRefView);
     }
     
-    private var notePopupController: iKFNotePopupViewController?;
-    private var popoverController: UIPopoverController?;
-    
-    //
     func openPopupViewer(postRefView:KFPostRefView){
-        let newPopupController = iKFNotePopupViewController();
-        newPopupController.note = (postRefView.model.post as KFNote);
-        
-        newPopupController.kfViewController = self;
-        newPopupController.preferredContentSize = newPopupController.view.frame.size;
-        self.notePopupController = newPopupController;
-        
-        self.popoverController = UIPopoverController(contentViewController: notePopupController);
-        newPopupController.popController = self.popoverController;
-        self.popoverController?.presentPopoverFromRect(postRefView.frame, inView: postRefView.superview, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
+        let notePopupController = iKFNotePopupViewController();
+        notePopupController.note = (postRefView.model.post as KFNote);
+        notePopupController.kfViewController = self;
+        notePopupController.preferredContentSize = notePopupController.view.frame.size;
+        let popoverController = self.canvasView.openInPopover(postRefView, controller: notePopupController);
+        notePopupController.popController = popoverController;
+    }
+    
+    func openBrowser(p:CGPoint, size:CGSize = CGSize(width: 500, height: 500)){
+        let browser = KFWebBrowserView();
+        //let p = self.canvasView.translateToCanvas(CGPointMake(50, 50));
+        browser.frame = CGRect(x: p.x, y:p.y, width: size.width, height:size.height);
+        println(browser.frame);
+        browser.setURL("http://www.google.com");
+        self.canvasView.windowsLayer.addSubview(browser);
+        browser.doubleTapHandler = {
+            self.showHalo(browser);
+        }
+        self.hideHalo();
+    }
+    
+    
+    func openImageSelectionViewer(locView:UIView){
+        let pickerController = imagePickerManager!.createImagePicker();
+        let popoverController = self.canvasView.openInPopover(locView, controller: pickerController);
+        imagePickerManager!.popController = popoverController;
     }
     
     /* event handlers */
@@ -392,19 +408,11 @@ class KFCanvasViewController: UIViewController {
     }
     
     @IBAction func imageAddPressed(sender: AnyObject) {
-        self.imagePicker!.openImagePicker(imageAddButton, viewId: self.getCurrentView().guid);
+//        self.imagePicker?.openImagePicker(imageAddButton, viewId: self.getCurrentView().guid);
     }
     
     @IBAction func browserAddPressed(sender: AnyObject) {
-        let browser = KFWebBrowserView();
-        let p = self.canvasView.translateToCanvas(CGPointMake(50, 50));
-        var r = CGRectMake(p.x, p.y, 500, 500);
-        browser.frame = r;
-        browser.setURL("http://www.google.com");
-        self.canvasView.windowsLayer.addSubview(browser);
-        browser.doubleTapHandler = {
-            self.showHalo(browser);
-        }
+        
     }
     
     func suppressScroll(){

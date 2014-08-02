@@ -72,13 +72,21 @@ class KFHalo: UIView {
             installHaloHandle("read.png", locator: locator.TOP_RIGHT(), tap: "handleRead:", pan: nil);
             installHaloHandle("edit.png", locator: locator.TOP(), tap: "handleEdit:", pan: nil);
             installHaloHandle("clip.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleClip:", pan: nil);
-            installHaloHandle("new.png", locator: locator.BOTTOM_LEFT(), tap: nil, pan: "handleBuildsOn:");
+            installHaloHandle("buildsOn.png", locator: locator.BOTTOM_LEFT(), tap: nil, pan: "handleBuildsOn:");
         }
         
         if(target is KFWebView || target is KFWebBrowserView){
             installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMoveWeb:");            
             installHaloHandle("resize.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: "handlePanResizeWeb:");
-            installHaloHandle("new", locator: locator.BOTTOM_LEFT(), tap: nil, pan: "handleAnchorWeb:");
+            installHaloHandle("anchor.png", locator: locator.BOTTOM_LEFT(), tap: nil, pan: "handleAnchorWeb:");
+        }
+        
+        if(target is KFCreationToolView){
+            installHaloHandle("new.png", locator: locator.TOP_LEFT(), tap: "handleNewNote:", pan: nil);
+            installHaloHandle("newpicture.png", locator: locator.TOP(), tap: "handleNewPicture:", pan: nil);
+            installHaloHandle("newviewlink.png", locator: locator.BOTTOM_LEFT(), tap: nil, pan: nil);
+            installHaloHandle("newview.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: nil);
+            installHaloHandle("window.png", locator: locator.TOP_RIGHT(), tap: "handleOpenWindow:", pan: nil);
         }
     }
     
@@ -98,6 +106,23 @@ class KFHalo: UIView {
             button.addGestureRecognizer(gesture);
         }
         return button;
+    }
+    
+    func handleOpenWindow(recognizer:UIGestureRecognizer){
+        let size = CGSizeMake(500, 500);
+        var loc = recognizer.locationInView(self.superview);
+        loc.x = loc.x - size.width / 2;
+        loc.x = 30 > loc.x ? 30 : loc.x;
+        controller?.openBrowser(loc, size:size);
+    }
+    
+    func handleNewNote(recognizer:UIGestureRecognizer){
+        var loc = recognizer.locationInView(self.superview);
+        controller?.createNote(loc);
+    }
+    
+    func handleNewPicture(recognizer:UIGestureRecognizer){
+        controller?.openImageSelectionViewer(recognizer.view);
     }
     
     func handleLock(recognizer:UIGestureRecognizer){
