@@ -11,7 +11,7 @@ import UIKit
 class KFCanvasView: UIView, UIScrollViewDelegate{
     
     let scrollView = UIScrollView();
-    private let layerContainerView = iKFLayerView();//should be layer for subview recognition
+    private let layerContainerView = UIView();
 
     let windowsLayer = iKFLayerView();
     let noteLayer = iKFLayerView();
@@ -27,7 +27,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         self.addSubview(scrollView);
         scrollView.addSubview(layerContainerView);
         scrollView.delegate = self;
-        //scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
+        //scrollView.decelerationRate = UIScrollViewDecelerationRateFast; //normal
         //scrollView.canCancelContentTouches = false;//important for subview recognition
         scrollView.delaysContentTouches = false;//important for subview recognition
         
@@ -41,8 +41,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         //halo disappear
         let recognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:");
         recognizer.numberOfTapsRequired = 1;
-        //layerContainerView.addGestureRecognizer(recognizer);
-        scrollView.addGestureRecognizer(recognizer); //important for subview recognition
+        layerContainerView.addGestureRecognizer(recognizer);
     }
     
     func setSize(size:CGSize){
