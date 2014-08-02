@@ -109,7 +109,13 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         return layerContainerView;
     }
     
-    
+    //    func scrollViewDidZoom(scrollView: UIScrollView!) {
+    //        if(scrollView.zoomScale > 1.0){
+    //            scrollView.canCancelContentTouches = false;
+    //        }else{
+    //            scrollView.canCancelContentTouches = true;
+    //        }
+    //    }
     
     /*
     // Only override drawRect: if you perform custom drawing.

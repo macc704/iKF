@@ -56,6 +56,7 @@
 		4989F568198C2ABE0053DCC8 /* KFLabelNoteRefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4989F567198C2ABE0053DCC8 /* KFLabelNoteRefView.swift */; };
 		4989F56A198C2D580053DCC8 /* KFInPlaceNoteRefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4989F569198C2D580053DCC8 /* KFInPlaceNoteRefView.swift */; };
 		4989F570198C8DCC0053DCC8 /* iKFLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4989F56F198C8DCC0053DCC8 /* iKFLayerView.m */; };
+		4989F572198C96A60053DCC8 /* KFImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4989F571198C96A60053DCC8 /* KFImageView.swift */; };
 		498BD1AB1942B768006217AD /* KFRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1AA1942B768006217AD /* KFRegistration.swift */; };
 		498BD1AD1942BC59006217AD /* KFUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1AC1942BC59006217AD /* KFUser.swift */; };
 		498BD1AF1942C1E0006217AD /* KFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1AE1942C1E0006217AD /* KFView.swift */; };
@@ -165,6 +166,7 @@
 		4989F569198C2D580053DCC8 /* KFInPlaceNoteRefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFInPlaceNoteRefView.swift; sourceTree = "<group>"; };
 		4989F56E198C8DCC0053DCC8 /* iKFLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFLayerView.h; sourceTree = "<group>"; };
 		4989F56F198C8DCC0053DCC8 /* iKFLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFLayerView.m; sourceTree = "<group>"; };
+		4989F571198C96A60053DCC8 /* KFImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFImageView.swift; sourceTree = "<group>"; };
 		498BD1AA1942B768006217AD /* KFRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFRegistration.swift; sourceTree = "<group>"; };
 		498BD1AC1942BC59006217AD /* KFUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFUser.swift; sourceTree = "<group>"; };
 		498BD1AE1942C1E0006217AD /* KFView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFView.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 			children = (
 				497C26E519888627007CCEED /* KFHalo.swift */,
 				4924590A198A9BDF00242188 /* KFHaloLocator.swift */,
+				4989F571198C96A60053DCC8 /* KFImageView.swift */,
 			);
 			name = Halo;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				499DE6E419894A3000BA2209 /* KFImageSizeSelectionViewController.swift in Sources */,
 				49EEFF071981627600F78F16 /* KFNetworkUtil.swift in Sources */,
 				49842F7619805AE20012900B /* KFHttpRequest.swift in Sources */,
+				4989F572198C96A60053DCC8 /* KFImageView.swift in Sources */,
 				492C10291947563300512591 /* KFSupport.swift in Sources */,
 				490E75C3194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.m in Sources */,
 				49C5590D1945EF5F00FDFF32 /* KFModel.swift in Sources */,

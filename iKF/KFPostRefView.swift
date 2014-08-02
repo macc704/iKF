@@ -50,6 +50,23 @@ class KFPostRefView: UIView {
         }
     }
     
+    override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
+        if(!model.isLocked()){
+            mainController.suppressScroll();
+        }
+    }
+    
+    override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!) {
+    }
+    
+    override func touchesCancelled(touches: NSSet!, withEvent event: UIEvent!) {
+        mainController.unlockSuppressScroll();
+    }
+    
+    override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!) {
+        mainController.unlockSuppressScroll();
+    }
+    
     func handlePanning(recognizer: UIPanGestureRecognizer){
         switch(recognizer.state){
         case .Began:

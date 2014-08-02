@@ -407,6 +407,14 @@ class KFCanvasViewController: UIViewController {
         }
     }
     
+    func suppressScroll(){
+        canvasView.scrollView.canCancelContentTouches = false;
+    }
+    
+    func unlockSuppressScroll(){
+        canvasView.scrollView.canCancelContentTouches = true;
+    }
+    
     /*
     // MARK: - Navigation
     

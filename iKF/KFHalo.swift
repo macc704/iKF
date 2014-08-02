@@ -22,6 +22,21 @@ class KFHalo: UIView {
         self.initializeSizeAndHandles();
     }
     
+    override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
+        controller?.suppressScroll();
+    }
+    
+    override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!) {
+    }
+    
+    override func touchesCancelled(touches: NSSet!, withEvent event: UIEvent!) {
+        controller?.unlockSuppressScroll();
+    }
+    
+    override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!) {
+        controller?.unlockSuppressScroll();
+    }
+    
     private func initializeSizeAndHandles(){
         for view in self.subviews{
             view.removeFromSuperview();
@@ -68,7 +83,8 @@ class KFHalo: UIView {
     }
     
     func installHaloHandle(imgName:String, locator:(()->CGRect), tap:Selector?, pan:Selector?) -> UIImageView{
-        let button = UIImageView(image: UIImage(named: imgName));
+        let button = KFImageView(image: UIImage(named: imgName));
+        button.mainController = controller;
         button.frame = locator();
         self.addSubview(button);
         button.userInteractionEnabled = true;
