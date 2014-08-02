@@ -323,8 +323,11 @@ class KFHalo: UIView {
             //http://kappdesign.blog.fc2.com/blog-entry-18.html
             // make difference then reverse y axis
             let diffX = movePoint.x - org.x;
-            let diffY = -(movePoint.y - org.y);
-            let radian:Double = atan2(Double(diffY), Double(diffX)) + (M_PI_2 + (M_PI_2 - atan2(Double(frameW), Double(frameH))));
+            var diffY = (movePoint.y - org.y);
+            diffY = -diffY;
+            let originalAngle:Double = atan2(Double(diffY), Double(diffX));
+            let leftBottomAngle:Double = M_PI - atan2(Double(frameW), Double(frameH));
+            let radian:Double =  originalAngle + leftBottomAngle;
             var newRotation:CGFloat = CGFloat(radian);
             newRotation = self.adjustRotation(newRotation);
             newRotation = -newRotation;
@@ -370,14 +373,16 @@ class KFHalo: UIView {
     }
     
     func adjustRotation(radian:CGFloat) -> CGFloat{
-        var degree:Int = Int(Double(radian) * 360.0 / (2.0 * M_PI))
+        let tmp1 = 360.0 / (2.0 * M_PI);
+        var degree:Int = Int(Double(radian) * tmp1);
         let a = degree % 90;
         if(-5 < a && a < 0){
             degree = degree + a;
         }else if(0 < a && a < 5){
             degree = degree - a;
         }
-        let newRadian = Double(degree) * (2.0 * M_PI) / 360.0;
+        let tmp2 = (2.0 * M_PI) / 360.0;
+        let newRadian = Double(degree) * tmp2;
         return CGFloat(newRadian);
     }
     

@@ -178,13 +178,21 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         self.closeButton!.frame = CGRectMake(width - self.closeButton!.frame.size.width, 1, 20, 20);
         
         self.toolContainer.frame = CGRectMake(0,22,width,44);
-        self.backButton!.frame = CGRectMake(5,5,35,35);
-        self.forwardButton!.frame = CGRectMake(45,5,35,35);
-        var tfWidth:CGFloat = width - (10 + 40 * 4);
-        tfWidth = tfWidth > 30 ? tfWidth : 30;
-        self.urlTextfield!.frame = CGRectMake(85,5,tfWidth,35);
-        self.reloadButton!.frame = CGRectMake(85+tfWidth+10,5,35,35);
-        self.stopButton!.frame = CGRectMake(85+tfWidth+10+40,5,35,35);
+        var x = CGFloat(5);
+        self.backButton!.frame = CGRectMake(x,5,35,35);
+        x += 40;
+        self.forwardButton!.frame = CGRectMake(x,5,35,35);
+        var tfWidth:CGFloat = width;
+        tfWidth -= 10;
+        tfWidth -= (40 * 4);
+        let tmp = tfWidth > 30;
+        tfWidth = tmp ? tfWidth : 30;
+        x += 40;
+        self.urlTextfield!.frame = CGRectMake(x,5,tfWidth,35);
+        x += tfWidth + 10;
+        self.reloadButton!.frame = CGRectMake(x,5,35,35);
+        x += 40;
+        self.stopButton!.frame = CGRectMake(x,5,35,35);
         
         if(!suppressWebLayout){
             self.webView.frame = CGRectMake(0,22+44,width,height-22-44);

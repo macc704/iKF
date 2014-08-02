@@ -39,11 +39,13 @@ class KFHaloLocator: NSObject {
     }
     
     private func quarterLeftP() ->CGFloat{
-        return ((self.halo.frame.size.width - self.size) * (1.0/4.0));
+        let tmp:CGFloat = (1.0/4.0);
+        return ((self.halo.frame.size.width - self.size) * tmp);
     }
     
     private func quarterRightP() ->CGFloat{
-        return ((self.halo.frame.size.width - self.size) * (3.0/4.0));
+        let tmp:CGFloat = (3.0/4.0);
+        return ((self.halo.frame.size.width - self.size) * tmp);
     }
     
     private func verticalCenterP() ->CGFloat{

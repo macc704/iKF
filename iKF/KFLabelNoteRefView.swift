@@ -55,9 +55,10 @@ class KFLabelNoteRefView: UIView {
         authorLabel.sizeToFit();
         
         //self.sizeToFit(); //does not work
-        let titleLeft = 40+titleLabel.frame.size.width+5;
-        let authorLeft = 50+authorLabel.frame.size.width+5;
-        let newWidth = titleLeft > authorLeft ? titleLeft : authorLeft;
+        let titleLeft = 45+titleLabel.frame.size.width;
+        let authorLeft = 55+authorLabel.frame.size.width;
+        let tmp = titleLeft > authorLeft;
+        let newWidth = tmp ? titleLeft : authorLeft;
         let r = self.frame;
         self.frame = CGRectMake(0, 0,  newWidth, r.size.height);
     }
