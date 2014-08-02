@@ -138,7 +138,6 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     }
     
     func close(){
-        //        println("close pressed");
         setURL("about:blank");
         self.removeFromSuperview();
     }

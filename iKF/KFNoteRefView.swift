@@ -17,6 +17,10 @@ class KFNoteRefView: KFPostRefView {
     init(controller: KFCanvasViewController, ref: KFReference) {
         super.init(controller: controller, ref: ref);
         //bindEvents();
+        
+        self.layer.cornerRadius = 5;
+        self.layer.masksToBounds = true;
+        //self.backgroundColor = UIColor.lightGrayColor();
     }
     
     //    override func hitTest(point: CGPoint, withEvent event: UIEvent!) -> UIView! {
