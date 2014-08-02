@@ -301,7 +301,7 @@ class KFService: NSObject {
     func createPicture(image:UIImage, viewId:String, location:CGPoint) -> Bool{
         let imageData = UIImagePNGRepresentation(image);
         let filenameBase = jsonScanner?.generateRandomString(8);
-        let filename = filenameBase! + ".png";
+        let filename = "\(filenameBase!).png";
         
         let jsonobj:AnyObject? = self.sendAttachment(imageData, mime: "image/png", filename: filename);
         if(!jsonobj){
@@ -329,8 +329,8 @@ class KFService: NSObject {
         
         // generate form boundary
         let key = jsonScanner?.generateRandomString(16);
-        let formBoundary = "----FormBoundary" + key!;
-        let path = "C\\fakepath\\" + filename;
+        let formBoundary = "----FormBoundary\(key!)";
+        let path = "C\\fakepath\\\(filename)";
         
         // generate post body
         let postbody = NSMutableData();
@@ -380,7 +380,7 @@ class KFService: NSObject {
     }
     
     func handleError(msg:String){
-        KFAppUtils.debug("KFService: Error: " + msg);
+        KFAppUtils.debug("KFService: Error: \(msg)");
     }
     
     

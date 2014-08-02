@@ -40,7 +40,7 @@ class KFHttpRequest: NSObject {
             if(!paramStr.isEmpty){
                 paramStr += "&";
             }
-            paramStr += (key + "=" + value!);
+            paramStr += "\(key)=\(value!)";
         }
         let data = paramStr.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false);
         nsRequest.setValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField:"Content-Type");
