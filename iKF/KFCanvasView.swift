@@ -11,7 +11,7 @@ import UIKit
 class KFCanvasView: UIView, UIScrollViewDelegate{
     
     let scrollView = UIScrollView();
-    private let layerContainerView = UIView();
+    private let layerContainerView = KFLayerView();//should be layer for subview recognition
 
     let windowsLayer = KFLayerView();
     let noteLayer = KFLayerView();
@@ -27,9 +27,12 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         self.addSubview(scrollView);
         scrollView.addSubview(layerContainerView);
         scrollView.delegate = self;
+        //scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
+        //scrollView.canCancelContentTouches = false;//important for subview recognition
+        scrollView.delaysContentTouches = false;//important for subview recognition
         
         //add layers by reversed order
-        //self.drawingLayer.userInteractionEnabled = true;
+        //self.drawingLayer.userInteractionEnabled = true;//not necessary
         layerContainerView.addSubview(self.drawingLayer);
         layerContainerView.addSubview(connectionLayer);
         layerContainerView.addSubview(self.noteLayer);
@@ -38,7 +41,8 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         //halo disappear
         let recognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:");
         recognizer.numberOfTapsRequired = 1;
-        layerContainerView.addGestureRecognizer(recognizer);
+        //layerContainerView.addGestureRecognizer(recognizer);
+        scrollView.addGestureRecognizer(recognizer); //important for subview recognition
     }
     
     func setSize(size:CGSize){
@@ -104,6 +108,8 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView! {
         return layerContainerView;
     }
+    
+    
     
     /*
     // Only override drawRect: if you perform custom drawing.
