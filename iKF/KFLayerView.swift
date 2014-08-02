@@ -15,8 +15,11 @@ class KFLayerView: UIView {
         self.backgroundColor = UIColor.clearColor();
     }
     
-    override func hitTest(point: CGPoint, withEvent event: UIEvent!) -> UIView! {
+    override func hitTest(point: CGPoint, withEvent event: UIEvent!) -> UIView? {
         let hitView = super.hitTest(point, withEvent: event);
+        if(hitView == nil){//necessary?
+            return nil;
+        }
         if(hitView == self){
             return nil;
         }else{
