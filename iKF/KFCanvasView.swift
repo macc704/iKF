@@ -11,12 +11,12 @@ import UIKit
 class KFCanvasView: UIView, UIScrollViewDelegate{
     
     let scrollView = UIScrollView();
-    private let layerContainerView = KFLayerView();//should be layer for subview recognition
+    private let layerContainerView = iKFLayerView();//should be layer for subview recognition
 
-    let windowsLayer = KFLayerView();
-    let noteLayer = KFLayerView();
+    let windowsLayer = iKFLayerView();
+    let noteLayer = iKFLayerView();
     let connectionLayer = iKFConnectionLayerView();
-    let drawingLayer = KFLayerView();
+    let drawingLayer = iKFLayerView();
     
     private var halo:KFHalo?;
     
