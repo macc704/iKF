@@ -335,13 +335,13 @@
 			isa = PBXGroup;
 			children = (
 				499DE6F21989A9CF00BA2209 /* KFCanvasViewController.swift */,
-				499DE6F31989A9CF00BA2209 /* KFCanvasViewController.xib */,
 				499DE6EC19898E6A00BA2209 /* KFCanvasView.swift */,
 				49245906198A952A00242188 /* KFConnectionViewModel.swift */,
 				497C26E8198889D7007CCEED /* KFImagePicker.swift */,
 				499DE6E219894A3000BA2209 /* KFImageSizeSelectionViewController.swift */,
-				499DE6E319894A3000BA2209 /* KFImageSizeSelectionViewController.xib */,
 				499DE6E81989893400BA2209 /* KFViewSelectionController.swift */,
+				499DE6F31989A9CF00BA2209 /* KFCanvasViewController.xib */,
+				499DE6E319894A3000BA2209 /* KFImageSizeSelectionViewController.xib */,
 				499DE6E91989893400BA2209 /* KFViewSelectionController.xib */,
 			);
 			name = MainUI;

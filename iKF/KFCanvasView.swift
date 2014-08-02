@@ -10,9 +10,9 @@ import UIKit
 
 class KFCanvasView: UIView, UIScrollViewDelegate{
     
-    let scrollView = UIScrollView();
+    private let scrollView = UIScrollView();
     private let layerContainerView = UIView();
-
+    
     let windowsLayer = iKFLayerView();
     let noteLayer = iKFLayerView();
     let connectionLayer = iKFConnectionLayerView();
@@ -22,7 +22,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     
     init() {
         super.init(frame: KFAppUtils.DEFAULT_RECT());
-
+        
         //basic structure
         self.addSubview(scrollView);
         scrollView.addSubview(layerContainerView);
@@ -100,6 +100,20 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
             self.halo!.removeFromSuperview();
             self.halo = nil;
         }
+    }
+    
+    func translateToCanvas(fromViewP:CGPoint) -> CGPoint{
+        let offset = scrollView.contentOffset;
+        let scale = scrollView.zoomScale;
+        return CGPointMake((fromViewP.x + offset.x) / scale, (fromViewP.y + offset.y) / scale);
+    }
+    
+    func suppressScroll(){
+        self.scrollView.canCancelContentTouches = false;
+    }
+    
+    func unlockSuppressScroll(){
+        self.scrollView.canCancelContentTouches = true;
     }
     
     /* Scrollling (only one method) */

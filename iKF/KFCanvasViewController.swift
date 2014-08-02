@@ -397,9 +397,9 @@ class KFCanvasViewController: UIViewController {
     
     @IBAction func browserAddPressed(sender: AnyObject) {
         let browser = KFWebBrowserView();
-        let scrollX = self.canvasView.scrollView.contentOffset.x;
-        let scrollY = self.canvasView.scrollView.contentOffset.y;
-        browser.frame = CGRectMake(scrollX + 50, scrollY + 50, 500, 500);
+        let p = self.canvasView.translateToCanvas(CGPointMake(50, 50));
+        var r = CGRectMake(p.x, p.y, 500, 500);
+        browser.frame = r;
         browser.setURL("http://www.google.com");
         self.canvasView.windowsLayer.addSubview(browser);
         browser.doubleTapHandler = {
@@ -408,11 +408,11 @@ class KFCanvasViewController: UIViewController {
     }
     
     func suppressScroll(){
-        canvasView.scrollView.canCancelContentTouches = false;
+        canvasView.suppressScroll();
     }
     
     func unlockSuppressScroll(){
-        canvasView.scrollView.canCancelContentTouches = true;
+        canvasView.unlockSuppressScroll();
     }
     
     /*
