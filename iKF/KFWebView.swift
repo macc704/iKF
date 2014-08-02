@@ -21,7 +21,9 @@ class A:iKFLayerView{
                 return self;
             }
         }
-        if(point.x < 20 && point.y < 20){
+        let a = point.x < 20;
+        let b = point.y < 20;
+        if(a && b){
             return self;
         }
         return super.hitTest(point, withEvent: event);
