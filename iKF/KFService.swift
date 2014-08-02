@@ -33,7 +33,7 @@ class KFService: NSObject {
     
     func initialize(host:String){
         self.host = host;
-        self.baseURL = String(format: "http://%@/kforum/", host);
+        self.baseURL = "http://\(host)/kforum/";
         
         self.jsonScanner = iKFJSONScanner();
         
@@ -51,7 +51,7 @@ class KFService: NSObject {
     }
     
     func getHostURL() -> String{
-        return String(format: "http://%@/", host!);
+        return "http://\(host)/";
     }
     
     func testConnectionToGoogle() -> Bool{
@@ -100,7 +100,7 @@ class KFService: NSObject {
     }
     
     func login(userName:String, password:String) -> Bool{
-        let url = self.baseURL! + "rest/account/userLogin";
+        let url = "\(self.baseURL!)rest/account/userLogin";
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("userName", value: userName);
         req.addParam("password", value: password);
@@ -116,11 +116,11 @@ class KFService: NSObject {
     }
     
     func refreshCurrentUser() -> Bool{
-        let url = self.baseURL! + "rest/account/currentUser";
+        let url = "\(self.baseURL!)rest/account/currentUser";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in currentUser() code=%d", res.getStatusCode()));
+            handleError("in currentUser() code=\(res.getStatusCode())");
             return false;
         }
         
@@ -136,33 +136,33 @@ class KFService: NSObject {
     }
     
     func registerCommunity(registrationCode:String) -> Bool{
-        let url = self.baseURL! + "rest/mobile/register/" + registrationCode;
+        let url = "\(self.baseURL!)rest/mobile/register/" + registrationCode;
         let req = KFHttpRequest(urlString: url, method: "POST");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in registerCommunity() code=%d", res.getStatusCode()));
+            handleError("in registerCommunity() code=\(res.getStatusCode())");
             return false;
         }
         return true;
     }
     
     func getRegistrations() -> [KFRegistration]{
-        let url = self.baseURL! + "rest/account/registrations";
+        let url = "\(self.baseURL!)rest/account/registrations";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in getRegistrations() code=%d", res.getStatusCode()));
+            handleError("in getRegistrations() code=\(res.getStatusCode())");
             return [];
         }
         return jsonScanner!.scanRegistrations(res.getBodyAsJSON()) as  [KFRegistration];
     }
     
     func enterCommunity(registration:KFRegistration) -> Bool{
-        let url = self.baseURL! + "rest/account/selectSection/" + registration.guid;
+        let url = "\(self.baseURL!)rest/account/selectSection/\(registration.guid)";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in enterCommunity() code=%d", res.getStatusCode()));
+            handleError("in enterCommunity() code=\(res.getStatusCode())");
             return false;
         }
         self.currentRegistration = registration;
@@ -170,22 +170,22 @@ class KFService: NSObject {
     }
     
     func getViews(communityId:String) -> [KFView]{
-        let url = self.baseURL! + "rest/content/getSectionViews/" + communityId;
+        let url = "\(self.baseURL!)rest/content/getSectionViews/\(communityId)";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in getViews() code=%d", res.getStatusCode()));
+            handleError("in getViews() code=\(res.getStatusCode())");
             return [];
         }
         return jsonScanner!.scanViews(res.getBodyAsJSON()) as  [KFView];
     }
     
     func getPosts(viewId:String) -> [String: KFReference]{
-        let url = self.baseURL! + "rest/content/getView/" + viewId;
+        let url = "\(self.baseURL!)rest/content/getView/\(viewId)";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in getPosts() code=%d", res.getStatusCode()));
+            handleError("in getPosts() code=\(res.getStatusCode())");
             return [:];
         }
         let json: AnyObject = res.getBodyAsJSON();
@@ -194,7 +194,7 @@ class KFService: NSObject {
     }
     
     func updatePostRef(viewId:String, postRef:KFReference) -> Bool{
-        let url = self.baseURL! + "rest/mobile/updatePostRef/" + viewId + "/" + postRef.guid;
+        let url = "\(self.baseURL!)rest/mobile/updatePostRef/\(viewId)/\(postRef.guid)";
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("x", value: String(Int(postRef.location.x)));
         req.addParam("y", value: String(Int(postRef.location.y)));
@@ -206,47 +206,47 @@ class KFService: NSObject {
         req.addParam("display", value: String(Int(postRef.displayFlags)));
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in updatePostRef() code=%d", res.getStatusCode()));
+            handleError("in updatePostRef() code=\(res.getStatusCode())");
             return false;
         }
         return true;
     }
     
     func deletePostRef(viewId:String, postRef:KFReference) -> Bool{
-        let url = self.baseURL! + "rest/mobile/deletePostRef/" + viewId + "/" + postRef.guid;
+        let url = "\(self.baseURL!)rest/mobile/deletePostRef/\(viewId)/\(postRef.guid)";
         let req = KFHttpRequest(urlString: url, method: "POST");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in deletePostRef() code=%d", res.getStatusCode()));
+            handleError("in deletePostRef() code=\(res.getStatusCode())");
             return false;
         }
         return true;
     }
     
     func getNoteAsHTML(post:KFPost) -> String{
-        let url = self.baseURL! + "rest/mobile/getNoteAsHTMLwJS/" + post.guid;
+        let url = "\(self.baseURL!)rest/mobile/getNoteAsHTMLwJS/\(post.guid)";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in getNoteAsHTML() code=%d", res.getStatusCode()));
+            handleError("in getNoteAsHTML() code=\(res.getStatusCode())");
             return "";
         }
         return req.getBodyAsString();
     }
     
     func readPost(post:KFPost) -> Bool{
-        let url = self.baseURL! + "rest/mobile/readPost/" + post.guid;
+        let url = "\(self.baseURL!)rest/mobile/readPost/\(post.guid)";
         let req = KFHttpRequest(urlString: url, method: "POST");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in readPost() code=%d", res.getStatusCode()));
+            handleError("in readPost() code=\(res.getStatusCode())");
             return false;
         }
         return true;
     }
     
     func createNote(viewId:String, buildsOn:KFReference? = nil, location:CGPoint, title:String = "NewNote", body:String = "") -> Bool{
-        let url = self.baseURL! + "rest/mobile/createNote/" + viewId;
+        let url = "\(self.baseURL!)rest/mobile/createNote/\(viewId)";
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("x", value: String(Int(location.x)));
         req.addParam("y", value: String(Int(location.y)));
@@ -257,42 +257,42 @@ class KFService: NSObject {
         }
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in createNote() code=%d", res.getStatusCode()));
+            handleError("in createNote() code=\(res.getStatusCode())");
             return false;
         }
         return true;
     }
     
     func updateNote(note:KFNote)->Bool{
-        let url = self.baseURL! + "rest/mobile/updateNote/" + note.guid;
+        let url = "\(self.baseURL!)rest/mobile/updateNote/\(note.guid)";
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("title", value: note.title);
         req.addParam("body", value: note.content);
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in updateNote() code=%d", res.getStatusCode()));
+            handleError("in updateNote() code=\(res.getStatusCode())");
             return false;
         }
         return true;
     }
     
     func getScaffolds(viewId:String) -> [KFScaffold]{
-        let url = self.baseURL! + "rest/mobile/getScaffolds/" + viewId;
+        let url = "\(self.baseURL!)rest/mobile/getScaffolds/\(viewId)";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in getScaffolds() code=%d", res.getStatusCode()));
+            handleError("in getScaffolds() code=\(res.getStatusCode())");
             return [];
         }
         return jsonScanner!.scanScaffolds(res.getBodyAsJSON()) as [KFScaffold];
     }
     
     func getNextViewVersionAsync(viewId:String, currentVersion:Int) -> Int{
-        let url = self.baseURL! + "rest/mobile/getNextViewVersionAsync/" + viewId + "/" + String(currentVersion);
+        let url = "\(self.baseURL!)rest/mobile/getNextViewVersionAsync/\(viewId)/\(String(currentVersion))";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in getNextViewVersionAsync() code=%d", res.getStatusCode()));
+            handleError("in getNextViewVersionAsync() code=\(res.getStatusCode())");
             return -1;
         }
         return res.getBodyAsString().toInt()!;
@@ -325,7 +325,7 @@ class KFService: NSObject {
     
     private func sendAttachment(data:NSData, mime:String, filename:String) -> AnyObject!{
         // generate url
-        let url = self.baseURL! + "rest/file/easyUpload/" + currentRegistration!.communityId;
+        let url = "\(self.baseURL!)rest/file/easyUpload/" + currentRegistration!.communityId;
         
         // generate form boundary
         let key = jsonScanner?.generateRandomString(16);
@@ -354,7 +354,7 @@ class KFService: NSObject {
         
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in sendAttachment() code=%d", res.getStatusCode()));
+            handleError("in sendAttachment() code=\(res.getStatusCode())");
             return nil;
         }
         
@@ -366,14 +366,14 @@ class KFService: NSObject {
     }
     
     private func createDrawing(viewId:String, svg:String, location:CGPoint) -> Bool{
-        let url = self.baseURL! + "rest/mobile/createDrawing/" + viewId;
+        let url = "\(self.baseURL!)rest/mobile/createDrawing/\(viewId)";
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("x", value: String(Int(location.x)));
         req.addParam("y", value: String(Int(location.y)));
         req.addParam("svg", value: svg);
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
-            handleError(String(format: "in createDrawing() code=%d", res.getStatusCode()));
+            handleError("in createDrawing() code=\(res.getStatusCode())");
             return false;
         }
         return true;
