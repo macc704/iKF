@@ -357,18 +357,69 @@ class KFCanvasViewController: UIViewController {
     
     func openPost(postRefView:KFPostRefView){
         //openPopupViewer(postRefView);
-        self.openPostViewer(postRefView.model.post!, from: postRefView.frame);
+        self.openPostViewer(postRefView.model.post!, from: postRefView);
     }
     
-    func openPostViewer(post:KFPost, from:CGRect){
+    func openPostViewer(post:KFPost, from:UIView){
         let browser = KFWebBrowserView(showToolBar: false);
-        browser.frame = CGRectMake(from.origin.x, from.origin.y, 400, 500);
+        browser.frame = postViewerRect(from);
         browser.kfSetNote(post as KFNote);
         browser.mainController = self;
         self.canvasView.windowsLayer.addSubview(browser);
         browser.doubleTapHandler = {
             self.showHalo(browser);
         }
+    }
+    
+    private func postViewerRect(from:UIView) -> CGRect{
+        let orient = UIDevice.currentDevice().orientation;
+        
+        var width:CGFloat = 400;
+        var height:CGFloat = 600;
+        if(orient == UIDeviceOrientation.LandscapeLeft || orient == UIDeviceOrientation.LandscapeRight){
+            width = 500;
+            height = 400;
+        }
+        var x = from.center.x;
+        var y = from.center.y;
+        
+        //        var screenW = self.view.frame.width;
+        //        var screenH = self.view.frame.height;
+        let screenW = canvasView.frame.size.width;
+        let screenH = canvasView.frame.size.height;
+        
+        let fromCenter = CGPointMake(from.frame.size.width/2, from.frame.size.height/2);
+        let absP = from.convertPoint(fromCenter, toView: canvasView);
+        //        let absP = from.convertPoint(fromCenter, toView: nil);
+        //println("\(screenW), \(screenH)");
+        //println(absP);
+        
+        // horizontal - default right
+        if(absP.x > screenW/2){// located in right
+            //to left
+            x -= width;
+        }else{
+            
+        }
+        
+        // vertical - default bottom
+        if(absP.y > screenH*2/3){ //located in bottom
+            //to top
+            y -= height;
+        }else if(absP.y > screenH/3){//located inmiddle
+            //to middle
+            y -= height / 2 ;
+        }
+        
+        //adjust
+        if(x < 30){
+            x = 30;
+        }
+        if(y < 30){
+            y = 30;
+        }
+        
+        return CGRectMake(x, y, width, height);
     }
     
     private func openPopupViewer(postRefView:KFPostRefView){
@@ -379,7 +430,7 @@ class KFCanvasViewController: UIViewController {
         KFPopoverManager.getInstance().openInPopover(postRefView, controller: notePopupController);
     }
     
-    func openBrowser(p:CGPoint, size:CGSize = CGSize(width: 500, height: 500)){
+    func openBrowser(p:CGPoint, size:CGSize = CGSize(width: 500, height: 600)){
         let browser = KFWebBrowserView();
         //let p = self.canvasView.translateToCanvas(CGPointMake(50, 50));
         browser.frame = CGRect(x: p.x, y:p.y, width: size.width, height:size.height);
@@ -435,7 +486,7 @@ class KFCanvasViewController: UIViewController {
     
     @IBAction func updatePressed(sender: AnyObject) {
     }
-       
+    
     func suppressScroll(){
         canvasView.suppressScroll();
     }
