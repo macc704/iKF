@@ -73,13 +73,15 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     func login() -> (result: Bool, errorMsg: String?) {        
         var service = KFService.getInstance();
         service.initialize(servers[serverPicker.selectedRowInComponent(0)]);
-        let googleTest = service.testConnectionToGoogle();
-        if(googleTest == false){
-            return (false, "Internet Connection Failed");
-        }
+        
         let hostTest = service.testConnectionToTheHost();
         if(hostTest == false){
-            return (false, "Connection Failed to the Selected Host");
+            let googleTest = service.testConnectionToGoogle();
+            if(googleTest == false){
+                return (false, "Internet Connection Failed");
+            }else{
+                return (false, "Connection Failed to the Selected Host");
+            }
         }
         let loginResult = service.login(self.usernameField.text, password:self.passwordField.text);
         if(loginResult == false){
