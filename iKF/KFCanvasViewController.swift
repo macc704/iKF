@@ -356,10 +356,21 @@ class KFCanvasViewController: UIViewController {
     }
     
     func openPost(postRefView:KFPostRefView){
-        openPopupViewer(postRefView);
+        //openPopupViewer(postRefView);
+        self.openPostViewer(postRefView.model.post!, from: postRefView.frame);
     }
     
-    func openPopupViewer(postRefView:KFPostRefView){
+    func openPostViewer(post:KFPost, from:CGRect){
+        let browser = KFWebBrowserView(showToolBar: false);
+        browser.frame = CGRectMake(from.origin.x, from.origin.y, 400, 500);
+        browser.kfSetNote(post as KFNote);
+        self.canvasView.windowsLayer.addSubview(browser);
+        browser.doubleTapHandler = {
+            self.showHalo(browser);
+        }
+    }
+    
+    private func openPopupViewer(postRefView:KFPostRefView){
         let notePopupController = iKFNotePopupViewController();
         notePopupController.note = (postRefView.model.post as KFNote);
         notePopupController.kfViewController = self;
@@ -371,7 +382,7 @@ class KFCanvasViewController: UIViewController {
         let browser = KFWebBrowserView();
         //let p = self.canvasView.translateToCanvas(CGPointMake(50, 50));
         browser.frame = CGRect(x: p.x, y:p.y, width: size.width, height:size.height);
-        println(browser.frame);
+        //println(browser.frame);
         browser.setURL("http://www.google.com");
         self.canvasView.windowsLayer.addSubview(browser);
         browser.doubleTapHandler = {

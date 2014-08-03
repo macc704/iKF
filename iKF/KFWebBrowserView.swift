@@ -55,7 +55,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         statusBar.layer.borderColor = BORDER_COLOR.CGColor;
         statusBar.layer.borderWidth = 1.0;
         self.addSubview(statusBar);
-        titleLabel.text = "hoge";
+        titleLabel.text = "";
         titleLabel.backgroundColor = UIColor.clearColor();
         titleLabel.textAlignment = NSTextAlignment.Center;
         titleLabel.sizeToFit();
@@ -85,7 +85,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         
         //web view
         webView.delegate = self;
-        webView.scalesPageToFit = true;
+        //webView.scalesPageToFit = true;
         self.addSubview(webView);
         
         //gestures
@@ -186,6 +186,17 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         webView.stopLoading();
     }
     
+    var note:KFNote?;
+    
+    func kfSetNote(note:KFNote){
+        self.note = note;
+        self.titleLabel.text = self.note!.title;
+        let html = note.getReadHtml();
+        let baseURL = KFService.getInstance().getHostURL();
+//        println("aaa=" + html);
+        self.webView.loadHTMLString(html, baseURL: baseURL);
+    }
+    
     func setURL(url:String){
         let url = NSURL(string: url);
         let req = NSURLRequest(URL: url);
@@ -248,7 +259,11 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false;
         loading.hide();
         updateStatus();
-        self.titleLabel.text = getTitle();
+        if(note != nil){
+            self.titleLabel.text = note!.title;
+        }else{
+            self.titleLabel.text = getTitle();
+        }
         self.urlTextfield!.text = getURL();
         //self.webView.scrollView.zoomToRect(self.webView.frame, animated: false);
     }

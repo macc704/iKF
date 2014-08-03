@@ -15,6 +15,15 @@ class KFNote: KFPost {
 //    var location = CGPoint(x:0, y:0);
     var buildsOn:KFNote?;
 //    var refId = "";
+    
+    func getReadHtml() -> String{
+        let template = KFService.getInstance().getReadTemplate();
+        var html = content;
+        if(template != nil){
+            html = template!.stringByReplacingOccurrencesOfString("%YOURCONTENT%", withString:content);
+        }
+        return html;
+    }
 
     func initWithoutAuthor() -> KFNote{
         self.guid = "temporary-\(idCounter)";

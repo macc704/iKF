@@ -72,14 +72,8 @@
     if(mobileJS != nil){
         [((iKFWebView*)self.webView) stringByEvaluatingJavaScriptFromString: mobileJS];
     }
-    NSString* template = [[KFService getInstance] getReadTemplate];
-    NSString* html;
-    if(template != nil){
-        html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:self.note.content];
-    }else{
-        html = self.note.content;
-    }
-    NSString* baseURLStr = [[KFService getInstance] getHostURL];
+    NSString* html = [self.note getReadHtml];
+    NSString* baseURLStr = [[KFService getInstance] getHostURLString];
     NSURL* baseURL = [[NSURL alloc] initWithString:baseURLStr];
     [self.webView loadHTMLString: html baseURL: baseURL];
     
