@@ -14,7 +14,6 @@ class KFCanvasViewController: UIViewController {
     @IBOutlet weak var canvasContainer: UIView!
     
     @IBOutlet weak var viewsButton: UIBarButtonItem!
-    @IBOutlet weak var imageAddButton: UIBarButtonItem!
     
     private var canvasView = KFCanvasView();
     private let creationToolView = KFCreationToolView(frame: CGRect(x:0, y:0, width:90, height:35));
@@ -418,15 +417,7 @@ class KFCanvasViewController: UIViewController {
     
     @IBAction func updatePressed(sender: AnyObject) {
     }
-    
-    @IBAction func imageAddPressed(sender: AnyObject) {
-//        self.imagePicker?.openImagePicker(imageAddButton, viewId: self.getCurrentView().guid);
-    }
-    
-    @IBAction func browserAddPressed(sender: AnyObject) {
-        
-    }
-    
+       
     func suppressScroll(){
         canvasView.suppressScroll();
     }
