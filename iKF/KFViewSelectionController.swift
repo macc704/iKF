@@ -25,6 +25,8 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
 
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
+        
+        self.preferredContentSize = self.view.frame.size;
 //        let a = NSIndexPath(index: 0);
 //        tableView.selectRowAtIndexPath(a, animated: false, scrollPosition: UITableViewScrollPosition.Middle);
     }
