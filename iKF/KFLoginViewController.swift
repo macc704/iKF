@@ -33,15 +33,13 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     override func viewDidAppear(animated: Bool) {
         let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50));
-        button.backgroundColor = UIColor.redColor();
-        button.titleLabel.text = "hoge";
+        button.backgroundColor = UIColor.clearColor();
         let r = UITapGestureRecognizer(target: self, action: "testPressed:");
         button.addGestureRecognizer(r);
         self.view.addSubview(button);
     }
     
     func testPressed(r:UITapGestureRecognizer){
-        println("tapp");
         let c = KFTestViewController(nibName: nil, bundle: nil);
         self.presentViewController(c, animated: true, completion: nil);
     }

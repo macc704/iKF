@@ -40,6 +40,10 @@ class KFTestViewController: UIViewController {
         //a();
     }
     
+    @IBAction func backClicked(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: {});
+    }
+    
     func doNothing(gesture:UITapGestureRecognizer){
     }
     
