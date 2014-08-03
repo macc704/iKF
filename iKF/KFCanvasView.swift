@@ -115,7 +115,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     /* popover management */
     
     func openInPopover(locView:UIView, controller:UIViewController) -> UIPopoverController{
-        self.popoverController?.dismissPopoverAnimated(false);
+        //self.popoverController?.dismissPopoverAnimated(false); //this causes problem not necessary
         self.popoverController = UIPopoverController(contentViewController: controller);
         self.popoverController!.presentPopoverFromRect(locView.frame, inView: locView.superview, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
         return self.popoverController!;

@@ -263,6 +263,19 @@ class KFService: NSObject {
         return true;
     }
     
+    func createViewLink(fromViewId:String, toViewId:String, location:CGPoint) -> Bool{
+        let url = "\(self.baseURL!)rest/mobile/createViewLink/\(fromViewId)/\(toViewId)";
+        let req = KFHttpRequest(urlString: url, method: "POST");
+        req.addParam("x", value: String(Int(location.x)));
+        req.addParam("y", value: String(Int(location.y)));
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError("in createViewLink() code=\(res.getStatusCode())");
+            return false;
+        }
+        return true;
+    }
+    
     func updateNote(note:KFNote)->Bool{
         let url = "\(self.baseURL!)rest/mobile/updateNote/\(note.guid)";
         let req = KFHttpRequest(urlString: url, method: "POST");

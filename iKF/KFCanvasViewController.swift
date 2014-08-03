@@ -382,11 +382,23 @@ class KFCanvasViewController: UIViewController {
         self.hideHalo();
     }
     
-    
-    func openImageSelectionViewer(locView:UIView){
+    func openImageSelectionViewer(popOverLoc:UIView, creatingPoint:CGPoint){
         let pickerController = imagePickerManager!.createImagePicker();
-        let popoverController = self.canvasView.openInPopover(locView, controller: pickerController);
+        imagePickerManager!.loc = creatingPoint;
+        let popoverController = self.canvasView.openInPopover(popOverLoc, controller: pickerController);
         imagePickerManager!.popController = popoverController;
+    }
+    
+    func openViewlinkSelectionViewer(popOverLoc:UIView, creatingPoint:CGPoint){
+        let viewSelectionController = KFViewSelectionController();
+        viewSelectionController.views = self.views;
+        let popController = canvasView.openInPopover(popOverLoc, controller: viewSelectionController);
+        let fromViewId = getCurrentView().guid;
+        viewSelectionController.selectedHandler = {(view:KFView) in
+            popController.dismissPopoverAnimated(true);
+            KFService.getInstance().createViewLink(fromViewId, toViewId: view.guid , location: creatingPoint);
+            return;
+        }
     }
     
     /* event handlers */

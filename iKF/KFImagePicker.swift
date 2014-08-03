@@ -12,19 +12,18 @@ class KFImagePicker: NSObject, UINavigationControllerDelegate, UIImagePickerCont
     
     private let mainController:KFCanvasViewController;
     var popController:UIPopoverController?;
+    var loc:CGPoint?;
     
     init(mainController:KFCanvasViewController){
         self.mainController = mainController;
     }
     
     func createImagePicker() -> UIImagePickerController{
-        //self.viewId = viewId;
         let imagePicker = UIImagePickerController();
         imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
         imagePicker.delegate = self;
         return imagePicker;
     }
-    
     
     /* UIImagePickerControllerDelegate */
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!){
@@ -34,11 +33,9 @@ class KFImagePicker: NSObject, UINavigationControllerDelegate, UIImagePickerCont
         sizeSelectionController.image = image;
         sizeSelectionController.modalPresentationStyle = UIModalPresentationStyle.FullScreen;
         sizeSelectionController.modalTransitionStyle = UIModalTransitionStyle.CoverVertical;
-        //        func callback(scale:CGFloat){
-        //            KFService.getInstance().createPicture(image, viewId: self.viewId!, location: CGPoint(x:50, y:50));
-        //            self.mainController.update();
-        //        }
-        //        sizeSelectionController.setButtonPressHandler(callback);        
+        if(loc != nil){
+            sizeSelectionController.point = loc!;
+        }
         popController?.dismissPopoverAnimated(true);
         mainController.presentViewController(sizeSelectionController, animated: true, completion: nil);
     }

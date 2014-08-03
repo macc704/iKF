@@ -84,8 +84,8 @@ class KFHalo: UIView {
         if(target is KFCreationToolView){
             installHaloHandle("new.png", locator: locator.TOP_LEFT(), tap: "handleNewNote:", pan: nil);
             installHaloHandle("newpicture.png", locator: locator.TOP(), tap: "handleNewPicture:", pan: nil);
-            installHaloHandle("newviewlink.png", locator: locator.BOTTOM_LEFT(), tap: nil, pan: nil);
-            installHaloHandle("newview.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: nil);
+            installHaloHandle("newviewlink.png", locator: locator.BOTTOM_LEFT(), tap: "handleNewViewlink:", pan: nil);
+            //installHaloHandle("newview.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: nil);
             installHaloHandle("window.png", locator: locator.TOP_RIGHT(), tap: "handleOpenWindow:", pan: nil);
         }
     }
@@ -122,7 +122,11 @@ class KFHalo: UIView {
     }
     
     func handleNewPicture(recognizer:UIGestureRecognizer){
-        controller?.openImageSelectionViewer(recognizer.view);
+        controller?.openImageSelectionViewer(recognizer.view, creatingPoint: self.target.frame.origin);
+    }
+
+    func handleNewViewlink(recognizer:UIGestureRecognizer){
+        controller?.openViewlinkSelectionViewer(recognizer.view, creatingPoint: self.target.frame.origin);
     }
     
     func handleLock(recognizer:UIGestureRecognizer){
