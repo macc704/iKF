@@ -78,6 +78,14 @@
         //KFView* model = [[KFView alloc] init];
         NSString* guid = each[@"viewReferenceId"];
         KFView* model = _views[guid];
+        if(model == nil){
+            [[KFService getInstance] refreshViews];
+            model = _views[guid];//retry
+            if(model == nil){
+                NSLog(@"Warning: view link to not found id= %@", guid);
+                return;
+            }
+        }
         reference.post = model;
         [models setObject: reference forKey: reference.guid];
         return;

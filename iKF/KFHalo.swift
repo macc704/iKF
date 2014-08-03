@@ -92,7 +92,7 @@ class KFHalo: UIView {
             installHaloHandle("new.png", locator: locator.TOP_LEFT(), tap: "handleNewNote:", pan: nil);
             installHaloHandle("newpicture.png", locator: locator.TOP(), tap: "handleNewPicture:", pan: nil);
             installHaloHandle("newviewlink.png", locator: locator.BOTTOM_LEFT(), tap: "handleNewViewlink:", pan: nil);
-            //installHaloHandle("newview.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: nil);
+            installHaloHandle("newview.png", locator: locator.BOTTOM_RIGHT(), tap: "handleNewView:", pan: nil);
             installHaloHandle("window.png", locator: locator.TOP_RIGHT(), tap: "handleOpenWindow:", pan: nil);
         }
     }
@@ -156,6 +156,10 @@ class KFHalo: UIView {
     
     func handleNewViewlink(recognizer:UIGestureRecognizer){
         controller?.openViewlinkSelectionViewer(recognizer.view, creatingPoint: self.target.frame.origin);
+    }
+    
+    func handleNewView(recognizer:UIGestureRecognizer){
+        controller?.openCreateView(recognizer.view, creatingPoint: self.target.frame.origin);
     }
     
     func handleLock(recognizer:UIGestureRecognizer){

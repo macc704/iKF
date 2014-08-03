@@ -79,7 +79,7 @@ class KFCanvasViewController: UIViewController {
                 return;
             }
             
-            self.views = KFService.getInstance().getViews(registration.communityId);
+            self.views = KFService.getInstance().refreshViews();
             self.initialized = true;
             self.setCurrentView(self.views[0]);
             //set current view do below
@@ -396,6 +396,13 @@ class KFCanvasViewController: UIViewController {
             KFService.getInstance().createViewLink(fromViewId, toViewId: view.guid , location: creatingPoint);
             return;
         }
+    }
+    
+    func openCreateView(popOverLoc:UIView, creatingPoint:CGPoint){
+        let controller = KFViewEditViewController();
+        controller.loc = creatingPoint;
+        controller.viewIdToLink = self.getCurrentView().guid;
+        KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: controller);
     }
     
     /* event handlers */

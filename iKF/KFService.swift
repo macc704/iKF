@@ -169,6 +169,10 @@ class KFService: NSObject {
         return true;
     }
     
+    func refreshViews() -> [KFView]{
+        return getViews(self.currentRegistration!.communityId);
+    }
+    
     func getViews(communityId:String) -> [KFView]{
         let url = "\(self.baseURL!)rest/content/getSectionViews/\(communityId)";
         let req = KFHttpRequest(urlString: url, method: "GET");
@@ -240,6 +244,23 @@ class KFService: NSObject {
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
             handleError("in readPost() code=\(res.getStatusCode())");
+            return false;
+        }
+        return true;
+    }
+    
+    func createView(title:String, viewIdToLink:String?, location:CGPoint?) -> Bool{
+        let url = "\(self.baseURL!)rest/mobile/createView/";
+        let req = KFHttpRequest(urlString: url, method: "POST");
+        if(viewIdToLink){
+            req.addParam("viewIdToLink", value: viewIdToLink!);
+            req.addParam("x", value: String(Int(location!.x)));
+            req.addParam("y", value: String(Int(location!.y)));
+        }
+        req.addParam("title", value: title);
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError("in createView() code=\(res.getStatusCode())");
             return false;
         }
         return true;
