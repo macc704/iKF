@@ -23,6 +23,7 @@ class KFViewEditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         okButton.enabled = false;
+        self.preferredContentSize = self.view.frame.size;
     }
 
     override func didReceiveMemoryWarning() {
