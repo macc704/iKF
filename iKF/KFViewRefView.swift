@@ -13,7 +13,7 @@ class KFViewRefView: KFPostRefView {
     init(controller: KFCanvasViewController, ref: KFReference) {
         super.init(controller: controller, ref: ref);
 
-        self.frame = CGRectMake(ref.location.x, ref.location.y, 230, 40);
+        self.frame = CGRectMake(ref.location.x, ref.location.y, 230, 30);
         //self.backgroundColor = UIColor.blueColor();
         self.backgroundColor = UIColor.clearColor();
         
@@ -28,7 +28,10 @@ class KFViewRefView: KFPostRefView {
         let view = ref.post as KFView;
         titleLabel.text = view.title;
         self.addSubview(titleLabel);
+        titleLabel.sizeToFit();
         
+        let titleRight = 40+titleLabel.frame.size.width;
+        self.frame = CGRectMake(ref.location.x, ref.location.y, titleRight, 30);
         //bindEvents();
     }
     

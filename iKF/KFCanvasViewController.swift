@@ -130,7 +130,7 @@ class KFCanvasViewController: UIViewController {
         
         postRefView?.updateFromModel();
         postRefViews[ref.guid] = postRefView;
-        //postRefViews[ref.post!.guid] = postRefView;//ちょっとずる
+        postRefViews[ref.post!.guid] = postRefView;//ちょっとずる
         canvasView.drawingLayer.addSubview(postRefView);
     }
     

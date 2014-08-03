@@ -53,6 +53,7 @@ class KFHalo: UIView {
     private func installHaloHandles(){
         if(target is KFPostRefView){
             installHaloHandle("bin.png", locator: locator.TOP_LEFT(), tap: "handleDelete:", pan: nil);
+            installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMove:");
         }
         
         if(target is KFDrawingRefView){
@@ -64,8 +65,8 @@ class KFHalo: UIView {
                 installHaloHandle("lock.png", locator: locator.TOP_RIGHT(), tap: "handleLock:", pan: nil);
             }
             installHaloHandle("resize.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: "handlePanResize:");
-            installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMove:");
             installHaloHandle("rotation.png", locator: locator.BOTTOM_LEFT(), tap: nil, pan: "handlePanRotation:");
+            installHaloHandle("buildsOn.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
             
             let rotationGesture = UIRotationGestureRecognizer(target: self, action: "handleGestureRotation:");
             self.addGestureRecognizer(rotationGesture);
@@ -75,10 +76,10 @@ class KFHalo: UIView {
         }
         
         if(target is KFNoteRefView){
-            installHaloHandle("read.png", locator: locator.TOP_RIGHT(), tap: "handleRead:", pan: nil);
-            installHaloHandle("edit.png", locator: locator.TOP(), tap: "handleEdit:", pan: nil);
-            installHaloHandle("clip.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleClip:", pan: nil);
-            installHaloHandle("buildsOn.png", locator: locator.BOTTOM_LEFT(), tap: nil, pan: "handleBuildsOn:");
+            installHaloHandle("read.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleRead:", pan: nil);
+            installHaloHandle("edit.png", locator: locator.TOP_RIGHT(), tap: "handleEdit:", pan: nil);
+            installHaloHandle("clip.png", locator: locator.BOTTOM_LEFT(), tap: "handleClip:", pan: nil);
+            installHaloHandle("buildsOn.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
         }
         
         if(target is KFWebView || target is KFWebBrowserView){
@@ -212,7 +213,7 @@ class KFHalo: UIView {
             break;
         case .Ended:
             let button = recognizer.view;
-            let objectP = postTarget.frame.origin;
+            let objectP = self.frame.origin;
             let buttonP = button.frame.origin;
             let p = CGPoint(x:objectP.x + buttonP.x, y:objectP.y + buttonP.y);
             controller?.createNote(p, buildsOn: postTarget);
@@ -234,7 +235,7 @@ class KFHalo: UIView {
             let url = webbrowser.getURL();
             let title = webbrowser.getTitle();
             let button = recognizer.view;
-            let objectP = webbrowser.frame.origin;
+            let objectP = self.frame.origin;
             let buttonP = button.frame.origin;
             let p = CGPoint(x:objectP.x + buttonP.x, y:objectP.y + buttonP.y);
             controller?.createWebNote(p, url: url, title: title);
