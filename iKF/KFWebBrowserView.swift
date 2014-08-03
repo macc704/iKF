@@ -103,7 +103,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         
         //web view
         webView.delegate = self;
-        //webView.scalesPageToFit = true;
+        webView.scalesPageToFit = true;
         self.addSubview(webView);
         
         //gestures
@@ -216,6 +216,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     
     func kfSetNote(note:KFNote){
         self.note = note;
+        webView.scalesPageToFit = false;//necessary
         self.titleLabel.text = self.note!.title;
         let html = note.getReadHtml();
         let baseURL = KFService.getInstance().getHostURL();
