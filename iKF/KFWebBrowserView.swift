@@ -19,6 +19,9 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     //        }
     //    }
     
+    let BORDER_COLOR = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0);
+    let TITLEBAR_COLOR = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 0.8);
+    
     let statusBar:UIView = UIView();
     private let titleLabel:UILabel = UILabel();
     private let webView:iKFWebView = iKFWebView();
@@ -33,37 +36,47 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     private var reloadButton:UIButton?;
     private var stopButton:UIButton?;
     
-    init() {
+    private var showToolBar = true;
+    
+    init(showToolBar:Bool = true) {
+        self.showToolBar = showToolBar;
+        
         super.init(frame: KFAppUtils.DEFAULT_RECT());
         
         //this
-        self.layer.borderColor = UIColor.blackColor().CGColor;
+        self.layer.borderColor = BORDER_COLOR.CGColor;
         self.layer.borderWidth = 1.0;
-        self.layer.cornerRadius = 5;
+        self.layer.cornerRadius = 10;
         self.layer.masksToBounds = true;
         
         //status bar
-        statusBar.backgroundColor = UIColor(red: 230, green: 230, blue: 230, alpha: 1);
-        statusBar.layer.borderColor = UIColor.blackColor().CGColor;
+        statusBar.backgroundColor = TITLEBAR_COLOR;
+//        statusBar.backgroundColor = UIColor.redColor();
+        statusBar.layer.borderColor = BORDER_COLOR.CGColor;
         statusBar.layer.borderWidth = 1.0;
         self.addSubview(statusBar);
         titleLabel.text = "hoge";
+        titleLabel.backgroundColor = UIColor.clearColor();
         titleLabel.textAlignment = NSTextAlignment.Center;
         titleLabel.sizeToFit();
         statusBar.addSubview(titleLabel);
         closeButton = createButton("X", selector: "close", border: false);
+        closeButton!.backgroundColor = UIColor.clearColor();
         statusBar.addSubview(closeButton);
         
         //tool bar
-        toolContainer.backgroundColor = UIColor(red: 230, green: 230, blue: 230, alpha: 1);
-        toolContainer.layer.borderColor = UIColor.blackColor().CGColor;
+        toolContainer.backgroundColor = UIColor.whiteColor();
+        toolContainer.layer.borderColor = BORDER_COLOR.CGColor;
         toolContainer.layer.borderWidth = 1.0;
-        self.addSubview(toolContainer);
+        if(showToolBar && !toolContainer.superview){
+            self.addSubview(toolContainer);
+        }
         backButton = createButton("<", selector: "back", border: true);
         toolContainer.addSubview(backButton);
         forwardButton = createButton(">", selector: "forward", border: true);
         toolContainer.addSubview(forwardButton);
         urlTextfield = UITextField();
+        urlTextfield!.backgroundColor = UIColor.whiteColor();
         toolContainer.addSubview(urlTextfield);
         reloadButton = createButton("Go", selector: "reload", border: true);
         toolContainer.addSubview(reloadButton);
@@ -86,6 +99,20 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         self.addGestureRecognizer(tapGestureSingle);
     }
     
+    func setShowToolbar(show:Bool){
+        self.showToolBar = show;
+        if(!showToolBar && toolContainer.superview != nil){
+            toolContainer.removeFromSuperview();
+        }
+        else if(showToolBar && toolContainer.superview == nil){
+            self.addSubview(toolContainer);
+        }
+    }
+    
+    func isShowToolbar() -> Bool{
+        return self.showToolBar;
+    }
+    
     func pan(recognizer:UIPanGestureRecognizer){
         switch(recognizer.state){
         case .Began:
@@ -105,7 +132,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     }
     
     var doubleTapHandler:(()->())?;
-
+    
     func tapDouble(recognizer:UITapGestureRecognizer){
         if(doubleTapHandler){
             doubleTapHandler!();
@@ -116,7 +143,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         // do nothing just suppress propagation
         self.superview.bringSubviewToFront(self);
     }
-
+    
     
     func createButton(text:String, selector:Selector, border:Bool) -> UIButton{
         let b = UIButton();
@@ -173,11 +200,16 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         let width:CGFloat = self.frame.size.width;
         let height:CGFloat = self.frame.size.height;
         
-        self.statusBar.frame = CGRectMake(0,0,width,22);
-        self.titleLabel.frame = CGRectMake(21,1,width-40,20);
-        self.closeButton!.frame = CGRectMake(width - self.closeButton!.frame.size.width, 1, 20, 20);
+        let statusBarH:CGFloat = 44.0;
+        self.statusBar.frame = CGRectMake(0,0,width,statusBarH);
+        self.titleLabel.frame = CGRectMake(1,1,width-2,statusBarH-2);
+        self.closeButton!.frame = CGRectMake(width - (statusBarH-2), 1, statusBarH-2, statusBarH-2);
         
-        self.toolContainer.frame = CGRectMake(0,22,width,44);
+        var toolBarH:CGFloat = 44.0;
+        if(!self.showToolBar){
+            toolBarH = 0.0;
+        }
+        self.toolContainer.frame = CGRectMake(0,statusBarH,width,44);
         var x = CGFloat(5);
         self.backButton!.frame = CGRectMake(x,5,35,35);
         x += 40;
@@ -195,7 +227,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         self.stopButton!.frame = CGRectMake(x,5,35,35);
         
         if(!suppressWebLayout){
-            self.webView.frame = CGRectMake(0,22+44,width,height-22-44);
+            self.webView.frame = CGRectMake(0,(statusBarH+toolBarH),width,height-(statusBarH+toolBarH));
         }
         
         //self.webView.scrollView.zoomToRect(self.webView.frame, animated: false);//does not work
@@ -228,11 +260,11 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         KFAppUtils.showAlert("Error", msg: "Error for URL: " + self.urlTextfield!.text);
     }
     
-
-//    - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error | ウェ
+    
+    //    - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error | ウェ
     
     func updateStatus(){
-
+        
         //println(webView.canGoBack);
         backButton!.enabled = webView.canGoBack;
         //println(webView.canGoForward);

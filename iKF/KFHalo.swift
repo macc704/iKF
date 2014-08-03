@@ -86,6 +86,8 @@ class KFHalo: UIView {
             installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMoveWeb:");
             installHaloHandle("resize.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: "handlePanResizeWeb:");
             installHaloHandle("anchor.png", locator: locator.BOTTOM_LEFT(), tap: nil, pan: "handleAnchorWeb:");
+            installHaloHandle("window.png", locator: locator.TOP_RIGHT(), tap: "handleToggleMenuWeb:", pan: nil);
+            installHaloHandle("close.png", locator: locator.TOP_LEFT(), tap: "closeWeb:", pan: nil);
         }
         
         if(target is KFCreationToolView){
@@ -135,6 +137,17 @@ class KFHalo: UIView {
                 //                handle.frame = self.handles[handle]!();
                 //            }
             });
+    }
+    
+    func handleToggleMenuWeb(recognizer:UIGestureRecognizer){
+        let browser = target as KFWebBrowserView;
+        browser.setShowToolbar(!browser.isShowToolbar());
+    }
+    
+    func closeWeb(recognizer:UIGestureRecognizer){
+        let browser = target as KFWebBrowserView;
+        browser.close();
+        self.removeFromSuperview();
     }
     
     func handleOpenWindow(recognizer:UIGestureRecognizer){

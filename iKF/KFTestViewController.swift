@@ -52,7 +52,8 @@ class KFTestViewController: UIViewController {
             hideHalo(nil);
         }
         halo = KFHalo(controller: nil, target: target);
-        self.view.addSubview(halo);
+//        self.view.addSubview(halo);
+        halo!.showWithAnimation(self.view);
     }
     
     func hideHalo(gesture:UITapGestureRecognizer?){
