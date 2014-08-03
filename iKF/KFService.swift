@@ -69,25 +69,25 @@ class KFService: NSObject {
         return res;
     }
     
-    func getMobileJS() -> String{
+    func getMobileJS() -> String?{
         if(mobileJS == nil){
             mobileJS = getURL("https://dl.dropboxusercontent.com/u/11409191/ikf/kfmobile.js");
         }
-        return mobileJS!;
+        return mobileJS;
     }
     
-    func getEditTemplate() -> String{
+    func getEditTemplate() -> String?{
         if(editTemplate == nil){
             editTemplate = getURL("http://dl.dropboxusercontent.com/u/11409191/ikf/edit.html");
         }
-        return editTemplate!;
+        return editTemplate;
     }
     
-    func getReadTemplate() -> String{
+    func getReadTemplate() -> String?{
         if(readTemplate == nil){
             readTemplate = getURL("http://dl.dropboxusercontent.com/u/11409191/ikf/read.html");
         }
-        return readTemplate!;
+        return readTemplate;
     }
     
     func getURL(urlString:String) -> String?{
