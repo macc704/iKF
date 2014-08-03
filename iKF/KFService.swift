@@ -174,7 +174,8 @@ class KFService: NSObject {
     }
     
     func getViews(communityId:String) -> [KFView]{
-        let url = "\(self.baseURL!)rest/content/getSectionViews/\(communityId)";
+        //        let url = "\(self.baseURL!)rest/content/getSectionViews/\(communityId)";
+        let url = "\(self.baseURL!)rest/mobile/getViewsOrdered/\(communityId)";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
