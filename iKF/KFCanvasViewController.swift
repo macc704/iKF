@@ -364,6 +364,7 @@ class KFCanvasViewController: UIViewController {
         let browser = KFWebBrowserView(showToolBar: false);
         browser.frame = CGRectMake(from.origin.x, from.origin.y, 400, 500);
         browser.kfSetNote(post as KFNote);
+        browser.mainController = self;
         self.canvasView.windowsLayer.addSubview(browser);
         browser.doubleTapHandler = {
             self.showHalo(browser);
@@ -382,6 +383,7 @@ class KFCanvasViewController: UIViewController {
         let browser = KFWebBrowserView();
         //let p = self.canvasView.translateToCanvas(CGPointMake(50, 50));
         browser.frame = CGRect(x: p.x, y:p.y, width: size.width, height:size.height);
+        browser.mainController = self;
         //println(browser.frame);
         browser.setURL("http://www.google.com");
         self.canvasView.windowsLayer.addSubview(browser);

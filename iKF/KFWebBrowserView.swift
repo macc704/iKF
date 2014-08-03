@@ -19,6 +19,8 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     //        }
     //    }
     
+    var mainController:KFCanvasViewController?;
+    
     let BORDER_COLOR = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0);
     let TITLEBAR_COLOR = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 0.8);
     
@@ -37,6 +39,22 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     private var stopButton:UIButton?;
     
     private var showToolBar = true;
+    
+    override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
+        println(mainController);
+        mainController?.suppressScroll();
+    }
+    
+    override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!) {
+    }
+    
+    override func touchesCancelled(touches: NSSet!, withEvent event: UIEvent!) {
+        mainController?.unlockSuppressScroll();
+    }
+    
+    override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!) {
+        mainController?.unlockSuppressScroll();
+    }
     
     init(showToolBar:Bool = true) {
         self.showToolBar = showToolBar;
@@ -97,6 +115,11 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         let tapGestureSingle = UITapGestureRecognizer(target: self, action: "tapSingle:")
         tapGestureSingle.numberOfTapsRequired = 1;
         self.addGestureRecognizer(tapGestureSingle);
+        
+        //suppress canvas scrolling
+        //almost ok but still parent scroll would be happened in scale up
+        let noPanGesture = UIPanGestureRecognizer(target: self, action: "nopan:");
+        self.addGestureRecognizer(noPanGesture);
     }
     
     func setShowToolbar(show:Bool){
@@ -111,6 +134,9 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     
     func isShowToolbar() -> Bool{
         return self.showToolBar;
+    }
+    
+    func nopan(recognizer:UIPanGestureRecognizer){
     }
     
     func pan(recognizer:UIPanGestureRecognizer){
