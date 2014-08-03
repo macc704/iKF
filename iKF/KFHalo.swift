@@ -66,7 +66,7 @@ class KFHalo: UIView {
             }
             installHaloHandle("resize.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: "handlePanResize:");
             installHaloHandle("rotation.png", locator: locator.BOTTOM_LEFT(), tap: nil, pan: "handlePanRotation:");
-            installHaloHandle("buildsOn.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
+            installHaloHandle("buildson.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
             
             let rotationGesture = UIRotationGestureRecognizer(target: self, action: "handleGestureRotation:");
             self.addGestureRecognizer(rotationGesture);
@@ -79,7 +79,7 @@ class KFHalo: UIView {
             installHaloHandle("read.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleRead:", pan: nil);
             installHaloHandle("edit.png", locator: locator.TOP_RIGHT(), tap: "handleEdit:", pan: nil);
             installHaloHandle("clip.png", locator: locator.BOTTOM_LEFT(), tap: "handleClip:", pan: nil);
-            installHaloHandle("buildsOn.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
+            installHaloHandle("buildson.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
         }
         
         if(target is KFWebView || target is KFWebBrowserView){
@@ -315,7 +315,8 @@ class KFHalo: UIView {
             break;
         case .Ended:
             self.updateToServer();
-            controller?.showHalo(drawingTarget);
+            //            controller?.showHalo(drawingTarget);
+            self.initializeSizeAndHandles();
             break;
         default:
             break;
@@ -361,7 +362,8 @@ class KFHalo: UIView {
             break;
         case .Ended:
             self.updateToServer();
-            controller?.showHalo(drawingTarget);
+            //            controller?.showHalo(drawingTarget);
+            self.initializeSizeAndHandles();
             break;
         default:
             break;
@@ -397,7 +399,8 @@ class KFHalo: UIView {
             break;
         case .Ended:
             self.updateToServer();
-            controller?.showHalo(drawingTarget);
+            //            controller?.showHalo(drawingTarget);
+            self.initializeSizeAndHandles();
             break;
         default:
             break;
@@ -421,7 +424,8 @@ class KFHalo: UIView {
             break;
         case .Ended:
             self.updateToServer();
-            controller?.showHalo(drawingTarget);
+            //            controller?.showHalo(drawingTarget);
+            self.initializeSizeAndHandles();
             break;
         default:
             break;
