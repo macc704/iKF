@@ -17,7 +17,7 @@ class KFCanvasViewController: UIViewController {
     @IBOutlet weak var imageAddButton: UIBarButtonItem!
     
     private var canvasView = KFCanvasView();
-    private let creationToolView = KFCreationToolView(frame: CGRect(x:0, y:0, width:120, height:30));
+    private let creationToolView = KFCreationToolView(frame: CGRect(x:0, y:0, width:90, height:35));
     private var imagePickerManager:KFImagePicker?;
     
     private var user:KFUser?;

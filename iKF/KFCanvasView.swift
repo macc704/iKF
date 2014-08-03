@@ -97,12 +97,9 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     }
     
     func showHalo(newHalo:KFHalo){
-        self.hideHalo();
-        
+        self.hideHalo();        
         self.halo = newHalo;
-        self.halo!.alpha = 0.0;
-        self.layerContainerView.addSubview(self.halo);
-        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {self.halo!.alpha = 1.0}, completion: nil);
+        self.halo!.showWithAnimation(self.layerContainerView);
     }
     
     func hideHalo(){

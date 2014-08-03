@@ -14,12 +14,17 @@ class KFHalo: UIView {
     private var target:UIView;
     private var size:CGFloat;
     
+    private var locator:KFHaloLocator!;
+    private var handles:[UIView:(()->CGRect)]=[:];//handle, locator
+    
     init(controller:KFCanvasViewController?, target:UIView, size:CGFloat = 40){
+        self.controller = controller;
         self.target = target;
         self.size = size;
         super.init(frame: KFAppUtils.DEFAULT_RECT());
-        self.controller = controller;
-        self.initializeSizeAndHandles();
+        self.locator = KFHaloLocator(halo: self, size: size);
+        self.installHaloHandles();
+        //self.initializeSizeAndHandles();
     }
     
     override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
@@ -38,13 +43,14 @@ class KFHalo: UIView {
     }
     
     private func initializeSizeAndHandles(){
-        for view in self.subviews{
-            view.removeFromSuperview();
-        }
-        let locator = KFHaloLocator(halo: self, size: size);
         let targetFrame = self.target.frame;
         self.frame = CGRect(x:targetFrame.origin.x - size, y:targetFrame.origin.y - size, width:targetFrame.size.width + size*2, height:targetFrame.size.height + size*2);
-        
+        for handle in handles.keys{
+            handle.frame = handles[handle]!();
+        }
+    }
+    
+    private func installHaloHandles(){
         if(target is KFPostRefView){
             installHaloHandle("bin.png", locator: locator.TOP_LEFT(), tap: "handleDelete:", pan: nil);
         }
@@ -76,7 +82,7 @@ class KFHalo: UIView {
         }
         
         if(target is KFWebView || target is KFWebBrowserView){
-            installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMoveWeb:");            
+            installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMoveWeb:");
             installHaloHandle("resize.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: "handlePanResizeWeb:");
             installHaloHandle("anchor.png", locator: locator.BOTTOM_LEFT(), tap: nil, pan: "handleAnchorWeb:");
         }
@@ -93,7 +99,6 @@ class KFHalo: UIView {
     func installHaloHandle(imgName:String, locator:(()->CGRect), tap:Selector?, pan:Selector?) -> UIImageView{
         let button = KFImageView(image: UIImage(named: imgName));
         button.mainController = controller;
-        button.frame = locator();
         self.addSubview(button);
         button.userInteractionEnabled = true;
         if(tap){
@@ -105,7 +110,30 @@ class KFHalo: UIView {
             let gesture = UIPanGestureRecognizer(target: self, action: pan!);
             button.addGestureRecognizer(gesture);
         }
+        self.handles[button] = locator;
         return button;
+    }
+    
+    func showWithAnimation(container:UIView){
+        self.initializeSizeAndHandles();
+        self.alpha = 0.0;
+        let center = CGPoint(x: self.frame.width/2, y: self.frame.height/2);
+        for handle in handles.keys{
+            handle.center = center;
+        }
+        container.addSubview(self);
+        UIView.animateWithDuration(0.25, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            self.alpha = 1.0
+            for handle in self.handles.keys{
+                handle.frame = self.handles[handle]!();
+            }
+            }, completion: {
+            (x:Bool) in
+                // not necessary
+                //            for handle in self.handles.keys{
+                //                handle.frame = self.handles[handle]!();
+                //            }
+            });
     }
     
     func handleOpenWindow(recognizer:UIGestureRecognizer){
@@ -124,7 +152,7 @@ class KFHalo: UIView {
     func handleNewPicture(recognizer:UIGestureRecognizer){
         controller?.openImageSelectionViewer(recognizer.view, creatingPoint: self.target.frame.origin);
     }
-
+    
     func handleNewViewlink(recognizer:UIGestureRecognizer){
         controller?.openViewlinkSelectionViewer(recognizer.view, creatingPoint: self.target.frame.origin);
     }
@@ -266,7 +294,7 @@ class KFHalo: UIView {
             break;
         }
     }
-
+    
     func handlePanResize(recognizer:UIPanGestureRecognizer){
         let drawingTarget = target as KFDrawingRefView;
         
