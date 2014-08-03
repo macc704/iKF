@@ -19,7 +19,6 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     
     var doubleTapHandler:((CGPoint)->())?;
     
-    private var popoverController:UIPopoverController?;
     private var halo:KFHalo?;
     
     init() {
@@ -107,15 +106,6 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
             self.halo!.removeFromSuperview();
             self.halo = nil;
         }
-    }
-    
-    /* popover management */
-    
-    func openInPopover(locView:UIView, controller:UIViewController) -> UIPopoverController{
-        //self.popoverController?.dismissPopoverAnimated(false); //this causes problem not necessary
-        self.popoverController = UIPopoverController(contentViewController: controller);
-        self.popoverController!.presentPopoverFromRect(locView.frame, inView: locView.superview, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
-        return self.popoverController!;
     }
     
     /* Scrollling */

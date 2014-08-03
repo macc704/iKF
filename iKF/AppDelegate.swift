@@ -9,14 +9,23 @@
 import UIKit
 import CoreData
 
+private var appInstance:AppDelegate?;
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-                            
-    var window: UIWindow?
 
+    class func getInstance() -> AppDelegate{
+        return appInstance!;
+    }
+    
+    var window: UIWindow?
+    
+    func getCurrentViewController() -> UIViewController{
+       return (window!.rootViewController as UINavigationController).visibleViewController;
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
-        // Override point for customization after application launch.
+        appInstance = self;
         iKFErrorHandler.hookErrorHandler(application);
         return true
     }

@@ -81,12 +81,14 @@
 }
 
 - (IBAction)finishButtonPressed:(id)sender {
-    [self.popController dismissPopoverAnimated:false];
+//    [self.popController dismissPopoverAnimated:false];
+    [[KFPopoverManager getInstance] closeCurrentPopoverWithAnimated:false];
 }
 
 - (IBAction)editButtonPressed:(id)sender {
-    [self.popController dismissPopoverAnimated:false];
-    //[self.kfViewController openNoteEditController: self.note mode:@"edit"];
+//    [self.popController dismissPopoverAnimated:false];
+    [[KFPopoverManager getInstance] closeCurrentPopoverWithAnimated:false];
+    [self.kfViewController openNoteEditController: self.note mode:@"edit"];
 }
 
 @end

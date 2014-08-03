@@ -8,11 +8,11 @@
 
 import UIKit
 
-private let instance = KFService();
+private let kfServiceInstance = KFService();
 
 class KFService: NSObject {
     class func getInstance() -> KFService{
-        return instance;
+        return kfServiceInstance;
     }
     
     private var host:String?;

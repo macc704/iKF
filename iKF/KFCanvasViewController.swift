@@ -364,8 +364,7 @@ class KFCanvasViewController: UIViewController {
         notePopupController.note = (postRefView.model.post as KFNote);
         notePopupController.kfViewController = self;
         notePopupController.preferredContentSize = notePopupController.view.frame.size;
-        let popoverController = self.canvasView.openInPopover(postRefView, controller: notePopupController);
-        notePopupController.popController = popoverController;
+        KFPopoverManager.getInstance().openInPopover(postRefView, controller: notePopupController);
     }
     
     func openBrowser(p:CGPoint, size:CGSize = CGSize(width: 500, height: 500)){
@@ -384,17 +383,16 @@ class KFCanvasViewController: UIViewController {
     func openImageSelectionViewer(popOverLoc:UIView, creatingPoint:CGPoint){
         let pickerController = imagePickerManager!.createImagePicker();
         imagePickerManager!.loc = creatingPoint;
-        let popoverController = self.canvasView.openInPopover(popOverLoc, controller: pickerController);
-        imagePickerManager!.popController = popoverController;
+        KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: pickerController);
     }
     
     func openViewlinkSelectionViewer(popOverLoc:UIView, creatingPoint:CGPoint){
         let viewSelectionController = KFViewSelectionController();
         viewSelectionController.views = self.views;
-        let popController = canvasView.openInPopover(popOverLoc, controller: viewSelectionController);
+        KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: viewSelectionController);
         let fromViewId = getCurrentView().guid;
         viewSelectionController.selectedHandler = {(view:KFView) in
-            popController.dismissPopoverAnimated(true);
+            KFPopoverManager.getInstance().closeCurrentPopover();
             KFService.getInstance().createViewLink(fromViewId, toViewId: view.guid , location: creatingPoint);
             return;
         }

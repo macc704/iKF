@@ -22,7 +22,7 @@
 @property KFPostRefView* noteView;//仮
 
 @property KFCanvasViewController* kfViewController;
-@property UIPopoverController* popController;
+//@property UIPopoverController* popController;
 
 @property (weak, nonatomic) IBOutlet UILabel *textFieldAuthor;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
