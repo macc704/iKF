@@ -190,7 +190,7 @@ class KFCanvasViewController: UIViewController {
         KFAppUtils.executeInBackThread({
             var body = "<html><head>";
             body = body + "<meta http-equiv='refresh' content='0; URL="+url+"'>";
-            body = body + "</head></html>";
+            body = body + "</head><body></body></html>";
             KFService.getInstance().createNote(viewId, location: p, title:title, body: body);
             return;
             });
