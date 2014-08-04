@@ -1,0 +1,9 @@
+<p>
+<span id="%SUPPORTID%_%UNIQUEID%_start" supportId="%SUPPORTID%" class="supportStartTag mceNonEditable">
+	<span class="startMark">&nbsp; </span>
+	<span class="startLabelTag">%TITLE%</span>
+</span>
+- enter your idea here - 
+<span supportId="%SUPPORTID%" class="supportEndTag endMark mceNonEditable">&nbsp; </span>
+</p>
+

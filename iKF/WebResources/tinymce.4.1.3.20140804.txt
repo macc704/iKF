@@ -1,0 +1,8 @@
+Yoshiaki Memo
+
+2014.08.04 4.1.3
+- 4.1.3 No compat3x plugin is included in the package, but we are not necessary - because the plugin enables to use plugins designed for tinyMCE 3, we never use the such plugins, so I REMOVED.
+- 4.1.x Bug for css file location in local has been fixed! we can use css file in local use!
+- Prod version of the code is only 300K, whereas dev version is 1.9M we should use prod version. This version is prod version
+
+<span class="mceNonEditable"> <span class="startMark">&nbsp; </span> <span class="startLabelTag">This theory cannot explain3</span> </span> - test132 - <span class="mceNonEditable endMark">&nbsp;</span> %YOURCONTENT%

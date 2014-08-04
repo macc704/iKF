@@ -104,6 +104,7 @@
 		49C78D70194105C2004D3404 /* iKFTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C78D6F194105C2004D3404 /* iKFTests.swift */; };
 		49EEFF071981627600F78F16 /* KFNetworkUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EEFF061981627600F78F16 /* KFNetworkUtil.swift */; };
 		49EEFF0C1981974500F78F16 /* iKFJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EEFF0B1981974500F78F16 /* iKFJSONScanner.m */; };
+		49FCA09B199037DA00D4EEC4 /* WebResources in Resources */ = {isa = PBXBuildFile; fileRef = 49FCA09A199037DA00D4EEC4 /* WebResources */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -234,6 +235,7 @@
 		49EEFF061981627600F78F16 /* KFNetworkUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFNetworkUtil.swift; sourceTree = "<group>"; };
 		49EEFF0A1981974500F78F16 /* iKFJSONScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFJSONScanner.h; sourceTree = "<group>"; };
 		49EEFF0B1981974500F78F16 /* iKFJSONScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFJSONScanner.m; sourceTree = "<group>"; };
+		49FCA09A199037DA00D4EEC4 /* WebResources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WebResources; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -480,6 +482,7 @@
 		49C78D56194105C2004D3404 /* iKF */ = {
 			isa = PBXGroup;
 			children = (
+				49FCA09A199037DA00D4EEC4 /* WebResources */,
 				490E756E1941116A004E8BF7 /* iKF-Bridging-Header.h */,
 				490E7572194111A8004E8BF7 /* ObjC */,
 				49842F6419803FA50012900B /* Network */,
@@ -611,6 +614,7 @@
 				496402B8198D7FFF009504B7 /* close.png in Resources */,
 				496402B9198D7FFF009504B7 /* closetoicon.png in Resources */,
 				496402C8198D7FFF009504B7 /* rotation.png in Resources */,
+				49FCA09B199037DA00D4EEC4 /* WebResources in Resources */,
 				496402BC198D7FFF009504B7 /* hidetoicon.png in Resources */,
 				496402CB198D7FFF009504B7 /* viewlink.png in Resources */,
 				492C1025194755FE00512591 /* KFScaffoldingTableViewController.xib in Resources */,
