@@ -222,6 +222,11 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         let baseURL = KFService.getInstance().getHostURL();
 //        println("aaa=" + html);
         self.webView.loadHTMLString(html, baseURL: baseURL);
+        KFAppUtils.executeInBackThread({
+            KFService.getInstance().readPost(self.note!);
+            return;
+            });
+
     }
     
     func setURL(url:String){
