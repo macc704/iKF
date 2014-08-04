@@ -94,7 +94,7 @@ class KFCanvasViewController: UIViewController {
             return;
         }
         
-        self.hideHalo();
+        //self.hideHalo();
         
         var postRefView:KFNoteRefView?;
         
@@ -117,7 +117,7 @@ class KFCanvasViewController: UIViewController {
             return;
         }
         
-        self.hideHalo();
+        //self.hideHalo();
         
         var postRefView:KFDrawingRefView?;
         
@@ -139,7 +139,7 @@ class KFCanvasViewController: UIViewController {
             //[NSException raise:@"iKFConnectionException" format:@"Illegal ViewRef"];
         }
         
-        self.hideHalo();
+        //self.hideHalo();
         let postRefView = KFViewRefView(controller: self, ref: ref);
         canvasView.noteLayer.addSubview(postRefView);
     }
