@@ -104,10 +104,18 @@ class KFService: NSObject {
     }
     
     func login(userName:String, password:String) -> Bool{
+        logout();
         let url = "\(self.baseURL!)rest/account/userLogin";
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("userName", value: userName);
         req.addParam("password", value: password);
+        let res = KFHttpConnection.connect(req);
+        return res.getStatusCode() == 200;
+    }
+    
+    private func logout() -> Bool{
+        let url = "\(self.baseURL!)rest/account/userLogout";
+        let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         return res.getStatusCode() == 200;
     }

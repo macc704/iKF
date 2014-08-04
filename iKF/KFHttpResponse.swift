@@ -18,11 +18,11 @@ class KFHttpResponse: NSObject {
     }
     
     func getStatusCode() -> Int{
-        if(error != nil){
-            return error!.code;
-        }
         if(res != nil){
             return res!.statusCode;
+        }
+        if(error != nil){
+            return error!.code;
         }
         return -1;
     }
