@@ -212,6 +212,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         webView.stopLoading();
     }
     
+    var noteRef:KFPostRefView?;//model is wrong this is temporary
     var note:KFNote?;
     
     func kfSetNote(note:KFNote){

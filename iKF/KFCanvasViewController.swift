@@ -357,13 +357,15 @@ class KFCanvasViewController: UIViewController {
     
     func openPost(postRefView:KFPostRefView){
         //openPopupViewer(postRefView);
-        self.openPostViewer(postRefView.model.post!, from: postRefView);
+        self.openPostViewer(postRefView.model.post!, from: postRefView, refView:postRefView);
     }
     
-    func openPostViewer(post:KFPost, from:UIView){
+    //ref is temporary
+    func openPostViewer(post:KFPost, from:UIView, refView:KFPostRefView? = nil){
         let browser = KFWebBrowserView(showToolBar: false);
         browser.frame = postViewerRect(from);
         browser.kfSetNote(post as KFNote);
+        browser.noteRef = refView; //temporary
         browser.mainController = self;
         self.canvasView.windowsLayer.addSubview(browser);
         browser.doubleTapHandler = {

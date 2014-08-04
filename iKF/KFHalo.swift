@@ -82,10 +82,14 @@ class KFHalo: UIView {
             installHaloHandle("buildson.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
         }
         
-        if(target is KFWebView || target is KFWebBrowserView){
+        if(target is KFWebBrowserView){
             installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMoveWeb:");
             installHaloHandle("resize.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: "handlePanResizeWeb:");
-            installHaloHandle("anchor.png", locator: locator.BOTTOM_LEFT(), tap: nil, pan: "handleAnchorWeb:");
+            if((target as KFWebBrowserView).noteRef == nil){
+                installHaloHandle("anchor.png", locator: locator.BOTTOM(), tap: nil, pan: "handleAnchorWeb:");
+            }else{
+                installHaloHandle("buildson.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
+            }
             installHaloHandle("window.png", locator: locator.TOP_RIGHT(), tap: "handleToggleMenuWeb:", pan: nil);
             installHaloHandle("close.png", locator: locator.TOP_LEFT(), tap: "closeWeb:", pan: nil);
         }
@@ -220,7 +224,16 @@ class KFHalo: UIView {
     }
     
     func handleBuildsOn(recognizer:UIPanGestureRecognizer){
-        let postTarget = target as KFPostRefView;
+        var postTarget:KFPostRefView?;
+        if(target is KFPostRefView){
+            postTarget = target as? KFPostRefView;
+        }else if (target is KFWebBrowserView){
+            postTarget = (target as KFWebBrowserView).noteRef;
+        }
+        
+        if(target == nil){
+            return;
+        }
         
         switch(recognizer.state){
         case .Began:
