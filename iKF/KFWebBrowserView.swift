@@ -41,7 +41,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     private var showToolBar = true;
     
     override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
-        println(mainController);
+        //println(mainController);
         mainController?.suppressScroll();
     }
     
