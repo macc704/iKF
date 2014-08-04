@@ -27,6 +27,7 @@ class KFService: NSObject {
     private var readTemplate:String?;
     private var mobileJS:String?;
     private var currentUser:KFUser?;
+    var globalEditWebView:iKFWebView?;//tmp
     
     private init(){
     }
@@ -44,6 +45,7 @@ class KFService: NSObject {
         self.readTemplate = nil;
         self.mobileJS = nil;
         self.currentUser = nil;
+        globalEditWebView = nil;
     }
     
     func getHost() -> String{

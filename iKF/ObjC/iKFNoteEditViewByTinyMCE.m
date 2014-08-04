@@ -13,7 +13,7 @@
 //#import "iKFLoadingView.h"
 #import "iKF-Swift.h"
 
-static iKFWebView* globalEditWebView;
+//static iKFWebView* globalEditWebView;
 static KFLoadingView* globalLoadingView;
 static bool loaded;
 
@@ -53,17 +53,16 @@ static bool loaded;
             [_sourceLabel setFont:[UIFont systemFontOfSize:24]];
             [_containerView addSubview:_sourceLabel];
             
-            if (globalEditWebView == nil){
-                globalEditWebView = [[iKFWebView alloc] init];
+            if ([KFService getInstance].globalEditWebView == nil){
+                [KFService getInstance].globalEditWebView = [[iKFWebView alloc] init];
                 loaded = false;
             }else{
                 if(globalLoadingView !=nil){
                     [globalLoadingView hide];
                     globalLoadingView = nil;
-                }
-                [globalEditWebView removeFromSuperview];
+                }                [[KFService getInstance].globalEditWebView removeFromSuperview];
             }
-            _webView = globalEditWebView;
+            _webView = [KFService getInstance].globalEditWebView;
             _webView.delegate = self;
             _webView.pasteAsReferenceTarget = self;
             //_webView.scrollView.scrollEnabled = FALSE;
