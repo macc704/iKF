@@ -14,7 +14,11 @@ class KFNoteRefView: KFPostRefView {
     
     var attachedTo:KFPost?;
     
-    init(controller: KFCanvasViewController, ref: KFReference) {
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(controller: KFCanvasViewController, ref: KFReference) {
         super.init(controller: controller, ref: ref);
         //bindEvents();
         
@@ -67,12 +71,12 @@ class KFNoteRefView: KFPostRefView {
 
         if(createIcon){
             refView = KFLabelNoteRefView(ref: model);
-            self.addSubview(refView);
+            self.addSubview(refView!);
         }
         if(createUnfold){
             refView = iKFWebView();
             refView!.userInteractionEnabled = false;
-            self.addSubview(refView);
+            self.addSubview(refView!);
         }
         
         //update model to view

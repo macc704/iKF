@@ -36,7 +36,11 @@ class KFWebView: UIView {
     private let webView = UIWebView();
     let cover = A();
     
-    init() {
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init() {
         super.init(frame: KFAppUtils.DEFAULT_RECT());
         
         //self.addSubview(scrollView);

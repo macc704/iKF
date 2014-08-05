@@ -10,7 +10,7 @@ import UIKit
 
 class KFImageSizeSelectionViewController: UIViewController {
     
-    private let mainController:KFCanvasViewController;
+    private let mainController:KFCanvasViewController!;
     
     //    private var image:UIImage?{
     //    get{
@@ -41,9 +41,13 @@ class KFImageSizeSelectionViewController: UIViewController {
     
     //private var handler: ((CGFloat) -> ())?
     
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
     init(mainController:KFCanvasViewController){
         self.mainController = mainController;
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "KFImageSizeSelectionViewController", bundle: nil)
     }
     
     override func viewDidLoad() {

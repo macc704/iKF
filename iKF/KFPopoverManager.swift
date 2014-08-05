@@ -18,7 +18,7 @@ class KFPopoverManager: NSObject {
     
     private var popoverController:UIPopoverController?;
     
-    private init(){
+    private override init(){
     }
     
     func openInPopover(locView:UIView, controller:UIViewController) -> UIPopoverController{
@@ -31,7 +31,7 @@ class KFPopoverManager: NSObject {
     }
     
     func closeCurrentPopover(animated:Bool = true){
-        if(self.popoverController){
+        if(self.popoverController != nil){
             self.popoverController!.dismissPopoverAnimated(animated)
             self.popoverController = nil;
         }

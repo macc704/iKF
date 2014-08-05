@@ -13,7 +13,7 @@ class KFScaffold: KFModel {
     var title = "";
     var supports = Array<KFSupport>();
     
-    init(){
+    override init(){
     }
     
     func addSupport(support:KFSupport){

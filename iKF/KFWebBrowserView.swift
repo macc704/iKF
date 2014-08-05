@@ -56,6 +56,10 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         mainController?.unlockSuppressScroll();
     }
     
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
     init(showToolBar:Bool = true) {
         self.showToolBar = showToolBar;
         
@@ -80,26 +84,26 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         statusBar.addSubview(titleLabel);
         closeButton = createButton("X", selector: "close", border: false);
         closeButton!.backgroundColor = UIColor.clearColor();
-        statusBar.addSubview(closeButton);
+        statusBar.addSubview(closeButton!);
         
         //tool bar
         toolContainer.backgroundColor = UIColor.whiteColor();
         toolContainer.layer.borderColor = BORDER_COLOR.CGColor;
         toolContainer.layer.borderWidth = 1.0;
-        if(showToolBar && !toolContainer.superview){
+        if(showToolBar != nil && toolContainer.superview != nil){
             self.addSubview(toolContainer);
         }
         backButton = createButton("<", selector: "back", border: true);
-        toolContainer.addSubview(backButton);
+        toolContainer.addSubview(backButton!);
         forwardButton = createButton(">", selector: "forward", border: true);
-        toolContainer.addSubview(forwardButton);
+        toolContainer.addSubview(forwardButton!);
         urlTextfield = UITextField();
         urlTextfield!.backgroundColor = UIColor.whiteColor();
-        toolContainer.addSubview(urlTextfield);
+        toolContainer.addSubview(urlTextfield!);
         reloadButton = createButton("Go", selector: "reload", border: true);
-        toolContainer.addSubview(reloadButton);
+        toolContainer.addSubview(reloadButton!);
         stopButton = createButton("x", selector: "stop", border: true);
-        toolContainer.addSubview(stopButton);
+        toolContainer.addSubview(stopButton!);
         
         //web view
         webView.delegate = self;
@@ -142,7 +146,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     func pan(recognizer:UIPanGestureRecognizer){
         switch(recognizer.state){
         case .Began:
-            self.superview.bringSubviewToFront(self);
+            self.superview!.bringSubviewToFront(self);
             break;
         case .Changed:
             let location = recognizer.translationInView(statusBar);
@@ -160,14 +164,14 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     var doubleTapHandler:(()->())?;
     
     func tapDouble(recognizer:UITapGestureRecognizer){
-        if(doubleTapHandler){
+        if(doubleTapHandler != nil){
             doubleTapHandler!();
         }
     }
     
     func tapSingle(recognizer:UITapGestureRecognizer){
         // do nothing just suppress propagation
-        self.superview.bringSubviewToFront(self);
+        self.superview!.bringSubviewToFront(self);
     }
     
     

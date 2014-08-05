@@ -10,7 +10,11 @@ import UIKit
 
 class KFCreationToolView: UIImageView {
 
-    init(frame: CGRect) {
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(frame: CGRect) {
         super.init(frame: frame)
     }
 

@@ -24,6 +24,8 @@
 		490E75E119411653004E8BF7 /* KFLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 490E75DF19411653004E8BF7 /* KFLoginViewController.xib */; };
 		49245907198A952A00242188 /* KFConnectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49245906198A952A00242188 /* KFConnectionViewModel.swift */; };
 		4924590B198A9BDF00242188 /* KFHaloLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924590A198A9BDF00242188 /* KFHaloLocator.swift */; };
+		4925D21E1991848100EB951C /* AViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4925D21C1991848100EB951C /* AViewController.swift */; };
+		4925D21F1991848100EB951C /* AViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4925D21D1991848100EB951C /* AViewController.xib */; };
 		492C1024194755FE00512591 /* KFScaffoldingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C1022194755FE00512591 /* KFScaffoldingTableViewController.swift */; };
 		492C1025194755FE00512591 /* KFScaffoldingTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 492C1023194755FE00512591 /* KFScaffoldingTableViewController.xib */; };
 		492C10271947562800512591 /* KFScaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C10261947562800512591 /* KFScaffold.swift */; };
@@ -147,6 +149,8 @@
 		490E75DF19411653004E8BF7 /* KFLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFLoginViewController.xib; sourceTree = "<group>"; };
 		49245906198A952A00242188 /* KFConnectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFConnectionViewModel.swift; sourceTree = "<group>"; };
 		4924590A198A9BDF00242188 /* KFHaloLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFHaloLocator.swift; sourceTree = "<group>"; };
+		4925D21C1991848100EB951C /* AViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AViewController.swift; sourceTree = "<group>"; };
+		4925D21D1991848100EB951C /* AViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AViewController.xib; sourceTree = "<group>"; };
 		492C1022194755FE00512591 /* KFScaffoldingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFScaffoldingTableViewController.swift; sourceTree = "<group>"; };
 		492C1023194755FE00512591 /* KFScaffoldingTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFScaffoldingTableViewController.xib; sourceTree = "<group>"; };
 		492C10261947562800512591 /* KFScaffold.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFScaffold.swift; sourceTree = "<group>"; };
@@ -293,6 +297,8 @@
 				490E75DF19411653004E8BF7 /* KFLoginViewController.xib */,
 				492F402B1941F3600038E621 /* KFRegistrationViewController.swift */,
 				492F402C1941F3600038E621 /* KFRegistrationViewController.xib */,
+				4925D21C1991848100EB951C /* AViewController.swift */,
+				4925D21D1991848100EB951C /* AViewController.xib */,
 			);
 			name = LoginUI;
 			sourceTree = "<group>";
@@ -610,6 +616,7 @@
 				492F402E1941F3600038E621 /* KFRegistrationViewController.xib in Resources */,
 				496402B8198D7FFF009504B7 /* close.png in Resources */,
 				496402B9198D7FFF009504B7 /* closetoicon.png in Resources */,
+				4925D21F1991848100EB951C /* AViewController.xib in Resources */,
 				496402C8198D7FFF009504B7 /* rotation.png in Resources */,
 				49FCA09B199037DA00D4EEC4 /* WebResources in Resources */,
 				496402BC198D7FFF009504B7 /* hidetoicon.png in Resources */,
@@ -660,6 +667,7 @@
 				499DE6EA1989893400BA2209 /* KFViewSelectionController.swift in Sources */,
 				490E75B5194111A8004E8BF7 /* iKFCommonView.m in Sources */,
 				490E75C8194111A8004E8BF7 /* iKFNoteReadView.m in Sources */,
+				4925D21E1991848100EB951C /* AViewController.swift in Sources */,
 				4903CD8E1942159D00C698AD /* iKFErrorHandler.m in Sources */,
 				49C78D5F194105C2004D3404 /* ViewController.swift in Sources */,
 				490E75B3194111A8004E8BF7 /* iKFAbstractNoteView.m in Sources */,

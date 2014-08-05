@@ -29,7 +29,7 @@ class KFService: NSObject {
     private var currentUser:KFUser?;
     var globalEditWebView:iKFWebView?;//tmp
     
-    private init(){
+    private override init(){
     }
     
     func initialize(host:String){
@@ -273,7 +273,7 @@ class KFService: NSObject {
     func createView(title:String, viewIdToLink:String?, location:CGPoint?) -> Bool{
         let url = "\(self.baseURL!)rest/mobile/createView/";
         let req = KFHttpRequest(urlString: url, method: "POST");
-        if(viewIdToLink){
+        if(viewIdToLink != nil){
             req.addParam("viewIdToLink", value: viewIdToLink!);
             req.addParam("x", value: String(Int(location!.x)));
             req.addParam("y", value: String(Int(location!.y)));
@@ -294,7 +294,7 @@ class KFService: NSObject {
         req.addParam("y", value: String(Int(location.y)));
         req.addParam("title", value: title);
         req.addParam("body", value: body);
-        if(buildsOn){
+        if(buildsOn != nil){
             req.addParam("buildsOnNoteId", value: buildsOn!.guid);
         }
         let res = KFHttpConnection.connect(req);
@@ -359,7 +359,7 @@ class KFService: NSObject {
         let filename = "\(filenameBase!).png";
         
         let jsonobj:AnyObject? = self.sendAttachment(imageData, mime: "image/png", filename: filename);
-        if(!jsonobj){
+        if(jsonobj == nil){
             return false;
         }
         

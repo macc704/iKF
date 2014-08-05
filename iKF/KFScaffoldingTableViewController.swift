@@ -13,12 +13,16 @@ class KFScaffoldingTableViewController: UITableViewController {
     var noteEditView:iKFAbstractNoteEditView?;
     var scaffolds = Array<KFScaffold>();
     
-    init(style: UITableViewStyle) {
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(style: UITableViewStyle) {
         super.init(style: style)
         // Custom initialization
     }
     
-    init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     

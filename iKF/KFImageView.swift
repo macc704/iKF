@@ -12,7 +12,11 @@ class KFImageView: UIImageView {
     
     var mainController: KFCanvasViewController?;
     
-    init(image: UIImage?){
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(image: UIImage?){
         super.init(image: image);
     }
     

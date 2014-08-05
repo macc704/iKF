@@ -11,10 +11,14 @@ import UIKit
 class KFPostRefIconView: UIView {
     
     var beenRead = false;
-    let icon:UIImageView;
-    let iconx:UIImageView;
+    let icon:UIImageView!;
+    let iconx:UIImageView!;
     
-    init(frame: CGRect) {
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(frame: CGRect) {
         icon = UIImageView(image: UIImage(named: "note.png"));
         icon.frame = frame;
         iconx = UIImageView(image: UIImage(named: "notex.png"));

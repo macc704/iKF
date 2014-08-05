@@ -16,8 +16,12 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
     var views:[KFView] = [];
     var selectedHandler:((KFView)->())?;
     
-    init(){
-        super.init(nibName: nil, bundle: nil);
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(){
+        super.init(nibName: "KFViewSelectionController", bundle: nil);
     }
     
     override func viewDidLoad() {
@@ -56,7 +60,7 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!){
-        if(selectedHandler){
+        if(selectedHandler != nil){
             let row:Int! = indexPath?.row;
             selectedHandler!(self.views[row]);
             self.dismissViewControllerAnimated(false, completion: nil);

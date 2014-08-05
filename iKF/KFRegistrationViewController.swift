@@ -16,7 +16,11 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet var registrationsPicker : UIPickerView!
     @IBOutlet weak var navBar: UINavigationBar!
     
-    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     

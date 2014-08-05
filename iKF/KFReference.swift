@@ -21,7 +21,7 @@ class KFReference: KFModel {
     var rotation = CGFloat(0);
     var displayFlags = Int(0);
     
-    init(){
+    override init(){
     }
     
     func isHidden() -> Bool{

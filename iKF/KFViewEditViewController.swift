@@ -16,8 +16,12 @@ class KFViewEditViewController: UIViewController {
     var viewIdToLink:String?;
     var loc:CGPoint?;
     
-    init(){
-        super.init(nibName: nil, bundle: nil);
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(){
+        super.init(nibName: "KFViewEditViewController", bundle: nil);
     }
     
     override func viewDidLoad() {

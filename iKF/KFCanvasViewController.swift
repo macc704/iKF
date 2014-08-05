@@ -31,8 +31,12 @@ class KFCanvasViewController: UIViewController {
     private var cometThreadNumber:Int = 0;
     private var cometVersion:Int = 0;
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init() {
+        super.init(nibName: "KFCanvasViewController", bundle: nil);
         imagePickerManager = KFImagePicker(mainController:self);
     }
     
@@ -85,7 +89,7 @@ class KFCanvasViewController: UIViewController {
             //set current view do below
             //self.cometThreadNumber++;
             //self.startComet(self.cometThreadNumber);
-            })
+        })
     }
     
     func addNote(ref:KFReference){
@@ -108,7 +112,7 @@ class KFCanvasViewController: UIViewController {
         postRefView?.updateFromModel();
         postRefViews[ref.guid] = postRefView;
         postRefViews[ref.post!.guid] = postRefView;//ちょっとずる
-        canvasView.noteLayer.addSubview(postRefView);
+        canvasView.noteLayer.addSubview(postRefView!);
     }
     
     func addDrawing(ref:KFReference){
@@ -131,7 +135,7 @@ class KFCanvasViewController: UIViewController {
         postRefView?.updateFromModel();
         postRefViews[ref.guid] = postRefView;
         postRefViews[ref.post!.guid] = postRefView;//ちょっとずる
-        canvasView.drawingLayer.addSubview(postRefView);
+        canvasView.drawingLayer.addSubview(postRefView!);
     }
     
     func addViewRef(ref:KFReference){
@@ -181,7 +185,7 @@ class KFCanvasViewController: UIViewController {
         KFAppUtils.executeInBackThread({
             KFService.getInstance().createNote(viewId, buildsOn: buildsOn?.model, location: p);
             return;
-            });
+        });
     }
     
     func createWebNote(p:CGPoint, url:String, title:String){
@@ -193,7 +197,7 @@ class KFCanvasViewController: UIViewController {
             body = body + "</head><body></body></html>";
             KFService.getInstance().createNote(viewId, location: p, title:title, body: body);
             return;
-            });
+        });
     }
     
     func deletePostRef(refView:KFPostRefView){
@@ -206,7 +210,7 @@ class KFCanvasViewController: UIViewController {
         KFAppUtils.executeInBackThread({
             self.cometVersion++;
             KFService.getInstance().deletePostRef(viewId, postRef: refView.model);
-            });
+        });
     }
     
     func updatePostRef(refView:KFPostRefView){
@@ -214,7 +218,7 @@ class KFCanvasViewController: UIViewController {
         KFAppUtils.executeInBackThread({
             self.cometVersion++;
             KFService.getInstance().updatePostRef(viewId, postRef: refView.model);
-            });
+        });
     }
     
     //?? Refactoring??
@@ -241,7 +245,7 @@ class KFCanvasViewController: UIViewController {
         self.currentView = view;
         KFAppUtils.executeInGUIThread({
             self.navBar.topItem.title = self.currentView!.title;
-            });
+        });
         self.cometThreadNumber++;
         self.startComet(self.cometThreadNumber);
     }
@@ -279,7 +283,7 @@ class KFCanvasViewController: UIViewController {
                     self.cometVersion = newVersion;
                 }
             }
-            })
+        })
         KFAppUtils.debug("comet stopped number=\(threadNumber)");
         
     }
@@ -290,8 +294,8 @@ class KFCanvasViewController: UIViewController {
             let newRefs = KFService.getInstance().getPosts(viewId);
             KFAppUtils.executeInGUIThread({
                 self.refreshPosts(newRefs);
-                });
             });
+        });
     }
     
     private func refreshPosts(newRefs:[String:KFReference]){

@@ -10,10 +10,14 @@ import UIKit
 
 class KFLabelNoteRefView: UIView {
 
-    let model:KFReference;
-    var icon: KFPostRefIconView;
-    var titleLabel: UILabel;
-    var authorLabel: UILabel;
+    let model:KFReference!;
+    var icon: KFPostRefIconView!;
+    var titleLabel: UILabel!;
+    var authorLabel: UILabel!;
+    
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
     
     init(ref: KFReference) {
         self.model = ref;

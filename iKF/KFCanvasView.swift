@@ -21,7 +21,11 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     
     private var halo:KFHalo?;
     
-    init() {
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init() {
         super.init(frame: KFAppUtils.DEFAULT_RECT());
         
         //basic structure
@@ -88,7 +92,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     }
     
     func handleSingleTap(recognizer: UIGestureRecognizer){
-        if(halo){
+        if(halo != nil){
             hideHalo();
         }else{
             //showhalo
@@ -102,7 +106,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     }
     
     func hideHalo(){
-        if(self.halo){
+        if(self.halo != nil){
             self.halo!.removeFromSuperview();
             self.halo = nil;
         }

@@ -11,14 +11,18 @@ import UIKit
 class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     
     //let ref: KFReference;
-    var webView:UIWebView;
+    var webView:UIWebView!;
     var svgwidth = CGFloat(100.0);
     var svgheight = CGFloat(100.0);
     var rotation = CGFloat(0.0);
     var scaleX = CGFloat(1.0);
     var scaleY = CGFloat(1.0);
     
-    init(controller: KFCanvasViewController, ref: KFReference) {
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(controller: KFCanvasViewController, ref: KFReference) {
         webView = UIWebView();
         //        web.backgroundColor = [UIColor clearColor];
         webView.userInteractionEnabled = false;
@@ -49,8 +53,8 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     
     func parser(parser: NSXMLParser!, didStartElement elementName: String!, namespaceURI: String!, qualifiedName qName: String!, attributes attributeDict: NSDictionary!){
         if(elementName == "svg"){
-            svgwidth =  CGFloat((attributeDict["width"] as String).bridgeToObjectiveC().floatValue);
-            svgheight =  CGFloat((attributeDict["height"] as String).bridgeToObjectiveC().floatValue);
+            svgwidth =  CGFloat((attributeDict["width"] as NSString).floatValue);
+            svgheight =  CGFloat((attributeDict["height"] as NSString).floatValue);
         }
     }
     

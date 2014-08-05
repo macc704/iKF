@@ -10,7 +10,11 @@ import UIKit
 
 class KFViewRefView: KFPostRefView {
     
-    init(controller: KFCanvasViewController, ref: KFReference) {
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(controller: KFCanvasViewController, ref: KFReference) {
         super.init(controller: controller, ref: ref);
 
         self.frame = CGRectMake(ref.location.x, ref.location.y, 230, 30);

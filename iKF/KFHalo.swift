@@ -11,11 +11,15 @@ import UIKit
 class KFHalo: UIView {
     
     private var controller:KFCanvasViewController?;
-    private var target:UIView;
-    private var size:CGFloat;
+    private var target:UIView!;
+    private var size:CGFloat!;
     
     private var locator:KFHaloLocator!;
     private var handles:[UIView:(()->CGRect)]=[:];//handle, locator
+    
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
     
     init(controller:KFCanvasViewController?, target:UIView, size:CGFloat = 40){
         self.controller = controller;
@@ -121,12 +125,12 @@ class KFHalo: UIView {
         button.mainController = controller;
         self.addSubview(button);
         button.userInteractionEnabled = true;
-        if(tap){
+        if(tap != nil){
             let gesture = UITapGestureRecognizer(target: self, action: tap!);
             gesture.numberOfTapsRequired = 1;
             button.addGestureRecognizer(gesture);
         }
-        if(pan){
+        if(pan != nil){
             let gesture = UIPanGestureRecognizer(target: self, action: pan!);
             button.addGestureRecognizer(gesture);
         }

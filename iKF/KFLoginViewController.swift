@@ -16,12 +16,17 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet var usernameField : UITextField!
     @IBOutlet var serverPicker : UIPickerView!
     
-    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         serverPicker.dataSource = self;
         serverPicker.delegate = self;
@@ -40,7 +45,7 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     func testPressed(r:UITapGestureRecognizer){
-        let c = KFTestViewController(nibName: nil, bundle: nil);
+        let c = KFTestViewController(nibName: "KFTestViewController", bundle: nil);
         self.presentViewController(c, animated: true, completion: nil);
     }
     
@@ -58,7 +63,7 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
         func onFinish(){
             if(res!.result == true){
-                let registrationViewController = KFRegistrationViewController(nibName: nil, bundle: nil);
+                let registrationViewController = KFRegistrationViewController(nibName: "KFRegistrationViewController", bundle: nil);
                 self.presentViewController(registrationViewController, animated: true, completion: nil);
             }else{
                 KFAppUtils.showAlert("ConnectionError", msg: res!.errorMsg!);

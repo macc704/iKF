@@ -14,7 +14,7 @@ class KFHttpResponse: NSObject {
     var error :NSError?
     var bodyData :NSData?
     
-    init(){
+    override init(){
     }
     
     func getStatusCode() -> Int{

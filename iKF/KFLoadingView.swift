@@ -17,7 +17,11 @@ class KFLoadingView: UIView {
     
     let indicator = UIActivityIndicatorView();
     
-    init(){
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(){
         super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100));
         
         // fun-iki dasutame black transparent color

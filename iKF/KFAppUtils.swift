@@ -59,7 +59,7 @@ class KFAppUtils: NSObject {
             execute();
             dispatch_async(dispatch_get_main_queue()){
                 loading.hide();
-                if(onFinish){
+                if(onFinish != nil){
                     onFinish!();
                 }
             }

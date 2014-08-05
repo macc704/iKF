@@ -12,7 +12,7 @@ class KFModel: NSObject{
 
     var guid = "";
     
-    init(){
+    override init(){
     }
     
     func detach(observer:AnyObject){

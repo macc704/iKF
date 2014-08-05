@@ -10,7 +10,7 @@ import UIKit
 
 class KFHttpRequest: NSObject {
     
-    public let nsRequest :NSMutableURLRequest;
+    var nsRequest :NSMutableURLRequest;
     
     private var params = [String: String]();
     //Swift note
@@ -23,11 +23,11 @@ class KFHttpRequest: NSObject {
         nsRequest.HTTPMethod = method;
     }
     
-    public func addParam(key:String, value:String){
+    func addParam(key:String, value:String){
         params[key] = escapeString(value);
     }
     
-    public func updateParams(){
+    func updateParams(){
         if(params.count <= 0){
             //nsRequest.setValue(nil, forHTTPHeaderField:"Content-Type");
             //nsRequest.HTTPBody = nil;
@@ -47,7 +47,7 @@ class KFHttpRequest: NSObject {
         nsRequest.HTTPBody = data!;
     }
     
-    public func getBodyAsString() -> String {
+    func getBodyAsString() -> String {
         return KFNetworkUtil.dataToString(self.nsRequest.HTTPBody);
     }
     

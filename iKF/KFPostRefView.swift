@@ -10,9 +10,13 @@ import UIKit
 
 class KFPostRefView: UIView {
     
-    var mainController: KFCanvasViewController;
-    var model: KFReference;
+    var mainController: KFCanvasViewController!;
+    var model: KFReference!;
     private var panGesture:UIPanGestureRecognizer?;
+    
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
     
     init(controller: KFCanvasViewController, ref: KFReference) {
         self.mainController = controller;
@@ -43,9 +47,9 @@ class KFPostRefView: UIView {
     func updatePanEventBinding(){
         if(!self.model.isLocked() && self.panGesture == nil){
             self.panGesture = UIPanGestureRecognizer(target:self, action:"handlePanning:");
-            self.addGestureRecognizer(self.panGesture);
+            self.addGestureRecognizer(self.panGesture!);
         }else if(self.model.isLocked() && self.panGesture != nil){
-            self.removeGestureRecognizer(panGesture);
+            self.removeGestureRecognizer(self.panGesture!);
             self.panGesture = nil;
         }
     }
@@ -76,7 +80,7 @@ class KFPostRefView: UIView {
     func handlePanning(recognizer: UIPanGestureRecognizer){
         switch(recognizer.state){
         case .Began:
-            self.superview.bringSubviewToFront(self);
+            self.superview!.bringSubviewToFront(self);
             self.makeShadow();
             break;
         case .Changed:
