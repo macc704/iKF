@@ -76,9 +76,16 @@ class KFHalo: UIView {
         }
         
         if(target is KFNoteRefView){
+            let note = target as KFNoteRefView;
             installHaloHandle("read.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleRead:", pan: nil);
             installHaloHandle("edit.png", locator: locator.TOP_RIGHT(), tap: "handleEdit:", pan: nil);
             installHaloHandle("clip.png", locator: locator.BOTTOM_LEFT(), tap: "handleClip:", pan: nil);
+            if(note.model.isShowInPlace()){
+                installHaloHandle("closetoicon", locator: locator.LEFT(), tap: "closeToIcon:", pan: nil);
+                installHaloHandle("resize.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: "handlePanResize:");
+            }else{
+                installHaloHandle("showinplace", locator: locator.LEFT(), tap: "showInPlace:", pan: nil);
+            }
             installHaloHandle("buildson.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
         }
         
@@ -192,6 +199,29 @@ class KFHalo: UIView {
         postTarget.model.setLocked(lock);
         postTarget.updatePanEventBinding();
         controller?.updatePostRef(postTarget);
+        controller?.hideHalo();
+    }
+    
+    func closeToIcon(recognizer:UIGestureRecognizer){
+        setShowInPlace(false);
+    }
+    
+    func showInPlace(recognizer:UIGestureRecognizer){
+        setShowInPlace(true);
+    }
+    
+    private func setShowInPlace(showInPlace:Bool){
+        let postTarget = target as KFPostRefView;
+        if(showInPlace && postTarget.model.width < 10){
+            postTarget.model.width = 100;
+        }
+        if(showInPlace && postTarget.model.height < 10){
+            postTarget.model.height = 100;
+        }
+        postTarget.model.setShowInPlace(showInPlace);
+//        postTarget.updatePanEventBinding();
+        controller?.updatePostRef(postTarget);
+        postTarget.updateFromModel();
         controller?.hideHalo();
     }
     
@@ -327,7 +357,7 @@ class KFHalo: UIView {
     }
     
     func handlePanResize(recognizer:UIPanGestureRecognizer){
-        let drawingTarget = target as KFDrawingRefView;
+        let drawingTarget = target as KFPostRefView;
         
         switch(recognizer.state){
         case .Began:
@@ -459,9 +489,9 @@ class KFHalo: UIView {
     }
     
     private func updateToServer(){
-        let drawingTarget = target as KFDrawingRefView;
-        drawingTarget.updateToModel();
-        controller?.updatePostRef(drawingTarget);
+        let postTarget = target as KFPostRefView;
+        postTarget.updateToModel();
+        controller?.updatePostRef(postTarget);
     }
     
     func adjustRotation(radian:CGFloat) -> CGFloat{

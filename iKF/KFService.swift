@@ -213,6 +213,12 @@ class KFService: NSObject {
     }
     
     func updatePostRef(viewId:String, postRef:KFReference) -> Bool{
+        if(postRef.isShowInPlace() && postRef.width < 50){
+            postRef.width = 50;
+        }
+        if(postRef.isShowInPlace() && postRef.height < 50){
+            postRef.height = 50;
+        }
         let url = "\(self.baseURL!)rest/mobile/updatePostRef/\(viewId)/\(postRef.guid)";
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("x", value: String(Int(postRef.location.x)));

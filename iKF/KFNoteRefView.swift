@@ -36,6 +36,8 @@ class KFNoteRefView: KFPostRefView {
         self.updateFromModel();
     }
     
+    var cache:String?;
+      
     override func updateFromModel(){
         super.updateFromModel();
         if(attachedTo != nil && attachedTo != model.post){
@@ -46,25 +48,51 @@ class KFNoteRefView: KFPostRefView {
             self.attachedTo = model.post;
         }
         
+        var createIcon = false;
+        var createUnfold = false;
         if(refView is KFLabelNoteRefView && self.model.isShowInPlace()){
-            refView = nil;
+            refView!.removeFromSuperview();
+            createUnfold = true;
         }
-        if(refView is KFInPlaceNoteRefView && !self.model.isShowInPlace()){
-            refView = nil;
+        else if(refView is iKFWebView && !self.model.isShowInPlace()){
+            refView!.removeFromSuperview();
+            createIcon = true;
         }
-        if(refView == nil){
-            if(self.model.isShowInPlace()){
-                
-            }else{
-                refView = KFLabelNoteRefView(ref: model);
-            }
+        else if(refView == nil && self.model.isShowInPlace()){
+            createUnfold = true;
+        }
+        else if(refView == nil && !self.model.isShowInPlace()){
+            createIcon = true;
+        }
+
+        if(createIcon){
+            refView = KFLabelNoteRefView(ref: model);
+            self.addSubview(refView);
+        }
+        if(createUnfold){
+            refView = iKFWebView();
+            refView!.userInteractionEnabled = false;
             self.addSubview(refView);
         }
         
+        //update model to view
         if(refView is KFLabelNoteRefView){
             (refView? as KFLabelNoteRefView).updateFromModel();
         }
+        if(refView is iKFWebView){
+            let refModel = model as KFReference;
+            let note = refModel.post as KFNote;
+            if(note.content != cache){
+                let template = KFService.getInstance().getReadTemplate();
+                let html = template!.stringByReplacingOccurrencesOfString("%YOURCONTENT%", withString:note.content);
+                (refView as iKFWebView).loadHTMLString(html, baseURL: nil);
+                cache = note.content;
+            }
+            refView!.frame = CGRectMake(0, 0, refModel.width, refModel.height);
+        }
         
+        
+        //only size
         self.frame.size = refView!.frame.size;
     }
     

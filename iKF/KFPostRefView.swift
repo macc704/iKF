@@ -50,6 +50,12 @@ class KFPostRefView: UIView {
         }
     }
     
+    func kfSetSize(width:CGFloat, height:CGFloat){
+        self.model.width = width;
+        self.model.height = height;
+        self.updateFromModel();
+    }
+    
     override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
         if(!model.isLocked()){
             mainController.suppressScroll();

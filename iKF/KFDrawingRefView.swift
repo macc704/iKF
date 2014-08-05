@@ -54,7 +54,7 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
         }
     }
     
-    func kfSetSize(width:CGFloat, height:CGFloat){
+    override func kfSetSize(width:CGFloat, height:CGFloat){
         kfSetScale(width/svgwidth, newScaleY: height/svgheight);
     }
     
