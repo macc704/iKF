@@ -13,10 +13,6 @@
 //#import "iKFLoadingView.h"
 #import "iKF-Swift.h"
 
-//static iKFWebView* globalEditWebView;
-static KFLoadingView* globalLoadingView;
-static bool loaded;
-
 @implementation iKFNoteEditViewByTinyMCE{
     UIView* _containerView;
     UILabel* _titleLabel;
@@ -53,16 +49,7 @@ static bool loaded;
             [_sourceLabel setFont:[UIFont systemFontOfSize:24]];
             [_containerView addSubview:_sourceLabel];
             
-            if ([KFService getInstance].globalEditWebView == nil){
-                [KFService getInstance].globalEditWebView = [[iKFWebView alloc] init];
-                loaded = false;
-            }else{
-                if(globalLoadingView !=nil){
-                    [globalLoadingView hide];
-                    globalLoadingView = nil;
-                }                [[KFService getInstance].globalEditWebView removeFromSuperview];
-            }
-            _webView = [KFService getInstance].globalEditWebView;
+            _webView = [[iKFWebView alloc] init];
             _webView.delegate = self;
             _webView.pasteAsReferenceTarget = self;
             //_webView.scrollView.scrollEnabled = FALSE;
@@ -81,15 +68,17 @@ static bool loaded;
 -(void) insertText: text{
     //NSLog(@"%@", text);
     NSString* insertString = text;
+    insertString = [insertString stringByReplacingOccurrencesOfString: @"\\" withString: @"\\\\"];//order important
     insertString = [insertString stringByReplacingOccurrencesOfString: @"\r" withString: @""];
     insertString = [insertString stringByReplacingOccurrencesOfString: @"\n" withString: @""];
+    insertString = [insertString stringByReplacingOccurrencesOfString: @"'" withString: @"\\'"];
     [_webView stringByEvaluatingJavaScriptFromString: [NSString stringWithFormat: @"tinymce.activeEditor.insertContent('%@')", insertString]];
 }
 
-NSString* cashe;
+//NSString* cashe;
 
 -(void) setText: text title: title{
-    cashe = text;
+    //cashe = text;
     [self setNavBarTitle: @"Edit"];
     [_titleView setText: title];
 
@@ -104,32 +93,64 @@ NSString* cashe;
     //[_webView loadHTMLString: html baseURL:nil];
 
     //v3
-    if(!loaded){
-        globalLoadingView = [[KFLoadingView alloc] init];
-        [globalLoadingView showOnView: _webView];
-        NSString* template = [[KFService getInstance] getEditTemplate];
-        NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:text];
-        [_webView loadHTMLString: html baseURL:nil];
-    }else{
-        [_webView stringByEvaluatingJavaScriptFromString: [NSString stringWithFormat: @"tinymce.activeEditor.setContent('%@')", text]];
-    }
+//    if(!loaded){
+//        globalLoadingView = [[KFLoadingView alloc] init];
+//        [globalLoadingView showOnView: _webView];
+//        NSString* template = [[KFService getInstance] getEditTemplate];
+//        NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:text];
+//        [_webView loadHTMLString: html baseURL:nil];
+//    }else{
+//        [_webView stringByEvaluatingJavaScriptFromString: [NSString stringWithFormat: @"tinymce.activeEditor.setContent('%@')", text]];
+//    }
+    
+    //v4 (local)
+    NSString* insertString = text;
+    insertString = [insertString stringByReplacingOccurrencesOfString: @"\\" withString: @"\\\\"];//order important
+    insertString = [insertString stringByReplacingOccurrencesOfString: @"\r" withString: @""];
+    insertString = [insertString stringByReplacingOccurrencesOfString: @"\n" withString: @""];
+    insertString = [insertString stringByReplacingOccurrencesOfString: @"'" withString: @"\\'"];
+    NSString* js = [NSString stringWithFormat: @"window.onload = function(){tinymce.activeEditor.setContent('%@');}", insertString];
+    [_webView stringByEvaluatingJavaScriptFromString:js];
+    
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"edit" ofType:@"html" inDirectory: @"WebResources"];
+    NSURLRequest* req = [[NSURLRequest alloc] initWithURL: [[NSURL alloc] initWithString: path]];
+    [_webView loadRequest: req];
+    
+    //v5 (local 2)
+//    NSString* template = [[KFService getInstance] getEditTemplate];
+    //        NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:text];
+    //        [_webView loadHTMLString: html baseURL:nil];
+    
+    
+//    NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:text];
+//    [_webView loadHTMLString: html baseURL:nil];
+    
+//    let path = NSBundle.mainBundle().pathForResource("edit", ofType: "html", inDirectory: "tinymce");
+//    let req = NSURLRequest(URL: NSURL(fileURLWithPath: path));
+//    webView.loadRequest(req);
+
+}
+
+- (BOOL) webView:(UIWebView*) webView shouldStartLoadWithRequest:(NSURLRequest*) request navigationType:(UIWebViewNavigationType) type{
+//    NSLog(@"shoud start? = %@", [request URL]);
+    return true;
+}
+
+
+- (void)webViewDidStartLoad:(UIWebView *)webView{
+//    NSLog(@"start\n");
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    if(globalLoadingView !=nil){
-        [globalLoadingView hide];
-        globalLoadingView = nil;
-    }
-    if(!loaded){
-        loaded = true;
-    }
+
+//    NSLog(@"a= %@\n", [_webView stringByEvaluatingJavaScriptFromString: @"tinymce.activeEditor;}"]);
+    //    NSString* js = [NSString stringWithFormat: @"tinymce.activeEditor.setContent('aaa')"];
+//    [_webView stringByEvaluatingJavaScriptFromString:js];
+//    [_webView stringByEvaluatingJavaScriptFromString:@"window.alert('didfinish');"];
 }
 
 -(NSString*)getText{
-    if(!loaded){
-        return cashe;
-    }
     NSString* text = [_webView stringByEvaluatingJavaScriptFromString:@"tinymce.activeEditor.getContent();"];
     //NSLog(@"getText: %@", text);
     //    if(text == nil || text.length == 0){
