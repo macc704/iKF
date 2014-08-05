@@ -487,6 +487,7 @@ class KFCanvasViewController: UIViewController {
     }
     
     @IBAction func updatePressed(sender: AnyObject) {
+        self.refreshAllPostsAsync();
     }
     
     func suppressScroll(){
