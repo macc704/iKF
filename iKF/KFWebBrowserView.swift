@@ -294,6 +294,13 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         updateStatus();
         if(note != nil){
             self.titleLabel.text = note!.title;
+            note!.beenRead = true;
+            note!.notify();
+            KFAppUtils.executeInBackThread(){
+                KFService.getInstance().readPost(self.note!);
+                return;
+            }
+
         }else{
             self.titleLabel.text = getTitle();
         }

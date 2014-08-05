@@ -77,7 +77,7 @@
     NSURL* baseURL = [[NSURL alloc] initWithString:baseURLStr];
     [self.webView loadHTMLString: html baseURL: baseURL];
     
-    self.note.beenRead = true;
+    self.note.beenRead = true;    
     [self.note notify];
 }
 
