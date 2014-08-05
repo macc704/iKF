@@ -79,7 +79,7 @@ class KFHalo: UIView {
             let note = target as KFNoteRefView;
             installHaloHandle("read.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleRead:", pan: nil);
             installHaloHandle("edit.png", locator: locator.TOP_RIGHT(), tap: "handleEdit:", pan: nil);
-            installHaloHandle("clip.png", locator: locator.BOTTOM_LEFT(), tap: "handleClip:", pan: nil);
+            installHaloHandle("clip.png", locator: locator.TOP_QUARTER_LEFT(), tap: "handleClip:", pan: nil);
             if(note.model.isShowInPlace()){
                 installHaloHandle("closetoicon", locator: locator.LEFT(), tap: "closeToIcon:", pan: nil);
                 installHaloHandle("resize.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: "handlePanResize:");
@@ -90,6 +90,12 @@ class KFHalo: UIView {
         }
         
         if(target is KFWebBrowserView){
+            if((target as KFWebBrowserView).noteRef != nil){
+                installHaloHandle("read.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleRead:", pan: nil);
+                installHaloHandle("edit.png", locator: locator.TOP_RIGHT(), tap: "handleEdit:", pan: nil);
+                installHaloHandle("clip.png", locator: locator.TOP_QUARTER_LEFT(), tap: "handleClip:", pan: nil);
+            }
+            
             installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMoveWeb:");
             installHaloHandle("resize.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: "handlePanResizeWeb:");
             if((target as KFWebBrowserView).noteRef == nil){
@@ -97,7 +103,7 @@ class KFHalo: UIView {
             }else{
                 installHaloHandle("buildson.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
             }
-            installHaloHandle("window.png", locator: locator.TOP_RIGHT(), tap: "handleToggleMenuWeb:", pan: nil);
+            installHaloHandle("window.png", locator: locator.RIGHT(), tap: "handleToggleMenuWeb:", pan: nil);
             installHaloHandle("close.png", locator: locator.TOP_LEFT(), tap: "closeWeb:", pan: nil);
         }
         
@@ -226,12 +232,28 @@ class KFHalo: UIView {
     }
     
     func handleEdit(recognizer:UIGestureRecognizer){
-        controller?.openNoteEditController((target as KFPostRefView).model.post as KFNote, mode: "edit");
+        var noteRef:KFPostRefView!;
+        if(target is KFWebBrowserView){
+            noteRef = (target as KFWebBrowserView).noteRef;
+        }else if(target is KFPostRefView){
+            noteRef = target as KFPostRefView;
+        }else{
+            return; //exception
+        }
+        controller?.openNoteEditController(noteRef.model.post as KFNote, mode: "edit");
         controller?.hideHalo();
     }
     
     func handleRead(recognizer:UIGestureRecognizer){
-        controller?.openNoteEditController((target as KFPostRefView).model.post as KFNote, mode: "read");
+        var noteRef:KFPostRefView!;
+        if(target is KFWebBrowserView){
+            noteRef = (target as KFWebBrowserView).noteRef;
+        }else if(target is KFPostRefView){
+            noteRef = target as KFPostRefView;
+        }else{
+            return; //exception
+        }
+        controller?.openNoteEditController(noteRef.model.post as KFNote, mode: "read");
         controller?.hideHalo();
     }
     
@@ -242,8 +264,15 @@ class KFHalo: UIView {
     }
     
     func handleClip(recognizer:UIGestureRecognizer){
-        let noteTarget = target as KFNoteRefView;
-        let note = noteTarget.model.post as KFNote;
+        var noteRef:KFPostRefView!;
+        if(target is KFWebBrowserView){
+            noteRef = (target as KFWebBrowserView).noteRef;
+        }else if(target is KFPostRefView){
+            noteRef = target as KFPostRefView;
+        }else{
+            return; //exception
+        }
+        let note = noteRef.model.post as KFNote;
         let pasteboard = UIPasteboard.generalPasteboard();
         pasteboard.string = note.title;
         var dic = NSMutableDictionary(dictionary: pasteboard.items[0] as NSDictionary);
