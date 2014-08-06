@@ -74,6 +74,11 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     //    }
     
     @IBAction func enterButtonPressed(sender : AnyObject) {
+        if(self.registrations.count <= 0){
+            KFAppUtils.showAlert("Error", msg: "No registration selected.");
+            return;
+        }
+        
         let canvasViewController = KFCanvasViewController();
         self.presentViewController(canvasViewController, animated: true, completion: nil);
         
@@ -83,7 +88,10 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     @IBAction func regsiterButtonPressed(sender : AnyObject) {
         let service = KFService.getInstance();
-        service.registerCommunity(registrationCodeField.text);
+        let res = service.registerCommunity(registrationCodeField.text);
+        if(res == false){
+            KFAppUtils.showAlert("Error", msg: "Registration failed.");
+        }
         self.refreshRegistrations();
     }
     
