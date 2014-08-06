@@ -34,7 +34,7 @@ class KFTestViewController: UIViewController {
         super.viewDidLoad();
         
         // Do any additional setup after loading the view.
-        let tap = UITapGestureRecognizer(target: self, action: "hideHalo:");
+        let tap = UITapGestureRecognizer(target: self, action: "hideHalo");
         self.view.addGestureRecognizer(tap);
         
         //a();
@@ -58,7 +58,7 @@ class KFTestViewController: UIViewController {
     
     func hideHalo(){
         if(halo != nil){
-            halo?.removeFromSuperview();
+            halo!.removeFromSuperview();
             self.halo = nil;
         }
     }

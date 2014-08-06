@@ -90,7 +90,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         toolContainer.backgroundColor = UIColor.whiteColor();
         toolContainer.layer.borderColor = BORDER_COLOR.CGColor;
         toolContainer.layer.borderWidth = 1.0;
-        if(showToolBar != nil && toolContainer.superview != nil){
+        if(showToolBar && toolContainer.superview == nil){
             self.addSubview(toolContainer);
         }
         backButton = createButton("<", selector: "back", border: true);
