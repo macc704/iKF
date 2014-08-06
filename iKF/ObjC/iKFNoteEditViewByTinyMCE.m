@@ -18,7 +18,7 @@
     UILabel* _titleLabel;
     UITextField* _titleView;
     UILabel* _sourceLabel;
-    iKFWebView* _webView;
+    KFWebView* _webView;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -49,9 +49,12 @@
             [_sourceLabel setFont:[UIFont systemFontOfSize:24]];
             [_containerView addSubview:_sourceLabel];
             
-            _webView = [[iKFWebView alloc] init];
+            _webView = [[KFWebView alloc] init];
             _webView.delegate = self;
-            _webView.pasteAsReferenceTarget = self;
+//            _webView.pasteAsReferenceTarget = self;
+            _webView.performPasteAsReference = ^(NSString* text){
+                [self insertText:text];
+            };
             //_webView.scrollView.scrollEnabled = FALSE;
             [_webView.layer setBorderColor:[UIColor blackColor].CGColor];
             [_webView.layer setBorderWidth:1.0];

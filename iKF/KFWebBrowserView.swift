@@ -26,7 +26,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     
     let statusBar:UIView = UIView();
     private let titleLabel:UILabel = UILabel();
-    private let webView:iKFWebView = iKFWebView();
+    private let webView = KFWebView();
     
     //    private let toolContainer:UIView = UIView();
     private let toolContainer:UIView = UIView();
@@ -221,6 +221,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     
     func kfSetNote(note:KFNote){
         self.note = note;
+        self.webView.kfModel = note;
         webView.scalesPageToFit = false;//necessary
         self.titleLabel.text = self.note!.title;
         let html = note.getReadHtml();

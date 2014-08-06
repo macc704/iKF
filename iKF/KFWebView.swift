@@ -1,87 +1,91 @@
 //
-//  KFWebVIew.swift
+//  KFWebView.swift
 //  iKF
 //
-//  Created by Yoshiaki Matsuzawa on 2014-07-31.
+//  Created by Yoshiaki Matsuzawa on 2014-08-06.
 //  Copyright (c) 2014 Yoshiaki Matsuzawa. All rights reserved.
 //
 
 import UIKit
 
-class A:iKFLayerView{
-    override func hitTest(point: CGPoint, withEvent event: UIEvent!) -> UIView! {
-        println(event);
-        println("a");
-        let allTouches = event.allTouches();
-        if(allTouches.count > 0){
-            println("b");
-            let touch:UITouch = allTouches.anyObject() as UITouch;
-            if(touch.tapCount == 2){
-                println("c");
-                return self;
-            }
+class KFWebView: UIWebView {
+    
+    var performPasteAsReference:((String)->())?;//(id)
+    var kfModel:KFModel?;//KFModel*
+    
+    override func canPerformAction(action: Selector, withSender sender: AnyObject!) -> Bool {
+        if(action == Selector("onPasteAsReference:")){
+            return self.canPerformPasteAsReference();
         }
-        let a = point.x < 20;
-        let b = point.y < 20;
-        if(a && b){
-            return self;
-        }
-        return super.hitTest(point, withEvent: event);
+        return super.canPerformAction(action, withSender: sender);
     }
-}
+    
+    private func canPerformPasteAsReference() -> Bool{
+        return self.performPasteAsReference != nil && self.getValueFromPasteboard("kfmodel.guid") != nil;
+    }
+    
+    func onPasteAsReference(sender:UIMenuController){
+        if (!self.canPerformPasteAsReference()){
+            return;
+        }
+    
+        let pasteboard = UIPasteboard.generalPasteboard();
+        let guid = self.getValueFromPasteboard("kfmodel.guid");
+        let type = self.getValueFromPasteboard("kfmodel");
+        let title = pasteboard.string;
+        var pasteString:String;
+        if (type == "contentreference"){
+            pasteString = "<kf-content-reference class=\"mceNonEditable\" postid=\"\(guid)\">\(title)</kf-content-reference>";
+        }else{//assume postreference
+            pasteString = "<kf-post-reference class=\"mceNonEditable\" postid=\"\(guid)\">\(title)</kf-post-reference>";
+        }
+        //        //NSLog(@"pasteString=%@", pasteString);
+        self.performPasteAsReference!(pasteString);
+        //        self.pasteAsReferenceTarget pasteAsReference: pasteString];
+    }
+    
+    override func copy(sender: AnyObject!) {
+        super.copy(sender);
+        
+        let pasteboard = UIPasteboard.generalPasteboard();
+        
+        if(self.kfModel != nil && pasteboard.numberOfItems > 0){
+            self.putValueToPasteboard("kfmodel", value: "contentreference")
+            self.putValueToPasteboard("kfmodel.guid", value: self.kfModel!.guid);
+        }
+    }
+    
+    private func getValueFromPasteboard(key:String) -> String?{
+        let pasteboard = UIPasteboard.generalPasteboard();
+        if(pasteboard.numberOfItems < 0){
+            return nil;
+        }
+        let data = pasteboard.items[0][key] as NSData;
+        if (data == nil){
+            return nil;
+        }
 
-class KFWebView: UIView {
-    
-    private let scrollView = UIScrollView();
-    private let webView = UIWebView();
-    let cover = A();
-    
-    required init(coder aDecoder: NSCoder!) {
-        super.init(coder: aDecoder)
+        let dataStr = NSString(data:data, encoding:NSUTF8StringEncoding);
+        return dataStr;
     }
     
-    override init() {
-        super.init(frame: KFAppUtils.DEFAULT_RECT());
-        
-        //self.addSubview(scrollView);
-        //scrollView.addSubview(webView);
-        self.addSubview(webView);
-        self.addSubview(cover);
-        self.webView.scrollView.scrollEnabled = true;
-        
-        self.layer.borderColor = UIColor.blackColor().CGColor;
-        self.layer.borderWidth = 1.0;
-        self.layer.cornerRadius = 5;
-        self.layer.masksToBounds = true;
-        
-//        self.webView.
+    private func putValueToPasteboard(key:String, value:String){
+        let pasteboard = UIPasteboard.generalPasteboard();
+        if(pasteboard.numberOfItems < 0){
+            return;
+        }
+        var newdic = NSMutableDictionary(dictionary:pasteboard.items[0] as NSDictionary);
+        newdic[key] = value;
+        pasteboard.items[0] = newdic;
     }
-    
-    func setURL(url:String){
-        let url = NSURL(string: url);
-        let req = NSURLRequest(URL: url);
-        webView.loadRequest(req);
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews();
-        
-        let width:CGFloat = self.frame.size.width;
-        let height:CGFloat = self.frame.size.height;
-        
-        let r:CGRect = CGRectMake(0,0,width,height);
-        self.scrollView.frame = r;
-        self.webView.frame = r;
-        self.cover.frame = r;
-    }
-    
+
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func drawRect(rect: CGRect)
     {
-    // Drawing code
+        // Drawing code
     }
     */
-    
+
 }
