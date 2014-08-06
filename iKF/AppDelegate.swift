@@ -20,6 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    func getRootNavigationViewController() -> UINavigationController{
+        return window!.rootViewController as UINavigationController;
+    }
+    
     func getCurrentViewController() -> UIViewController{
        return (window!.rootViewController as UINavigationController).visibleViewController;
     }
@@ -27,7 +31,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
         appInstance = self;
         iKFErrorHandler.hookErrorHandler(application);
-        return true
+        
+        let nav = UINavigationController();
+        nav.setNavigationBarHidden(true, animated: false);
+        window!.rootViewController = nav;
+        let loginController = KFLoginViewController(nibName: "KFLoginViewController", bundle: nil);
+        AppDelegate.getInstance().getRootNavigationViewController().pushViewController(loginController, animated: false);
+        return true;
     }
 
     func applicationWillResignActive(application: UIApplication) {

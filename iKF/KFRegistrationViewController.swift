@@ -9,12 +9,13 @@
 import UIKit
 
 class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-
+    
+    var host:String!;
     var registrations:Array<KFRegistration> = [];
     
     @IBOutlet var registrationCodeField : UITextField!
     @IBOutlet var registrationsPicker : UIPickerView!
-    @IBOutlet weak var navBar: UINavigationBar!
+    @IBOutlet weak var usernameLabel: UILabel!
     
     required init(coder aDecoder: NSCoder!) {
         super.init(coder: aDecoder)
@@ -28,12 +29,22 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
         super.viewDidLoad()
         self.registrationsPicker.dataSource = self;
         self.registrationsPicker.delegate = self;
-        self.navBar.topItem.title = "Hello, " + KFService.getInstance().getCurrentUser().getFullName();
+        //        self.navBar.topItem.title = "Hello, " + KFService.getInstance().getCurrentUser().getFullName();
+        self.navigationItem.title = "Welcome to " + host;
+        self.usernameLabel.text = KFService.getInstance().getCurrentUser().getFullName();
         self.refreshRegistrations();
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController.setNavigationBarHidden(false, animated: animated);
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController.setNavigationBarHidden(true, animated: animated);
     }
     
     /* data source */
@@ -56,14 +67,16 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int){
     }
     
-    @IBAction func backButtonPressed(sender : AnyObject) {
-        self.dismissViewControllerAnimated(false, completion: nil);
-    }
-
+    //    @IBAction func backButtonPressed(sender : AnyObject) {
+    ////        self.dismissViewControllerAnimated(false, completion: nil);
+    //        self.navigationController.popViewControllerAnimated(true);
+    //
+    //    }
+    
     @IBAction func enterButtonPressed(sender : AnyObject) {
         let canvasViewController = KFCanvasViewController();
         self.presentViewController(canvasViewController, animated: true, completion: nil);
-
+        
         let row = self.registrationsPicker.selectedRowInComponent(0);
         canvasViewController.go(self.registrations[row]);
     }
@@ -82,12 +95,12 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     /*
     // #pragma mark - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
 }

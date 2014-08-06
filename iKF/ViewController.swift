@@ -8,7 +8,11 @@
 
 import UIKit
 
+// we use navigation controller
+// this class not been used any more
 class ViewController: UIViewController {
+    
+//    var nav:UINavigationController!;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,8 +25,9 @@ class ViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        let controller = KFLoginViewController(nibName: "KFLoginViewController", bundle: nil);
-        self.presentViewController(controller, animated: true, completion: nil);
+        // this class not been used any more
+        //        let controller = KFLoginViewController(nibName: "KFLoginViewController", bundle: nil);
+        //        self.presentViewController(controller, animated: true, completion: nil);
     }
     
     

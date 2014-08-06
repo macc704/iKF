@@ -16,6 +16,8 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet var usernameField : UITextField!
     @IBOutlet var serverPicker : UIPickerView!
     
+    //    var nav:UINavigationController!;
+    
     required init(coder aDecoder: NSCoder!) {
         super.init(coder: aDecoder)
     }
@@ -27,12 +29,18 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ////nav = UINavigationController(rootViewController: self);
+        //self.navigationController = UINavigationController(rootViewController: self);
         
         serverPicker.dataSource = self;
         serverPicker.delegate = self;
         
-        self.usernameField.text = "ikit";
-        self.passwordField.text = "pass";
+        let userDefaults = NSUserDefaults.standardUserDefaults();
+        let username = userDefaults.stringForKey("username");
+        let password = userDefaults.stringForKey("password");
+        
+        self.usernameField.text = username;
+        self.passwordField.text = password;
         self.passwordField.secureTextEntry = true;
     }
     
@@ -53,6 +61,12 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         super.didReceiveMemoryWarning()
     }
     
+    @IBAction func newAccountButtonPressed(sender: AnyObject) {
+        let c = KFAccountCreationViewController(nibName: "KFAccountCreationViewController", bundle: nil);
+        c.host = getHost();
+        self.navigationController.pushViewController(c, animated: true);
+    }
+    
     @IBAction func loginButtonPressed(sender : AnyObject) {
         //        let queue = dispatch_queue_create("sub_queue", 0);
         var res:(result: Bool, errorMsg: String?)?;
@@ -63,8 +77,10 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
         func onFinish(){
             if(res!.result == true){
-                let registrationViewController = KFRegistrationViewController(nibName: "KFRegistrationViewController", bundle: nil);
-                self.presentViewController(registrationViewController, animated: true, completion: nil);
+                let c = KFRegistrationViewController(nibName: "KFRegistrationViewController", bundle: nil);
+                c.host = getHost();
+                //self.presentViewController(registrationViewController, animated: true, completion: nil);
+                self.navigationController.pushViewController(c, animated: true);
             }else{
                 KFAppUtils.showAlert("ConnectionError", msg: res!.errorMsg!);
             }
@@ -73,9 +89,13 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         KFAppUtils.asyncExecWithLoadingView(self.view, execute: execute, onFinish: onFinish);
     }
     
+    func getHost() -> String{
+        return servers[serverPicker.selectedRowInComponent(0)];
+    }
+    
     func login() -> (result: Bool, errorMsg: String?) {        
         var service = KFService.getInstance();
-        service.initialize(servers[serverPicker.selectedRowInComponent(0)]);
+        service.initialize(getHost());
         
         let hostTest = service.testConnectionToTheHost();
         if(hostTest == false){
@@ -86,7 +106,9 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 return (false, "Connection Failed to the Selected Host");
             }
         }
-        let loginResult = service.login(self.usernameField.text, password:self.passwordField.text);
+        let username = self.usernameField.text;
+        let password = self.passwordField.text;
+        let loginResult = service.login(username, password:password);
         if(loginResult == false){
             return (false, "Login Failed");
         }
@@ -94,6 +116,9 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         if(userResult == false){
             return (false, "getUser() Failed");
         }
+        let userDefaults = NSUserDefaults.standardUserDefaults();
+        userDefaults.setValue(username, forKey: "username");
+        userDefaults.setValue(password, forKey: "password");
         return (true, nil);
     }
     
