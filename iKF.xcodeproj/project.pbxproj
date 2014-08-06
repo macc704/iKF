@@ -36,6 +36,7 @@
 		495A155C198B37A50056EE50 /* KFTestWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495A155B198B37A50056EE50 /* KFTestWebView.swift */; };
 		495A155E198BC6770056EE50 /* KFWebBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495A155D198BC6770056EE50 /* KFWebBrowserView.swift */; };
 		496074FE1992613F00131111 /* KFWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496074FD1992613F00131111 /* KFWebView.swift */; };
+		496075001992759F00131111 /* KFResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496074FF1992759F00131111 /* KFResource.swift */; };
 		496402B4198D7FFF009504B7 /* anchor.png in Resources */ = {isa = PBXBuildFile; fileRef = 4964029B198D7FFF009504B7 /* anchor.png */; };
 		496402B5198D7FFF009504B7 /* bin.png in Resources */ = {isa = PBXBuildFile; fileRef = 4964029C198D7FFF009504B7 /* bin.png */; };
 		496402B6198D7FFF009504B7 /* buildson.png in Resources */ = {isa = PBXBuildFile; fileRef = 4964029D198D7FFF009504B7 /* buildson.png */; };
@@ -161,6 +162,7 @@
 		495A155B198B37A50056EE50 /* KFTestWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFTestWebView.swift; sourceTree = "<group>"; };
 		495A155D198BC6770056EE50 /* KFWebBrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFWebBrowserView.swift; sourceTree = "<group>"; };
 		496074FD1992613F00131111 /* KFWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFWebView.swift; sourceTree = "<group>"; };
+		496074FF1992759F00131111 /* KFResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFResource.swift; sourceTree = "<group>"; };
 		4964029B198D7FFF009504B7 /* anchor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anchor.png; sourceTree = "<group>"; };
 		4964029C198D7FFF009504B7 /* bin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bin.png; sourceTree = "<group>"; };
 		4964029D198D7FFF009504B7 /* buildson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buildson.png; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				494DE5A3195488DD0053F9DF /* KFAppUtils.swift */,
+				496074FF1992759F00131111 /* KFResource.swift */,
 				499DE6E61989770700BA2209 /* KFLoadingView.swift */,
 				495A155D198BC6770056EE50 /* KFWebBrowserView.swift */,
 				4984496E198E735900D80327 /* KFPopoverManager.swift */,
@@ -714,6 +717,7 @@
 				490E75C3194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.m in Sources */,
 				49C5590D1945EF5F00FDFF32 /* KFModel.swift in Sources */,
 				49B938441946404000BD9C0D /* KFViewRefView.swift in Sources */,
+				496075001992759F00131111 /* KFResource.swift in Sources */,
 				49C78D5A194105C2004D3404 /* AppDelegate.swift in Sources */,
 				496074FE1992613F00131111 /* KFWebView.swift in Sources */,
 				492C10271947562800512591 /* KFScaffold.swift in Sources */,

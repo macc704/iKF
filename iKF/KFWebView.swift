@@ -30,14 +30,14 @@ class KFWebView: UIWebView {
         }
     
         let pasteboard = UIPasteboard.generalPasteboard();
-        let guid = self.getValueFromPasteboard("kfmodel.guid");
-        let type = self.getValueFromPasteboard("kfmodel");
+        let guid:String! = self.getValueFromPasteboard("kfmodel.guid")!;
+        let type:String?/* not good! */ = self.getValueFromPasteboard("kfmodel");
         let title = pasteboard.string;
         var pasteString:String;
         if (type == "contentreference"){
-            pasteString = "<kf-content-reference class=\"mceNonEditable\" postid=\"\(guid)\">\(title)</kf-content-reference>";
+            pasteString = "<kf-content-reference class=\"mceNonEditable\" postid=\"\(guid!)\">\(title)</kf-content-reference>";
         }else{//assume postreference
-            pasteString = "<kf-post-reference class=\"mceNonEditable\" postid=\"\(guid)\">\(title)</kf-post-reference>";
+            pasteString = "<kf-post-reference class=\"mceNonEditable\" postid=\"\(guid!)\">\(title)</kf-post-reference>";
         }
         //        //NSLog(@"pasteString=%@", pasteString);
         self.performPasteAsReference!(pasteString);
@@ -60,11 +60,13 @@ class KFWebView: UIWebView {
         if(pasteboard.numberOfItems < 0){
             return nil;
         }
-        let data = pasteboard.items[0][key] as NSData;
-        if (data == nil){
+        
+        let obj = pasteboard.items[0][key];
+        if(obj! == nil){ //why obj == nil does not work? unwrap necessary if check nil
             return nil;
         }
-
+        
+        let data = obj as NSData;
         let dataStr = NSString(data:data, encoding:NSUTF8StringEncoding);
         return dataStr;
     }

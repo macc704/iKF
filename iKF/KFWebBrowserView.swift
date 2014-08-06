@@ -225,8 +225,10 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         webView.scalesPageToFit = false;//necessary
         self.titleLabel.text = self.note!.title;
         let html = note.getReadHtml();
-        let baseURL = KFService.getInstance().getHostURL();
-//        println("aaa=" + html);
+        //println(html);
+        let baseURL = note.getBaseURL();
+        //println(baseURL);
+        //println(baseURL2);
         self.webView.loadHTMLString(html, baseURL: baseURL);
         KFAppUtils.executeInBackThread({
             KFService.getInstance().readPost(self.note!);
@@ -286,6 +288,17 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     }
     
     let loading = KFLoadingView();
+    
+    func webView(webView: UIWebView!, shouldStartLoadWithRequest request: NSURLRequest!, navigationType: UIWebViewNavigationType) -> Bool {
+        let host = request.URL.host;
+        if(host != nil && host == "kfpost"){
+            var guid = request.URL.lastPathComponent!;
+            let frame = CGRectMake(self.frame.origin.x + 50, self.frame.origin.y + 50, self.frame.size.width, self.frame.size.height);
+            self.mainController?.openPostById(guid, frame: frame);
+            return false;
+        }
+        return true;
+    }
     
     func webViewDidStartLoad(webView: UIWebView!) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true;

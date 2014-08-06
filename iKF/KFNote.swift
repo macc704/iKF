@@ -17,12 +17,15 @@ class KFNote: KFPost {
 //    var refId = "";
     
     func getReadHtml() -> String{
-        let template = KFService.getInstance().getReadTemplate();
+        //let template = KFService.getInstance().getReadTemplate();
+        let template = KFResource.getReadTemplate();
         var html = content;
-        if(template != nil){
-            html = template!.stringByReplacingOccurrencesOfString("%YOURCONTENT%", withString:content);
-        }
+        html = template.stringByReplacingOccurrencesOfString("%YOURCONTENT%", withString:content);
         return html;
+    }
+    
+    func getBaseURL() -> NSURL{
+        return KFResource.getWebResourceURL();
     }
 
     func initWithoutAuthor() -> KFNote{

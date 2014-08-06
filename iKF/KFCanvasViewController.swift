@@ -359,6 +359,17 @@ class KFCanvasViewController: UIViewController {
         self.presentViewController(noteController, animated: true, completion: nil);
     }
     
+    func openPostById(guid:String, frame:CGRect){
+        let view = postRefViews[guid];
+        if(view != nil){
+            let refview = view! as KFPostRefView;
+            openPostViewer0(refview.model.post!, frame: frame, refView:refview);
+        }else{
+            KFAppUtils.showAlert("not implemented", msg: "ref to post not found in this view guid=\(guid)");
+            //not implemented
+        }
+    }
+    
     func openPost(postRefView:KFPostRefView){
         //openPopupViewer(postRefView);
         self.openPostViewer(postRefView.model.post!, from: postRefView, refView:postRefView);
@@ -366,8 +377,13 @@ class KFCanvasViewController: UIViewController {
     
     //ref is temporary
     func openPostViewer(post:KFPost, from:UIView, refView:KFPostRefView? = nil){
+        let frame = postViewerRect(from);
+        openPostViewer0(post, frame: frame, refView: refView);
+    }
+    
+    func openPostViewer0(post:KFPost, frame:CGRect, refView:KFPostRefView? = nil){
         let browser = KFWebBrowserView(showToolBar: false);
-        browser.frame = postViewerRect(from);
+        browser.frame = frame;
         browser.kfSetNote(post as KFNote);
         browser.noteRef = refView; //temporary
         browser.mainController = self;

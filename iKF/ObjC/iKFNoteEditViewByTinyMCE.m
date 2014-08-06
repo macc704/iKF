@@ -116,7 +116,8 @@
     [_webView stringByEvaluatingJavaScriptFromString:js];
     
     NSString* path = [[NSBundle mainBundle] pathForResource:@"edit" ofType:@"html" inDirectory: @"WebResources"];
-    NSURLRequest* req = [[NSURLRequest alloc] initWithURL: [[NSURL alloc] initWithString: path]];
+    NSLog(@"path? = %@", path);
+    NSURLRequest* req = [[NSURLRequest alloc] initWithURL: [[NSURL alloc] initWithString: path]];    
     [_webView loadRequest: req];
     
     //v5 (local 2)
@@ -135,7 +136,7 @@
 }
 
 - (BOOL) webView:(UIWebView*) webView shouldStartLoadWithRequest:(NSURLRequest*) request navigationType:(UIWebViewNavigationType) type{
-//    NSLog(@"shoud start? = %@", [request URL]);
+    NSLog(@"shoud start? = %@", [request URL]);
     return true;
 }
 

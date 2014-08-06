@@ -10,8 +10,8 @@ function replacePostReferenceTag() {
 		var element = elements[i];
 		var postId = element.getAttribute("postId");
 		var original = element.innerHTML;
-		elements[i].innerHTML = "<a href='/kforum/rest/mobile/getNoteAsHTMLwJS/"
-				+ postId + "'>" + "<img src='https://dl.dropboxusercontent.com/u/11409191/ikf/note.png' width=15px, height=15px/>"+ original + "</a>";
+		elements[i].innerHTML = "<a href='http://kfpost/"
+				+ postId + "'>" + "<img src='note.png' width=15px, height=15px/>"+ original + "</a>";
 	}
 }
 
@@ -21,8 +21,8 @@ function replaceContentReferenceTag() {
 		var element = elements[i];
 		var postId = element.getAttribute("postId");
 		var original = element.innerHTML;
-		elements[i].innerHTML = "<span style='font-style:italic;'>\""+original+"\"</span>" + "(<a href='/kforum/rest/mobile/getNoteAsHTMLwJS/"
-				+ postId + "'>" + "<img src='https://dl.dropboxusercontent.com/u/11409191/ikf/note.png' width=15px, height=15px/>" + "</a>)";
+		elements[i].innerHTML = "<span style='font-style:italic;'>\""+original+"\"</span>" + "(<a href='http://kfpost/"
+				+ postId + "'>" + "<img src='note.png' width=15px, height=15px/>" + "</a>)";
 	}
 }
 
