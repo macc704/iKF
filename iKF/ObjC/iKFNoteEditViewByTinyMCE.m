@@ -105,13 +105,15 @@
 //    }else{
 //        [_webView stringByEvaluatingJavaScriptFromString: [NSString stringWithFormat: @"tinymce.activeEditor.setContent('%@')", text]];
 //    }
+    if([self initialized]){
+        NSString* insertString = [KFResource encodingForJS: text];
+        NSString* js = [NSString stringWithFormat: @"tinymce.activeEditor.setContent('%@');", insertString];
+        [_webView stringByEvaluatingJavaScriptFromString:js];
+        return;
+    }
     
     //v4 (local)
-    NSString* insertString = text;
-    insertString = [insertString stringByReplacingOccurrencesOfString: @"\\" withString: @"\\\\"];//order important
-    insertString = [insertString stringByReplacingOccurrencesOfString: @"\r" withString: @""];
-    insertString = [insertString stringByReplacingOccurrencesOfString: @"\n" withString: @""];
-    insertString = [insertString stringByReplacingOccurrencesOfString: @"'" withString: @"\\'"];
+    NSString* insertString = [KFResource encodingForJS: text];
     NSString* js = [NSString stringWithFormat: @"window.onload = function(){tinymce.activeEditor.setContent('%@');}", insertString];
     [_webView stringByEvaluatingJavaScriptFromString:js];
     
@@ -152,6 +154,16 @@
     //    NSString* js = [NSString stringWithFormat: @"tinymce.activeEditor.setContent('aaa')"];
 //    [_webView stringByEvaluatingJavaScriptFromString:js];
 //    [_webView stringByEvaluatingJavaScriptFromString:@"window.alert('didfinish');"];
+}
+
+- (BOOL) initialized{
+    NSString* res = [_webView stringByEvaluatingJavaScriptFromString:@"tinymce.activeEditor.isDirty();"];
+    //returns true or false or ""
+    if([res length] == 0){
+        return false;
+    }
+//    NSLog(@"res = %@", res);
+    return true;
 }
 
 -(NSString*)getText{

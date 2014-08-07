@@ -66,7 +66,9 @@
     if(dirty){
         self.note.title = newTitle;
         self.note.content = newContent;
-        [[KFService getInstance] updateNote: self.note];
+        [KFAppUtils executeInBackThread:^{
+            [[KFService getInstance] updateNote: self.note];
+        }];
         [self.note notify];
     }
 }

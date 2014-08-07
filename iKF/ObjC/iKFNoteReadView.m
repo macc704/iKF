@@ -37,9 +37,10 @@
 -(void) showHTML: (NSString*)textString title: (NSString*) title{
     [self setNavBarTitle: title];
     
-    NSString* template = [[KFService getInstance] getReadTemplate];
+//    NSString* template = [[KFService getInstance] getReadTemplate];
+    NSString* template = [KFResource getReadTemplate];
     NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:textString];
-    [self._webView loadHTMLString: html baseURL:nil];
+    [self._webView loadHTMLString: html baseURL:[KFResource getWebResourceURL]];
     //[_webView loadHTMLString: textString baseURL:nil];
 }
 
