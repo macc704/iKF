@@ -22,8 +22,7 @@ class KFNoteRefView: KFPostRefView {
         super.init(controller: controller, ref: ref);
         //bindEvents();
         
-        self.layer.cornerRadius = 5;
-        self.layer.masksToBounds = true;
+
         //self.backgroundColor = UIColor.lightGrayColor();
     }
     
@@ -94,11 +93,30 @@ class KFNoteRefView: KFPostRefView {
             }
             refView!.frame = CGRectMake(0, 0, refModel.width, refModel.height);
         }
-        
-        
+
         //only size
         self.frame.size = refView!.frame.size;
+        
+        if(operatableHandle == nil && model.isOperatable() && refView is KFWebView){
+            operatableHandle = UIView();
+            operatableHandle.backgroundColor = UIColor.grayColor();
+            operatableHandle.frame = CGRectMake(self.frame.size.width-10,0, 10, 10);
+            let recognizerDoubleTap = UITapGestureRecognizer(target:self, action:"handleDoubleTap:");
+            recognizerDoubleTap.numberOfTapsRequired = 2;
+            operatableHandle.addGestureRecognizer(recognizerDoubleTap);
+            self.addSubview(operatableHandle);
+            (refView as KFWebView).userInteractionEnabled = true;
+        }else if (operatableHandle != nil && (!model.isOperatable() || !(refView is KFWebView))){
+            if(refView is KFWebView){
+                (refView as KFWebView).userInteractionEnabled = false;
+            }
+            operatableHandle.removeFromSuperview();
+            operatableHandle = nil;
+        }
+
     }
+    
+    var operatableHandle:UIView!;
     
     override func tapA(){
         self.mainController.openPost(self);

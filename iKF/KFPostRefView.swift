@@ -44,6 +44,32 @@ class KFPostRefView: UIView {
         recognizerSingleTap.requireGestureRecognizerToFail(recognizerDoubleTap);
     }
     
+    func getMenuItems() -> [KFMenu]{
+        let refModel = self.model;
+        var menues:[KFMenu] = [];
+        
+        let operatable = KFDefaultMenu();
+        operatable.name = "Operatable";
+        operatable.checked = refModel.isOperatable();
+        operatable.exec = {
+            operatable.checked = !refModel.isOperatable();
+            refModel.setOperatable(!refModel.isOperatable());
+            self.updateFromModel();
+            self.mainController.updatePostRef(self);
+        }
+        
+        let border = KFDefaultMenu();
+        border.name = "Border";
+        border.checked = refModel.isBorder();
+        border.exec = {
+            border.checked = !refModel.isBorder()
+            refModel.setBorder(!refModel.isBorder());
+            self.updateFromModel();
+            self.mainController.updatePostRef(self);
+        }
+        return [operatable, border];
+    }
+    
     func updatePanEventBinding(){
         if(!self.model.isLocked() && self.panGesture == nil){
             self.panGesture = UIPanGestureRecognizer(target:self, action:"handlePanning:");
@@ -136,7 +162,18 @@ class KFPostRefView: UIView {
     func updateToModel(){        
     }
     
+    var border:Bool = false;
+    
     func updateFromModel(){
+        if(!border && model.isBorder() && model.isShowInPlace()){
+            self.layer.borderColor = UIColor.grayColor().CGColor;
+            self.layer.borderWidth = 1.0;
+            border = true;
+        }else if (border && (!model.isBorder() || !model.isShowInPlace())){
+            self.layer.borderWidth = 0.0;
+            border = false;
+        }
+        
         let r = self.frame;
         self.frame = CGRectMake(model.location.x, model.location.y, r.size.width, r.size.height);
     }

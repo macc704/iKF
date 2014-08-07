@@ -21,11 +21,15 @@ class KFLabelNoteRefView: UIView {
     
     init(ref: KFReference) {
         self.model = ref;
+        
         icon = KFPostRefIconView(frame: CGRectMake(5, 5, 20, 20));
         titleLabel = UILabel(frame: CGRectMake(40, 7, 200, 20));
         authorLabel = UILabel(frame: CGRectMake(50, 23, 120, 10));
         
         super.init(frame: KFAppUtils.DEFAULT_RECT());
+        
+        self.layer.cornerRadius = 5;
+        self.layer.masksToBounds = true;
         
         //self.backgroundColor = UIColor.whiteColor();
         self.backgroundColor = UIColor.clearColor();

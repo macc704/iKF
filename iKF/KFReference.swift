@@ -13,6 +13,8 @@ class KFReference: KFModel {
     let HIDDEN_BIT = 0x01;
     let LOCKED_BIT = 0x02;
     let SHOWINPLACE_BIT = 0x04;
+    let OPERATABLE_BIT = 0x08;
+    let BORDER_BIT = 0x10;
     
     var post:KFPost?;
     var location = CGPoint(x:0, y:0);
@@ -57,6 +59,30 @@ class KFReference: KFModel {
             displayFlags = displayFlags | SHOWINPLACE_BIT;
         }else{
             displayFlags = displayFlags & ~SHOWINPLACE_BIT;
+        }
+    }
+    
+    func isOperatable() -> Bool{
+        return displayFlags & OPERATABLE_BIT == OPERATABLE_BIT;
+    }
+    
+    func setOperatable(operatable:Bool){
+        if(operatable){
+            displayFlags = displayFlags | OPERATABLE_BIT;
+        }else{
+            displayFlags = displayFlags & ~OPERATABLE_BIT;
+        }
+    }
+    
+    func isBorder() -> Bool{
+        return displayFlags & BORDER_BIT == BORDER_BIT;
+    }
+    
+    func setBorder(border:Bool){
+        if(border){
+            displayFlags = displayFlags | BORDER_BIT;
+        }else{
+            displayFlags = displayFlags & ~BORDER_BIT;
         }
     }
 

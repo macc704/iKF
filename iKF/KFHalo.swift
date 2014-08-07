@@ -90,6 +90,9 @@ class KFHalo: UIView {
             }else{
                 installHaloHandle("showinplace", locator: locator.LEFT(), tap: "showInPlace:", pan: nil);
             }
+            if(note.model.isShowInPlace()){
+                installHaloHandle("list", locator: locator.RIGHT(), tap: "handleShowMenu:", pan: nil);
+            }
             installHaloHandle("buildson.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
         }
         
@@ -158,6 +161,13 @@ class KFHalo: UIView {
                 //                handle.frame = self.handles[handle]!();
                 //            }
             });
+    }
+    
+    func handleShowMenu(recognizer:UIGestureRecognizer){
+        let postRefView = target as KFPostRefView;
+        let c = KFMenuViewController(menues:postRefView.getMenuItems());
+        let from = recognizer.view;
+        KFPopoverManager.getInstance().openInPopover(from, controller: c);
     }
     
     func handleToggleMenuWeb(recognizer:UIGestureRecognizer){
