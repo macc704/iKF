@@ -58,7 +58,7 @@ class KFNoteRefView: KFPostRefView {
             refView!.removeFromSuperview();
             createUnfold = true;
         }
-        else if(refView is iKFWebView && !self.model.isShowInPlace()){
+        else if(refView is KFWebView && !self.model.isShowInPlace()){
             refView!.removeFromSuperview();
             createIcon = true;
         }
@@ -74,7 +74,7 @@ class KFNoteRefView: KFPostRefView {
             self.addSubview(refView!);
         }
         if(createUnfold){
-            refView = iKFWebView();
+            refView = KFWebView();
             refView!.userInteractionEnabled = false;
             self.addSubview(refView!);
         }
@@ -83,13 +83,13 @@ class KFNoteRefView: KFPostRefView {
         if(refView is KFLabelNoteRefView){
             (refView? as KFLabelNoteRefView).updateFromModel();
         }
-        if(refView is iKFWebView){
+        if(refView is KFWebView){
             let refModel = model as KFReference;
             let note = refModel.post as KFNote;
             if(note.content != cache){
                 let template = KFService.getInstance().getReadTemplate();
                 let html = template!.stringByReplacingOccurrencesOfString("%YOURCONTENT%", withString:note.content);
-                (refView as iKFWebView).loadHTMLString(html, baseURL: nil);
+                (refView as KFWebView).loadHTMLString(html, baseURL: nil);
                 cache = note.content;
             }
             refView!.frame = CGRectMake(0, 0, refModel.width, refModel.height);
