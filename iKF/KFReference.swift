@@ -15,6 +15,7 @@ class KFReference: KFModel {
     let SHOWINPLACE_BIT = 0x04;
     let OPERATABLE_BIT = 0x08;
     let BORDER_BIT = 0x10;
+    let FITSCALE_BIT = 0x20;
     
     var post:KFPost?;
     var location = CGPoint(x:0, y:0);
@@ -83,6 +84,18 @@ class KFReference: KFModel {
             displayFlags = displayFlags | BORDER_BIT;
         }else{
             displayFlags = displayFlags & ~BORDER_BIT;
+        }
+    }
+    
+    func isFitScale() -> Bool{
+        return displayFlags & FITSCALE_BIT == FITSCALE_BIT;
+    }
+    
+    func setFitScale(fitscale:Bool){
+        if(fitscale){
+            displayFlags = displayFlags | FITSCALE_BIT;
+        }else{
+            displayFlags = displayFlags & ~FITSCALE_BIT;
         }
     }
 

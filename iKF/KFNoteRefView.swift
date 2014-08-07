@@ -93,14 +93,13 @@ class KFNoteRefView: KFPostRefView {
             }
             refView!.frame = CGRectMake(0, 0, refModel.width, refModel.height);
         }
-
-        //only size
-        self.frame.size = refView!.frame.size;
+      
+        self.frame.size = refView!.frame.size;        //only size
         
         if(operatableHandle == nil && model.isOperatable() && refView is KFWebView){
             operatableHandle = UIView();
             operatableHandle.backgroundColor = UIColor.grayColor();
-            operatableHandle.frame = CGRectMake(self.frame.size.width-10,0, 10, 10);
+            operatableHandle.frame = CGRectMake(self.frame.size.width-40,0, 40, 40);
             let recognizerDoubleTap = UITapGestureRecognizer(target:self, action:"handleDoubleTap:");
             recognizerDoubleTap.numberOfTapsRequired = 2;
             operatableHandle.addGestureRecognizer(recognizerDoubleTap);
@@ -113,7 +112,19 @@ class KFNoteRefView: KFPostRefView {
             operatableHandle.removeFromSuperview();
             operatableHandle = nil;
         }
-
+        if(operatableHandle != nil && refView is KFWebView){
+            operatableHandle.frame = CGRectMake(self.frame.size.width-40,0, 40, 40);
+        }
+        
+        if(refView is KFWebView){
+            if(model.isFitScale()){
+                (refView as KFWebView).scalesPageToFit = true;
+            }
+            else{
+                (refView as KFWebView).scalesPageToFit = false;
+            }
+        }
+        
     }
     
     var operatableHandle:UIView!;

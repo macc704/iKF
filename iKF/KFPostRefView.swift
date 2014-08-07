@@ -67,7 +67,17 @@ class KFPostRefView: UIView {
             self.updateFromModel();
             self.mainController.updatePostRef(self);
         }
-        return [operatable, border];
+
+        let fitscale = KFDefaultMenu();
+        fitscale.name = "FitScale";
+        fitscale.checked = refModel.isFitScale();
+        fitscale.exec = {
+            fitscale.checked = !refModel.isFitScale();
+            self.updateFromModel();
+            self.mainController.updatePostRef(self);
+        }
+        
+        return [operatable, border, fitscale];
     }
     
     func updatePanEventBinding(){
