@@ -17,7 +17,7 @@
 #import "iKFNoteEditViewByTinyMCE.h"
 #import "iKFNoteEditViewController.h"
 //#import "iKFNoteIcon.h"
-#import "iKFNotePopupViewController.h"
+//#import "iKFNotePopupViewController.h"
 #import "iKFNoteReadView.h"
 #import "iKFNoteReadViewController.h"
 //#import "iKFNoteView.h"

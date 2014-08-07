@@ -444,13 +444,13 @@ class KFCanvasViewController: UIViewController {
         return CGRectMake(x, y, width, height);
     }
     
-    private func openPopupViewer(postRefView:KFPostRefView){
-        let notePopupController = iKFNotePopupViewController();
-        notePopupController.note = (postRefView.model.post as KFNote);
-        notePopupController.kfViewController = self;
-        notePopupController.preferredContentSize = notePopupController.view.frame.size;
-        KFPopoverManager.getInstance().openInPopover(postRefView, controller: notePopupController);
-    }
+    //    private func openPopupViewer(postRefView:KFPostRefView){
+    //        let notePopupController = iKFNotePopupViewController();
+    //        notePopupController.note = (postRefView.model.post as KFNote);
+    //        notePopupController.kfViewController = self;
+    //        notePopupController.preferredContentSize = notePopupController.view.frame.size;
+    //        KFPopoverManager.getInstance().openInPopover(postRefView, controller: notePopupController);
+    //    }
     
     func openBrowser(p:CGPoint, size:CGSize = CGSize(width: 500, height: 600)){
         let browser = KFWebBrowserView();

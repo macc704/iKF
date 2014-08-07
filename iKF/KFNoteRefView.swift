@@ -86,9 +86,9 @@ class KFNoteRefView: KFPostRefView {
             let refModel = model as KFReference;
             let note = refModel.post as KFNote;
             if(note.content != cache){
-                let template = KFService.getInstance().getReadTemplate();
-                let html = template!.stringByReplacingOccurrencesOfString("%YOURCONTENT%", withString:note.content);
-                (refView as KFWebView).loadHTMLString(html, baseURL: nil);
+                //let template = KFService.getInstance().getReadTemplate();
+                //let html = template!.stringByReplacingOccurrencesOfString("%YOURCONTENT%", withString:note.content);                
+                (refView as KFWebView).loadHTMLString(note.getReadHtml(), baseURL: KFResource.getWebResourceURL());
                 cache = note.content;
             }
             refView!.frame = CGRectMake(0, 0, refModel.width, refModel.height);
