@@ -398,8 +398,16 @@ class KFHalo: UIView {
         case .Changed:
             let button = recognizer.view;
             moveHandle(recognizer);
-            let w = button.frame.origin.x - button.frame.size.width;
-            let h = button.frame.origin.y - button.frame.size.height;
+            var w = button.frame.origin.x - button.frame.size.width;
+            var h = button.frame.origin.y - button.frame.size.height;
+            w = round(w);
+            h = round(h);
+            if(w < 50){
+                w = 50;
+            }
+            if(h < 50){
+                h = 50;
+            }
             drawingTarget.kfSetSize(w, height:h);
             break;
         case .Ended:
@@ -419,8 +427,16 @@ class KFHalo: UIView {
         case .Changed:
             let button = recognizer.view;
             moveHandle(recognizer);
-            let w = button.frame.origin.x - button.frame.size.width;
-            let h = button.frame.origin.y - button.frame.size.height;
+            var w = button.frame.origin.x - button.frame.size.width;
+            var h = button.frame.origin.y - button.frame.size.height;
+            w = round(w);
+            h = round(h);
+            if(w < 50){
+                w = 50;
+            }
+            if(h < 50){
+                h = 50;
+            }
             let newRect:CGRect = CGRectMake(target.frame.origin.x, target.frame.origin.y, w, h);
             target.frame = newRect;
             break;
