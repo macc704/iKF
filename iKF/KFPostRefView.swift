@@ -52,8 +52,8 @@ class KFPostRefView: UIView {
         operatable.name = "Operatable";
         operatable.checked = refModel.isOperatable();
         operatable.exec = {
-            operatable.checked = !refModel.isOperatable();
             refModel.setOperatable(!refModel.isOperatable());
+            operatable.checked = refModel.isOperatable();
             self.updateFromModel();
             self.mainController.updatePostRef(self);
         }
@@ -62,8 +62,8 @@ class KFPostRefView: UIView {
         border.name = "Border";
         border.checked = refModel.isBorder();
         border.exec = {
-            border.checked = !refModel.isBorder()
             refModel.setBorder(!refModel.isBorder());
+            border.checked = refModel.isBorder();
             self.updateFromModel();
             self.mainController.updatePostRef(self);
         }
@@ -72,7 +72,8 @@ class KFPostRefView: UIView {
         fitscale.name = "FitScale";
         fitscale.checked = refModel.isFitScale();
         fitscale.exec = {
-            fitscale.checked = !refModel.isFitScale();
+            refModel.setFitScale(!refModel.isFitScale())
+            fitscale.checked = refModel.isFitScale();
             self.updateFromModel();
             self.mainController.updatePostRef(self);
         }
