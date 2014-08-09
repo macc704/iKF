@@ -73,12 +73,24 @@ class KFNoteRefView: KFPostRefView {
             self.addSubview(refView!);
         }
         if(createUnfold){
+            cache = "";
             refView = KFWebView();
             refView!.userInteractionEnabled = false;
             self.addSubview(refView!);
         }
         
         //update model to view
+        if(refView is KFWebView){
+            if(model.isFitScale()){
+                (refView as KFWebView).scalesPageToFit = true;
+                cache = "";
+            }
+            else{
+                (refView as KFWebView).scalesPageToFit = false;
+                cache = "";
+            }
+        }
+        
         if(refView is KFLabelNoteRefView){
             (refView? as KFLabelNoteRefView).updateFromModel();
         }
@@ -116,14 +128,7 @@ class KFNoteRefView: KFPostRefView {
             operatableHandle.frame = CGRectMake(self.frame.size.width-40,0, 40, 40);
         }
         
-        if(refView is KFWebView){
-            if(model.isFitScale()){
-                (refView as KFWebView).scalesPageToFit = true;
-            }
-            else{
-                (refView as KFWebView).scalesPageToFit = false;
-            }
-        }
+
         
     }
     
