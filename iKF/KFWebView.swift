@@ -13,12 +13,25 @@ class KFWebView: UIWebView {
     var performPasteAsReference:((String)->())?;//(id)
     var kfModel:KFModel?;//KFModel*
     
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(){
+        super.init(frame: KFAppUtils.DEFAULT_RECT());
+        //TODO to global
+        let menuItem = UIMenuItem(title: "Paste As Reference", action: Selector("onPasteAsReference:"));
+        UIMenuController.sharedMenuController().menuItems = [menuItem];
+    }
+    
     override func canPerformAction(action: Selector, withSender sender: AnyObject!) -> Bool {
         if(action == Selector("onPasteAsReference:")){
             return self.canPerformPasteAsReference();
         }
         return super.canPerformAction(action, withSender: sender);
     }
+    
+    
     
     private func canPerformPasteAsReference() -> Bool{
         return self.performPasteAsReference != nil && self.getValueFromPasteboard("kfmodel.guid") != nil;

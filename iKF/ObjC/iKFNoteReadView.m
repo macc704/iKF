@@ -8,7 +8,7 @@
 
 #import "iKFNoteReadView.h"
 //#import "iKFConnector.h"
-#import "iKFWebView.h"
+//#import "iKFWebView.h"
 #import "iKF-Swift.h"
 
 @implementation iKFNoteReadView{
@@ -20,7 +20,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         //web
-        self._webView = [[iKFWebView alloc] init];
+        self._webView = [[KFWebView alloc] init];
         self._webView.scrollView.scrollEnabled = TRUE;
         [self addSubview: self._webView];
     }
