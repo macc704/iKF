@@ -39,7 +39,8 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         //add layers by reversed order
         //self.drawingLayer.userInteractionEnabled = true;//not necessary
         layerContainerView.addSubview(self.drawingLayer);
-        layerContainerView.addSubview(connectionLayer);
+        //layerContainerView.addSubview(connectionLayer);
+        self.noteLayer.layer.addSublayer(connectionLayer);
         layerContainerView.addSubview(self.noteLayer);
         layerContainerView.addSubview(self.windowsLayer);
         

@@ -8,19 +8,24 @@
 
 import UIKit
 
-class KFConnectionLayer: UIView {
+import QuartzCore
+
+class KFConnectionLayer: CALayer {
     
     var connections:[KFConnectionViewModel] = [];
     
-    required init(coder aDecoder: NSCoder!) {
-        super.init(coder: aDecoder)
-    }
-    
-    override init(){
-        super.init(frame: KFAppUtils.DEFAULT_RECT());
-        self.userInteractionEnabled = false;
-        self.backgroundColor = UIColor.clearColor();
-    }
+    //    required init(coder aDecoder: NSCoder!) {
+    //        super.init(coder: aDecoder)
+    //    }
+    //
+    //    override init(){
+    //        super.init(frame: KFAppUtils.DEFAULT_RECT());
+    //
+    ////        let a = CALayer();
+    //        self.layer.
+    //        self.userInteractionEnabled = false;
+    //        self.backgroundColor = UIColor.clearColor();
+    //    }
     
     func clearAllConnections(){
         connections = [];
@@ -52,11 +57,34 @@ class KFConnectionLayer: UIView {
         self.requestRepaint();
     }
     
+    override func drawInContext(ctx: CGContext!) {
+        self.drawAll(ctx);
+    }
     
-    override func drawRect(rect: CGRect) {
-        let context = UIGraphicsGetCurrentContext();
-        
-        CGContextClearRect(context, rect);
+    
+    //    override func drawRect(rect: CGRect) {
+    //        let context = UIGraphicsGetCurrentContext();
+    //
+    //        CGContextClearRect(context, rect);
+    //
+    //        CGContextSetStrokeColorWithColor(context, UIColor.blueColor().CGColor);
+    //        CGContextSetLineWidth(context, 2.0);
+    //
+    //        for conn in connections {
+    //            //CGPoint fromP = conn.from.center;
+    //            let fromP = self.createChopBoxAnchor(conn.to, to: conn.from);
+    //            let toP = self.createChopBoxAnchor(conn.from, to: conn.to);
+    //            CGContextMoveToPoint(context, fromP.x, fromP.y);
+    //            CGContextAddLineToPoint(context, toP.x, toP.y);
+    //            CGContextStrokePath(context);
+    //
+    //            //Arrow
+    //            self.createArrow(context, from: fromP, to: toP);
+    //        }
+    //    }
+    
+    private func drawAll(context: CGContext!){
+        //CGContextClearRect(context, rect);
         
         CGContextSetStrokeColorWithColor(context, UIColor.blueColor().CGColor);
         CGContextSetLineWidth(context, 2.0);
