@@ -14,7 +14,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     private let layerContainerView = UIView();
     let windowsLayer = iKFLayerView();
     let noteLayer = iKFLayerView();
-    let connectionLayer = iKFConnectionLayerView();
+    let connectionLayer = KFConnectionLayer();
     let drawingLayer = iKFLayerView();
     
     var doubleTapHandler:((CGPoint)->())?;

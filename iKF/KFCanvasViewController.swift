@@ -158,7 +158,7 @@ class KFCanvasViewController: UIViewController {
         if(note.buildsOn != nil){
             let fromRefView = postRefViews[note.guid]
             let toRefView = postRefViews[note.buildsOn!.guid];//ちょっとずる
-            canvasView.connectionLayer.addConnectionFrom(fromRefView, to: toRefView);
+            canvasView.connectionLayer.addConnection(fromRefView!, to: toRefView!);
         }
     }
     
