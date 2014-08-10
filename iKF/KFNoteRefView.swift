@@ -69,12 +69,15 @@ class KFNoteRefView: KFPostRefView {
         }
 
         if(createIcon){
+            if(refView != nil && refView is KFWebView){
+                (refView as KFWebView).close();
+            }
             refView = KFLabelNoteRefView(ref: model);
             self.addSubview(refView!);
         }
         if(createUnfold){
             cache = "";
-            refView = KFWebView();
+            refView = KFWebView.createAsPost();
             refView!.userInteractionEnabled = false;
             self.addSubview(refView!);
         }

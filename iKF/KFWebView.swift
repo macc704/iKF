@@ -8,7 +8,56 @@
 
 import UIKit
 
+class WeakReference<T: AnyObject> {
+    weak var value: T?
+    init (value: T) {
+        self.value = value
+    }
+}
+
+private var postInstances:[WeakReference<KFWebView>] = [];
+private var instances:[WeakReference<KFWebView>] = [];//others
+
 class KFWebView: UIWebView {
+    
+    class func createAsPost() -> KFWebView{
+        let one = KFWebView();
+        postInstances.append(WeakReference(value: one));
+        return one;
+    }
+    
+    class func create() -> KFWebView{
+        let one = KFWebView();
+        instances.append(WeakReference(value: one));
+        return one;
+    }
+    
+    class func clearPostInstances(){
+        if(postInstances == nil){
+            return;
+        }
+        print(postInstances.count);
+        for instance in postInstances{
+            if(instance.value != nil){
+                instance.value!.close();
+            }
+        }
+        postInstances = [];
+    }
+    
+    class func clearAllInstances(){
+        self.clearPostInstances();
+        
+        if(instances == nil){
+            return;
+        }
+        for instance in instances{
+            if(instance.value != nil){
+                instance.value!.close();
+            }
+        }
+        instances = [];
+    }
     
     var performPasteAsReference:((String)->())?;//(id)
     var kfModel:KFModel?;//KFModel*
@@ -17,7 +66,7 @@ class KFWebView: UIWebView {
         super.init(coder: aDecoder)
     }
     
-    override init(){
+    private override init(){
         super.init(frame: KFAppUtils.DEFAULT_RECT());
         //TODO to global
         let menuItem = UIMenuItem(title: "Paste As Reference", action: Selector("onPasteAsReference:"));
@@ -31,17 +80,25 @@ class KFWebView: UIWebView {
         return super.canPerformAction(action, withSender: sender);
     }
     
-    
-    
     private func canPerformPasteAsReference() -> Bool{
         return self.performPasteAsReference != nil && self.getValueFromPasteboard("kfmodel.guid") != nil;
+    }
+    
+    func close(){
+        self.setURL("about:blank");
+    }
+    
+    func setURL(url:String){
+        let url = NSURL(string: url);
+        let req = NSURLRequest(URL: url);
+        self.loadRequest(req);
     }
     
     func onPasteAsReference(sender:UIMenuController){
         if (!self.canPerformPasteAsReference()){
             return;
         }
-    
+        
         let pasteboard = UIPasteboard.generalPasteboard();
         let guid:String! = self.getValueFromPasteboard("kfmodel.guid")!;
         let type:String?/* not good! */ = self.getValueFromPasteboard("kfmodel");
@@ -93,14 +150,14 @@ class KFWebView: UIWebView {
         newdic[key] = value;
         pasteboard.items[0] = newdic;
     }
-
+    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func drawRect(rect: CGRect)
     {
-        // Drawing code
+    // Drawing code
     }
     */
-
+    
 }

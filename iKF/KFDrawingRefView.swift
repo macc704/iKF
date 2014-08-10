@@ -11,7 +11,7 @@ import UIKit
 class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     
     //let ref: KFReference;
-    var webView:UIWebView!;
+    var webView:KFWebView!;
     var svgwidth = CGFloat(100.0);
     var svgheight = CGFloat(100.0);
     var rotation = CGFloat(0.0);
@@ -23,7 +23,7 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     }
     
     override init(controller: KFCanvasViewController, ref: KFReference) {
-        webView = UIWebView();
+        webView = KFWebView.createAsPost();
         //        web.backgroundColor = [UIColor clearColor];
         webView.userInteractionEnabled = false;
         

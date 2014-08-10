@@ -26,7 +26,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     
     let statusBar:UIView = UIView();
     private let titleLabel:UILabel = UILabel();
-    private let webView = KFWebView();
+    private let webView = KFWebView.create();
     
     //    private let toolContainer:UIView = UIView();
     private let toolContainer:UIView = UIView();
@@ -195,7 +195,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     }
     
     func close(){
-        setURL("about:blank");
+        webView.close();
         self.removeFromSuperview();
     }
     
@@ -210,6 +210,10 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     func reload(){
         let url = urlTextfield!.text;
         setURL(url);
+    }
+    
+    func setURL(url:String){
+        self.webView.setURL(url);
     }
     
     func stop(){
@@ -237,11 +241,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
 
     }
     
-    func setURL(url:String){
-        let url = NSURL(string: url);
-        let req = NSURLRequest(URL: url);
-        webView.loadRequest(req);
-    }
+
     
     var suppressWebLayout = false;
     

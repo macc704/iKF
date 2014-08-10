@@ -242,12 +242,14 @@ class KFCanvasViewController: UIViewController {
             return;//already the view
         }
         
-        self.currentView = view;
+        //new view
         KFAppUtils.executeInGUIThread({
+            KFWebView.clearPostInstances();
+            self.currentView = view;
             self.navBar.topItem.title = self.currentView!.title;
+            self.cometThreadNumber++;
+            self.startComet(self.cometThreadNumber);
         });
-        self.cometThreadNumber++;
-        self.startComet(self.cometThreadNumber);
     }
     
     func getCurrentView() -> KFView{
@@ -499,6 +501,7 @@ class KFCanvasViewController: UIViewController {
     
     @IBAction func exitPressed(sender: AnyObject) {
         self.cometThreadNumber++;
+        KFWebView.clearAllInstances();
         self.dismissViewControllerAnimated(true, completion: nil);
     }
     
