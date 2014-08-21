@@ -10,11 +10,14 @@ import UIKit
 
 class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate {
     
-    var servers = ["132.203.154.41:8080", "rooibos.cs.inf.shizuoka.ac.jp", "128.100.72.137:8080", "localhost:8080", "192.168.43.97:8080", "138.51.181.244:8080", "no server"];
+//    var INPUT = "(input textfield)";
+    
+    var servers = ["132.203.154.41:8080", "rooibos.cs.inf.shizuoka.ac.jp", "128.100.72.137:8080", "kforum.glm.edu.co:8080", "localhost:8080", "(input textfield)"];
     
     @IBOutlet var passwordField : UITextField!
     @IBOutlet var usernameField : UITextField!
     @IBOutlet var serverPicker : UIPickerView!
+    @IBOutlet weak var serverNameField: UITextField!
     
     //    var nav:UINavigationController!;
     
@@ -42,6 +45,8 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         self.usernameField.text = username;
         self.passwordField.text = password;
         self.passwordField.secureTextEntry = true;
+        
+        self.serverNameField.enabled = false;
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -90,6 +95,10 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     func getHost() -> String{
+        let host = servers[serverPicker.selectedRowInComponent(0)];
+        if(host == "(input textfield)"){
+            return serverNameField.text;
+        }
         return servers[serverPicker.selectedRowInComponent(0)];
     }
     
@@ -142,6 +151,12 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int){
+        let host = servers[serverPicker.selectedRowInComponent(0)];
+        if(host == "(input textfield)"){
+            serverNameField.enabled = true;
+        }else{
+            serverNameField.enabled = false;
+        }
     }
     
     
