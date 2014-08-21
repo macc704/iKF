@@ -55,7 +55,7 @@
             _webView.performPasteAsReference = ^(NSString* text){
                 [self insertText:text];
             };
-            //_webView.scrollView.scrollEnabled = FALSE;
+            _webView.scrollView.scrollEnabled = FALSE;
             [_webView.layer setBorderColor:[UIColor blackColor].CGColor];
             [_webView.layer setBorderWidth:1.0];
             [_containerView addSubview:_webView];

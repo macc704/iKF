@@ -2,10 +2,21 @@
 <html>
 
 	<head><!-- CDN hosted by Cachefly -->
+        <STYLE type="text/css">
+        <!--
+        .mcearea {
+            overflow: scroll;
+            width: 100%;
+            height: 300px;
+            background-color: white;
+        }
+        -->
+        </STYLE>
 		<script src="tinymce/tinymce.min.js"></script>
 		<script>
 			tinymce.init({
-				selector:'textarea',
+				selector:'#mcearea1',
+                inline: true,
 				//plugins: ["code, preview, contextmenu, image, link, searchreplace noneditable"],
 				plugins : ["advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking table directionality emoticons template textcolor paste textcolor noneditable fullpage"],
 				// you should not add 'fullpage' plugin it makes <!DOCTYPE> tag
@@ -18,13 +29,14 @@
 				custom_elements: "~kf-[a-zA-Z0-9]+$",
 				menubar: false,
 				toolbar_items_size: 'large',
-				content_css: "kf.css, kfmce.css",
+				content_css: "kf.css,kfmce.css",
 				//	extended_valid_elements : "span[supportId]",	
 			});
 		</script>
 	</head>
 
 	<body>	
-        <textarea rows="30" id="mcearea">%YOURCONTENT%</textarea>
+        <!--<textarea rows="5" id="mcearea">%YOURCONTENT%</textarea>-->
+        <div id="mcearea1" class="mcearea"></div>
 	</body>
 </html>

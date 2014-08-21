@@ -127,7 +127,7 @@ class KFWebView: UIWebView {
     
     private func getValueFromPasteboard(key:String) -> String?{
         let pasteboard = UIPasteboard.generalPasteboard();
-        if(pasteboard.numberOfItems < 0){
+        if(pasteboard.numberOfItems <= 0){
             return nil;
         }
         
