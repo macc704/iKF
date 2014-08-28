@@ -40,6 +40,7 @@ class KFNoteRefView: KFPostRefView {
     }
     
     var cache:String?;
+    var wasFitScale = false;
       
     override func updateFromModel(){
         super.updateFromModel();
@@ -84,12 +85,14 @@ class KFNoteRefView: KFPostRefView {
         
         //update model to view
         if(refView is KFWebView){
-            if(model.isFitScale()){
+            if(wasFitScale == false && model.isFitScale() == true){
                 (refView as KFWebView).scalesPageToFit = true;
+                wasFitScale = true;
                 cache = "";
             }
-            else{
+            else if(wasFitScale == true && model.isFitScale() == false){
                 (refView as KFWebView).scalesPageToFit = false;
+                wasFitScale = false;
                 cache = "";
             }
         }
