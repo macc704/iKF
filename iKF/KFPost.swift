@@ -10,8 +10,15 @@ import UIKit
 
 class KFPost: KFModel {
 
+    var authors:[KFUser]=[];
     var primaryAuthor:KFUser?;
     var canEdit = false;
     var beenRead = false;
+    
+    func canEdit(user:KFUser)->Bool{
+        println(authors);
+        println(user);
+        return contains(authors, user);
+    }
     
 }

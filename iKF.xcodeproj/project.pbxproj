@@ -27,6 +27,9 @@
 		492C10291947563300512591 /* KFSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C10281947563300512591 /* KFSupport.swift */; };
 		492F402D1941F3600038E621 /* KFRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F402B1941F3600038E621 /* KFRegistrationViewController.swift */; };
 		492F402E1941F3600038E621 /* KFRegistrationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 492F402C1941F3600038E621 /* KFRegistrationViewController.xib */; };
+		4930D4A319AFF46900AEAE86 /* copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 4930D4A019AFF46900AEAE86 /* copy.png */; };
+		4930D4A419AFF46900AEAE86 /* nonedit.png in Resources */ = {isa = PBXBuildFile; fileRef = 4930D4A119AFF46900AEAE86 /* nonedit.png */; };
+		4930D4A519AFF46900AEAE86 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 4930D4A219AFF46900AEAE86 /* setting.png */; };
 		494DE5A4195488DD0053F9DF /* KFAppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494DE5A3195488DD0053F9DF /* KFAppUtils.swift */; };
 		494E90C01996FD6800296204 /* KFConnectionLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494E90BF1996FD6800296204 /* KFConnectionLayer.swift */; };
 		495761A91945EEA10017A852 /* KFPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495761A81945EEA10017A852 /* KFPost.swift */; };
@@ -152,6 +155,9 @@
 		492C10281947563300512591 /* KFSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFSupport.swift; sourceTree = "<group>"; };
 		492F402B1941F3600038E621 /* KFRegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFRegistrationViewController.swift; sourceTree = "<group>"; };
 		492F402C1941F3600038E621 /* KFRegistrationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFRegistrationViewController.xib; sourceTree = "<group>"; };
+		4930D4A019AFF46900AEAE86 /* copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = copy.png; sourceTree = "<group>"; };
+		4930D4A119AFF46900AEAE86 /* nonedit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nonedit.png; sourceTree = "<group>"; };
+		4930D4A219AFF46900AEAE86 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting.png; sourceTree = "<group>"; };
 		494DE5A3195488DD0053F9DF /* KFAppUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFAppUtils.swift; sourceTree = "<group>"; };
 		494E90BF1996FD6800296204 /* KFConnectionLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFConnectionLayer.swift; sourceTree = "<group>"; };
 		495761A81945EEA10017A852 /* KFPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFPost.swift; sourceTree = "<group>"; };
@@ -339,6 +345,9 @@
 		492F40221941F2AB0038E621 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				4930D4A019AFF46900AEAE86 /* copy.png */,
+				4930D4A119AFF46900AEAE86 /* nonedit.png */,
+				4930D4A219AFF46900AEAE86 /* setting.png */,
 				4964029B198D7FFF009504B7 /* anchor.png */,
 				4964029C198D7FFF009504B7 /* bin.png */,
 				4964029D198D7FFF009504B7 /* buildson.png */,
@@ -639,13 +648,16 @@
 				496402BB198D7FFF009504B7 /* edit.png in Resources */,
 				499DE6E519894A3000BA2209 /* KFImageSizeSelectionViewController.xib in Resources */,
 				496402CA198D7FFF009504B7 /* unlock.png in Resources */,
+				4930D4A419AFF46900AEAE86 /* nonedit.png in Resources */,
 				499DE6EB1989893400BA2209 /* KFViewSelectionController.xib in Resources */,
 				490E75E119411653004E8BF7 /* KFLoginViewController.xib in Resources */,
 				49C78D64194105C2004D3404 /* Images.xcassets in Resources */,
 				499DE6F51989A9CF00BA2209 /* KFCanvasViewController.xib in Resources */,
+				4930D4A519AFF46900AEAE86 /* setting.png in Resources */,
 				496402CC198D7FFF009504B7 /* window.png in Resources */,
 				496402BE198D7FFF009504B7 /* lock.png in Resources */,
 				496402C9198D7FFF009504B7 /* showinplace.png in Resources */,
+				4930D4A319AFF46900AEAE86 /* copy.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -35,11 +35,19 @@ class KFModel: NSObject{
         }
     }
     
+    override var description: String {
+        return "a KFModel: \(guid)";
+    }
+    
 //    override func hash() -> UInt{
 //        return 3;
 //    }
     
 
+}
+
+func ==(left: KFModel, right: KFModel) -> Bool{
+    return left.guid == right.guid;
 }
 
 //- (void) attach: (id)observer selector: (SEL)selector{

@@ -12,10 +12,12 @@
 
 @implementation iKFJSONScanner{
     NSDictionary* _views;
+    NSMutableDictionary* _users;
 }
 
 - (id) init{
     _views = [[NSDictionary alloc] init];
+    _users = [[NSMutableDictionary alloc] init];
     return self;
 }
 
@@ -104,10 +106,12 @@
         model.title = eachPost[@"title"];
         model.content = eachPost[@"body"];
         
-        KFUser* user = [[KFUser alloc] init];
-        user.firstName = eachPost[@"authors"][0][@"firstName"];
-        user.lastName = eachPost[@"authors"][0][@"lastName"];
-        model.primaryAuthor = user;
+        //KFUser* user = [[KFUser alloc] init];
+        //user.firstName = eachPost[@"authors"][0][@"firstName"];
+        //user.lastName = eachPost[@"authors"][0][@"lastName"];
+        //model.primaryAuthor = user;
+        model.authors = [self parseUsers: eachPost[@"authors"]];
+        model.primaryAuthor = [self getUserById: eachPost[@"primaryAuthorId"]];
         reference.post = model;
     }
     else if([eachPost[@"postType"] isEqualToString: @"DRAWING"]){
@@ -137,6 +141,26 @@
     //    },
     
     [models setObject: reference forKey: reference.guid];
+}
+
+- (NSArray*) parseUsers: (id)jsons {
+    NSMutableArray* users = [[NSMutableArray alloc] init];
+    for (id json in jsons) {
+        NSString* guid = json[@"guid"];
+        KFUser* user = [self getUserById: guid];
+        user.guid = guid;
+        user.firstName = json[@"firstName"];
+        user.lastName = json[@"lastName"];
+        [users addObject: user];
+    }
+    return users;
+}
+
+- (KFUser*) getUserById: (NSString*)userId{
+    if(_users[userId] == nil){
+       _users[userId] = [[KFUser alloc] init];
+    }
+    return _users[userId];
 }
 
 - (NSArray*) scanScaffolds:(id)jsonobj{
