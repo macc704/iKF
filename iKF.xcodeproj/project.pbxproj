@@ -30,6 +30,7 @@
 		4930D4A319AFF46900AEAE86 /* copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 4930D4A019AFF46900AEAE86 /* copy.png */; };
 		4930D4A419AFF46900AEAE86 /* nonedit.png in Resources */ = {isa = PBXBuildFile; fileRef = 4930D4A119AFF46900AEAE86 /* nonedit.png */; };
 		4930D4A519AFF46900AEAE86 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 4930D4A219AFF46900AEAE86 /* setting.png */; };
+		4930D4A719AFFA5B00AEAE86 /* lockedviewlink.png in Resources */ = {isa = PBXBuildFile; fileRef = 4930D4A619AFFA5B00AEAE86 /* lockedviewlink.png */; };
 		494DE5A4195488DD0053F9DF /* KFAppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494DE5A3195488DD0053F9DF /* KFAppUtils.swift */; };
 		494E90C01996FD6800296204 /* KFConnectionLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494E90BF1996FD6800296204 /* KFConnectionLayer.swift */; };
 		495761A91945EEA10017A852 /* KFPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495761A81945EEA10017A852 /* KFPost.swift */; };
@@ -158,6 +159,7 @@
 		4930D4A019AFF46900AEAE86 /* copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = copy.png; sourceTree = "<group>"; };
 		4930D4A119AFF46900AEAE86 /* nonedit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nonedit.png; sourceTree = "<group>"; };
 		4930D4A219AFF46900AEAE86 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting.png; sourceTree = "<group>"; };
+		4930D4A619AFFA5B00AEAE86 /* lockedviewlink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lockedviewlink.png; sourceTree = "<group>"; };
 		494DE5A3195488DD0053F9DF /* KFAppUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFAppUtils.swift; sourceTree = "<group>"; };
 		494E90BF1996FD6800296204 /* KFConnectionLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFConnectionLayer.swift; sourceTree = "<group>"; };
 		495761A81945EEA10017A852 /* KFPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFPost.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 		492F40221941F2AB0038E621 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				4930D4A619AFFA5B00AEAE86 /* lockedviewlink.png */,
 				4930D4A019AFF46900AEAE86 /* copy.png */,
 				4930D4A119AFF46900AEAE86 /* nonedit.png */,
 				4930D4A219AFF46900AEAE86 /* setting.png */,
@@ -653,6 +656,7 @@
 				490E75E119411653004E8BF7 /* KFLoginViewController.xib in Resources */,
 				49C78D64194105C2004D3404 /* Images.xcassets in Resources */,
 				499DE6F51989A9CF00BA2209 /* KFCanvasViewController.xib in Resources */,
+				4930D4A719AFFA5B00AEAE86 /* lockedviewlink.png in Resources */,
 				4930D4A519AFF46900AEAE86 /* setting.png in Resources */,
 				496402CC198D7FFF009504B7 /* window.png in Resources */,
 				496402BE198D7FFF009504B7 /* lock.png in Resources */,

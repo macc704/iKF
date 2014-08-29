@@ -56,6 +56,9 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
         let row:Int! = indexPath?.row;
         let cell:UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: nil);
         cell.textLabel.text = self.views[row].title;
+        if(self.views[row].published == false){
+            cell.textLabel.text = "\(cell.textLabel.text) (private)";
+        }
         return cell;
     }
     

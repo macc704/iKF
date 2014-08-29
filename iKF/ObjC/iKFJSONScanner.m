@@ -41,6 +41,7 @@
         KFView* model = [[KFView alloc] init];
         model.guid = each[@"guid"];
         model.title = each[@"title"];
+        model.published = [each[@"published"] boolValue];
         [models addObject: model];
         [_views setValue:model forKey:model.guid];//create cash
     }

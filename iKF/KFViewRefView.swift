@@ -22,7 +22,12 @@ class KFViewRefView: KFPostRefView {
         self.backgroundColor = UIColor.clearColor();
         
         //icon
-        let icon = UIImageView(image: UIImage(named: "viewlink.png"));
+        var icon:UIImageView;
+        if((ref.post as KFView).published == true){
+            icon = UIImageView(image: UIImage(named: "viewlink.png"));
+        }else{
+            icon = UIImageView(image: UIImage(named: "lockedviewlink.png"));
+        }
         icon.frame = CGRectMake(5, 5, 20, 20);
         self.addSubview(icon);
         

@@ -9,6 +9,7 @@
 class KFView: KFPost {
 
     var title = "";
+    var published = false;
     
     func description() -> String{
         return title;
