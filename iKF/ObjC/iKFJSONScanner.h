@@ -22,4 +22,6 @@
 - (NSArray*) scanScaffolds:(id)jsonobj;
 - (NSString*) generateRandomString: (int)len;
 
+- (NSDictionary*) getUsers;
+
 @end

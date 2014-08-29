@@ -157,6 +157,10 @@
     return users;
 }
 
+- (NSDictionary*) getUsers{
+    return _users;
+}
+
 - (KFUser*) getUserById: (NSString*)userId{
     if(_users[userId] == nil){
        _users[userId] = [[KFUser alloc] init];

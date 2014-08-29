@@ -129,6 +129,11 @@ class KFService: NSObject {
         return self.currentUser!;
     }
     
+    //temporary
+    func getUsers() -> [String:KFUser]{
+        return jsonScanner!.getUsers() as [String:KFUser];
+    }
+    
     func refreshCurrentUser() -> Bool{
         let url = "\(self.baseURL!)rest/account/currentUser";
         let req = KFHttpRequest(urlString: url, method: "GET");

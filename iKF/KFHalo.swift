@@ -122,6 +122,7 @@ class KFHalo: UIView {
             installHaloHandle("new.png", locator: locator.TOP_LEFT(), tap: "handleNewNote:", pan: nil);
             installHaloHandle("newpicture.png", locator: locator.TOP(), tap: "handleNewPicture:", pan: nil);
             installHaloHandle("newviewlink.png", locator: locator.BOTTOM_LEFT(), tap: "handleNewViewlink:", pan: nil);
+            installHaloHandle("setting.png", locator: locator.BOTTOM(), tap: "handleViewSetting:", pan: nil);
             installHaloHandle("newview.png", locator: locator.BOTTOM_RIGHT(), tap: "handleNewView:", pan: nil);
             installHaloHandle("window.png", locator: locator.TOP_RIGHT(), tap: "handleOpenWindow:", pan: nil);
         }
@@ -170,6 +171,28 @@ class KFHalo: UIView {
     func handleShowMenu(recognizer:UIGestureRecognizer){
         let postRefView = target as KFPostRefView;
         let c = KFMenuViewController(menues:postRefView.getMenuItems());
+        let from = recognizer.view;
+        KFPopoverManager.getInstance().openInPopover(from, controller: c);
+    }
+    
+    func handleViewSetting(recognizer:UIGestureRecognizer){
+        var menus:[KFMenu] = [];
+        let users:[KFUser] = KFService.getInstance().getUsers().values.array;
+        for user in users {
+            let menu = KFDefaultMenu();
+            menu.name = user.getFullName();
+            menu.checked = controller!.getCurrentView().canEdit(user);
+            menu.exec = {
+                let newValue = !menu.checked;
+                menu.checked = newValue;
+////                refModel.setOperatable(!refModel.isOperatable());
+////                operatable.checked = refModel.isOperatable();
+////                self.updateFromModel();
+////                self.mainController.updatePostRef(self);
+            }
+            menus.append(menu);
+        }
+        let c = KFMenuViewController(menues:menus);
         let from = recognizer.view;
         KFPopoverManager.getInstance().openInPopover(from, controller: c);
     }
