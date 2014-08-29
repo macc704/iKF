@@ -12,6 +12,7 @@ class KFViewEditViewController: UIViewController {
 
     @IBOutlet weak var okButton: UIButton!
     @IBOutlet weak var nameTextfield: UITextField!
+    @IBOutlet weak var accessToggle: UISegmentedControl!
     
     var viewIdToLink:String?;
     var loc:CGPoint?;
@@ -37,7 +38,9 @@ class KFViewEditViewController: UIViewController {
     
     @IBAction func okPressed(sender: AnyObject) {
         let text = nameTextfield.text;
-        KFService.getInstance().createView(text, viewIdToLink: viewIdToLink, location: loc);
+        let isPrivate = accessToggle.selectedSegmentIndex == 1;
+        //0 means public
+        KFService.getInstance().createView(text, viewIdToLink: viewIdToLink, location: loc, isPrivate: isPrivate);
         KFPopoverManager.getInstance().closeCurrentPopover();
     }
 

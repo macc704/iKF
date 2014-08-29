@@ -270,13 +270,14 @@ class KFService: NSObject {
         return true;
     }
     
-    func createView(title:String, viewIdToLink:String?, location:CGPoint?) -> Bool{
+    func createView(title:String, viewIdToLink:String?, location:CGPoint?, isPrivate:Bool) -> Bool{
         let url = "\(self.baseURL!)rest/mobile/createView/";
         let req = KFHttpRequest(urlString: url, method: "POST");
         if(viewIdToLink != nil){
             req.addParam("viewIdToLink", value: viewIdToLink!);
             req.addParam("x", value: String(Int(location!.x)));
             req.addParam("y", value: String(Int(location!.y)));
+            req.addParam("isPrivate", value: "\(isPrivate)");
         }
         req.addParam("title", value: title);
         let res = KFHttpConnection.connect(req);

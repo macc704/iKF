@@ -16,8 +16,8 @@ class KFPost: KFModel {
     var beenRead = false;
     
     func canEdit(user:KFUser)->Bool{
-        println(authors);
-        println(user);
+        //println(authors);
+        //println(user);
         return contains(authors, user);
     }
     
