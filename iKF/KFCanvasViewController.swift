@@ -475,25 +475,6 @@ class KFCanvasViewController: UIViewController {
         KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: pickerController);
     }
     
-    func openViewlinkSelectionViewer(popOverLoc:UIView, creatingPoint:CGPoint){
-        let viewSelectionController = KFViewSelectionController();
-        viewSelectionController.setBarTitle("Create Link to View");
-        viewSelectionController.views = KFService.getInstance().currentRegistration.community.views.array;
-        KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: viewSelectionController);
-        let fromViewId = getCurrentView().guid;
-        viewSelectionController.selectedHandler = {(view:KFView) in
-            KFPopoverManager.getInstance().closeCurrentPopover();
-            KFService.getInstance().createViewLink(fromViewId, toViewId: view.guid , location: creatingPoint);
-            return;
-        }
-    }
-    
-    func openCreateView(popOverLoc:UIView, creatingPoint:CGPoint){
-        let controller = KFViewEditViewController();
-        controller.loc = creatingPoint;
-        controller.viewIdToLink = self.getCurrentView().guid;
-        KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: controller);
-    }
     
     /* event handlers */
     

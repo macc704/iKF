@@ -77,11 +77,15 @@ class KFHalo: UIView {
             installHaloHandle("rotation.png", locator: locator.BOTTOM_LEFT(), tap: nil, pan: "handlePanRotation:");
             installHaloHandle("buildson.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
             
+            installHaloHandle("moveto.png", locator: locator.BOTTOM_QUARTER_LEFT(), tap: "handleMovePostToView:", pan: nil);
+            
             let rotationGesture = UIRotationGestureRecognizer(target: self, action: "handleGestureRotation:");
             self.addGestureRecognizer(rotationGesture);
             
             let pinchGesture = UIPinchGestureRecognizer(target: self, action: "handleGestureResize:");
             self.addGestureRecognizer(pinchGesture);
+            
+            
         }
         
         if(target is KFNoteRefView){
@@ -103,6 +107,7 @@ class KFHalo: UIView {
                 installHaloHandle("list", locator: locator.RIGHT(), tap: "handleShowMenu:", pan: nil);
             }
             installHaloHandle("buildson.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
+            installHaloHandle("moveto.png", locator: locator.BOTTOM_QUARTER_LEFT(), tap: "handleMovePostToView:", pan: nil);
         }
         
         if(target is KFWebBrowserView){
@@ -173,6 +178,8 @@ class KFHalo: UIView {
         });
     }
     
+    // ----------- handlers -----------
+    
     func handleShowMenu(recognizer:UIGestureRecognizer){
         let postRefView = target as KFPostRefView;
         let c = KFMenuViewController(menues:postRefView.getMenuItems());
@@ -180,6 +187,22 @@ class KFHalo: UIView {
         c.fit();
         let from = recognizer.view;
         KFPopoverManager.getInstance().openInPopover(from, controller: c);
+    }
+    
+    func handleMovePostToView(recognizer:UIGestureRecognizer){
+        let post = (target as KFPostRefView).model.post!;
+        let popOverLoc = recognizer.view;
+        let creatingPoint = CGPointMake(50, 50);
+        let viewSelectionController = KFViewSelectionController();
+        viewSelectionController.setBarTitle("Copy to");
+        viewSelectionController.views = KFService.getInstance().currentRegistration.community.views.array;
+        KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: viewSelectionController);
+        //let fromViewId = controller!.getCurrentView().guid;
+        viewSelectionController.selectedHandler = {(view:KFView) in
+            KFPopoverManager.getInstance().closeCurrentPopover();
+            KFService.getInstance().createPostLink(view.guid, toPostId: post.guid , location:creatingPoint);
+            return;
+        }
     }
     
     func handlePostSetting(recognizer:UIGestureRecognizer){
@@ -247,11 +270,31 @@ class KFHalo: UIView {
     }
     
     func handleNewViewlink(recognizer:UIGestureRecognizer){
-        controller?.openViewlinkSelectionViewer(recognizer.view, creatingPoint: self.target.frame.origin);
+        self.openViewlinkSelectionViewer(recognizer.view, creatingPoint: self.target.frame.origin);
+    }
+    
+    private func openViewlinkSelectionViewer(popOverLoc:UIView, creatingPoint:CGPoint){
+        let viewSelectionController = KFViewSelectionController();
+        viewSelectionController.setBarTitle("Create Link to View");
+        viewSelectionController.views = KFService.getInstance().currentRegistration.community.views.array;
+        KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: viewSelectionController);
+        let fromViewId = controller!.getCurrentView().guid;
+        viewSelectionController.selectedHandler = {(view:KFView) in
+            KFPopoverManager.getInstance().closeCurrentPopover();
+            KFService.getInstance().createViewLink(fromViewId, toViewId: view.guid , location: creatingPoint);
+            return;
+        }
     }
     
     func handleNewView(recognizer:UIGestureRecognizer){
-        controller?.openCreateView(recognizer.view, creatingPoint: self.target.frame.origin);
+        self.openCreateView(recognizer.view, creatingPoint: self.target.frame.origin);
+    }
+    
+    private func openCreateView(popOverLoc:UIView, creatingPoint:CGPoint){
+        let c = KFViewEditViewController();
+        c.loc = creatingPoint;
+        c.viewIdToLink = self.controller!.getCurrentView().guid;
+        KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: c);
     }
     
     func handleLock(recognizer:UIGestureRecognizer){
