@@ -92,6 +92,14 @@ class KFHaloLocator: NSObject {
         return {return CGRect(x: self.quarterRightP(), y: self.topP(), width: self.size, height: self.size)};
     }
     
+    func BOTTOM_QUARTER_LEFT() -> (()->CGRect){
+        return {return CGRect(x: self.quarterLeftP(), y: self.bottomP(), width: self.size, height: self.size)};
+    }
+    
+    func BOTTOM_QUARTER_RIGHT() -> (()->CGRect){
+        return {return CGRect(x: self.quarterRightP(), y: self.bottomP(), width: self.size, height: self.size)};
+    }
+    
     
     //        CGRectMake((self.frame.size.width - SIZE) , 0, SIZE, SIZE)]; anchor
     //        GRectMake(self.frame.size.width - SIZE , self.frame.size.height - SIZE, SIZE, SIZE)]; resize

@@ -20,6 +20,7 @@ class KFMenuViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     
     private var menues:[KFMenu] = [];
+    var closeHandler:(()->())?;
     var selectedHandler:((KFMenu)->())?;
     
     required init(coder aDecoder: NSCoder!) {
@@ -41,6 +42,12 @@ class KFMenuViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.preferredContentSize = CGSizeMake(self.view.frame.width, CGFloat(44*menues.count));
         //        let a = NSIndexPath(index: 0);
         //        tableView.selectRowAtIndexPath(a, animated: false, scrollPosition: UITableViewScrollPosition.Middle);
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        if(closeHandler != nil){
+            closeHandler!();
+        }
     }
     
     override func didReceiveMemoryWarning() {

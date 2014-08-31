@@ -7,9 +7,10 @@
 //
 
 class KFRegistration: KFModel {
-
-    var communityId = "";
-    var communityName = "";
+    
+    //    var communityId = "";
+    //    var communityName = "";
+    var community:KFCommunity!;
     var roleName = "";
     
 }

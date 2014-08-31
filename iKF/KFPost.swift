@@ -10,15 +10,27 @@ import UIKit
 
 class KFPost: KFModel {
 
-    var authors:[KFUser]=[];
+    var authors:[String:KFUser]=[:];
     var primaryAuthor:KFUser?;
     var canEdit = false;
     var beenRead = false;
     
+    var dirtyAuthors = false;
+    
     func canEdit(user:KFUser)->Bool{
         //println(authors);
         //println(user);
-        return contains(authors, user);
+        return contains(authors.keys, user.guid);
     }
     
+    func setAuthor(user:KFUser, value:Bool){
+        if(!contains(authors.keys, user.guid) && value == true){            //add
+            authors[user.guid] = user;
+            dirtyAuthors = true;
+        }else if(!contains(authors.keys, user.guid) && value == false) {           //remove
+            authors.removeValueForKey(user.guid);
+            dirtyAuthors = true;
+        }
+    }
+        
 }

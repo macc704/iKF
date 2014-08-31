@@ -23,7 +23,7 @@ class KFCanvasViewController: UIViewController {
     private var registration:KFRegistration?;
     private var postRefs:[String: KFReference] = [:];
     private var postRefViews:[String: KFPostRefView] = [:];
-    private var views:[KFView] = [];
+//    private var views:[KFView] = [];
     private var currentView:KFView?
     private var reusableRefViews:[String: KFPostRefView] = [:];
     
@@ -76,16 +76,17 @@ class KFCanvasViewController: UIViewController {
     func go(registration:KFRegistration){
         KFAppUtils.executeInBackThread({
             self.registration = registration;
-            self.user = KFService.getInstance().getCurrentUser();
+            self.user = KFService.getInstance().currentUser;
             let enterResult = KFService.getInstance().enterCommunity(registration);
             if(enterResult == false){
                 //alert
                 return;
             }
             
-            self.views = KFService.getInstance().refreshViews();
+            KFService.getInstance().refreshMembers();//order imporatnt
+            KFService.getInstance().refreshViews();//order important
             self.initialized = true;
-            self.setCurrentView(self.views[0]);
+            self.setCurrentView(KFService.getInstance().currentRegistration.community.views.array[0]);
             //set current view do below
             //self.cometThreadNumber++;
             //self.startComet(self.cometThreadNumber);
@@ -341,7 +342,7 @@ class KFCanvasViewController: UIViewController {
     
     private func showViewSelection(){
         let viewSelectionController = KFViewSelectionController();
-        viewSelectionController.views = self.views;
+        viewSelectionController.views = KFService.getInstance().currentRegistration.community.views.array;
         let popController = UIPopoverController(contentViewController: viewSelectionController);
         viewSelectionController.selectedHandler = {(view:KFView) in
             popController.dismissPopoverAnimated(true);
@@ -476,7 +477,7 @@ class KFCanvasViewController: UIViewController {
     
     func openViewlinkSelectionViewer(popOverLoc:UIView, creatingPoint:CGPoint){
         let viewSelectionController = KFViewSelectionController();
-        viewSelectionController.views = self.views;
+        viewSelectionController.views = KFService.getInstance().currentRegistration.community.views.array;
         KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: viewSelectionController);
         let fromViewId = getCurrentView().guid;
         viewSelectionController.selectedHandler = {(view:KFView) in
