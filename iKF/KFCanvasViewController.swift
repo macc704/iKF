@@ -477,6 +477,7 @@ class KFCanvasViewController: UIViewController {
     
     func openViewlinkSelectionViewer(popOverLoc:UIView, creatingPoint:CGPoint){
         let viewSelectionController = KFViewSelectionController();
+        viewSelectionController.setBarTitle("Create Link to View");
         viewSelectionController.views = KFService.getInstance().currentRegistration.community.views.array;
         KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: viewSelectionController);
         let fromViewId = getCurrentView().guid;

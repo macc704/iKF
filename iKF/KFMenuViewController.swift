@@ -17,11 +17,15 @@ protocol KFMenu{
 
 class KFMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var titleBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
     
     private var menues:[KFMenu] = [];
     var closeHandler:(()->())?;
     var selectedHandler:((KFMenu)->())?;
+    
+    private var barTitle:String!;
+    private var fitsize = false;
     
     required init(coder aDecoder: NSCoder!) {
         super.init(coder: aDecoder)
@@ -38,10 +42,31 @@ class KFMenuViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         
+        if(barTitle != nil){
+            titleBar.topItem.title = barTitle;
+        }
+        
+        if(fitsize){
+            let original:CGFloat = 568;//iphone 4inch
+            let calc:CGFloat = CGFloat(44*menues.count)+titleBar.frame.size.height;
+            let height = min(original, calc);
+            println(height);
+            self.preferredContentSize = CGSizeMake(self.view.frame.width,height);
+        }else{
+            self.preferredContentSize = self.view.frame.size;
+        }
         //        self.preferredContentSize = self.view.frame.size;
-        self.preferredContentSize = CGSizeMake(self.view.frame.width, CGFloat(44*menues.count));
+        
         //        let a = NSIndexPath(index: 0);
         //        tableView.selectRowAtIndexPath(a, animated: false, scrollPosition: UITableViewScrollPosition.Middle);
+    }
+    
+    func setBarTitle(title:String){
+        self.barTitle = title;
+    }
+    
+    func fit(){
+        self.fitsize = true;
     }
     
     override func viewWillDisappear(animated: Bool) {

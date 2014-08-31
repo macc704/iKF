@@ -16,6 +16,8 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
     var views:[KFView] = [];
     var selectedHandler:((KFView)->())?;
     
+    var barTitle = "Views";
+    
     required init(coder aDecoder: NSCoder!) {
         super.init(coder: aDecoder)
     }
@@ -33,6 +35,11 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
         self.preferredContentSize = self.view.frame.size;
 //        let a = NSIndexPath(index: 0);
 //        tableView.selectRowAtIndexPath(a, animated: false, scrollPosition: UITableViewScrollPosition.Middle);
+        navigationBar.topItem.title = barTitle;
+    }
+    
+    func setBarTitle(title:String){
+        self.barTitle = title;
     }
 
     override func didReceiveMemoryWarning() {

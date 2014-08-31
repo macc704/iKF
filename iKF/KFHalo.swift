@@ -176,6 +176,8 @@ class KFHalo: UIView {
     func handleShowMenu(recognizer:UIGestureRecognizer){
         let postRefView = target as KFPostRefView;
         let c = KFMenuViewController(menues:postRefView.getMenuItems());
+        c.setBarTitle("Properties:")
+        c.fit();
         let from = recognizer.view;
         KFPopoverManager.getInstance().openInPopover(from, controller: c);
     }
@@ -202,6 +204,7 @@ class KFHalo: UIView {
             menus.append(menu);
         }
         let c = KFMenuViewController(menues:menus);
+        c.setBarTitle("Co-Authors");
         c.closeHandler = {
             if(post.dirtyAuthors){
                 post.dirtyAuthors = false;
