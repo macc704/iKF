@@ -11,13 +11,13 @@
 #import "iKF-Swift.h"
 
 @implementation iKFJSONScanner{
-//    NSDictionary* _views;
-//    NSMutableDictionary* _users;
+    //    NSDictionary* _views;
+    //    NSMutableDictionary* _users;
 }
 
 - (id) init{
-//    _views = [[NSDictionary alloc] init];
-//    _users = [[NSMutableDictionary alloc] init];
+    //    _views = [[NSDictionary alloc] init];
+    //    _users = [[NSMutableDictionary alloc] init];
     return self;
 }
 
@@ -31,7 +31,7 @@
         community.guid = each[@"sectionId"];
         community.name = each[@"sectionTitle"];
         model.community = community;
-
+        
         [models addObject: model];
     }
     return models;
@@ -70,7 +70,52 @@
     return models;
 }
 
-- (NSDictionary*) scanPosts: (id)jsonobj{
+- (NSArray*) scanPosts: (id)jsonobj{
+    NSMutableArray* models = [[NSMutableArray alloc] init];
+    for (id each in jsonobj) {
+        KFPost* post = [self scanPost: each];
+        if(post != nil){
+            [models addObject: post];
+        }
+    }
+    return models;
+}
+
+- (KFPost*) scanPost: (id)eachPost{
+    
+    KFPost* model;
+    if([eachPost[@"postType"] isEqualToString: @"NOTE"]){
+        KFNote* note = [[KFNote alloc] initWithoutAuthor];
+        model = note;
+        note.title = eachPost[@"title"];
+        note.content = eachPost[@"body"];
+    }
+    else if([eachPost[@"postType"] isEqualToString: @"DRAWING"]){
+        KFDrawing* drawing = [[KFDrawing alloc] init];
+        model = drawing;
+        if([[eachPost allKeys] containsObject: @"body"]){//swift beta4 does not allow nil value
+            drawing.content = eachPost[@"body"];
+        }
+    }else{
+        NSLog(@"Warning: unsupported type= %@", eachPost[@"postType"]);
+        return nil;
+    }
+    
+    // common
+    model.guid = eachPost[@"guid"];
+    NSMutableDictionary* authors = [[NSMutableDictionary alloc] init];
+    for (id eachAuthor in eachPost[@"authors"]) {
+        authors[eachAuthor[@"guid"]] = [self getUserById: eachAuthor[@"guid"]];
+    }
+    model.authors = authors;
+    model.primaryAuthor = [self getUserById: eachPost[@"primaryAuthorId"]];
+    model.created = eachPost[@"created"];
+    model.modified = eachPost[@"modified"];
+    
+    return model;
+}
+
+- (NSDictionary*) scanPostRefs: (id)jsonobj{
     NSMutableDictionary* models = [NSMutableDictionary dictionary];
     for (id each in jsonobj[@"viewPostRefs"]) {
         [self scanPostRef:each models:models];
@@ -114,40 +159,21 @@
         reference.post = model;
         [models setObject: reference forKey: reference.guid];
         return;
-    }else{//normal postinfo
-        //NSLog(@"%@", each[@"display"]);
-        reference.displayFlags = [each[@"display"] intValue];
-        reference.width = [each[@"width"] intValue];
-        reference.height = [each[@"height"] intValue];
-        reference.rotation = [each[@"rotation"] doubleValue];
     }
     
-    NSDictionary* eachPost = each[@"postInfo"];
-    if([eachPost[@"postType"] isEqualToString: @"NOTE"]){
-        KFNote* model = [[KFNote alloc] initWithoutAuthor];
-        model.guid = eachPost[@"guid"];
-        model.title = eachPost[@"title"];
-        model.content = eachPost[@"body"];
-        
-        NSMutableDictionary* authors = [[NSMutableDictionary alloc] init];
-        for (id eachAuthor in eachPost[@"authors"]) {
-           authors[eachAuthor[@"guid"]] = [self getUserById: eachAuthor[@"guid"]];
-        }
-        model.authors = authors;
-        model.primaryAuthor = [self getUserById: eachPost[@"primaryAuthorId"]];
-        reference.post = model;
-    }
-    else if([eachPost[@"postType"] isEqualToString: @"DRAWING"]){
-        KFDrawing* model = [[KFDrawing alloc] init];
-        model.guid = eachPost[@"guid"];
-        if([[eachPost allKeys] containsObject: @"body"]){//swift beta4 does not allow nil value
-            model.content = eachPost[@"body"];
-        }
-        reference.post = model;
-    }else{
-        NSLog(@"Warning: unsupported type= %@", eachPost[@"postType"]);
+    //normal postinfo
+    //NSLog(@"%@", each[@"display"]);
+    reference.displayFlags = [each[@"display"] intValue];
+    reference.width = [each[@"width"] intValue];
+    reference.height = [each[@"height"] intValue];
+    reference.rotation = [each[@"rotation"] doubleValue];
+    
+    // scan postinfo
+    KFPost* post = [self scanPost: each[@"postInfo"]];
+    if(post == nil){
         return;
     }
+    reference.post = post;
     
     reference.post.beenRead = [each[@"statusForAuthor"][@"beenRead"] boolValue];
     reference.post.canEdit = [each[@"statusForAuthor"][@"canEdit"] boolValue];

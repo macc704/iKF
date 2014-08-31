@@ -130,11 +130,13 @@ class KFHalo: UIView {
         
         if(target is KFCreationToolView){
             installHaloHandle("new.png", locator: locator.TOP_LEFT(), tap: "handleNewNote:", pan: nil);
-            installHaloHandle("newpicture.png", locator: locator.TOP(), tap: "handleNewPicture:", pan: nil);
-            installHaloHandle("newviewlink.png", locator: locator.BOTTOM_LEFT(), tap: "handleNewViewlink:", pan: nil);
-            installHaloHandle("setting.png", locator: locator.BOTTOM(), tap: "handlePostSetting:", pan: nil);
-            installHaloHandle("newview.png", locator: locator.BOTTOM_RIGHT(), tap: "handleNewView:", pan: nil);
-            installHaloHandle("window.png", locator: locator.TOP_RIGHT(), tap: "handleOpenWindow:", pan: nil);
+            installHaloHandle("newpicture.png", locator: locator.TOP_QUARTER_LEFT(), tap: "handleNewPicture:", pan: nil);
+            installHaloHandle("newviewlink.png", locator: locator.TOP(), tap: "handleNewViewlink:", pan: nil);
+            installHaloHandle("moveto.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleNewPostlink:", pan: nil);
+            installHaloHandle("newview.png", locator: locator.TOP_RIGHT(), tap: "handleNewView:", pan: nil);
+            
+            installHaloHandle("setting.png", locator: locator.BOTTOM_LEFT(), tap: "handlePostSetting:", pan: nil);
+            installHaloHandle("window.png", locator: locator.BOTTOM_RIGHT(), tap: "handleOpenWindow:", pan: nil);
         }
     }
     
@@ -285,6 +287,24 @@ class KFHalo: UIView {
             return;
         }
     }
+    
+    func handleNewPostlink(recognizer:UIGestureRecognizer){
+        self.openPostlinkSelectionViewer(recognizer.view, creatingPoint: self.target.frame.origin);
+    }
+    
+    private func openPostlinkSelectionViewer(popOverLoc:UIView, creatingPoint:CGPoint){
+        let viewSelectionController = KFViewSelectionController();
+        viewSelectionController.setBarTitle("Create PostLink Here");
+        viewSelectionController.models = KFService.getInstance().getAllPosts().array;
+        KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: viewSelectionController);
+        let fromViewId = controller!.getCurrentView().guid;
+        viewSelectionController.selectedHandler = {(model:KFModel) in
+            KFPopoverManager.getInstance().closeCurrentPopover();
+            KFService.getInstance().createPostLink(fromViewId, toPostId: model.guid , location: creatingPoint);
+            return;
+        }
+    }
+
     
     func handleNewView(recognizer:UIGestureRecognizer){
         self.openCreateView(recognizer.view, creatingPoint: self.target.frame.origin);

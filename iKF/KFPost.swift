@@ -11,9 +11,11 @@ import UIKit
 class KFPost: KFModel {
 
     var authors:[String:KFUser]=[:];
-    var primaryAuthor:KFUser?;
+    var primaryAuthor:KFUser!;
     var canEdit = false;
     var beenRead = false;
+    var created:String! = "";
+    var modified:String! = "";
     
     var dirtyAuthors = false;
     
@@ -32,5 +34,6 @@ class KFPost: KFModel {
             dirtyAuthors = true;
         }
     }
-        
+
+    
 }

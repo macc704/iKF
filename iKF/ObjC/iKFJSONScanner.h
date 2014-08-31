@@ -20,7 +20,8 @@
 - (NSArray*) scanRegistrations: (id)jsonobj;
 - (NSArray*) scanViews: (id)jsonobj;
 - (NSArray*) scanUsers: (id)jsonobj;
-- (NSDictionary*) scanPosts: (id)jsonobj;
+- (NSArray*) scanPosts: (id)jsonobj;
+- (NSDictionary*) scanPostRefs: (id)jsonobj;
 - (NSArray*) scanScaffolds:(id)jsonobj;
 - (NSString*) generateRandomString: (int)len;
 

@@ -16,7 +16,7 @@ class KFCanvasViewController: UIViewController {
     @IBOutlet weak var viewsButton: UIBarButtonItem!
     
     private var canvasView = KFCanvasView();
-    private let creationToolView = KFCreationToolView(frame: CGRect(x:0, y:0, width:90, height:35));
+    private let creationToolView = KFCreationToolView(frame: CGRect(x:0, y:0, width:120, height:35));
     private var imagePickerManager:KFImagePicker?;
     
     private var user:KFUser?;
@@ -294,7 +294,7 @@ class KFCanvasViewController: UIViewController {
     private func refreshAllPostsAsync(){
         KFAppUtils.executeInBackThread({
             let viewId = self.getCurrentView().guid;
-            let newRefs = KFService.getInstance().getPosts(viewId);
+            let newRefs = KFService.getInstance().getPostRefs(viewId);
             KFAppUtils.executeInGUIThread({
                 self.refreshPosts(newRefs);
             });

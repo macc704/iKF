@@ -232,7 +232,22 @@ class KFService: NSObject {
         return models;
     }
     
-    func getPosts(viewId:String) -> [String: KFReference]{
+    func getAllPosts() -> KFModelArray<KFPost>{
+        let url = "\(self.baseURL!)rest/mobile/getPostsOrdered/\(currentRegistration.community.guid)";
+        let req = KFHttpRequest(urlString: url, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        var models = KFModelArray<KFPost>();
+        if(res.getStatusCode() != 200){
+            handleError("in getPostsOrdered() code=\(res.getStatusCode())");
+            return models;
+        }
+        for post in jsonScanner!.scanPosts(res.getBodyAsJSON()) {
+            models.add(post as KFPost);
+        }
+        return models;
+    }
+    
+    func getPostRefs(viewId:String) -> [String: KFReference]{
         let url = "\(self.baseURL!)rest/content/getView/\(viewId)";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
@@ -242,7 +257,7 @@ class KFService: NSObject {
         }
         let json: AnyObject = res.getBodyAsJSON();
         //println(res.getBodyAsJSON())
-        return jsonScanner!.scanPosts(res.getBodyAsJSON()) as [String: KFReference];
+        return jsonScanner!.scanPostRefs(res.getBodyAsJSON()) as [String: KFReference];
     }
     
     func updatePostAuthors(post:KFPost) -> Bool{

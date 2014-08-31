@@ -42,7 +42,20 @@ class KFNote: KFPost {
         self.content = "Test";
         return self;
     }
-
+    
+    override func toString() -> String {
+        //        var text = "Note:";
+        var text = "";
+        text += "\"\(title)\"";
+        if(self.primaryAuthor != nil){
+            text = text + " by " + self.primaryAuthor.firstName;
+        }
+        if(self.modified != nil){
+            text = text + " at " + self.modified;
+        }
+        return text;
+    }
+    
 }
 
 
