@@ -70,7 +70,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         
         scrollView.contentSize = layerContainerView.frame.size;
         scrollView.maximumZoomScale = 4.0;
-        scrollView.minimumZoomScale = 0.4;
+        scrollView.minimumZoomScale = 0.2;
     }
     
     func clearViews(){
