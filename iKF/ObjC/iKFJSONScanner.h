@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class KFModelArray;
 @class KFUser;
 @class KFNote;
 @class KFPost;
@@ -18,8 +19,11 @@
 
 - (NSArray*) scanRegistrations: (id)jsonobj;
 - (NSArray*) scanViews: (id)jsonobj;
+- (NSArray*) scanUsers: (id)jsonobj;
 - (NSDictionary*) scanPosts: (id)jsonobj;
 - (NSArray*) scanScaffolds:(id)jsonobj;
 - (NSString*) generateRandomString: (int)len;
+
+//- (NSDictionary*) getUsers;
 
 @end

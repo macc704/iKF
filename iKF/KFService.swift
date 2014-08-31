@@ -21,12 +21,13 @@ class KFService: NSObject {
     private var jsonScanner:iKFJSONScanner?;
     
     //cache
-    private var currentRegistration:KFRegistration?;
-    private var views = [String: KFView]();
+    var currentRegistration:KFRegistration!;
+    var currentUser:KFUser!;
+    
     private var editTemplate:String?;
     private var readTemplate:String?;
     private var mobileJS:String?;
-    private var currentUser:KFUser?;
+
     //    var globalEditWebView:iKFWebView?;//tmp
     
     private override init(){
@@ -40,12 +41,12 @@ class KFService: NSObject {
         
         //clear cache
         self.currentRegistration = nil;
-        self.views = [String: KFView]();
+        self.currentUser = nil;
+        //self.views = [String: KFView]();
         self.editTemplate = nil;
         self.readTemplate = nil;
         self.mobileJS = nil;
-        self.currentUser = nil;
-//        globalEditWebView = nil;
+        //        globalEditWebView = nil;
     }
     
     func getHost() -> String{
@@ -75,26 +76,26 @@ class KFService: NSObject {
         return res;
     }
     
-//    func getMobileJS() -> String?{
-//        if(mobileJS == nil){
-//            mobileJS = getURL("https://dl.dropboxusercontent.com/u/11409191/ikf/kfmobile.js");
-//        }
-//        return mobileJS;
-//    }
+    //    func getMobileJS() -> String?{
+    //        if(mobileJS == nil){
+    //            mobileJS = getURL("https://dl.dropboxusercontent.com/u/11409191/ikf/kfmobile.js");
+    //        }
+    //        return mobileJS;
+    //    }
     
-//    func getEditTemplate() -> String?{
-//        if(editTemplate == nil){
-//            editTemplate = getURL("http://dl.dropboxusercontent.com/u/11409191/ikf/edit.html");
-//        }
-//        return editTemplate;
-//    }
-//    
-//    func getReadTemplate() -> String?{
-//        if(readTemplate == nil){
-//            readTemplate = getURL("http://dl.dropboxusercontent.com/u/11409191/ikf/read.html");
-//        }
-//        return readTemplate;
-//    }
+    //    func getEditTemplate() -> String?{
+    //        if(editTemplate == nil){
+    //            editTemplate = getURL("http://dl.dropboxusercontent.com/u/11409191/ikf/edit.html");
+    //        }
+    //        return editTemplate;
+    //    }
+    //
+    //    func getReadTemplate() -> String?{
+    //        if(readTemplate == nil){
+    //            readTemplate = getURL("http://dl.dropboxusercontent.com/u/11409191/ikf/read.html");
+    //        }
+    //        return readTemplate;
+    //    }
     
     func getURL(urlString:String) -> String?{
         let req = KFHttpRequest(urlString: urlString, method: "GET");
@@ -122,12 +123,21 @@ class KFService: NSObject {
         return res.getStatusCode() == 200;
     }
     
-    func getCurrentUser() -> KFUser{
-        if(currentUser == nil){
-            refreshCurrentUser();
-        }
-        return self.currentUser!;
-    }
+//    func getCurrentUser() -> KFUser{
+//        if(currentUser == nil){
+//            refreshCurrentUser();
+//        }
+//        return self.currentUser!;
+//    }
+//    
+//    func getCurrentRegistration() -> KFRegistration{
+//        return self.currentRegistration;
+//    }
+    
+    //temporary
+    //    func getUsers() -> [String:KFUser]{
+    //        return jsonScanner!.getUsers() as [String:KFUser];
+    //    }
     
     func refreshCurrentUser() -> Bool{
         let url = "\(self.baseURL!)rest/account/currentUser";
@@ -183,20 +193,43 @@ class KFService: NSObject {
         return true;
     }
     
-    func refreshViews() -> [KFView]{
-        return getViews(self.currentRegistration!.communityId);
+    func refreshViews(){
+        self.currentRegistration.community.views = getViews(self.currentRegistration.community.guid);
     }
     
-    func getViews(communityId:String) -> [KFView]{
+    private func getViews(communityId:String) -> KFModelArray<KFView>{
         //        let url = "\(self.baseURL!)rest/content/getSectionViews/\(communityId)";
         let url = "\(self.baseURL!)rest/mobile/getViewsOrdered/\(communityId)";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
+        var models = KFModelArray<KFView>();
         if(res.getStatusCode() != 200){
             handleError("in getViews() code=\(res.getStatusCode())");
-            return [];
+            return models;
         }
-        return jsonScanner!.scanViews(res.getBodyAsJSON()) as  [KFView];
+        for view in jsonScanner!.scanViews(res.getBodyAsJSON()) {
+            models.add(view as KFView);
+        }
+        return models;
+    }
+    
+    func refreshMembers(){
+        self.currentRegistration.community.members = getMembers(self.currentRegistration.community.guid);
+    }
+    
+    private func getMembers(communityId:String) -> KFModelArray<KFUser>{
+        let url = "\(self.baseURL!)rest/mobile/getMembers/\(communityId)";
+        let req = KFHttpRequest(urlString: url, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        var models = KFModelArray<KFUser>();
+        if(res.getStatusCode() != 200){
+            handleError("in getViews() code=\(res.getStatusCode())");
+            return models;
+        }
+        for view in jsonScanner!.scanUsers(res.getBodyAsJSON()) {
+            models.add(view as KFUser);
+        }
+        return models;
     }
     
     func getPosts(viewId:String) -> [String: KFReference]{
@@ -210,6 +243,18 @@ class KFService: NSObject {
         let json: AnyObject = res.getBodyAsJSON();
         //println(res.getBodyAsJSON())
         return jsonScanner!.scanPosts(res.getBodyAsJSON()) as [String: KFReference];
+    }
+    
+    func updatePostAuthors(post:KFPost) -> Bool{
+        let url = "\(self.baseURL!)rest/mobile/updatePostAuthors/\(post.guid)";
+        let req = KFHttpRequest(urlString: url, method: "POST");
+        req.addParams("authorIds", values: post.authors.keys.array);
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError("in updatePostRef() code=\(res.getStatusCode())");
+            return false;
+        }
+        return true;
     }
     
     func updatePostRef(viewId:String, postRef:KFReference) -> Bool{
@@ -385,7 +430,7 @@ class KFService: NSObject {
     
     private func sendAttachment(data:NSData, mime:String, filename:String) -> AnyObject!{
         // generate url
-        let url = "\(self.baseURL!)rest/file/easyUpload/" + currentRegistration!.communityId;
+        let url = "\(self.baseURL!)rest/file/easyUpload/" + currentRegistration.community.guid;
         
         // generate form boundary
         let key = jsonScanner?.generateRandomString(16);

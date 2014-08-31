@@ -56,8 +56,13 @@ class KFHalo: UIView {
     
     private func installHaloHandles(){
         if(target is KFPostRefView){
+            let post = (target as KFPostRefView).model.post!;
             installHaloHandle("bin.png", locator: locator.TOP_LEFT(), tap: "handleDelete:", pan: nil);
             installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMove:");
+            
+            if(post.canEdit(KFService.getInstance().currentUser)){
+                installHaloHandle("setting.png", locator: locator.BOTTOM_QUARTER_RIGHT(), tap: "handlePostSetting:", pan: nil);
+            }
         }
         
         if(target is KFDrawingRefView){
@@ -82,7 +87,7 @@ class KFHalo: UIView {
         if(target is KFNoteRefView){
             let note = target as KFNoteRefView;
             installHaloHandle("read.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleRead:", pan: nil);
-            if(note.model.post!.canEdit(KFService.getInstance().getCurrentUser())){
+            if(note.model.post!.canEdit(KFService.getInstance().currentUser)){
                 installHaloHandle("edit.png", locator: locator.TOP_RIGHT(), tap: "handleEdit:", pan: nil);
             }else{
                 installHaloHandle("nonedit.png", locator: locator.TOP_RIGHT(), tap: nil, pan: nil);
@@ -122,6 +127,7 @@ class KFHalo: UIView {
             installHaloHandle("new.png", locator: locator.TOP_LEFT(), tap: "handleNewNote:", pan: nil);
             installHaloHandle("newpicture.png", locator: locator.TOP(), tap: "handleNewPicture:", pan: nil);
             installHaloHandle("newviewlink.png", locator: locator.BOTTOM_LEFT(), tap: "handleNewViewlink:", pan: nil);
+            installHaloHandle("setting.png", locator: locator.BOTTOM(), tap: "handlePostSetting:", pan: nil);
             installHaloHandle("newview.png", locator: locator.BOTTOM_RIGHT(), tap: "handleNewView:", pan: nil);
             installHaloHandle("window.png", locator: locator.TOP_RIGHT(), tap: "handleOpenWindow:", pan: nil);
         }
@@ -159,17 +165,55 @@ class KFHalo: UIView {
                 handle.frame = self.handles[handle]!();
             }
             }, completion: {
-            (x:Bool) in
+                (x:Bool) in
                 // not necessary
                 //            for handle in self.handles.keys{
                 //                handle.frame = self.handles[handle]!();
                 //            }
-            });
+        });
     }
     
     func handleShowMenu(recognizer:UIGestureRecognizer){
         let postRefView = target as KFPostRefView;
         let c = KFMenuViewController(menues:postRefView.getMenuItems());
+        c.setBarTitle("Properties:")
+        c.fit();
+        let from = recognizer.view;
+        KFPopoverManager.getInstance().openInPopover(from, controller: c);
+    }
+    
+    func handlePostSetting(recognizer:UIGestureRecognizer){
+        var post:KFPost!;
+        if(target is KFCreationToolView){
+            post = controller!.getCurrentView();
+        }else{
+            post = (target as KFPostRefView).model.post!;
+        }
+        
+        var menus:[KFMenu] = [];
+        let users:[KFUser] = KFService.getInstance().currentRegistration.community.members.array;
+        for user in users {
+            let menu = KFDefaultMenu();
+            menu.name = user.getFullName();
+            menu.checked = post.canEdit(user);
+            menu.exec = {
+                let newValue = !menu.checked;
+                menu.checked = newValue;
+                post.setAuthor(user, value:newValue);
+            }
+            menus.append(menu);
+        }
+        let c = KFMenuViewController(menues:menus);
+        c.setBarTitle("Co-Authors");
+        c.closeHandler = {
+            if(post.dirtyAuthors){
+                post.dirtyAuthors = false;
+                KFAppUtils.executeInBackThread({
+                    KFService.getInstance().updatePostAuthors(post);
+                    return;
+                });
+            }
+        };
         let from = recognizer.view;
         KFPopoverManager.getInstance().openInPopover(from, controller: c);
     }
@@ -243,7 +287,7 @@ class KFHalo: UIView {
             postTarget.model.height = 100;
         }
         postTarget.model.setShowInPlace(showInPlace);
-//        postTarget.updatePanEventBinding();
+        //        postTarget.updatePanEventBinding();
         controller?.updatePostRef(postTarget);
         postTarget.updateFromModel();
         controller?.hideHalo();

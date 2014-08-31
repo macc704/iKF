@@ -27,6 +27,18 @@ class KFHttpRequest: NSObject {
         params[key] = escapeString(value);
     }
     
+    func addParams(key:String, values:[String]){
+        var jsonStr = "[";
+        for value in values{
+            if(jsonStr.utf16Count != 1){
+                jsonStr += ",";
+            }
+            jsonStr += "\"" + value + "\"";
+        }
+        jsonStr += "]";
+        addParam(key, value: jsonStr);
+    }
+    
     func updateParams(){
         if(params.count <= 0){
             //nsRequest.setValue(nil, forHTTPHeaderField:"Content-Type");

@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KFMenuViewController" customModule="iKF" customModuleProvider="target">
             <connections>
                 <outlet property="tableView" destination="2Jz-Oe-AU4" id="BgE-kK-MdT"/>
+                <outlet property="titleBar" destination="opN-cg-HnX" id="csO-DP-wLD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,14 +17,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GQH-hU-WC6">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <rect key="frame" x="0.0" y="44" width="320" height="524"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2Jz-Oe-AU4">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </tableView>
                     </subviews>
                 </scrollView>
+                <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="opN-cg-HnX">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <items>
+                        <navigationItem id="x6V-Xv-hxq"/>
+                    </items>
+                </navigationBar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>

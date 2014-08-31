@@ -11,13 +11,13 @@
 #import "iKF-Swift.h"
 
 @implementation iKFJSONScanner{
-    NSDictionary* _views;
-    NSMutableDictionary* _users;
+//    NSDictionary* _views;
+//    NSMutableDictionary* _users;
 }
 
 - (id) init{
-    _views = [[NSDictionary alloc] init];
-    _users = [[NSMutableDictionary alloc] init];
+//    _views = [[NSDictionary alloc] init];
+//    _users = [[NSMutableDictionary alloc] init];
     return self;
 }
 
@@ -26,24 +26,46 @@
     for (id each in jsonobj) {
         KFRegistration* model = [[KFRegistration alloc] init];
         model.guid = each[@"guid"];
-        model.communityId = each[@"sectionId"];
-        model.communityName = each[@"sectionTitle"];
         model.roleName = each[@"roleInfo"][@"name"];
+        KFCommunity* community = [[KFCommunity alloc] init];
+        community.guid = each[@"sectionId"];
+        community.name = each[@"sectionTitle"];
+        model.community = community;
+
         [models addObject: model];
     }
     return models;
 }
 
 - (NSArray*) scanViews: (id)jsonobj{
-    _views = [[NSMutableDictionary alloc] init];//create cash
-    NSMutableArray* models = [NSMutableArray array];
+    NSMutableArray* models = [[NSMutableArray alloc] init];
     for (id each in jsonobj) {
         KFView* model = [[KFView alloc] init];
         model.guid = each[@"guid"];
         model.title = each[@"title"];
         model.published = [each[@"published"] boolValue];
+        
+        NSMutableDictionary* authors = [[NSMutableDictionary alloc] init];
+        for (id eachAuthor in each[@"authors"]) {
+            authors[eachAuthor[@"guid"]] = [self getUserById: eachAuthor[@"guid"]];
+        }
+        model.authors = authors;
+        model.primaryAuthor = [self getUserById: each[@"primaryAuthorId"]];
+        
         [models addObject: model];
-        [_views setValue:model forKey:model.guid];//create cash
+    }
+    return models;
+}
+
+- (NSArray*) scanUsers: (id)jsonobj{
+    NSMutableArray* models = [[NSMutableArray alloc] init];
+    for (id json in jsonobj) {
+        NSString* guid = json[@"guid"];
+        KFUser* model = [[KFUser alloc] init];
+        model.guid = guid;
+        model.firstName = json[@"firstName"];
+        model.lastName = json[@"lastName"];
+        [models addObject: model];
     }
     return models;
 }
@@ -80,10 +102,10 @@
     if(each[@"viewReferenceId"] != nil){
         //KFView* model = [[KFView alloc] init];
         NSString* guid = each[@"viewReferenceId"];
-        KFView* model = _views[guid];
+        KFView* model = [[KFService getInstance].currentRegistration.community getView: guid];
         if(model == nil){
             [[KFService getInstance] refreshViews];
-            model = _views[guid];//retry
+            model = [[KFService getInstance].currentRegistration.community getView: guid];//retry
             if(model == nil){
                 NSLog(@"Warning: view link to not found id= %@", guid);
                 return;
@@ -107,11 +129,11 @@
         model.title = eachPost[@"title"];
         model.content = eachPost[@"body"];
         
-        //KFUser* user = [[KFUser alloc] init];
-        //user.firstName = eachPost[@"authors"][0][@"firstName"];
-        //user.lastName = eachPost[@"authors"][0][@"lastName"];
-        //model.primaryAuthor = user;
-        model.authors = [self parseUsers: eachPost[@"authors"]];
+        NSMutableDictionary* authors = [[NSMutableDictionary alloc] init];
+        for (id eachAuthor in eachPost[@"authors"]) {
+           authors[eachAuthor[@"guid"]] = [self getUserById: eachAuthor[@"guid"]];
+        }
+        model.authors = authors;
         model.primaryAuthor = [self getUserById: eachPost[@"primaryAuthorId"]];
         reference.post = model;
     }
@@ -144,24 +166,12 @@
     [models setObject: reference forKey: reference.guid];
 }
 
-- (NSArray*) parseUsers: (id)jsons {
-    NSMutableArray* users = [[NSMutableArray alloc] init];
-    for (id json in jsons) {
-        NSString* guid = json[@"guid"];
-        KFUser* user = [self getUserById: guid];
-        user.guid = guid;
-        user.firstName = json[@"firstName"];
-        user.lastName = json[@"lastName"];
-        [users addObject: user];
-    }
-    return users;
-}
+//- (NSDictionary*) getUsers{
+//    return _users;
+//}
 
 - (KFUser*) getUserById: (NSString*)userId{
-    if(_users[userId] == nil){
-       _users[userId] = [[KFUser alloc] init];
-    }
-    return _users[userId];
+    return [[KFService getInstance].currentRegistration.community getMember: userId];
 }
 
 - (NSArray*) scanScaffolds:(id)jsonobj{

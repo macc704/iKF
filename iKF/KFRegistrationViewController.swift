@@ -31,7 +31,7 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
         self.registrationsPicker.delegate = self;
         //        self.navBar.topItem.title = "Hello, " + KFService.getInstance().getCurrentUser().getFullName();
         self.navigationItem.title = "Welcome to " + host;
-        self.usernameLabel.text = KFService.getInstance().getCurrentUser().getFullName();
+        self.usernameLabel.text = KFService.getInstance().currentUser.getFullName();
         self.refreshRegistrations();
     }
     
@@ -61,7 +61,7 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     func pickerView(pickerView: UIPickerView!, titleForRow row: Int, forComponent component: Int) -> String!{
         let registration:KFRegistration = self.registrations[row];
-        return registration.communityName + " ( as " + registration.roleName + " )";
+        return registration.community.name + " ( as " + registration.roleName + " )";
     }
     
     func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int){
