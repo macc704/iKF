@@ -213,6 +213,10 @@ class KFService: NSObject {
     }
     
     func updatePostRef(viewId:String, postRef:KFReference) -> Bool{
+        postRef.location.x = max(5, postRef.location.x);//avoid minus
+        postRef.location.y = max(5, postRef.location.y);//avoid minus
+        postRef.location.x = min(3995, postRef.location.x);//avoid over range
+        postRef.location.y = min(2995, postRef.location.y);//avoid over range
         if(postRef.isShowInPlace() && postRef.width < 50){
             postRef.width = 50;
         }
