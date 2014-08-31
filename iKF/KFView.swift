@@ -14,4 +14,12 @@ class KFView: KFPost {
     func description() -> String{
         return title;
     }
+    
+    override func toString() -> String {
+        var text = self.title;
+        if(self.published == false){
+            text += " (private)";
+        }
+        return text;
+    }
 }

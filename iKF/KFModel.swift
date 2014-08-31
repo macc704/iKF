@@ -39,6 +39,10 @@ class KFModel: NSObject{
         return "a KFModel: \(guid)";
     }
     
+    func toString() -> String {
+        return description;
+    }
+    
 //    override func hash() -> UInt{
 //        return 3;
 //    }

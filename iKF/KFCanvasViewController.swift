@@ -342,11 +342,11 @@ class KFCanvasViewController: UIViewController {
     
     private func showViewSelection(){
         let viewSelectionController = KFViewSelectionController();
-        viewSelectionController.views = KFService.getInstance().currentRegistration.community.views.array;
+        viewSelectionController.models = KFService.getInstance().currentRegistration.community.views.array;
         let popController = UIPopoverController(contentViewController: viewSelectionController);
-        viewSelectionController.selectedHandler = {(view:KFView) in
+        viewSelectionController.selectedHandler = {(model:KFModel) in
             popController.dismissPopoverAnimated(true);
-            self.setCurrentView(view);
+            self.setCurrentView(model as KFView);
         }
         popController.presentPopoverFromBarButtonItem(self.viewsButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
     }

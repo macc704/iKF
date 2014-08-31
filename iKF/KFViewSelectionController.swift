@@ -13,8 +13,8 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
     
-    var views:[KFView] = [];
-    var selectedHandler:((KFView)->())?;
+    var models:[KFModel] = [];
+    var selectedHandler:((KFModel)->())?;
     
     var barTitle = "Views";
     
@@ -54,7 +54,7 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
-        return views.count;
+        return models.count;
     }
     
     // mark - Table view delegate
@@ -62,21 +62,17 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
     func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
         let row:Int! = indexPath?.row;
         let cell:UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: nil);
-        cell.textLabel.text = self.views[row].title;
-        if(self.views[row].published == false){
-            cell.textLabel.text = "\(cell.textLabel.text) (private)";
-        }
+        cell.textLabel.text = self.models[row].toString();
         return cell;
     }
     
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!){
         if(selectedHandler != nil){
             let row:Int! = indexPath?.row;
-            selectedHandler!(self.views[row]);
+            selectedHandler!((self.models[row]));
             self.dismissViewControllerAnimated(false, completion: nil);
         }
     }
-    
 
     /*
     // MARK: - Navigation

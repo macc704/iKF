@@ -195,12 +195,12 @@ class KFHalo: UIView {
         let creatingPoint = CGPointMake(50, 50);
         let viewSelectionController = KFViewSelectionController();
         viewSelectionController.setBarTitle("Copy to");
-        viewSelectionController.views = KFService.getInstance().currentRegistration.community.views.array;
+        viewSelectionController.models = KFService.getInstance().currentRegistration.community.views.array;
         KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: viewSelectionController);
         //let fromViewId = controller!.getCurrentView().guid;
-        viewSelectionController.selectedHandler = {(view:KFView) in
+        viewSelectionController.selectedHandler = {(model:KFModel) in
             KFPopoverManager.getInstance().closeCurrentPopover();
-            KFService.getInstance().createPostLink(view.guid, toPostId: post.guid , location:creatingPoint);
+            KFService.getInstance().createPostLink(model.guid, toPostId: post.guid , location:creatingPoint);
             return;
         }
     }
@@ -276,12 +276,12 @@ class KFHalo: UIView {
     private func openViewlinkSelectionViewer(popOverLoc:UIView, creatingPoint:CGPoint){
         let viewSelectionController = KFViewSelectionController();
         viewSelectionController.setBarTitle("Create Link to View");
-        viewSelectionController.views = KFService.getInstance().currentRegistration.community.views.array;
+        viewSelectionController.models = KFService.getInstance().currentRegistration.community.views.array;
         KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: viewSelectionController);
         let fromViewId = controller!.getCurrentView().guid;
-        viewSelectionController.selectedHandler = {(view:KFView) in
+        viewSelectionController.selectedHandler = {(model:KFModel) in
             KFPopoverManager.getInstance().closeCurrentPopover();
-            KFService.getInstance().createViewLink(fromViewId, toViewId: view.guid , location: creatingPoint);
+            KFService.getInstance().createViewLink(fromViewId, toViewId: model.guid , location: creatingPoint);
             return;
         }
     }
