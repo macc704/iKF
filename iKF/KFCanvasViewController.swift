@@ -31,7 +31,7 @@ class KFCanvasViewController: UIViewController {
     private var cometThreadNumber:Int = 0;
     private var cometVersion:Int = 0;
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

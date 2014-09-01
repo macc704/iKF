@@ -14,10 +14,10 @@ class KFNetworkUtil: NSObject {
         if(data == nil){
             return "nil";
         }
-        var str = NSString(data: data, encoding:NSUTF8StringEncoding);
-        if(str == nil){
-            return "nil";
-        }
+        var str:NSString = NSString(data: data!, encoding:NSUTF8StringEncoding);
+        //        if(str == nil){
+        //            return "nil";
+        //        }
         return str;
     }
 }

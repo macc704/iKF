@@ -17,7 +17,7 @@ class KFHalo: UIView {
     private var locator:KFHaloLocator!;
     private var handles:[UIView:(()->CGRect)]=[:];//handle, locator
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

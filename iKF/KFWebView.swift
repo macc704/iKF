@@ -33,9 +33,9 @@ class KFWebView: UIWebView {
     }
     
     class func clearPostInstances(){
-        if(postInstances == nil){
-            return;
-        }
+        //        if(postInstances == nil){
+        //            return;
+        //        }
         print(postInstances.count);
         for instance in postInstances{
             if(instance.value != nil){
@@ -48,9 +48,9 @@ class KFWebView: UIWebView {
     class func clearAllInstances(){
         self.clearPostInstances();
         
-        if(instances == nil){
-            return;
-        }
+        //        if(instances == nil){
+        //            return;
+        //        }
         for instance in instances{
             if(instance.value != nil){
                 instance.value!.close();
@@ -62,7 +62,7 @@ class KFWebView: UIWebView {
     var performPasteAsReference:((String)->())?;//(id)
     var kfModel:KFModel?;//KFModel*
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

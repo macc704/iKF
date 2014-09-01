@@ -9,7 +9,7 @@
 import UIKit
 
 class A:iKFLayerView{
-    override func hitTest(point: CGPoint, withEvent event: UIEvent!) -> UIView! {
+    override func hitTest(point: CGPoint, withEvent event: UIEvent!) -> UIView? {
         println(event);
         println("a");
         let allTouches = event.allTouches();
@@ -36,7 +36,7 @@ class KFTestWebView: UIView {
     private let webView = UIWebView();
     let cover = A();
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

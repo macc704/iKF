@@ -33,7 +33,7 @@ class KFHttpResponse: NSObject {
     
     func getBodyAsJSON() -> AnyObject{
         var error: NSError?
-        let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(bodyData, options: NSJSONReadingOptions.AllowFragments, error: &error);
+        let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(bodyData!, options: NSJSONReadingOptions.AllowFragments, error: &error);
         return json;
     }
 }

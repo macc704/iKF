@@ -19,7 +19,7 @@ class KFResource: NSObject {
         //        println(path);
 //        println(NSBundle.mainBundle().bundlePath);
 //        println(NSBundle.mainBundle().bundleURL);
-        let text = NSString.stringWithContentsOfFile(path, encoding: NSUTF8StringEncoding, error: nil);
+        let text = NSString.stringWithContentsOfFile(path!, encoding: NSUTF8StringEncoding, error: nil);
 //        //println(a);
 //        let url = NSURL(fileURLWithPath: path);
 //        let req = NSURLRequest(URL: url);

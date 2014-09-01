@@ -17,7 +17,7 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet var registrationsPicker : UIPickerView!
     @IBOutlet weak var usernameLabel: UILabel!
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

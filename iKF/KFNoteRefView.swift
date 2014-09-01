@@ -14,7 +14,7 @@ class KFNoteRefView: KFPostRefView {
     
     var attachedTo:KFPost?;
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

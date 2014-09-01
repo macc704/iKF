@@ -18,7 +18,7 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     var scaleX = CGFloat(1.0);
     var scaleY = CGFloat(1.0);
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

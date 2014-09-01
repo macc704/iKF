@@ -18,7 +18,7 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
     
     var barTitle = "Views";
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

@@ -21,7 +21,7 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     //    var nav:UINavigationController!;
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

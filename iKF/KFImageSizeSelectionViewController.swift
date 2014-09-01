@@ -41,7 +41,7 @@ class KFImageSizeSelectionViewController: UIViewController {
     
     //private var handler: ((CGFloat) -> ())?
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -60,7 +60,7 @@ class KFImageSizeSelectionViewController: UIViewController {
     }
     
     private func updateImageInfo(){
-        if(imageContainer){
+        if(imageContainer != nil){
             let imgWidth = self.image!.size.width;
             let imgHeight = self.image!.size.height;
             labelSize.text = "\(imgWidth) x \(imgHeight)";

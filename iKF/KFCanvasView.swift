@@ -21,7 +21,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     
     private var halo:KFHalo?;
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

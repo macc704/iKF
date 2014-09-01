@@ -27,7 +27,7 @@ class KFMenuViewController: UIViewController, UITableViewDelegate, UITableViewDa
     private var barTitle:String!;
     private var fitsize = false;
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

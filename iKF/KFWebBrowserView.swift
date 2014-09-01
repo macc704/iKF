@@ -56,7 +56,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         mainController?.unlockSuppressScroll();
     }
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
