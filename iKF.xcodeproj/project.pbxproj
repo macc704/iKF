@@ -594,7 +594,7 @@
 				TargetAttributes = {
 					49C78D53194105C2004D3404 = {
 						CreatedOnToolsVersion = 6.0;
-						DevelopmentTeam = B66PC57289;
+						DevelopmentTeam = WRTM6EBGP5;
 					};
 					49C78D68194105C2004D3404 = {
 						CreatedOnToolsVersion = 6.0;
@@ -867,8 +867,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 芳昭 松澤 (8MH2XY48Z2)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Yoshiaki Matsuzawa (WRTM6EBGP5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yoshiaki Matsuzawa (WRTM6EBGP5)";
 				INFOPLIST_FILE = iKF/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -886,8 +886,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 芳昭 松澤 (8MH2XY48Z2)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Yoshiaki Matsuzawa (WRTM6EBGP5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Yoshiaki Matsuzawa (WRTM6EBGP5)";
 				INFOPLIST_FILE = iKF/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
