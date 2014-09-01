@@ -19,6 +19,9 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet var serverPicker : UIPickerView!
     @IBOutlet weak var serverNameField: UITextField!
     
+    @IBOutlet weak var labelVersion: UILabel!
+    @IBOutlet weak var labelBuild: UILabel!
+    @IBOutlet weak var labelBuildDate: UILabel!
     //    var nav:UINavigationController!;
     
     required init(coder aDecoder: NSCoder) {
@@ -31,6 +34,13 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let version = NSBundle.mainBundle().infoDictionary["CFBundleShortVersionString"]! as String;
+        labelVersion.text = version;
+        let build = NSBundle.mainBundle().infoDictionary["CFBundleVersion"]! as String;
+        labelBuild.text = build;
+        let date = iKFUtil.getBuildDate() + " " + iKFUtil.getBuildTime();
+        labelBuildDate.text = date;
         
         ////nav = UINavigationController(rootViewController: self);
         //self.navigationController = UINavigationController(rootViewController: self);
