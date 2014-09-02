@@ -10,7 +10,8 @@
 #import "iKFNoteReadViewController.h"
 #import "iKFNoteEditViewController.h"
 #import "iKFNoteEditViewBySource.h"
-#import "iKFNoteEditViewByTinyMCE.h"
+//#import "iKFNoteEditViewByTinyMCE.h"
+#import "iKF-Swift.h"
 
 @implementation iKFCompositeNoteViewController{
     iKFNoteReadViewController* controllerA;
@@ -27,7 +28,7 @@
         controllerA.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Read" image:nil selectedImage:nil];
         [self addChildViewController: controllerA];
         
-        controllerC = [[iKFNoteEditViewController alloc] initWithView:(iKFAbstractNoteEditView*)[[iKFNoteEditViewByTinyMCE alloc] init]];
+        controllerC = [[iKFNoteEditViewController alloc] initWithView:(iKFAbstractNoteEditView*)[[KFNoteEditViewByTinyMCE alloc] init]];
         controllerC.view.backgroundColor = [UIColor whiteColor];
         controllerC.editView.closableController = self;
         controllerC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Edit" image:nil selectedImage:nil];

@@ -13,13 +13,13 @@
 		490E75B5194111A8004E8BF7 /* iKFCommonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E757B194111A8004E8BF7 /* iKFCommonView.m */; };
 		490E75B7194111A8004E8BF7 /* iKFCompositeNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E757F194111A8004E8BF7 /* iKFCompositeNoteViewController.m */; };
 		490E75C2194111A8004E8BF7 /* iKFNoteEditViewBySource.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E7595194111A8004E8BF7 /* iKFNoteEditViewBySource.m */; };
-		490E75C3194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E7597194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.m */; };
 		490E75C4194111A8004E8BF7 /* iKFNoteEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E7599194111A8004E8BF7 /* iKFNoteEditViewController.m */; };
 		490E75C8194111A8004E8BF7 /* iKFNoteReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E75A0194111A8004E8BF7 /* iKFNoteReadView.m */; };
 		490E75C9194111A8004E8BF7 /* iKFNoteReadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 490E75A2194111A8004E8BF7 /* iKFNoteReadViewController.m */; };
 		490E75E019411653004E8BF7 /* KFLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490E75DE19411653004E8BF7 /* KFLoginViewController.swift */; };
 		490E75E119411653004E8BF7 /* KFLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 490E75DF19411653004E8BF7 /* KFLoginViewController.xib */; };
 		491AD84419B668D000B92386 /* KFLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AD84319B668D000B92386 /* KFLayerView.swift */; };
+		491AD84619B66B6700B92386 /* KFNoteEditViewByTinyMCE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AD84519B66B6700B92386 /* KFNoteEditViewByTinyMCE.swift */; };
 		49245907198A952A00242188 /* KFConnectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49245906198A952A00242188 /* KFConnectionViewModel.swift */; };
 		4924590B198A9BDF00242188 /* KFHaloLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924590A198A9BDF00242188 /* KFHaloLocator.swift */; };
 		492C1024194755FE00512591 /* KFScaffoldingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C1022194755FE00512591 /* KFScaffoldingTableViewController.swift */; };
@@ -141,8 +141,6 @@
 		490E757F194111A8004E8BF7 /* iKFCompositeNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFCompositeNoteViewController.m; sourceTree = "<group>"; };
 		490E7594194111A8004E8BF7 /* iKFNoteEditViewBySource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNoteEditViewBySource.h; sourceTree = "<group>"; };
 		490E7595194111A8004E8BF7 /* iKFNoteEditViewBySource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteEditViewBySource.m; sourceTree = "<group>"; };
-		490E7596194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNoteEditViewByTinyMCE.h; sourceTree = "<group>"; };
-		490E7597194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteEditViewByTinyMCE.m; sourceTree = "<group>"; };
 		490E7598194111A8004E8BF7 /* iKFNoteEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNoteEditViewController.h; sourceTree = "<group>"; };
 		490E7599194111A8004E8BF7 /* iKFNoteEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFNoteEditViewController.m; sourceTree = "<group>"; };
 		490E759F194111A8004E8BF7 /* iKFNoteReadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFNoteReadView.h; sourceTree = "<group>"; };
@@ -152,6 +150,7 @@
 		490E75DE19411653004E8BF7 /* KFLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFLoginViewController.swift; sourceTree = "<group>"; };
 		490E75DF19411653004E8BF7 /* KFLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFLoginViewController.xib; sourceTree = "<group>"; };
 		491AD84319B668D000B92386 /* KFLayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFLayerView.swift; sourceTree = "<group>"; };
+		491AD84519B66B6700B92386 /* KFNoteEditViewByTinyMCE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFNoteEditViewByTinyMCE.swift; sourceTree = "<group>"; };
 		49245906198A952A00242188 /* KFConnectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFConnectionViewModel.swift; sourceTree = "<group>"; };
 		4924590A198A9BDF00242188 /* KFHaloLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFHaloLocator.swift; sourceTree = "<group>"; };
 		492C1022194755FE00512591 /* KFScaffoldingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFScaffoldingTableViewController.swift; sourceTree = "<group>"; };
@@ -346,6 +345,7 @@
 			children = (
 				492C1022194755FE00512591 /* KFScaffoldingTableViewController.swift */,
 				492C1023194755FE00512591 /* KFScaffoldingTableViewController.xib */,
+				491AD84519B66B6700B92386 /* KFNoteEditViewByTinyMCE.swift */,
 			);
 			name = NoteUI;
 			sourceTree = "<group>";
@@ -467,8 +467,6 @@
 				490E75A2194111A8004E8BF7 /* iKFNoteReadViewController.m */,
 				490E7594194111A8004E8BF7 /* iKFNoteEditViewBySource.h */,
 				490E7595194111A8004E8BF7 /* iKFNoteEditViewBySource.m */,
-				490E7596194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.h */,
-				490E7597194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.m */,
 				490E7598194111A8004E8BF7 /* iKFNoteEditViewController.h */,
 				490E7599194111A8004E8BF7 /* iKFNoteEditViewController.m */,
 			);
@@ -745,6 +743,7 @@
 				494E90C01996FD6800296204 /* KFConnectionLayer.swift in Sources */,
 				49842F7419805ACB0012900B /* KFHttpResponse.swift in Sources */,
 				496075031992AD0D00131111 /* KFAccountCreationViewController.swift in Sources */,
+				491AD84619B66B6700B92386 /* KFNoteEditViewByTinyMCE.swift in Sources */,
 				49842F7819805AFC0012900B /* KFHttpConnection.swift in Sources */,
 				495A155E198BC6770056EE50 /* KFWebBrowserView.swift in Sources */,
 				4924590B198A9BDF00242188 /* KFHaloLocator.swift in Sources */,
@@ -759,7 +758,6 @@
 				49842F7619805AE20012900B /* KFHttpRequest.swift in Sources */,
 				4989F572198C96A60053DCC8 /* KFImageView.swift in Sources */,
 				492C10291947563300512591 /* KFSupport.swift in Sources */,
-				490E75C3194111A8004E8BF7 /* iKFNoteEditViewByTinyMCE.m in Sources */,
 				49C5590D1945EF5F00FDFF32 /* KFModel.swift in Sources */,
 				49B938441946404000BD9C0D /* KFViewRefView.swift in Sources */,
 				496075001992759F00131111 /* KFResource.swift in Sources */,
