@@ -44,17 +44,26 @@
         model.guid = each[@"guid"];
         model.title = each[@"title"];
         model.published = [each[@"published"] boolValue];
-        
-        NSMutableDictionary* authors = [[NSMutableDictionary alloc] init];
-        for (id eachAuthor in each[@"authors"]) {
-            authors[eachAuthor[@"guid"]] = [self getUserById: eachAuthor[@"guid"]];
-        }
-        model.authors = authors;
+        model.authors = [self scanAuthors: each[@"authors"]];
         model.primaryAuthor = [self getUserById: each[@"primaryAuthorId"]];
         
         [models addObject: model];
     }
     return models;
+}
+
+- (NSDictionary*) scanAuthors: (id) jsonobj{
+    NSMutableDictionary* authors = [[NSMutableDictionary alloc] init];
+    for (id eachAuthor in jsonobj) {
+        NSString* authorGUID = eachAuthor[@"guid"];
+        KFUser* user = [self getUserById: authorGUID];
+        if(user == nil){
+            NSLog(@"nil user for guid=%@", authorGUID);
+            continue;
+        }
+        authors[authorGUID] = user;
+    }
+    return authors;
 }
 
 - (NSArray*) scanUsers: (id)jsonobj{
@@ -103,11 +112,7 @@
     
     // common
     model.guid = eachPost[@"guid"];
-    NSMutableDictionary* authors = [[NSMutableDictionary alloc] init];
-    for (id eachAuthor in eachPost[@"authors"]) {
-        authors[eachAuthor[@"guid"]] = [self getUserById: eachAuthor[@"guid"]];
-    }
-    model.authors = authors;
+    model.authors = [self scanAuthors: eachPost[@"authors"]];
     model.primaryAuthor = [self getUserById: eachPost[@"primaryAuthorId"]];
     model.created = eachPost[@"created"];
     model.modified = eachPost[@"modified"];
