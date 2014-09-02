@@ -8,7 +8,7 @@
 
 import UIKit
 
-class A:iKFLayerView{
+class A:KFLayerView{
     override func hitTest(point: CGPoint, withEvent event: UIEvent!) -> UIView? {
         println(event);
         println("a");
