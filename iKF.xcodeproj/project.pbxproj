@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4903CD8E1942159D00C698AD /* iKFErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4903CD8D1942159D00C698AD /* iKFErrorHandler.m */; };
-		4904812119B75F2600126571 /* KFCommonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4904812019B75F2600126571 /* KFCommonView.swift */; };
 		4904812319B762A500126571 /* KFAbstractNoteEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4904812219B762A500126571 /* KFAbstractNoteEditView.swift */; };
 		4904812519B763FB00126571 /* KFAbstractNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4904812419B763FB00126571 /* KFAbstractNoteView.swift */; };
 		4904812719B76A6E00126571 /* KFNoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4904812619B76A6E00126571 /* KFNoteEditViewController.swift */; };
@@ -129,7 +128,6 @@
 /* Begin PBXFileReference section */
 		4903CD8C1942159D00C698AD /* iKFErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFErrorHandler.h; sourceTree = "<group>"; };
 		4903CD8D1942159D00C698AD /* iKFErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFErrorHandler.m; sourceTree = "<group>"; };
-		4904812019B75F2600126571 /* KFCommonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFCommonView.swift; sourceTree = "<group>"; };
 		4904812219B762A500126571 /* KFAbstractNoteEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFAbstractNoteEditView.swift; sourceTree = "<group>"; };
 		4904812419B763FB00126571 /* KFAbstractNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KFAbstractNoteView.swift; path = ObjC/KFAbstractNoteView.swift; sourceTree = "<group>"; };
 		4904812619B76A6E00126571 /* KFNoteEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KFNoteEditViewController.swift; path = ../KFNoteEditViewController.swift; sourceTree = "<group>"; };
@@ -337,7 +335,6 @@
 				494D215119B7736100189EE6 /* KFCompositeNoteViewController.swift */,
 				494D214F19B771B200189EE6 /* KFNoteReadViewController.swift */,
 				4904812619B76A6E00126571 /* KFNoteEditViewController.swift */,
-				4904812019B75F2600126571 /* KFCommonView.swift */,
 				4904812419B763FB00126571 /* KFAbstractNoteView.swift */,
 				494D214D19B76EB200189EE6 /* KFNoteReadView.swift */,
 				4904812219B762A500126571 /* KFAbstractNoteEditView.swift */,
@@ -720,7 +717,6 @@
 				494D215019B771B200189EE6 /* KFNoteReadViewController.swift in Sources */,
 				4930D4AB19B399B600AEAE86 /* KFModelArray.swift in Sources */,
 				49C5590F1945F5D700FDFF32 /* KFReference.swift in Sources */,
-				4904812119B75F2600126571 /* KFCommonView.swift in Sources */,
 				499DE6E419894A3000BA2209 /* KFImageSizeSelectionViewController.swift in Sources */,
 				494D214E19B76EB200189EE6 /* KFNoteReadView.swift in Sources */,
 				49EEFF071981627600F78F16 /* KFNetworkUtil.swift in Sources */,
