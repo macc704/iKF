@@ -23,7 +23,7 @@ class KFCanvasViewController: UIViewController {
     private var registration:KFRegistration?;
     private var postRefs:[String: KFReference] = [:];
     private var postRefViews:[String: KFPostRefView] = [:];
-//    private var views:[KFView] = [];
+    //    private var views:[KFView] = [];
     private var currentView:KFView?
     private var reusableRefViews:[String: KFPostRefView] = [:];
     
@@ -343,12 +343,13 @@ class KFCanvasViewController: UIViewController {
     private func showViewSelection(){
         let viewSelectionController = KFViewSelectionController();
         viewSelectionController.models = KFService.getInstance().currentRegistration.community.views.array;
-        let popController = UIPopoverController(contentViewController: viewSelectionController);
+        //        let popController = UIPopoverController(contentViewController: viewSelectionController);
         viewSelectionController.selectedHandler = {(model:KFModel) in
-            popController.dismissPopoverAnimated(true);
+            //            popController.dismissPopoverAnimated(true);
             self.setCurrentView(model as KFView);
         }
-        popController.presentPopoverFromBarButtonItem(self.viewsButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
+        KFPopoverManager.getInstance().openInPopoverFromBarButton(self.viewsButton, controller: viewSelectionController);
+        //        popController.presentPopoverFromBarButtonItem(self.viewsButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
     }
     
     func openNoteEditController(note:KFNote, mode:String){

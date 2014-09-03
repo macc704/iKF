@@ -19,7 +19,7 @@ class KFCompositeNoteViewController: UITabBarController {
     }
     
     override init(){
-        super.init();
+        super.init(nibName: nil, bundle: nil);
         
         readController = KFNoteReadViewController(view: KFNoteReadView());
         readController.view.backgroundColor = UIColor.whiteColor();

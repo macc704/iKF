@@ -24,9 +24,15 @@ class KFPopoverManager: NSObject {
     func openInPopover(locView:UIView, controller:UIViewController) -> UIPopoverController{
         //self.popoverController?.dismissPopoverAnimated(false); //this causes problem not necessary
         self.popoverController = UIPopoverController(contentViewController: controller);
-        //        self.popoverController!.popoverContentSize = controller.view.frame.size;
-        //deprecated use preferredsize instead
+        //self.popoverController!.popoverContentSize = controller.view.frame.size;
+        //deprecated, please use preferredsize instead
         self.popoverController!.presentPopoverFromRect(locView.frame, inView: locView.superview!, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
+        return self.popoverController!;
+    }
+    
+    func openInPopoverFromBarButton(barButton:UIBarButtonItem, controller:UIViewController) -> UIPopoverController{
+        self.popoverController = UIPopoverController(contentViewController: controller);
+        self.popoverController!.presentPopoverFromBarButtonItem(barButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
         return self.popoverController!;
     }
     

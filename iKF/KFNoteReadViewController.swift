@@ -18,8 +18,8 @@ class KFNoteReadViewController: UIViewController {
     }
     
     init(view: KFNoteReadView){
+        super.init(nibName: nil, bundle: nil);
         self.readView = view;
-        super.init();
     }
     
     override func loadView() {

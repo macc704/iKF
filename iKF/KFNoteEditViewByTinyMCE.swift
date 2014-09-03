@@ -162,7 +162,7 @@ class KFNoteEditViewByTinyMCE: KFAbstractNoteEditView, UIWebViewDelegate {
     }
     
     private func isTitleDirty() -> Bool {
-        return cachedTitle != nil && cachedTitle! == titleView.text;
+        return cachedTitle != nil && cachedTitle! != titleView.text;
     }
     
     private func isTextDirty() -> Bool{

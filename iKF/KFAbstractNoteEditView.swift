@@ -44,9 +44,7 @@ class KFAbstractNoteEditView: KFAbstractNoteView {
         }
         
         controller.scaffolds = KFService.getInstance().getScaffolds(self.viewId);
-        KFPopoverManager.getInstance().openInPopover(self, controller: controller);
-        //        let popController = UIPopoverController(contentViewController: controller);
-        //    [popController presentPopoverFromBarButtonItem:self.scaffoldButton permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        KFPopoverManager.getInstance().openInPopoverFromBarButton(scaffoldButton, controller: controller);
     }
     
     func isDirty()->Bool{

@@ -18,7 +18,7 @@ class KFNoteEditViewController: UIViewController {
     }
     
     init(view: KFAbstractNoteEditView){
-        super.init();
+        super.init(nibName: nil, bundle: nil);        
         self.editView = view;
     }
     
