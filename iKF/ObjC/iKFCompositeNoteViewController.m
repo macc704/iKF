@@ -70,7 +70,7 @@
     [self addChildViewController: controllerA];
     if([note canEditMe] == true){
         [self addChildViewController: controllerC];
-        [self addChildViewController: controllerB];
+        //[self addChildViewController: controllerB];
     }
     
     if(editMode == true){
