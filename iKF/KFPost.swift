@@ -23,7 +23,7 @@ class KFPost: KFModel {
         return canEdit(KFService.getInstance().currentUser);
     }
     
-    private func canEdit(user:KFUser)->Bool{
+    func canEdit(user:KFUser)->Bool{
         //println(authors);
         //println(user);
         return contains(authors.keys, user.guid);

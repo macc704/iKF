@@ -224,7 +224,7 @@ class KFHalo: UIView {
         for user in users {
             let menu = KFDefaultMenu();
             menu.name = user.getFullName();
-            menu.checked = post.canEditMe();
+            menu.checked = post.canEdit(user);
             menu.exec = {
                 let newValue = !menu.checked;
                 menu.checked = newValue;
