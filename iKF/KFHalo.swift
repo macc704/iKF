@@ -60,7 +60,7 @@ class KFHalo: UIView {
             installHaloHandle("bin.png", locator: locator.TOP_LEFT(), tap: "handleDelete:", pan: nil);
             installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMove:");
             
-            if(post.canEdit(KFService.getInstance().currentUser)){
+            if(post.canEditMe()){
                 installHaloHandle("setting.png", locator: locator.BOTTOM_QUARTER_RIGHT(), tap: "handlePostSetting:", pan: nil);
             }
         }
@@ -91,7 +91,7 @@ class KFHalo: UIView {
         if(target is KFNoteRefView){
             let note = target as KFNoteRefView;
             installHaloHandle("read.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleRead:", pan: nil);
-            if(note.model.post!.canEdit(KFService.getInstance().currentUser)){
+            if(note.model.post!.canEditMe()){
                 installHaloHandle("edit.png", locator: locator.TOP_RIGHT(), tap: "handleEdit:", pan: nil);
             }else{
                 installHaloHandle("nonedit.png", locator: locator.TOP_RIGHT(), tap: nil, pan: nil);
@@ -113,7 +113,11 @@ class KFHalo: UIView {
         if(target is KFWebBrowserView){
             if((target as KFWebBrowserView).noteRef != nil){
                 installHaloHandle("read.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleRead:", pan: nil);
-                installHaloHandle("edit.png", locator: locator.TOP_RIGHT(), tap: "handleEdit:", pan: nil);
+                if((target as KFWebBrowserView).noteRef!.model.post!.canEditMe()){
+                    installHaloHandle("edit.png", locator: locator.TOP_RIGHT(), tap: "handleEdit:", pan: nil);
+                }else{
+                    installHaloHandle("nonedit.png", locator: locator.TOP_RIGHT(), tap: nil, pan: nil);
+                }
                 installHaloHandle("clip.png", locator: locator.TOP_QUARTER_LEFT(), tap: "handleClip:", pan: nil);
             }
             
@@ -220,7 +224,7 @@ class KFHalo: UIView {
         for user in users {
             let menu = KFDefaultMenu();
             menu.name = user.getFullName();
-            menu.checked = post.canEdit(user);
+            menu.checked = post.canEditMe();
             menu.exec = {
                 let newValue = !menu.checked;
                 menu.checked = newValue;
@@ -304,7 +308,7 @@ class KFHalo: UIView {
             return;
         }
     }
-
+    
     
     func handleNewView(recognizer:UIGestureRecognizer){
         self.openCreateView(recognizer.view, creatingPoint: self.target.frame.origin);

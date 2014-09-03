@@ -19,7 +19,11 @@ class KFPost: KFModel {
     
     var dirtyAuthors = false;
     
-    func canEdit(user:KFUser)->Bool{
+    func canEditMe() -> Bool{
+        return canEdit(KFService.getInstance().currentUser);
+    }
+    
+    private func canEdit(user:KFUser)->Bool{
         //println(authors);
         //println(user);
         return contains(authors.keys, user.guid);

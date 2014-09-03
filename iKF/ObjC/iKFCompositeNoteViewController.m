@@ -17,6 +17,7 @@
     iKFNoteReadViewController* controllerA;
     iKFNoteEditViewController* controllerB;
     iKFNoteEditViewController* controllerC;
+    BOOL editMode;
 }
 
 -(id) init{
@@ -26,31 +27,37 @@
         controllerA.view.backgroundColor = [UIColor whiteColor];
         controllerA.readView.closableController = self;
         controllerA.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Read" image:nil selectedImage:nil];
-        [self addChildViewController: controllerA];
         
         controllerC = [[iKFNoteEditViewController alloc] initWithView:(iKFAbstractNoteEditView*)[[KFNoteEditViewByTinyMCE alloc] init]];
         controllerC.view.backgroundColor = [UIColor whiteColor];
         controllerC.editView.closableController = self;
         controllerC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Edit" image:nil selectedImage:nil];
-        [self addChildViewController: controllerC];
         
         controllerB = [[iKFNoteEditViewController alloc] initWithView:(iKFAbstractNoteEditView*)[[iKFNoteEditViewBySource alloc] init]];
         controllerB.view.backgroundColor = [UIColor whiteColor];
         controllerB.editView.closableController = self;
         controllerB.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Source" image:nil selectedImage:nil];
-        [self addChildViewController: controllerB];
         
-        [self toEditMode];
+        editMode = false;
+        
     }
     return self;
 }
 
 - (void) toReadMode{
-    self.selectedViewController = controllerA;
+    if(controllerA.note != nil){
+        self.selectedViewController = controllerA;
+    }else{
+        editMode = false;
+    }
 }
 
 - (void) toEditMode{
-    self.selectedViewController = controllerC;
+    if(controllerA.note != nil){
+        self.selectedViewController = controllerC;
+    }else{
+        editMode = true;
+    }
 }
 
 - (void) setNote: (KFNote*)note andViewId: (NSString*)viewId{
@@ -59,6 +66,16 @@
     controllerC.note = note;
     controllerB.editView.viewId = viewId;
     controllerC.editView.viewId = viewId;
+
+    [self addChildViewController: controllerA];
+    if([note canEditMe] == true){
+        [self addChildViewController: controllerC];
+        [self addChildViewController: controllerB];
+    }
+    
+    if(editMode == true){
+        [self toEditMode];
+    }
 }
 
 @end
