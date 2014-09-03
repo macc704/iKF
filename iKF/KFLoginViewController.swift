@@ -49,9 +49,8 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         serverPicker.delegate = self;
         
         let userDefaults = NSUserDefaults.standardUserDefaults();
-        let username = userDefaults.stringForKey("username");
+         let username = userDefaults.stringForKey("username");
         let password = userDefaults.stringForKey("password");
-        
         self.usernameField.text = username;
         self.passwordField.text = password;
         self.passwordField.secureTextEntry = true;
@@ -65,6 +64,12 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         let r = UITapGestureRecognizer(target: self, action: "testPressed:");
         button.addGestureRecognizer(r);
         self.view.addSubview(button);
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults();
+        let host = userDefaults.stringForKey("hostname");
+        if(host != nil){
+            setHost(host!);
+        }
     }
     
     func testPressed(r:UITapGestureRecognizer){
@@ -104,7 +109,7 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         KFAppUtils.asyncExecWithLoadingView(self.view, execute: execute, onFinish: onFinish);
     }
     
-    func getHost() -> String{
+    private func getHost() -> String{
         let host = servers[serverPicker.selectedRowInComponent(0)];
         if(host == "(input textfield)"){
             return serverNameField.text;
@@ -112,9 +117,22 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         return servers[serverPicker.selectedRowInComponent(0)];
     }
     
+    private func setHost(host:String){
+        let len = servers.count;
+        for(var i=0;i<len;i++){
+            if(servers[i] == host){
+                serverPicker.selectRow(i, inComponent: 0, animated: false);
+                return;
+            }
+        }
+        serverPicker.selectRow(len-1, inComponent: 0, animated: false);
+        serverNameField.text = host;
+    }
+    
     func login() -> (result: Bool, errorMsg: String?) {        
         var service = KFService.getInstance();
-        service.initialize(getHost());
+        let host = getHost();
+        service.initialize(host);
         
         let hostTest = service.testConnectionToTheHost();
         if(hostTest == false){
@@ -138,6 +156,8 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         let userDefaults = NSUserDefaults.standardUserDefaults();
         userDefaults.setValue(username, forKey: "username");
         userDefaults.setValue(password, forKey: "password");
+        userDefaults.setValue(host, forKey: "hostname");
+        userDefaults.synchronize();
         return (true, nil);
     }
     
