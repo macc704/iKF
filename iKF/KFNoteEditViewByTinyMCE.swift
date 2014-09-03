@@ -16,7 +16,7 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
     var sourceLabel:UILabel!;
     var webView:KFWebView!;
     
-    private var landscapeInitialize = false;
+    private var portrait = true;
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -85,16 +85,13 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
         
         let setString = KFResource.encodingForJS(sText);
         if(self.isInitialized()){
-            webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.setContent('\(setString)');");
+            webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.setContent('\(setString)')");
+            webView.stringByEvaluatingJavaScriptFromString(getSetHeightJS());
             return;
         }
         
         //else not initialized
-        if(!landscapeInitialize){//portrait
-            webView.stringByEvaluatingJavaScriptFromString("window.onload = function(){tinymce.activeEditor.setContent('\(setString)');}");
-        }else{//landscape
-            webView.stringByEvaluatingJavaScriptFromString("window.onload = function(){tinymce.activeEditor.setContent('\(setString)');document.getElementById('mcearea1').style.height='120px';}");
-        }
+        webView.stringByEvaluatingJavaScriptFromString("window.onload = function(){tinymce.activeEditor.setContent('\(setString)');\(getSetHeightJS())}");
         
         let path = NSBundle.mainBundle().pathForResource("edit", ofType: "html", inDirectory: "WebResources");
         let req = NSURLRequest(URL: NSURL(string: path!));
@@ -137,25 +134,34 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
         let fullWidth = rect.size.width-40;
         let fullHeight = rect.size.height-40;
         
+        self.portrait = fullWidth < fullHeight;
+        
+        //title label
         titleLabel.frame = CGRectMake(x, y, 100, 35);
         titleView.frame = CGRectMake(x+100, y, fullWidth-100, 35);
         y=y+40;
         
+        //source label
         sourceLabel.frame = CGRectMake(x, y, fullWidth, 35);
-        
-        let portrait = fullWidth < fullHeight;
         if(portrait){
             y=y+40;
             webView.frame = CGRectMake(x, y, fullWidth, 520);
-            webView.stringByEvaluatingJavaScriptFromString("document.getElementById('mcearea1').style.height='400px';");
-            
+            if(isInitialized()){
+                webView.stringByEvaluatingJavaScriptFromString(getSetHeightJS());
+            }
         }else{//landscape
             webView.frame = CGRectMake(x+100, y, fullWidth-100, 230);
-            if(isInitialized() == false){
-                landscapeInitialize = true;
-            }else{
-                webView.stringByEvaluatingJavaScriptFromString("document.getElementById('mcearea1').style.height='120px';");
+            if(isInitialized()){
+                webView.stringByEvaluatingJavaScriptFromString(getSetHeightJS());
             }
+        }
+    }
+    
+    private func getSetHeightJS() -> String{
+        if(portrait){
+            return "document.getElementById('mcearea1').style.height='400px';";
+        }else{//landscape
+            return "document.getElementById('mcearea1').style.height='120px';";
         }
     }
     
