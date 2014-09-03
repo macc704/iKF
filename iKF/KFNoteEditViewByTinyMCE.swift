@@ -16,6 +16,8 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
     var sourceLabel:UILabel!;
     var webView:KFWebView!;
     
+    private var landscapeInitialize = false;
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -88,7 +90,11 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
         }
         
         //else not initialized
-        webView.stringByEvaluatingJavaScriptFromString("window.onload = function(){tinymce.activeEditor.setContent('\(setString)');}");
+        if(!landscapeInitialize){//portrait
+            webView.stringByEvaluatingJavaScriptFromString("window.onload = function(){tinymce.activeEditor.setContent('\(setString)');}");
+        }else{//landscape
+            webView.stringByEvaluatingJavaScriptFromString("window.onload = function(){tinymce.activeEditor.setContent('\(setString)');document.getElementById('mcearea1').style.height='120px';}");
+        }
         
         let path = NSBundle.mainBundle().pathForResource("edit", ofType: "html", inDirectory: "WebResources");
         let req = NSURLRequest(URL: NSURL(string: path!));
@@ -130,25 +136,28 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
         var y:CGFloat = 20.0;
         let fullWidth = rect.size.width-40;
         let fullHeight = rect.size.height-40;
-
+        
         titleLabel.frame = CGRectMake(x, y, 100, 35);
         titleView.frame = CGRectMake(x+100, y, fullWidth-100, 35);
         y=y+40;
-
+        
         sourceLabel.frame = CGRectMake(x, y, fullWidth, 35);
-
+        
         let portrait = fullWidth < fullHeight;
         if(portrait){
             y=y+40;
             webView.frame = CGRectMake(x, y, fullWidth, 520);
             webView.stringByEvaluatingJavaScriptFromString("document.getElementById('mcearea1').style.height='400px';");
             
-        }else{
+        }else{//landscape
             webView.frame = CGRectMake(x+100, y, fullWidth-100, 230);
-            webView.stringByEvaluatingJavaScriptFromString("document.getElementById('mcearea1').style.height='120px';");
+            if(isInitialized() == false){
+                landscapeInitialize = true;
+            }else{
+                webView.stringByEvaluatingJavaScriptFromString("document.getElementById('mcearea1').style.height='120px';");
+            }
         }
     }
-    
     
     /*
     // Only override drawRect: if you perform custom drawing.
