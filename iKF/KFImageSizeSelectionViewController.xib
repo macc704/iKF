@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6205" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6206.8" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KFImageSizeSelectionViewController" customModule="iKF" customModuleProvider="target">
@@ -9,6 +10,7 @@
                 <outlet property="button1" destination="Pc3-k1-1hF" id="cFa-da-8vS"/>
                 <outlet property="button2" destination="vHc-Mc-sx4" id="F2I-3g-Z04"/>
                 <outlet property="button3" destination="7zd-ox-bTR" id="acf-hr-ZPS"/>
+                <outlet property="button33" destination="YSl-H8-TSR" id="1W4-xW-Df5"/>
                 <outlet property="imageContainer" destination="rAI-18-xDj" id="pMm-0g-mez"/>
                 <outlet property="labelSize" destination="KRQ-vk-ksJ" id="naU-DT-dik"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -20,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pc3-k1-1hF">
-                    <rect key="frame" x="364" y="544" width="41" height="30"/>
+                    <rect key="frame" x="202" y="538" width="41" height="30"/>
                     <state key="normal" title="100%">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -29,7 +31,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vHc-Mc-sx4">
-                    <rect key="frame" x="368" y="619" width="33" height="30"/>
+                    <rect key="frame" x="301" y="538" width="33" height="30"/>
                     <state key="normal" title="50%">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -37,17 +39,8 @@
                         <action selector="button2Pressed:" destination="-1" eventType="touchUpInside" id="QWG-rK-coP"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tvk-0d-0yN">
-                    <rect key="frame" x="360" y="766" width="48" height="30"/>
-                    <state key="normal" title="Cancel">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="cancelPressed:" destination="-1" eventType="touchUpInside" id="OPt-TR-gqL"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zd-ox-bTR">
-                    <rect key="frame" x="368" y="689" width="33" height="30"/>
+                    <rect key="frame" x="492" y="538" width="33" height="30"/>
                     <state key="normal" title="25%">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -83,6 +76,24 @@
                     <rect key="frame" x="153" y="101" width="462" height="287"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YSl-H8-TSR">
+                    <rect key="frame" x="392" y="538" width="33" height="30"/>
+                    <state key="normal" title="33%">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="button33Pressed:" destination="-1" eventType="touchUpInside" id="dZS-uh-ae7"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tvk-0d-0yN">
+                    <rect key="frame" x="360" y="618" width="48" height="30"/>
+                    <state key="normal" title="Cancel">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="cancelPressed:" destination="-1" eventType="touchUpInside" id="OPt-TR-gqL"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>

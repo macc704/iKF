@@ -38,6 +38,7 @@ class KFImageSizeSelectionViewController: UIViewController {
     @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var button3: UIButton!
     //@IBOutlet weak var sizelabel: UILabel!
+    @IBOutlet weak var button33: UIButton!
     
     //private var handler: ((CGFloat) -> ())?
     
@@ -109,6 +110,10 @@ class KFImageSizeSelectionViewController: UIViewController {
     
     @IBAction func button3Pressed(sender: AnyObject) {
         upload(0.25);
+    }
+    
+    @IBAction func button33Pressed(sender: AnyObject) {
+        upload(0.33);
     }
     
     @IBAction func cancelPressed(sender: AnyObject) {
