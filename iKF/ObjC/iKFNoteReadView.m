@@ -38,7 +38,7 @@
     [self setNavBarTitle: title];
     
 //    NSString* template = [[KFService getInstance] getReadTemplate];
-    NSString* template = [KFResource getReadTemplate];
+    NSString* template = [KFResource loadReadTemplate];
     NSString* html = [template stringByReplacingOccurrencesOfString:@"%YOURCONTENT%" withString:textString];
     [self._webView loadHTMLString: html baseURL:[KFResource getWebResourceURL]];
     //[_webView loadHTMLString: textString baseURL:nil];

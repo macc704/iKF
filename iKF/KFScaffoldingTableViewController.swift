@@ -74,8 +74,8 @@ class KFScaffoldingTableViewController: UITableViewController {
             let title = scaffolds[indexPath.section].supports[indexPath.row].title;
             let supportId = scaffolds[indexPath.section].supports[indexPath.row].guid;
             let uniqueId = String(Int(NSDate.date().timeIntervalSince1970));
-            let template = KFService.getInstance().getURL("https://dl.dropboxusercontent.com/u/11409191/ikf/scaffoldtag.txt");
-            var insertString = template!;
+            let template = KFResource.loadScaffoldTagTemplate();
+            var insertString = template;
             insertString = insertString.stringByReplacingOccurrencesOfString("%SUPPORTID%", withString: supportId, options: nil, range: nil);
             insertString = insertString.stringByReplacingOccurrencesOfString("%UNIQUEID%", withString: uniqueId, options: nil, range: nil);
             insertString = insertString.stringByReplacingOccurrencesOfString("%TITLE%", withString: title, options: nil, range: nil);

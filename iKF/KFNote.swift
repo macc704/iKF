@@ -18,7 +18,7 @@ class KFNote: KFPost {
     
     func getReadHtml() -> String{
         //let template = KFService.getInstance().getReadTemplate();
-        let template = KFResource.getReadTemplate();
+        let template = KFResource.loadReadTemplate();
         var html = content;
         html = template.stringByReplacingOccurrencesOfString("%YOURCONTENT%", withString:content);
         return html;

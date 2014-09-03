@@ -1,9 +1,12 @@
 <p>
-<span id="%SUPPORTID%_%UNIQUEID%_start" supportId="%SUPPORTID%" class="supportStartTag mceNonEditable">
-	<span class="startMark">&nbsp; </span>
-	<span class="startLabelTag">%TITLE%</span>
+<span id="%SUPPORTID%_%UNIQUEID%_start" supportId="%SUPPORTID%" class="supportTag mceNonEditable">
+    <span class="supportStartTag">
+        <span class="startMark">&nbsp; </span>
+        <span class="startLabelTag">%TITLE%</span>
+    </span>
+    <span class="mceEditable">- enter your idea here -</span>
+    <span supportId="%SUPPORTID%" class="supportEndTag endMark">&nbsp; </span>
 </span>
-- enter your idea here - 
-<span supportId="%SUPPORTID%" class="supportEndTag endMark mceNonEditable">&nbsp; </span>
 </p>
+<br/>
 
