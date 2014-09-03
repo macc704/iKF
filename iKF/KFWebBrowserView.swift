@@ -40,19 +40,19 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     
     private var showToolBar = true;
     
-    override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         //println(mainController);
         mainController?.suppressScroll();
     }
     
-    override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!) {
+    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
     }
     
-    override func touchesCancelled(touches: NSSet!, withEvent event: UIEvent!) {
+    override func touchesCancelled(touches: NSSet, withEvent event: UIEvent) {
         mainController?.unlockSuppressScroll();
     }
     
-    override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!) {
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         mainController?.unlockSuppressScroll();
     }
     
@@ -292,7 +292,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     func webView(webView: UIWebView!, shouldStartLoadWithRequest request: NSURLRequest!, navigationType: UIWebViewNavigationType) -> Bool {
         let host = request.URL.host;
         if(host != nil && host == "kfpost"){
-            var guid = request.URL.lastPathComponent!;
+            var guid = request.URL.lastPathComponent;
             let frame = CGRectMake(self.frame.origin.x + 50, self.frame.origin.y + 50, self.frame.size.width, self.frame.size.height);
             self.mainController?.openPostById(guid, frame: frame);
             return false;
@@ -347,11 +347,11 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     }
     
     func getTitle() -> String{
-        return webView.stringByEvaluatingJavaScriptFromString("document.title");
+        return webView.stringByEvaluatingJavaScriptFromString("document.title")!;
     }
     
     func getURL() -> String{
-        return webView.stringByEvaluatingJavaScriptFromString("document.URL");
+        return webView.stringByEvaluatingJavaScriptFromString("document.URL")!;
     }
     
     

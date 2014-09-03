@@ -57,19 +57,19 @@ class KFScaffoldingTableViewController: UITableViewController {
     
     // mark - Table view delegate
     
-    override func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
-        let section:Int! = indexPath?.section;
-        let row:Int! = indexPath?.row;
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let section:Int = indexPath.section;
+        let row:Int = indexPath.row;
         let cell:UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: nil);
-        cell.textLabel.text = self.scaffolds[section].supports[row].title;
+        cell.textLabel!.text = self.scaffolds[section].supports[row].title;
         return cell;
     }
     
-    override func tableView(tableView: UITableView!, titleForHeaderInSection section: Int) -> String! {
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String {
         return self.scaffolds[section].title;
     }
     
-    override func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!){
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         if(self.noteEditView? != nil){
             let title = scaffolds[indexPath.section].supports[indexPath.row].title;
             let supportId = scaffolds[indexPath.section].supports[indexPath.row].guid;

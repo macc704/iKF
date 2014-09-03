@@ -43,7 +43,7 @@ class KFMenuViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.dataSource = self;
         
         if(barTitle != nil){
-            titleBar.topItem.title = barTitle;
+            titleBar.topItem!.title = barTitle;
         }
         
         if(fitsize){
@@ -82,26 +82,26 @@ class KFMenuViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // #pragma mark - Table view data source
     
-    func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1;
     }
     
-    func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return menues.count;
     }
     
     // mark - Table view delegate
     
-    func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
-        let row:Int! = indexPath?.row;
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let row:Int = indexPath.row;
         let cell:UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: nil);
         cell.accessoryType = self.menues[row].getAccessoryType();
-        cell.textLabel.text = self.menues[row].getName();
+        cell.textLabel!.text = self.menues[row].getName();
         return cell;
     }
     
-    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!){
-        let row:Int! = indexPath?.row;
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+        let row:Int = indexPath.row;
         self.menues[row].execute();
         if(selectedHandler != nil){
             selectedHandler!(self.menues[row]);

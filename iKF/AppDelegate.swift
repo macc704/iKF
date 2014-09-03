@@ -98,7 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var managedObjectModel: NSManagedObjectModel {
         if (_managedObjectModel != nil){
             let modelURL = NSBundle.mainBundle().URLForResource("iKF", withExtension: "momd")
-            _managedObjectModel = NSManagedObjectModel(contentsOfURL: modelURL)
+            _managedObjectModel = NSManagedObjectModel(contentsOfURL: modelURL!)
         }
         return _managedObjectModel!
     }

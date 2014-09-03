@@ -26,7 +26,7 @@ class KFPopoverManager: NSObject {
         self.popoverController = UIPopoverController(contentViewController: controller);
         //        self.popoverController!.popoverContentSize = controller.view.frame.size;
         //deprecated use preferredsize instead
-        self.popoverController!.presentPopoverFromRect(locView.frame, inView: locView.superview, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
+        self.popoverController!.presentPopoverFromRect(locView.frame, inView: locView.superview!, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
         return self.popoverController!;
     }
     

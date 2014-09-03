@@ -111,7 +111,7 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
     
     func isInitialized()->Bool{
         let res = webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.isDirty();");
-        if(res.isEmpty){
+        if(res == nil || res!.isEmpty){
             return false;
         }
         return true;

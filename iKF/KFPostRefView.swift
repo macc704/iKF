@@ -104,20 +104,20 @@ class KFPostRefView: UIView {
         self.updateFromModel();
     }
     
-    override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         if(!getModel().isLocked()){
             mainController.suppressScroll();
         }
     }
     
-    override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!) {
+    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
     }
     
     override func touchesCancelled(touches: NSSet!, withEvent event: UIEvent!) {
         mainController.unlockSuppressScroll();
     }
     
-    override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!) {
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         mainController.unlockSuppressScroll();
     }
     

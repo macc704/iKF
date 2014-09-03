@@ -84,7 +84,7 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBAction func newAccountButtonPressed(sender: AnyObject) {
         let c = KFAccountCreationViewController(nibName: "KFAccountCreationViewController", bundle: nil);
         c.host = getHost();
-        self.navigationController.pushViewController(c, animated: true);
+        self.navigationController!.pushViewController(c, animated: true);
     }
     
     @IBAction func loginButtonPressed(sender : AnyObject) {
@@ -100,7 +100,7 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 let c = KFRegistrationViewController(nibName: "KFRegistrationViewController", bundle: nil);
                 c.host = getHost();
                 //self.presentViewController(registrationViewController, animated: true, completion: nil);
-                self.navigationController.pushViewController(c, animated: true);
+                self.navigationController!.pushViewController(c, animated: true);
             }else{
                 KFAppUtils.showAlert("ConnectionError", msg: res!.errorMsg!);
             }
@@ -166,21 +166,21 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     /* data source */
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView!) -> Int {
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1;
     }
     
-    func pickerView(pickerView: UIPickerView!, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return servers.count;
     }
     
     /* delegate */
     
-    func pickerView(pickerView: UIPickerView!, titleForRow row: Int, forComponent component: Int) -> String!{
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String!{
         return servers[row];
     }
     
-    func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int){
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
         let host = servers[serverPicker.selectedRowInComponent(0)];
         if(host == "(input textfield)"){
             serverNameField.enabled = true;

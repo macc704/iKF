@@ -35,7 +35,7 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
         self.preferredContentSize = self.view.frame.size;
 //        let a = NSIndexPath(index: 0);
 //        tableView.selectRowAtIndexPath(a, animated: false, scrollPosition: UITableViewScrollPosition.Middle);
-        navigationBar.topItem.title = barTitle;
+        navigationBar.topItem!.title = barTitle;
     }
     
     func setBarTitle(title:String){
@@ -49,26 +49,26 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
     
     // #pragma mark - Table view data source
     
-    func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1;
     }
     
-    func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return models.count;
     }
     
     // mark - Table view delegate
     
-    func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
-        let row:Int! = indexPath?.row;
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let row:Int = indexPath.row;
         let cell:UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: nil);
-        cell.textLabel.text = self.models[row].toString();
+        cell.textLabel!.text = self.models[row].toString();
         return cell;
     }
     
-    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!){
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         if(selectedHandler != nil){
-            let row:Int! = indexPath?.row;
+            let row:Int! = indexPath.row;
             selectedHandler!((self.models[row]));
             self.dismissViewControllerAnimated(false, completion: nil);
         }

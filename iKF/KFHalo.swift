@@ -31,18 +31,19 @@ class KFHalo: UIView {
         //self.initializeSizeAndHandles();
     }
     
-    override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         controller?.suppressScroll();
     }
     
-    override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!) {
+    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
     }
     
-    override func touchesCancelled(touches: NSSet!, withEvent event: UIEvent!) {
+    override func touchesCancelled(touches: NSSet, withEvent event: UIEvent) {
         controller?.unlockSuppressScroll();
     }
     
-    override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!) {
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         controller?.unlockSuppressScroll();
     }
     
@@ -192,7 +193,7 @@ class KFHalo: UIView {
         c.setBarTitle("Properties:")
         c.fit();
         let from = recognizer.view;
-        KFPopoverManager.getInstance().openInPopover(from, controller: c);
+        KFPopoverManager.getInstance().openInPopover(from!, controller: c);
     }
     
     func handleMovePostToView(recognizer:UIGestureRecognizer){
@@ -202,7 +203,7 @@ class KFHalo: UIView {
         let viewSelectionController = KFViewSelectionController();
         viewSelectionController.setBarTitle("Copy to");
         viewSelectionController.models = KFService.getInstance().currentRegistration.community.views.array;
-        KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: viewSelectionController);
+        KFPopoverManager.getInstance().openInPopover(popOverLoc!, controller: viewSelectionController);
         //let fromViewId = controller!.getCurrentView().guid;
         viewSelectionController.selectedHandler = {(model:KFModel) in
             KFPopoverManager.getInstance().closeCurrentPopover();
@@ -244,7 +245,7 @@ class KFHalo: UIView {
             }
         };
         let from = recognizer.view;
-        KFPopoverManager.getInstance().openInPopover(from, controller: c);
+        KFPopoverManager.getInstance().openInPopover(from!, controller: c);
     }
     
     func handleToggleMenuWeb(recognizer:UIGestureRecognizer){
@@ -272,11 +273,11 @@ class KFHalo: UIView {
     }
     
     func handleNewPicture(recognizer:UIGestureRecognizer){
-        controller?.openImageSelectionViewer(recognizer.view, creatingPoint: self.target.frame.origin);
+        controller?.openImageSelectionViewer(recognizer.view!, creatingPoint: self.target.frame.origin);
     }
     
     func handleNewViewlink(recognizer:UIGestureRecognizer){
-        self.openViewlinkSelectionViewer(recognizer.view, creatingPoint: self.target.frame.origin);
+        self.openViewlinkSelectionViewer(recognizer.view!, creatingPoint: self.target.frame.origin);
     }
     
     private func openViewlinkSelectionViewer(popOverLoc:UIView, creatingPoint:CGPoint){
@@ -293,7 +294,7 @@ class KFHalo: UIView {
     }
     
     func handleNewPostlink(recognizer:UIGestureRecognizer){
-        self.openPostlinkSelectionViewer(recognizer.view, creatingPoint: self.target.frame.origin);
+        self.openPostlinkSelectionViewer(recognizer.view!, creatingPoint: self.target.frame.origin);
     }
     
     private func openPostlinkSelectionViewer(popOverLoc:UIView, creatingPoint:CGPoint){
@@ -311,7 +312,7 @@ class KFHalo: UIView {
     
     
     func handleNewView(recognizer:UIGestureRecognizer){
-        self.openCreateView(recognizer.view, creatingPoint: self.target.frame.origin);
+        self.openCreateView(recognizer.view!, creatingPoint: self.target.frame.origin);
     }
     
     private func openCreateView(popOverLoc:UIView, creatingPoint:CGPoint){
@@ -432,7 +433,7 @@ class KFHalo: UIView {
         case .Ended:
             let button = recognizer.view;
             let objectP = self.frame.origin;
-            let buttonP = button.frame.origin;
+            let buttonP = button!.frame.origin;
             let p = CGPoint(x:objectP.x + buttonP.x, y:objectP.y + buttonP.y);
             controller?.createNote(p, buildsOn: postTarget);
             break;
@@ -454,7 +455,7 @@ class KFHalo: UIView {
             let title = webbrowser.getTitle();
             let button = recognizer.view;
             let objectP = self.frame.origin;
-            let buttonP = button.frame.origin;
+            let buttonP = button!.frame.origin;
             let p = CGPoint(x:objectP.x + buttonP.x, y:objectP.y + buttonP.y);
             controller?.createWebNote(p, url: url, title: title);
             self.initializeSizeAndHandles();
@@ -465,7 +466,7 @@ class KFHalo: UIView {
     }
     
     private func moveHandle(recognizer:UIPanGestureRecognizer) -> CGPoint{
-        let button = recognizer.view;
+        let button = recognizer.view!;
         let location = recognizer.translationInView(button);
         let movePoint = CGPointMake(button.center.x+location.x, button.center.y+location.y);
         button.center = movePoint;
@@ -521,7 +522,7 @@ class KFHalo: UIView {
         case .Began:
             break;
         case .Changed:
-            let button = recognizer.view;
+            let button = recognizer.view!;
             moveHandle(recognizer);
             var w = button.frame.origin.x - button.frame.size.width;
             var h = button.frame.origin.y - button.frame.size.height;
@@ -550,7 +551,7 @@ class KFHalo: UIView {
         case .Began:
             break;
         case .Changed:
-            let button = recognizer.view;
+            let button = recognizer.view!;
             moveHandle(recognizer);
             var w = button.frame.origin.x - button.frame.size.width;
             var h = button.frame.origin.y - button.frame.size.height;

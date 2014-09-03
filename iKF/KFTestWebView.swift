@@ -13,9 +13,9 @@ class A:KFLayerView{
         println(event);
         println("a");
         let allTouches = event.allTouches();
-        if(allTouches.count > 0){
+        if(allTouches?.count > 0){
             println("b");
-            let touch:UITouch = allTouches.anyObject() as UITouch;
+            let touch:UITouch = allTouches!.anyObject() as UITouch;
             if(touch.tapCount == 2){
                 println("c");
                 return self;

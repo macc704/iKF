@@ -40,31 +40,31 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationController.setNavigationBarHidden(false, animated: animated);
+        self.navigationController!.setNavigationBarHidden(false, animated: animated);
     }
     
     override func viewWillDisappear(animated: Bool) {
-        self.navigationController.setNavigationBarHidden(true, animated: animated);
+        self.navigationController!.setNavigationBarHidden(true, animated: animated);
     }
     
     /* data source */
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView!) -> Int {
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1;
     }
     
-    func pickerView(pickerView: UIPickerView!, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return registrations.count;
     }
     
     /* delegate */
     
-    func pickerView(pickerView: UIPickerView!, titleForRow row: Int, forComponent component: Int) -> String!{
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String!{
         let registration:KFRegistration = self.registrations[row];
         return registration.community.name + " ( as " + registration.roleName + " )";
     }
     
-    func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int){
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
     }
     
     //    @IBAction func backButtonPressed(sender : AnyObject) {

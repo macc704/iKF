@@ -247,7 +247,7 @@ class KFCanvasViewController: UIViewController {
         KFAppUtils.executeInGUIThread({
             KFWebView.clearPostInstances();
             self.currentView = view;
-            self.navBar.topItem.title = self.currentView!.title;
+            self.navBar.topItem!.title = self.currentView!.title;
             self.cometThreadNumber++;
             self.startComet(self.cometThreadNumber);
         });

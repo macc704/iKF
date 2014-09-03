@@ -24,12 +24,12 @@ class KFAccountCreationViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationController.setNavigationBarHidden(false, animated: animated);
+        self.navigationController!.setNavigationBarHidden(false, animated: animated);
         self.navigationItem.title = "Create Account for \(host)";
     }
     
     override func viewWillDisappear(animated: Bool) {
-        self.navigationController.setNavigationBarHidden(true, animated: animated);
+        self.navigationController!.setNavigationBarHidden(true, animated: animated);
     }
 
     override func didReceiveMemoryWarning() {
