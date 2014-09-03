@@ -29,7 +29,7 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
         
         super.init(controller: controller, ref: ref);
         
-        let drawing = model.post as KFDrawing;
+        let drawing = getModel().post as KFDrawing;
         let data = drawing.content.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true);
         let parser = NSXMLParser(data: data);
         parser.delegate = self;
@@ -85,19 +85,19 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     
     override func updateToModel() {
         super.updateToModel();
-        model.location = self.frame.origin;
-        model.width = self.svgwidth * self.scaleX;
-        model.height = self.svgheight * self.scaleY;
-        model.rotation = self.rotation;
-        model.setShowInPlace(true);
+        getModel().location = self.frame.origin;
+        getModel().width = self.svgwidth * self.scaleX;
+        getModel().height = self.svgheight * self.scaleY;
+        getModel().rotation = self.rotation;
+        getModel().setShowInPlace(true);
     }
     
     override func updateFromModel(){
         super.updateFromModel();
         self.updatePanEventBinding();
-        if(model.isShowInPlace()){
-            kfSetSize(model.width, height: model.height);
-            kfSetRotation(model.rotation);
+        if(getModel().isShowInPlace()){
+            kfSetSize(getModel().width, height: getModel().height);
+            kfSetRotation(getModel().rotation);
         }
     }
     

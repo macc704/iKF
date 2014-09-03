@@ -10,7 +10,7 @@ import UIKit
 
 class KFLabelNoteRefView: UIView {
 
-    let model:KFReference!;
+    var model:KFReference!;
     var icon: KFPostRefIconView!;
     var titleLabel: UILabel!;
     var authorLabel: UILabel!;

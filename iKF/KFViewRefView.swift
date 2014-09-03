@@ -49,7 +49,7 @@ class KFViewRefView: KFPostRefView {
 //    }
     
     override func tapA() {
-        self.mainController.setCurrentView(self.model.post as KFView);
+        self.mainController.setCurrentView(self.getModel().post as KFView);
     }
 
     /*

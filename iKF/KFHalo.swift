@@ -56,7 +56,7 @@ class KFHalo: UIView {
     
     private func installHaloHandles(){
         if(target is KFPostRefView){
-            let post = (target as KFPostRefView).model.post!;
+            let post = (target as KFPostRefView).getModel().post!;
             installHaloHandle("bin.png", locator: locator.TOP_LEFT(), tap: "handleDelete:", pan: nil);
             installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMove:");
             
@@ -67,7 +67,7 @@ class KFHalo: UIView {
         
         if(target is KFDrawingRefView){
             let drawing = target as KFDrawingRefView;
-            if(drawing.model.isLocked()){
+            if(drawing.getModel().isLocked()){
                 installHaloHandle("unlock.png", locator: locator.TOP_RIGHT(), tap: "handleUnlock:", pan: nil);
             }
             else{
@@ -91,19 +91,19 @@ class KFHalo: UIView {
         if(target is KFNoteRefView){
             let note = target as KFNoteRefView;
             installHaloHandle("read.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleRead:", pan: nil);
-            if(note.model.post!.canEditMe()){
+            if(note.getModel().post!.canEditMe()){
                 installHaloHandle("edit.png", locator: locator.TOP_RIGHT(), tap: "handleEdit:", pan: nil);
             }else{
                 installHaloHandle("nonedit.png", locator: locator.TOP_RIGHT(), tap: nil, pan: nil);
             }
             installHaloHandle("clip.png", locator: locator.TOP_QUARTER_LEFT(), tap: "handleClip:", pan: nil);
-            if(note.model.isShowInPlace()){
+            if(note.getModel().isShowInPlace()){
                 installHaloHandle("closetoicon", locator: locator.LEFT(), tap: "closeToIcon:", pan: nil);
                 installHaloHandle("resize.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: "handlePanResize:");
             }else{
                 installHaloHandle("showinplace", locator: locator.LEFT(), tap: "showInPlace:", pan: nil);
             }
-            if(note.model.isShowInPlace()){
+            if(note.getModel().isShowInPlace()){
                 installHaloHandle("list", locator: locator.RIGHT(), tap: "handleShowMenu:", pan: nil);
             }
             installHaloHandle("buildson.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
@@ -113,7 +113,7 @@ class KFHalo: UIView {
         if(target is KFWebBrowserView){
             if((target as KFWebBrowserView).noteRef != nil){
                 installHaloHandle("read.png", locator: locator.TOP_QUARTER_RIGHT(), tap: "handleRead:", pan: nil);
-                if((target as KFWebBrowserView).noteRef!.model.post!.canEditMe()){
+                if((target as KFWebBrowserView).noteRef!.getModel().post!.canEditMe()){
                     installHaloHandle("edit.png", locator: locator.TOP_RIGHT(), tap: "handleEdit:", pan: nil);
                 }else{
                     installHaloHandle("nonedit.png", locator: locator.TOP_RIGHT(), tap: nil, pan: nil);
@@ -196,7 +196,7 @@ class KFHalo: UIView {
     }
     
     func handleMovePostToView(recognizer:UIGestureRecognizer){
-        let post = (target as KFPostRefView).model.post!;
+        let post = (target as KFPostRefView).getModel().post!;
         let popOverLoc = recognizer.view;
         let creatingPoint = CGPointMake(50, 50);
         let viewSelectionController = KFViewSelectionController();
@@ -216,7 +216,7 @@ class KFHalo: UIView {
         if(target is KFCreationToolView){
             post = controller!.getCurrentView();
         }else{
-            post = (target as KFPostRefView).model.post!;
+            post = (target as KFPostRefView).getModel().post!;
         }
         
         var menus:[KFMenu] = [];
@@ -331,7 +331,7 @@ class KFHalo: UIView {
     
     private func setLock(lock:Bool){
         let postTarget = target as KFPostRefView;
-        postTarget.model.setLocked(lock);
+        postTarget.getModel().setLocked(lock);
         postTarget.updatePanEventBinding();
         controller?.updatePostRef(postTarget);
         controller?.hideHalo();
@@ -347,13 +347,13 @@ class KFHalo: UIView {
     
     private func setShowInPlace(showInPlace:Bool){
         let postTarget = target as KFPostRefView;
-        if(showInPlace && postTarget.model.width < 10){
-            postTarget.model.width = 100;
+        if(showInPlace && postTarget.getModel().width < 10){
+            postTarget.getModel().width = 100;
         }
-        if(showInPlace && postTarget.model.height < 10){
-            postTarget.model.height = 100;
+        if(showInPlace && postTarget.getModel().height < 10){
+            postTarget.getModel().height = 100;
         }
-        postTarget.model.setShowInPlace(showInPlace);
+        postTarget.getModel().setShowInPlace(showInPlace);
         //        postTarget.updatePanEventBinding();
         controller?.updatePostRef(postTarget);
         postTarget.updateFromModel();
@@ -369,7 +369,7 @@ class KFHalo: UIView {
         }else{
             return; //exception
         }
-        controller?.openNoteEditController(noteRef.model.post as KFNote, mode: "edit");
+        controller?.openNoteEditController(noteRef.getModel().post as KFNote, mode: "edit");
         controller?.hideHalo();
     }
     
@@ -382,7 +382,7 @@ class KFHalo: UIView {
         }else{
             return; //exception
         }
-        controller?.openNoteEditController(noteRef.model.post as KFNote, mode: "read");
+        controller?.openNoteEditController(noteRef.getModel().post as KFNote, mode: "read");
         controller?.hideHalo();
     }
     
@@ -401,7 +401,7 @@ class KFHalo: UIView {
         }else{
             return; //exception
         }
-        let note = noteRef.model.post as KFNote;
+        let note = noteRef.getModel().post as KFNote;
         let pasteboard = UIPasteboard.generalPasteboard();
         pasteboard.string = note.title;
         var dic = NSMutableDictionary(dictionary: pasteboard.items[0] as NSDictionary);

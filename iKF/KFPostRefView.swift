@@ -11,7 +11,7 @@ import UIKit
 class KFPostRefView: UIView {
     
     var mainController: KFCanvasViewController!;
-    var model: KFReference!;
+    private var _model: KFReference!;
     private var panGesture:UIPanGestureRecognizer?;
     
     required init(coder aDecoder: NSCoder) {
@@ -20,11 +20,18 @@ class KFPostRefView: UIView {
     
     init(controller: KFCanvasViewController, ref: KFReference) {
         self.mainController = controller;
-        self.model = ref;
-        
         super.init(frame: CGRectMake(0,0,0,0));
+        self.setModel(ref);
         
         bindEvents();
+    }
+    
+    func getModel()->KFReference!{
+        return self._model;
+    }
+    
+    func setModel(newModel:KFReference){
+        self._model = newModel;
     }
     
     private func bindEvents(){
@@ -45,7 +52,7 @@ class KFPostRefView: UIView {
     }
     
     func getMenuItems() -> [KFMenu]{
-        let refModel = self.model;
+        let refModel = self.getModel();
         var menues:[KFMenu] = [];
         
         let operatable = KFDefaultMenu();
@@ -82,23 +89,23 @@ class KFPostRefView: UIView {
     }
     
     func updatePanEventBinding(){
-        if(!self.model.isLocked() && self.panGesture == nil){
+        if(!self.getModel().isLocked() && self.panGesture == nil){
             self.panGesture = UIPanGestureRecognizer(target:self, action:"handlePanning:");
             self.addGestureRecognizer(self.panGesture!);
-        }else if(self.model.isLocked() && self.panGesture != nil){
+        }else if(self.getModel().isLocked() && self.panGesture != nil){
             self.removeGestureRecognizer(self.panGesture!);
             self.panGesture = nil;
         }
     }
     
     func kfSetSize(width:CGFloat, height:CGFloat){
-        self.model.width = width;
-        self.model.height = height;
+        self.getModel().width = width;
+        self.getModel().height = height;
         self.updateFromModel();
     }
     
     override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
-        if(!model.isLocked()){
+        if(!getModel().isLocked()){
             mainController.suppressScroll();
         }
     }
@@ -176,17 +183,17 @@ class KFPostRefView: UIView {
     var border:Bool = false;
     
     func updateFromModel(){
-        if(!border && model.isBorder() && model.isShowInPlace()){
+        if(!border && getModel().isBorder() && getModel().isShowInPlace()){
             self.layer.borderColor = UIColor.grayColor().CGColor;
             self.layer.borderWidth = 1.0;
             border = true;
-        }else if (border && (!model.isBorder() || !model.isShowInPlace())){
+        }else if (border && (!getModel().isBorder() || !getModel().isShowInPlace())){
             self.layer.borderWidth = 0.0;
             border = false;
         }
         
         let r = self.frame;
-        self.frame = CGRectMake(model.location.x, model.location.y, r.size.width, r.size.height);
+        self.frame = CGRectMake(getModel().location.x, getModel().location.y, r.size.width, r.size.height);
     }
     
     //    func die(){

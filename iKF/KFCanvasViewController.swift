@@ -101,16 +101,16 @@ class KFCanvasViewController: UIViewController {
         
         //self.hideHalo();
         
-        var postRefView:KFNoteRefView?;
+        var postRefView:KFNoteRefView!;
         
         if(self.reusableRefViews[ref.guid] != nil ){
-            postRefView = reusableRefViews[ref.guid] as? KFNoteRefView;
-            postRefView!.model = ref;
+            postRefView = reusableRefViews[ref.guid] as KFNoteRefView;
+            postRefView.setModel(ref);
         }else{
             postRefView = KFNoteRefView(controller: self, ref: ref);
         }
         
-        postRefView?.updateFromModel();
+        postRefView.updateFromModel();
         postRefViews[ref.guid] = postRefView;
         postRefViews[ref.post!.guid] = postRefView;//ちょっとずる
         canvasView.noteLayer.addSubview(postRefView!);
@@ -124,16 +124,16 @@ class KFCanvasViewController: UIViewController {
         
         //self.hideHalo();
         
-        var postRefView:KFDrawingRefView?;
+        var postRefView:KFDrawingRefView!;
         
         if(self.reusableRefViews[ref.guid] != nil ){
-            postRefView = reusableRefViews[ref.guid] as? KFDrawingRefView;
-            postRefView!.model = ref;
+            postRefView = reusableRefViews[ref.guid] as KFDrawingRefView;
+            postRefView.setModel(ref);
         }else{
             postRefView = KFDrawingRefView(controller: self, ref: ref);
         }
         
-        postRefView?.updateFromModel();
+        postRefView.updateFromModel();
         postRefViews[ref.guid] = postRefView;
         postRefViews[ref.post!.guid] = postRefView;//ちょっとずる
         canvasView.drawingLayer.addSubview(postRefView!);
@@ -184,7 +184,7 @@ class KFCanvasViewController: UIViewController {
         self.hideHalo();
         let viewId = self.getCurrentView().guid;
         KFAppUtils.executeInBackThread({
-            KFService.getInstance().createNote(viewId, buildsOn: buildsOn?.model, location: p);
+            KFService.getInstance().createNote(viewId, buildsOn: buildsOn?.getModel(), location: p);
             return;
         });
     }
@@ -210,7 +210,7 @@ class KFCanvasViewController: UIViewController {
         let viewId = self.getCurrentView().guid;
         KFAppUtils.executeInBackThread({
             self.cometVersion++;
-            KFService.getInstance().deletePostRef(viewId, postRef: refView.model);
+            KFService.getInstance().deletePostRef(viewId, postRef: refView.getModel());
         });
     }
     
@@ -218,13 +218,13 @@ class KFCanvasViewController: UIViewController {
         let viewId = self.getCurrentView().guid;
         KFAppUtils.executeInBackThread({
             self.cometVersion++;
-            KFService.getInstance().updatePostRef(viewId, postRef: refView.model);
+            KFService.getInstance().updatePostRef(viewId, postRef: refView.getModel());
         });
     }
     
     //?? Refactoring??
     func postLocationChanged(postView:KFPostRefView){
-        postView.model.location = postView.frame.origin;
+        postView.getModel().location = postView.frame.origin;
         self.updatePostRef(postView);
     }
     
@@ -366,7 +366,7 @@ class KFCanvasViewController: UIViewController {
         let view = postRefViews[guid];
         if(view != nil){
             let refview = view! as KFPostRefView;
-            openPostViewer0(refview.model.post!, frame: frame, refView:refview);
+            openPostViewer0(refview.getModel().post!, frame: frame, refView:refview);
         }else{
             KFAppUtils.showAlert("not implemented", msg: "ref to post not found in this view guid=\(guid)");
             //not implemented
@@ -375,7 +375,7 @@ class KFCanvasViewController: UIViewController {
     
     func openPost(postRefView:KFPostRefView){
         //openPopupViewer(postRefView);
-        self.openPostViewer(postRefView.model.post!, from: postRefView, refView:postRefView);
+        self.openPostViewer(postRefView.getModel().post!, from: postRefView, refView:postRefView);
     }
     
     //ref is temporary

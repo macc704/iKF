@@ -26,14 +26,22 @@ class KFNoteRefView: KFPostRefView {
         //self.backgroundColor = UIColor.lightGrayColor();
     }
     
-    //    override func hitTest(point: CGPoint, withEvent event: UIEvent!) -> UIView! {
-    //        let hitView = super.hitTest(point, withEvent: event);
-    //        if(hitView == self){
-    //            return nil;
-    //        }else{
-    //            return hitView;
-    //        }
-    //    }
+    override func setModel(newModel: KFReference) {
+        if(getModel() != nil){
+            getModel().post?.detach(self);
+            self.attachedTo = nil;
+        }
+        
+        super.setModel(newModel);
+        
+        if(getModel() != nil){
+            getModel().post!.attach(self, selector: "noteChanged");
+            self.attachedTo = getModel().post;
+            if(refView is KFLabelNoteRefView){
+                (refView? as KFLabelNoteRefView).model = getModel();
+            }
+        }
+    }
     
     func noteChanged(){
         self.updateFromModel();
@@ -44,28 +52,21 @@ class KFNoteRefView: KFPostRefView {
       
     override func updateFromModel(){
         super.updateFromModel();
-        if(attachedTo != nil && attachedTo != model.post){
-            model.post?.detach(self);
-        }
-        if(attachedTo == nil){
-            model.post!.attach(self, selector: "noteChanged");
-            self.attachedTo = model.post;
-        }
         
         var createIcon = false;
         var createUnfold = false;
-        if(refView is KFLabelNoteRefView && self.model.isShowInPlace()){
+        if(refView is KFLabelNoteRefView && self.getModel().isShowInPlace()){
             refView!.removeFromSuperview();
             createUnfold = true;
         }
-        else if(refView is KFWebView && !self.model.isShowInPlace()){
+        else if(refView is KFWebView && !self.getModel().isShowInPlace()){
             refView!.removeFromSuperview();
             createIcon = true;
         }
-        else if(refView == nil && self.model.isShowInPlace()){
+        else if(refView == nil && self.getModel().isShowInPlace()){
             createUnfold = true;
         }
-        else if(refView == nil && !self.model.isShowInPlace()){
+        else if(refView == nil && !self.getModel().isShowInPlace()){
             createIcon = true;
         }
 
@@ -73,7 +74,7 @@ class KFNoteRefView: KFPostRefView {
             if(refView != nil && refView is KFWebView){
                 (refView as KFWebView).close();
             }
-            refView = KFLabelNoteRefView(ref: model);
+            refView = KFLabelNoteRefView(ref: getModel());
             self.addSubview(refView!);
         }
         if(createUnfold){
@@ -85,12 +86,12 @@ class KFNoteRefView: KFPostRefView {
         
         //update model to view
         if(refView is KFWebView){
-            if(wasFitScale == false && model.isFitScale() == true){
+            if(wasFitScale == false && getModel().isFitScale() == true){
                 (refView as KFWebView).scalesPageToFit = true;
                 wasFitScale = true;
                 cache = "";
             }
-            else if(wasFitScale == true && model.isFitScale() == false){
+            else if(wasFitScale == true && getModel().isFitScale() == false){
                 (refView as KFWebView).scalesPageToFit = false;
                 wasFitScale = false;
                 cache = "";
@@ -101,20 +102,19 @@ class KFNoteRefView: KFPostRefView {
             (refView? as KFLabelNoteRefView).updateFromModel();
         }
         if(refView is KFWebView){
-            let refModel = model as KFReference;
-            let note = refModel.post as KFNote;
+            let note = getModel().post as KFNote;
             if(note.content != cache){
                 //let template = KFService.getInstance().getReadTemplate();
                 //let html = template!.stringByReplacingOccurrencesOfString("%YOURCONTENT%", withString:note.content);                
                 (refView as KFWebView).loadHTMLString(note.getReadHtml(), baseURL: KFResource.getWebResourceURL());
                 cache = note.content;
             }
-            refView!.frame = CGRectMake(0, 0, refModel.width, refModel.height);
+            refView!.frame = CGRectMake(0, 0, getModel().width, getModel().height);
         }
       
         self.frame.size = refView!.frame.size;        //only size
         
-        if(operatableHandle == nil && model.isOperatable() && refView is KFWebView){
+        if(operatableHandle == nil && getModel().isOperatable() && refView is KFWebView){
             operatableHandle = UIView();
             operatableHandle.backgroundColor = UIColor.grayColor();
             operatableHandle.frame = CGRectMake(self.frame.size.width-40,0, 40, 40);
@@ -123,7 +123,7 @@ class KFNoteRefView: KFPostRefView {
             operatableHandle.addGestureRecognizer(recognizerDoubleTap);
             self.addSubview(operatableHandle);
             (refView as KFWebView).userInteractionEnabled = true;
-        }else if (operatableHandle != nil && (!model.isOperatable() || !(refView is KFWebView))){
+        }else if (operatableHandle != nil && (!getModel().isOperatable() || !(refView is KFWebView))){
             if(refView is KFWebView){
                 (refView as KFWebView).userInteractionEnabled = false;
             }
