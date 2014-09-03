@@ -130,14 +130,23 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
         var y:CGFloat = 20.0;
         let fullWidth = rect.size.width-40;
         let fullHeight = rect.size.height-40;
-        
-        titleLabel.frame = CGRectMake(x, 20, 100, 35);
-        titleView.frame = CGRectMake(x+100, 20, fullWidth-100, 35);
+
+        titleLabel.frame = CGRectMake(x, y, 100, 35);
+        titleView.frame = CGRectMake(x+100, y, fullWidth-100, 35);
         y=y+40;
-        
+
         sourceLabel.frame = CGRectMake(x, y, fullWidth, 35);
-        y=y+40;
-        webView.frame = CGRectMake(x, y, fullWidth, fullHeight-y);
+
+        let portrait = fullWidth < fullHeight;
+        if(portrait){
+            y=y+40;
+            webView.frame = CGRectMake(x, y, fullWidth, 520);
+            webView.stringByEvaluatingJavaScriptFromString("document.getElementById('mcearea1').style.height='400px';");
+            
+        }else{
+            webView.frame = CGRectMake(x+100, y, fullWidth-100, 230);
+            webView.stringByEvaluatingJavaScriptFromString("document.getElementById('mcearea1').style.height='120px';");
+        }
     }
     
     
