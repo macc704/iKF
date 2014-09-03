@@ -150,7 +150,7 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
                 webView.stringByEvaluatingJavaScriptFromString(getSetHeightJS());
             }
         }else{//landscape
-            webView.frame = CGRectMake(x+100, y, fullWidth-100, 230);
+            webView.frame = CGRectMake(x+100, y, fullWidth-100, 220);
             if(isInitialized()){
                 webView.stringByEvaluatingJavaScriptFromString(getSetHeightJS());
             }
@@ -161,7 +161,7 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
         if(portrait){
             return "document.getElementById('mcearea1').style.height='400px';";
         }else{//landscape
-            return "document.getElementById('mcearea1').style.height='120px';";
+            return "document.getElementById('mcearea1').style.height='110px';";
         }
     }
     
