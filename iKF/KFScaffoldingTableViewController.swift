@@ -10,8 +10,8 @@ import UIKit
 
 class KFScaffoldingTableViewController: UITableViewController {
     
-    var noteEditView:iKFAbstractNoteEditView?;
-    var scaffolds = Array<KFScaffold>();
+    var scaffolds:[KFScaffold] = [];
+    var selectedHandler:((KFSupport)->())?;
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -19,7 +19,6 @@ class KFScaffoldingTableViewController: UITableViewController {
     
     override init(style: UITableViewStyle) {
         super.init(style: style)
-        // Custom initialization
     }
     
     override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
@@ -28,6 +27,8 @@ class KFScaffoldingTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.preferredContentSize = self.view.frame.size;
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -44,14 +45,10 @@ class KFScaffoldingTableViewController: UITableViewController {
     // #pragma mark - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return scaffolds.count;
     }
     
     override func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
         return scaffolds[section].supports.count;
     }
     
@@ -70,20 +67,11 @@ class KFScaffoldingTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        if(self.noteEditView? != nil){
-            let title = scaffolds[indexPath.section].supports[indexPath.row].title;
-            let supportId = scaffolds[indexPath.section].supports[indexPath.row].guid;
-            let uniqueId = String(Int(NSDate.date().timeIntervalSince1970));
-            let template = KFResource.loadScaffoldTagTemplate();
-            var insertString = template;
-            insertString = insertString.stringByReplacingOccurrencesOfString("%SUPPORTID%", withString: supportId, options: nil, range: nil);
-            insertString = insertString.stringByReplacingOccurrencesOfString("%UNIQUEID%", withString: uniqueId, options: nil, range: nil);
-            insertString = insertString.stringByReplacingOccurrencesOfString("%TITLE%", withString: title, options: nil, range: nil);
-            //insertString = insertString.stringByReplacingOccurrencesOfString("\r", withString: "", options: nil, range: nil);
-            //insertString = insertString.stringByReplacingOccurrencesOfString("\n", withString: "", options: nil, range: nil);
-            self.noteEditView?.insertText(insertString);
+        if(selectedHandler != nil){
+            let support = scaffolds[indexPath.section].supports[indexPath.row];
+            selectedHandler!(support);
+            self.dismissViewControllerAnimated(false, completion: nil);
         }
-        self.dismissViewControllerAnimated(false, completion: nil);
     }
     
     /*

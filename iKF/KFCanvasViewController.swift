@@ -352,13 +352,13 @@ class KFCanvasViewController: UIViewController {
     }
     
     func openNoteEditController(note:KFNote, mode:String){
-        let noteController = iKFCompositeNoteViewController();
+        let noteController = KFCompositeNoteViewController();
         if(mode == "edit"){
             noteController.toEditMode();
         }else if(mode == "read"){
             noteController.toReadMode();
         }
-        noteController.setNote(note, andViewId: self.getCurrentView().guid);
+        noteController.setNote(note, viewId: self.getCurrentView().guid);
         self.presentViewController(noteController, animated: true, completion: nil);
     }
     

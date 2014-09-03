@@ -8,13 +8,15 @@
 
 import UIKit
 
-class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
+class KFNoteEditViewByTinyMCE: KFAbstractNoteEditView, UIWebViewDelegate {
     
     var containerView:UIView!;
     var titleLabel:UILabel!;
     var titleView:UITextField!;
     var sourceLabel:UILabel!;
     var webView:KFWebView!;
+    
+    private var cachedTitle:String?;
     
     private var portrait = true;
     
@@ -23,16 +25,8 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
     }
     
     override init(){
-        super.init(frame: KFAppUtils.DEFAULT_RECT());
-        self.initialize();
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame);
-        self.initialize();
-    }
-    
-    private func initialize(){
+        super.init();
+
         // container
         containerView = UIView();
         self.addSubview(containerView);
@@ -71,19 +65,17 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
         self.insertText(text);
     }
     
-    override func insertText(text: AnyObject!) {
-        var insertString = text as String!;
-        insertString = KFResource.encodingForJS(insertString);
+    override func insertText(text:String) {
+        let insertString = KFResource.encodingForJS(text);
         webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.insertContent('\(insertString)')");
     }
     
-    override func setText(text: AnyObject!, title: AnyObject!) {
-        let sText = text as String!;
-        let sTitle = title as String!;
+    override func setText(text:String, title:String) {
         self.setNavBarTitle("Edit");
-        titleView.text = sTitle;
+        self.cachedTitle = title;
+        titleView.text = title;
         
-        let setString = KFResource.encodingForJS(sText);
+        let setString = KFResource.encodingForJS(text);
         if(self.isInitialized()){
             webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.setContent('\(setString)')");
             webView.stringByEvaluatingJavaScriptFromString(getSetHeightJS());
@@ -117,11 +109,11 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
         return true;
     }
     
-    override func getText() -> String! {
+    override func getText() -> String?{
         return webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.getContent();");
     }
     
-    override func getTitle() -> String!{
+    override func getTitle() -> String?{
         return titleView.text;
     }
     
@@ -164,6 +156,34 @@ class KFNoteEditViewByTinyMCE: iKFAbstractNoteEditView, UIWebViewDelegate {
             return "document.getElementById('mcearea1').style.height='110px';";
         }
     }
+    
+    override func isDirty() -> Bool{
+        return isTitleDirty() || isTextDirty();
+    }
+    
+    private func isTitleDirty() -> Bool {
+        return cachedTitle != nil && cachedTitle! == titleView.text;
+    }
+    
+    private func isTextDirty() -> Bool{
+        let res = webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.isDirty();");
+        println(res)
+        return res == "true";
+    }
+    
+    //NSString* newTitle = [self.editView getTitle];
+    //bool dirty = false;
+    //if(![newTitle isEqualToString: self.note.title]){
+    //    dirty = true;
+    //}
+    //NSString* newContent = [self.editView getText];
+    //if(![newContent isEqualToString: self.note.content]){
+    //    dirty = true;
+    //}
+    //
+    //if(dirty){
+    
+    
     
     /*
     // Only override drawRect: if you perform custom drawing.
