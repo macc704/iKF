@@ -389,7 +389,7 @@ class KFHalo: UIView {
     
     func handleDelete(recognizer:UIGestureRecognizer){
         let postTarget = target as KFPostRefView;
-        self.controller?.deletePostRef(postTarget);
+        self.controller?.deletePostRef(postTarget, fromUI:true);
         controller?.hideHalo();
     }
     

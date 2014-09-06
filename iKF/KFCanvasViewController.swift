@@ -28,8 +28,7 @@ class KFCanvasViewController: UIViewController {
     private var reusableRefViews:[String: KFPostRefView] = [:];
     
     private var initialized = false;
-    private var cometThreadNumber:Int = 0;
-    private var cometVersion:Int = 0;
+    private var cometManager:KFMobileCometManager = KFMobileCometManager();
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -57,9 +56,34 @@ class KFCanvasViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
-        if(self.initialized){
-            self.cometThreadNumber++;
-            self.startComet(self.cometThreadNumber);
+        
+
+    }
+    
+    func messageReceived(type:String?, method:String?, target:String?){
+        //            println("messageReceived: \(type), \(method), \(target)");
+        let service = KFService.getInstance();
+        
+        if(type == "postref" && method == "create"){
+            let ref = service.getPostRef(target!);
+            addReference(ref!);
+        }
+        if(type == "postref" && method == "update"){
+            let ref = service.getPostRef(target!);
+            //println(ref);
+            let refView = self.postRefViews[ref!.guid];
+            if(refView == nil){
+                println("ref is null =\(target)");
+                return;
+            }
+            refView!.setModel(ref!);
+            refView!.updateFromModel();
+        }
+        if(type == "postref" && method == "delete"){
+            let refView = self.postRefViews[target!];
+            if(refView != nil){
+                deletePostRef(refView!, fromUI:false);
+            }
         }
     }
     
@@ -70,27 +94,28 @@ class KFCanvasViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
-        self.cometThreadNumber++;
+        cometManager.stop();
     }
     
     func go(registration:KFRegistration){
-        KFAppUtils.executeInBackThread({
-            self.registration = registration;
-            self.user = KFService.getInstance().currentUser;
-            let enterResult = KFService.getInstance().enterCommunity(registration);
-            if(enterResult == false){
-                //alert
-                return;
-            }
-            
-            KFService.getInstance().refreshMembers();//order imporatnt
-            KFService.getInstance().refreshViews();//order important
-            self.initialized = true;
-            self.setCurrentView(KFService.getInstance().currentRegistration.community.views.array[0]);
-            //set current view do below
-            //self.cometThreadNumber++;
-            //self.startComet(self.cometThreadNumber);
-        })
+        self.cometManager.busInitialized = {
+            KFAppUtils.executeInBackThread({
+                self.registration = registration;
+                self.user = KFService.getInstance().currentUser;
+                let enterResult = KFService.getInstance().enterCommunity(registration);
+                if(enterResult == false){
+                    //alert
+                    return;
+                }
+                KFService.getInstance().refreshMembers();//order imporatnt
+                KFService.getInstance().refreshViews();//order important
+                self.initialized = true;
+                self.setCurrentView(KFService.getInstance().currentRegistration.community.views.array[0]);
+            });
+        }
+        self.cometManager.messageReceived = self.messageReceived;
+        let service = KFService.getInstance();
+        self.cometManager.start(service.getHost(), username: service.username!, password: service.password!);
     }
     
     func addNote(ref:KFReference){
@@ -147,6 +172,7 @@ class KFCanvasViewController: UIViewController {
         //self.hideHalo();
         let postRefView = KFViewRefView(controller: self, ref: ref);
         canvasView.noteLayer.addSubview(postRefView);
+        postRefViews[ref.guid] = postRefView;
     }
     
     func addBuildsOn(ref:KFReference){
@@ -201,24 +227,26 @@ class KFCanvasViewController: UIViewController {
         });
     }
     
-    func deletePostRef(refView:KFPostRefView){
+    func deletePostRef(refView:KFPostRefView, fromUI:Bool){
         self.hideHalo();
         
         refView.removeFromSuperview();
         canvasView.connectionLayer.noteRemoved(refView);
         
-        let viewId = self.getCurrentView().guid;
-        KFAppUtils.executeInBackThread({
-            self.cometVersion++;
-            KFService.getInstance().deletePostRef(viewId, postRef: refView.getModel());
-        });
+        if(fromUI == true){
+            let viewId = self.getCurrentView().guid;
+            KFAppUtils.executeInBackThread({
+                KFService.getInstance().deletePostRef(viewId, postRef: refView.getModel());
+                return;
+            });
+        }
     }
     
     func updatePostRef(refView:KFPostRefView){
         let viewId = self.getCurrentView().guid;
         KFAppUtils.executeInBackThread({
-            self.cometVersion++;
             KFService.getInstance().updatePostRef(viewId, postRef: refView.getModel());
+            return;
         });
     }
     
@@ -248,8 +276,11 @@ class KFCanvasViewController: UIViewController {
             KFWebView.clearPostInstances();
             self.currentView = view;
             self.navBar.topItem!.title = self.currentView!.title;
-            self.cometThreadNumber++;
-            self.startComet(self.cometThreadNumber);
+            self.refreshAllPostsAsync();
+            let res = self.cometManager.subscribeViewEvent(self.getCurrentView().guid);
+            println(res);
+            //self.cometThreadNumber++;
+            //self.startComet(self.cometThreadNumber);
         });
     }
     
@@ -258,36 +289,6 @@ class KFCanvasViewController: UIViewController {
     }
     
     private func startComet(threadNumber:Int){
-        KFAppUtils.executeInBackThread({
-            var viewId = self.getCurrentView().guid;
-            self.cometVersion = -1;
-            while(true){
-                if(viewId != self.getCurrentView().guid){
-                    viewId = self.getCurrentView().guid;
-                    self.cometVersion = -1;
-                }
-                let newVersion = KFService.getInstance().getNextViewVersionAsync(viewId, currentVersion: self.cometVersion);
-                if(threadNumber != self.cometThreadNumber){
-                    break;
-                }
-                if(newVersion == -1){
-                    KFAppUtils.debug("error at newVersion");
-                    break;
-                }
-                KFAppUtils.debug("newVersion=\(newVersion)");
-                if(newVersion > self.cometVersion){
-                    self.cometVersion = newVersion;
-                    KFAppUtils.debug("refresh request");
-                    self.refreshAllPostsAsync();
-                    NSThread.sleepForTimeInterval(2.0);
-                    KFAppUtils.debug("wake up");
-                }else if(newVersion < self.cometVersion){
-                    KFAppUtils.debug("ERROR: newVersion < cometVersion");
-                    self.cometVersion = newVersion;
-                }
-            }
-        })
-        KFAppUtils.debug("comet stopped number=\(threadNumber)");
         
     }
     
@@ -301,25 +302,29 @@ class KFCanvasViewController: UIViewController {
         });
     }
     
+    private func addReference(ref:KFReference){
+        if(ref.isHidden()){
+            return;
+        }
+        
+        if(ref.post is KFNote){
+            self.addNote(ref);
+        }else if(ref.post is KFDrawing){
+            self.addDrawing(ref);
+        }else if(ref.post is KFView){
+            self.addViewRef(ref);
+        }else{
+            KFAppUtils.debug("unknown post=\(ref.post)");
+        }
+    }
+    
     private func refreshPosts(newRefs:[String:KFReference]){
         self.reusableRefViews = self.postRefViews;
         self.clearViews();
         self.postRefs = newRefs;
         
         for each in self.postRefs.values{
-            if(each.isHidden()){
-                continue;
-            }
-            
-            if(each.post is KFNote){
-                self.addNote(each);
-            }else if(each.post is KFDrawing){
-                self.addDrawing(each);
-            }else if(each.post is KFView){
-                self.addViewRef(each);
-            }else{
-                KFAppUtils.debug("unknown post=\(each.post)");
-            }
+            addReference(each);
         }
         
         for each in self.postRefs.values{
@@ -484,7 +489,6 @@ class KFCanvasViewController: UIViewController {
     }
     
     @IBAction func exitPressed(sender: AnyObject) {
-        self.cometThreadNumber++;
         KFWebView.clearAllInstances();
         self.dismissViewControllerAnimated(true, completion: nil);
     }

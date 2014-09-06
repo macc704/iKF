@@ -17,6 +17,8 @@ class KFService: NSObject {
     
     private var host:String?;
     private var baseURL:String?;
+    var username:String?
+    var password:String?
     
     private var jsonScanner:iKFJSONScanner?;
     
@@ -112,6 +114,8 @@ class KFService: NSObject {
         let req = KFHttpRequest(urlString: url, method: "POST");
         req.addParam("userName", value: userName);
         req.addParam("password", value: password);
+        self.username = userName;
+        self.password = password;
         let res = KFHttpConnection.connect(req);
         return res.getStatusCode() == 200;
     }
@@ -258,6 +262,18 @@ class KFService: NSObject {
         let json: AnyObject = res.getBodyAsJSON();
         //println(res.getBodyAsJSON())
         return jsonScanner!.scanPostRefs(res.getBodyAsJSON()) as [String: KFReference];
+    }
+    
+    func getPostRef(postRefId:String) -> KFReference?{
+        let url = "\(self.baseURL!)rest/mobile/getPostRef/\(postRefId)";
+        let req = KFHttpRequest(urlString: url, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError("in getPosts() code=\(res.getStatusCode())");
+            return nil;
+        }
+        let json: AnyObject = res.getBodyAsJSON();
+        return jsonScanner!.scanPostRef(res.getBodyAsJSON());
     }
     
     func updatePostAuthors(post:KFPost) -> Bool{

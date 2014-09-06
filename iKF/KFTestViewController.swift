@@ -44,14 +44,15 @@ class KFTestViewController: UIViewController {
 //        req.updateParams();
 //        webbrowser.setRequest(req.nsRequest);
         if(comet == nil){
-            comet = KFMobileCometManager(host: "localhost:8080", username: "ikit", password: "pass");
+            comet = KFMobileCometManager()
             comet!.busInitialized = {
                 self.comet!.subscribeViewEvent("31b8bac8-0eda-4695-87f3-51de32c931de");
+                return;
             }
             comet!.messageReceived = {(type:String?, method:String?, target:String?) in
                 println("messageReceived: \(type), \(method), \(target)");
             };
-            comet!.start();
+            comet!.start("localhost:8080", username: "ikit", password: "pass");
         }
         self.view.addSubview(webbrowser);
         webbrowser.doubleTapHandler = {

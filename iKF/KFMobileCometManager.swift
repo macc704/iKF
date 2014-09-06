@@ -9,12 +9,12 @@
 import UIKit
 
 class KFMobileCometManager: NSObject, UIWebViewDelegate {
-
+    
     private let webView = UIWebView();
     
-    private var host:String;
-    private var username:String;
-    private var password:String;
+    private var host:String!;
+    private var username:String!;
+    private var password:String!;
     
     private var onLoginProcess = false;
     
@@ -22,15 +22,15 @@ class KFMobileCometManager: NSObject, UIWebViewDelegate {
     var busInitialized:(()->())?;
     var messageReceived:((type:String?, method:String?, target:String?)->())?
     
-    init(host:String, username:String, password:String){
-        self.host = host;
-        self.username = username;
-        self.password = password;
+    override init(){
         super.init();
         webView.delegate = self;
     }
     
-    func start(){
+    func start(host:String, username:String, password:String){
+        self.host = host;
+        self.username = username;
+        self.password = password;
         requestLogin();
     }
     
@@ -53,8 +53,9 @@ class KFMobileCometManager: NSObject, UIWebViewDelegate {
         webView.loadRequest(req.nsRequest);
     }
     
-    func subscribeViewEvent(viewId:String){
-        webView.stringByEvaluatingJavaScriptFromString("subscribeViewEvent('\(viewId)');");
+    func subscribeViewEvent(viewId:String) -> Bool{
+        let res = webView.stringByEvaluatingJavaScriptFromString("subscribeViewEvent('\(viewId)');");
+        return res != nil && res! == "true";
     }
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
@@ -94,8 +95,8 @@ class KFMobileCometManager: NSObject, UIWebViewDelegate {
     // An empty implementation adversely affects performance during animation.
     override func drawRect(rect: CGRect)
     {
-        // Drawing code
+    // Drawing code
     }
     */
-
+    
 }
