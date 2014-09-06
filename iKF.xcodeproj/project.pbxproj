@@ -446,12 +446,12 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		4991C32E19BAAE1200677B9A /* json.swift */ = {
+		4991C32E19BAAE1200677B9A /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
 				4991C32F19BAAE2800677B9A /* json.swift */,
 			);
-			name = json.swift;
+			name = ThirdParty;
 			sourceTree = "<group>";
 		};
 		49C12591198B0B2F000336D8 /* TestUI */ = {
@@ -484,7 +484,7 @@
 		49C78D56194105C2004D3404 /* iKF */ = {
 			isa = PBXGroup;
 			children = (
-				4991C32E19BAAE1200677B9A /* json.swift */,
+				4991C32E19BAAE1200677B9A /* ThirdParty */,
 				49FCA09A199037DA00D4EEC4 /* WebResources */,
 				490E756E1941116A004E8BF7 /* iKF-Bridging-Header.h */,
 				490E7572194111A8004E8BF7 /* ObjC */,
