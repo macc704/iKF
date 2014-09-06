@@ -123,11 +123,17 @@
 - (NSDictionary*) scanPostRefs: (id)jsonobj{
     NSMutableDictionary* models = [NSMutableDictionary dictionary];
     for (id each in jsonobj[@"viewPostRefs"]) {
-        [self scanPostRef:each models:models];
+        KFReference* ref = [self scanPostRef:each];
+        if(ref != nil){
+            [models setObject: ref forKey: ref.guid];
+        }
     }
     
     for (id each in jsonobj[@"linkedViewReferences"]) {
-        [self scanPostRef:each models:models];
+        KFReference* ref = [self scanPostRef:each];
+        if(ref != nil){
+            [models setObject: ref forKey: ref.guid];
+        }
     }
     
     for (id each in jsonobj[@"buildOns"]) {
@@ -140,7 +146,7 @@
     return models;
 }
 
-- (void)scanPostRef:(id)each models:(NSMutableDictionary *)models {
+- (KFReference*)scanPostRef:(id)each {
     KFReference* reference = [[KFReference alloc] init];
     
     reference.guid = each[@"guid"];
@@ -158,12 +164,11 @@
             model = [[KFService getInstance].currentRegistration.community getView: guid];//retry
             if(model == nil){
                 NSLog(@"Warning: view link to not found id= %@", guid);
-                return;
+                return nil;
             }
         }
         reference.post = model;
-        [models setObject: reference forKey: reference.guid];
-        return;
+        return reference;
     }
     
     //normal postinfo
@@ -176,7 +181,7 @@
     // scan postinfo
     KFPost* post = [self scanPost: each[@"postInfo"]];
     if(post == nil){
-        return;
+        return nil;
     }
     reference.post = post;
     
@@ -194,7 +199,7 @@
     //        "starred": false
     //    },
     
-    [models setObject: reference forKey: reference.guid];
+    return reference;
 }
 
 //- (NSDictionary*) getUsers{
