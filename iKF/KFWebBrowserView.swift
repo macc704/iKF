@@ -216,6 +216,10 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         self.webView.setURL(url);
     }
     
+    func setRequest(req:NSURLRequest){
+        self.webView.loadRequest(req);
+    }
+    
     func stop(){
         webView.stopLoading();
     }
@@ -325,7 +329,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         self.urlTextfield!.text = getURL();
         //self.webView.scrollView.zoomToRect(self.webView.frame, animated: false);
     }
-    
+
     func webView(webView: UIWebView!, didFailLoadWithError error: NSError!) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false;
         loading.hide();

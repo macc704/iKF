@@ -10,25 +10,7 @@ import UIKit
 
 class KFTestViewController: UIViewController {
     
-    @IBAction func aPressed(sender: AnyObject) {
-        a();
-    }
-    
-    func a(){
-        println("button pressed");
-        let webbrowser = KFWebBrowserView();
-        let rect2:CGRect = CGRect(x: 300, y: 300, width: 200, height: 200);
-        webbrowser.frame = rect2;
-        webbrowser.setURL("http://www.google.com");
-        self.view.addSubview(webbrowser);
-        webbrowser.doubleTapHandler = {
-            self.showHalo(webbrowser);
-        }
-    }
-    
     var halo:KFHalo?;
-    
-    //var web = KFWebView();
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -36,14 +18,48 @@ class KFTestViewController: UIViewController {
         // Do any additional setup after loading the view.
         let tap = UITapGestureRecognizer(target: self, action: "hideHalo");
         self.view.addGestureRecognizer(tap);
-        
-        //a();
     }
     
     @IBAction func backClicked(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: {});
+        comet?.stop();
+        comet = nil;
     }
     
+    @IBAction func aPressed(sender: AnyObject) {
+        a();
+    }
+    
+    var comet:KFMobileCometManager?;
+    
+    func a(){
+        println("button pressed");
+        let webbrowser = KFWebBrowserView();
+        let rect2:CGRect = CGRect(x: 300, y: 300, width: 200, height: 200);
+        webbrowser.frame = rect2;
+        webbrowser.setURL("http://www.google.com");
+//        let req = KFHttpRequest(urlString: "http://localhost:8080/kforum/rest/account/userLogin", method: "POST");
+//        req.addParam("userName", value: "ikit");
+//        req.addParam("password", value: "pass");
+//        req.updateParams();
+//        webbrowser.setRequest(req.nsRequest);
+        if(comet == nil){
+            comet = KFMobileCometManager(host: "localhost:8080", username: "ikit", password: "pass");
+            comet!.busInitialized = {
+                self.comet!.subscribeViewEvent("31b8bac8-0eda-4695-87f3-51de32c931de");
+            }
+            comet!.messageReceived = {(type:String?, method:String?, target:String?) in
+                println("messageReceived: \(type), \(method), \(target)");
+            };
+            comet!.start();
+        }
+        self.view.addSubview(webbrowser);
+        webbrowser.doubleTapHandler = {
+            self.showHalo(webbrowser);
+        }
+    }
+    
+  
     func doNothing(gesture:UITapGestureRecognizer){
     }
     
@@ -52,7 +68,6 @@ class KFTestViewController: UIViewController {
             hideHalo();
         }
         halo = KFHalo(controller: nil, target: target);
-//        self.view.addSubview(halo);
         halo!.showWithAnimation(self.view);
     }
     
