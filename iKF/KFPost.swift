@@ -18,6 +18,7 @@ class KFPost: KFModel {
     var modified:String! = "";
     
     var dirtyAuthors = false;
+    var buildsOn:KFPost?;
     
     func canEditMe() -> Bool{
         return canEdit(KFService.getInstance().currentUser);

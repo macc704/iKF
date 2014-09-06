@@ -29,7 +29,7 @@ class KFService: NSObject {
     private var editTemplate:String?;
     private var readTemplate:String?;
     private var mobileJS:String?;
-
+    
     //    var globalEditWebView:iKFWebView?;//tmp
     
     private override init(){
@@ -127,16 +127,16 @@ class KFService: NSObject {
         return res.getStatusCode() == 200;
     }
     
-//    func getCurrentUser() -> KFUser{
-//        if(currentUser == nil){
-//            refreshCurrentUser();
-//        }
-//        return self.currentUser!;
-//    }
-//    
-//    func getCurrentRegistration() -> KFRegistration{
-//        return self.currentRegistration;
-//    }
+    //    func getCurrentUser() -> KFUser{
+    //        if(currentUser == nil){
+    //            refreshCurrentUser();
+    //        }
+    //        return self.currentUser!;
+    //    }
+    //
+    //    func getCurrentRegistration() -> KFRegistration{
+    //        return self.currentRegistration;
+    //    }
     
     //temporary
     //    func getUsers() -> [String:KFUser]{
@@ -261,6 +261,27 @@ class KFService: NSObject {
         }
         let json: AnyObject = res.getBodyAsJSON();
         return jsonScanner!.scanPost(res.getBodyAsJSON());
+    }
+    
+    func updateBuildOnsInPost(post:KFPost){
+        let url = "\(self.baseURL!)rest/mobile/getBuildsOnInPost/\(post.guid)";
+        let req = KFHttpRequest(urlString: url, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError("in getBuildsOnInPost() code=\(res.getStatusCode())");
+            //            return nil;
+            return;
+        }
+        
+        let json = JSON.parse(res.getBodyAsString());
+        let len = json.length;
+        for(var i=0; i<len; i++){
+            let fromId = json[i]["from"].asString!;
+            let toId = json[i]["to"].asString!; //parent
+            if(fromId == post.guid){ //be supposed to
+                post.buildsOn = getPost(toId);
+            }
+        }
     }
     
     func getPostRefs(viewId:String) -> [String: KFReference]{

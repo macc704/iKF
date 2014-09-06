@@ -13,7 +13,7 @@ class KFNote: KFPost {
     var title = "";
     var content = "";
 //    var location = CGPoint(x:0, y:0);
-    var buildsOn:KFNote?;
+//    var buildsOn:KFNote?;
 //    var refId = "";
     
     func getReadHtml() -> String{

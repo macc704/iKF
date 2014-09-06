@@ -66,7 +66,9 @@ class KFCanvasViewController: UIViewController {
         
         if(type == "postref" && method == "create"){
             let ref = service.getPostRef(target!);
-            addReference(ref!);
+            service.updateBuildOnsInPost(ref!.post!);
+            self.addReference(ref!);
+            self.addBuildsOn(ref!);
         }
         if(type == "postref" && method == "update"){
             let ref = service.getPostRef(target!);
@@ -195,7 +197,9 @@ class KFCanvasViewController: UIViewController {
         if(note.buildsOn != nil){
             let fromRefView = postRefViews[note.guid]
             let toRefView = postRefViews[note.buildsOn!.guid];//ちょっとずる
-            canvasView.connectionLayer.addConnection(fromRefView!, to: toRefView!);
+            if(fromRefView != nil && toRefView != nil){
+                canvasView.connectionLayer.addConnection(fromRefView!, to: toRefView!);
+            }
         }
     }
     
