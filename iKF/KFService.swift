@@ -251,6 +251,18 @@ class KFService: NSObject {
         return models;
     }
     
+    func getPost(postId:String) -> KFPost?{
+        let url = "\(self.baseURL!)rest/mobile/getPost/\(postId)";
+        let req = KFHttpRequest(urlString: url, method: "GET");
+        let res = KFHttpConnection.connect(req);
+        if(res.getStatusCode() != 200){
+            handleError("in getPost() code=\(res.getStatusCode())");
+            return nil;
+        }
+        let json: AnyObject = res.getBodyAsJSON();
+        return jsonScanner!.scanPost(res.getBodyAsJSON());
+    }
+    
     func getPostRefs(viewId:String) -> [String: KFReference]{
         let url = "\(self.baseURL!)rest/content/getView/\(viewId)";
         let req = KFHttpRequest(urlString: url, method: "GET");

@@ -90,32 +90,32 @@
     return models;
 }
 
-- (KFPost*) scanPost: (id)eachPost{
+- (KFPost*) scanPost: (id)jsonobj{
     
     KFPost* model;
-    if([eachPost[@"postType"] isEqualToString: @"NOTE"]){
+    if([jsonobj[@"postType"] isEqualToString: @"NOTE"]){
         KFNote* note = [[KFNote alloc] initWithoutAuthor];
         model = note;
-        note.title = eachPost[@"title"];
-        note.content = eachPost[@"body"];
+        note.title = jsonobj[@"title"];
+        note.content = jsonobj[@"body"];
     }
-    else if([eachPost[@"postType"] isEqualToString: @"DRAWING"]){
+    else if([jsonobj[@"postType"] isEqualToString: @"DRAWING"]){
         KFDrawing* drawing = [[KFDrawing alloc] init];
         model = drawing;
-        if([[eachPost allKeys] containsObject: @"body"]){//swift beta4 does not allow nil value
-            drawing.content = eachPost[@"body"];
+        if([[jsonobj allKeys] containsObject: @"body"]){//swift beta4 does not allow nil value
+            drawing.content = jsonobj[@"body"];
         }
     }else{
-        NSLog(@"Warning: unsupported type= %@", eachPost[@"postType"]);
+        NSLog(@"Warning: unsupported type= %@", jsonobj[@"postType"]);
         return nil;
     }
     
     // common
-    model.guid = eachPost[@"guid"];
-    model.authors = [self scanAuthors: eachPost[@"authors"]];
-    model.primaryAuthor = [self getUserById: eachPost[@"primaryAuthorId"]];
-    model.created = eachPost[@"created"];
-    model.modified = eachPost[@"modified"];
+    model.guid = jsonobj[@"guid"];
+    model.authors = [self scanAuthors: jsonobj[@"authors"]];
+    model.primaryAuthor = [self getUserById: jsonobj[@"primaryAuthorId"]];
+    model.created = jsonobj[@"created"];
+    model.modified = jsonobj[@"modified"];
     
     return model;
 }

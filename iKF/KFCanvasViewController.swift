@@ -85,6 +85,16 @@ class KFCanvasViewController: UIViewController {
                 deletePostRef(refView!, fromUI:false);
             }
         }
+        if(type == "post" && method == "update"){
+            let post = service.getPost(target!);
+            let refView = self.postRefViews[target!];//ずる
+            if(refView == nil){
+                println("ref is null =\(target)");
+                return;
+            }
+            refView!.getModel().post = post;
+            refView!.updateFromModel();
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -94,7 +104,7 @@ class KFCanvasViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
-        cometManager.stop();
+        //        cometManager.stop();
     }
     
     func go(registration:KFRegistration){
@@ -490,6 +500,7 @@ class KFCanvasViewController: UIViewController {
     
     @IBAction func exitPressed(sender: AnyObject) {
         KFWebView.clearAllInstances();
+        cometManager.stop();
         self.dismissViewControllerAnimated(true, completion: nil);
     }
     
