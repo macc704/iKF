@@ -260,7 +260,7 @@ class KFService: NSObject {
             return nil;
         }
         let json: AnyObject = res.getBodyAsJSON();
-        return jsonScanner!.scanPost(res.getBodyAsJSON());
+        return jsonScanner!.scanPost(json["post"]);
     }
     
     func updateBuildOnsInPost(post:KFPost){
