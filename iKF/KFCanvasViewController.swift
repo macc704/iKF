@@ -97,6 +97,12 @@ class KFCanvasViewController: UIViewController {
             refView!.getModel().post = post;
             refView!.updateFromModel();
         }
+        if(type == "view" && method == "create"){
+            KFService.getInstance().refreshViews();
+        }        
+        if(type == "view" && method == "delete"){
+            KFService.getInstance().refreshViews();
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -122,6 +128,11 @@ class KFCanvasViewController: UIViewController {
                 KFService.getInstance().refreshMembers();//order imporatnt
                 KFService.getInstance().refreshViews();//order important
                 self.initialized = true;
+                println(registration.community.guid);
+                KFAppUtils.executeInGUIThread({
+                    self.cometManager.subscribeCommunityEvent(registration.community.guid);
+                    return;
+                });
                 self.setCurrentView(KFService.getInstance().currentRegistration.community.views.array[0]);
             });
         }

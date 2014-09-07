@@ -58,6 +58,11 @@ class KFMobileCometManager: NSObject, UIWebViewDelegate {
         return res != nil && res! == "true";
     }
     
+    func subscribeCommunityEvent(communityId:String) -> Bool{
+        let res = webView.stringByEvaluatingJavaScriptFromString("subscribeCommunityEvent('\(communityId)');");
+        return res != nil && res! == "true";
+    }
+    
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         let host = request.URL.host;
         if(host != nil && host == "kfbus.initialized"){
