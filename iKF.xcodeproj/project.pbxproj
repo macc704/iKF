@@ -86,6 +86,7 @@
 		498BD1B11942C372006217AD /* KFNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD1B01942C372006217AD /* KFNote.swift */; };
 		4991C32D19BA9CC000677B9A /* KFMobileCometManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4991C32C19BA9CC000677B9A /* KFMobileCometManager.swift */; };
 		4991C33019BAAE2800677B9A /* json.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4991C32F19BAAE2800677B9A /* json.swift */; };
+		4991C33219BBF90E00677B9A /* KFJSONScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4991C33119BBF90E00677B9A /* KFJSONScanner.swift */; };
 		499DE6E419894A3000BA2209 /* KFImageSizeSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499DE6E219894A3000BA2209 /* KFImageSizeSelectionViewController.swift */; };
 		499DE6E519894A3000BA2209 /* KFImageSizeSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 499DE6E319894A3000BA2209 /* KFImageSizeSelectionViewController.xib */; };
 		499DE6E71989770700BA2209 /* KFLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499DE6E61989770700BA2209 /* KFLoadingView.swift */; };
@@ -208,6 +209,7 @@
 		498BD1B01942C372006217AD /* KFNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFNote.swift; sourceTree = "<group>"; };
 		4991C32C19BA9CC000677B9A /* KFMobileCometManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFMobileCometManager.swift; sourceTree = "<group>"; };
 		4991C32F19BAAE2800677B9A /* json.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = json.swift; sourceTree = "<group>"; };
+		4991C33119BBF90E00677B9A /* KFJSONScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFJSONScanner.swift; sourceTree = "<group>"; };
 		499DE6E219894A3000BA2209 /* KFImageSizeSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFImageSizeSelectionViewController.swift; sourceTree = "<group>"; };
 		499DE6E319894A3000BA2209 /* KFImageSizeSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFImageSizeSelectionViewController.xib; sourceTree = "<group>"; };
 		499DE6E61989770700BA2209 /* KFLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFLoadingView.swift; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 			isa = PBXGroup;
 			children = (
 				49842F7119805A3D0012900B /* KFService.swift */,
+				4991C33119BBF90E00677B9A /* KFJSONScanner.swift */,
 				49842F7319805ACB0012900B /* KFHttpResponse.swift */,
 				49842F7519805AE20012900B /* KFHttpRequest.swift */,
 				49842F7719805AFC0012900B /* KFHttpConnection.swift */,
@@ -742,6 +745,7 @@
 				491AD84419B668D000B92386 /* KFLayerView.swift in Sources */,
 				49C78D5A194105C2004D3404 /* AppDelegate.swift in Sources */,
 				4904812319B762A500126571 /* KFAbstractNoteEditView.swift in Sources */,
+				4991C33219BBF90E00677B9A /* KFJSONScanner.swift in Sources */,
 				496074FE1992613F00131111 /* KFWebView.swift in Sources */,
 				492C10271947562800512591 /* KFScaffold.swift in Sources */,
 				497C26E9198889D7007CCEED /* KFImagePicker.swift in Sources */,

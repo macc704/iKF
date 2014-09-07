@@ -21,6 +21,7 @@ class KFService: NSObject {
     var password:String?
     
     private var jsonScanner:iKFJSONScanner?;
+    private var jsonScanner2 = KFJSONScanner();
     
     //cache
     var currentRegistration:KFRegistration!;
@@ -182,7 +183,7 @@ class KFService: NSObject {
             handleError("in getRegistrations() code=\(res.getStatusCode())");
             return [];
         }
-        return jsonScanner!.scanRegistrations(res.getBodyAsJSON()) as  [KFRegistration];
+        return jsonScanner2.scanRegistrations(res.getBodyAsJSON2()).array;
     }
     
     func enterCommunity(registration:KFRegistration) -> Bool{
@@ -206,15 +207,11 @@ class KFService: NSObject {
         let url = "\(self.baseURL!)rest/mobile/getViewsOrdered/\(communityId)";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
-        var models = KFModelArray<KFView>();
         if(res.getStatusCode() != 200){
             handleError("in getViews() code=\(res.getStatusCode())");
-            return models;
+            return KFModelArray<KFView>();
         }
-        for view in jsonScanner!.scanViews(res.getBodyAsJSON()) {
-            models.add(view as KFView);
-        }
-        return models;
+        return jsonScanner2.scanViews(res.getBodyAsJSON2());
     }
     
     func refreshMembers(){
@@ -225,30 +222,22 @@ class KFService: NSObject {
         let url = "\(self.baseURL!)rest/mobile/getMembers/\(communityId)";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
-        var models = KFModelArray<KFUser>();
         if(res.getStatusCode() != 200){
             handleError("in getViews() code=\(res.getStatusCode())");
-            return models;
+            return KFModelArray<KFUser>();
         }
-        for view in jsonScanner!.scanUsers(res.getBodyAsJSON()) {
-            models.add(view as KFUser);
-        }
-        return models;
+        return jsonScanner2.scanUsers(res.getBodyAsJSON2());
     }
     
     func getAllPosts() -> KFModelArray<KFPost>{
         let url = "\(self.baseURL!)rest/mobile/getPostsOrdered/\(currentRegistration.community.guid)";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
-        var models = KFModelArray<KFPost>();
         if(res.getStatusCode() != 200){
             handleError("in getPostsOrdered() code=\(res.getStatusCode())");
-            return models;
+            return KFModelArray<KFPost>();
         }
-        for post in jsonScanner!.scanPosts(res.getBodyAsJSON()) {
-            models.add(post as KFPost);
-        }
-        return models;
+        return jsonScanner2.scanPosts(res.getBodyAsJSON2());
     }
     
     func getPost(postId:String) -> KFPost?{
@@ -259,42 +248,42 @@ class KFService: NSObject {
             handleError("in getPost() code=\(res.getStatusCode())");
             return nil;
         }
-        let json: AnyObject = res.getBodyAsJSON();
-        return jsonScanner!.scanPost(json["post"]);
+        let json = res.getBodyAsJSON2();
+        let post = jsonScanner2.scanPost(json["body"]);
+        //builds-on parsing ommited now
+        return post;
     }
     
-    func updateBuildOnsInPost(post:KFPost){
-        let url = "\(self.baseURL!)rest/mobile/getBuildsOnInPost/\(post.guid)";
-        let req = KFHttpRequest(urlString: url, method: "GET");
-        let res = KFHttpConnection.connect(req);
-        if(res.getStatusCode() != 200){
-            handleError("in getBuildsOnInPost() code=\(res.getStatusCode())");
-            //            return nil;
-            return;
-        }
-        
-        let json = JSON.parse(res.getBodyAsString());
-        let len = json.length;
-        for(var i=0; i<len; i++){
-            let fromId = json[i]["from"].asString!;
-            let toId = json[i]["to"].asString!; //parent
-            if(fromId == post.guid){ //be supposed to
-                post.buildsOn = getPost(toId);
-            }
-        }
-    }
+    //    func updateBuildOnsInPost(post:KFPost){
+    //        let url = "\(self.baseURL!)rest/mobile/getBuildsOnInPost/\(post.guid)";
+    //        let req = KFHttpRequest(urlString: url, method: "GET");
+    //        let res = KFHttpConnection.connect(req);
+    //        if(res.getStatusCode() != 200){
+    //            handleError("in getBuildsOnInPost() code=\(res.getStatusCode())");
+    //            return;
+    //        }
+    //
+    //        let json = res.getBodyAsJSON2();
+    //        for each in json.asArray! {
+    //            let fromId = each["from"].asString!;
+    //            let toId = each["to"].asString!; //parent
+    //            if(fromId == post.guid){ //be supposed to
+    //                post.buildsOn = getPost(toId);
+    //            }
+    //        }
+    //    }
     
     func getPostRefs(viewId:String) -> [String: KFReference]{
-        let url = "\(self.baseURL!)rest/content/getView/\(viewId)";
+        let url = "\(self.baseURL!)rest/mobile/getView/\(viewId)";
         let req = KFHttpRequest(urlString: url, method: "GET");
         let res = KFHttpConnection.connect(req);
         if(res.getStatusCode() != 200){
             handleError("in getPosts() code=\(res.getStatusCode())");
             return [:];
         }
-        let json: AnyObject = res.getBodyAsJSON();
-        //println(res.getBodyAsJSON())
-        return jsonScanner!.scanPostRefs(res.getBodyAsJSON()) as [String: KFReference];
+        let json = res.getBodyAsJSON2();
+        let dic = jsonScanner2.scanView(json).dic;
+        return dic;
     }
     
     func getPostRef(postRefId:String) -> KFReference?{
@@ -305,8 +294,17 @@ class KFService: NSObject {
             handleError("in getPosts() code=\(res.getStatusCode())");
             return nil;
         }
-        let json: AnyObject = res.getBodyAsJSON();
-        return jsonScanner!.scanPostRef(res.getBodyAsJSON());
+        let json = res.getBodyAsJSON2();
+        let ref = jsonScanner2.scanPostRef(json["body"]);
+        
+        for each in json["buildsons"].asArray! {
+            let fromId = each["from"].asString!;
+            let toId = each["to"].asString!; //parent
+            if(fromId == ref.post!.guid){ //be supposed to
+                ref.post!.buildsOn = getPost(toId);
+            }
+        }
+        return ref;
     }
     
     func updatePostAuthors(post:KFPost) -> Bool{
@@ -466,7 +464,7 @@ class KFService: NSObject {
             handleError("in getScaffolds() code=\(res.getStatusCode())");
             return [];
         }
-        return jsonScanner!.scanScaffolds(res.getBodyAsJSON()) as [KFScaffold];
+        return jsonScanner2.scanScaffolds(res.getBodyAsJSON2()).array;
     }
     
     func getNextViewVersionAsync(viewId:String, currentVersion:Int) -> Int{

@@ -17,14 +17,14 @@
 
 @interface iKFJSONScanner : NSObject
 
-- (NSArray*) scanRegistrations: (id)jsonobj;
-- (NSArray*) scanViews: (id)jsonobj;
-- (NSArray*) scanUsers: (id)jsonobj;
-- (NSArray*) scanPosts: (id)jsonobj;
-- (KFPost*) scanPost: (id)jsonobj;
-- (NSDictionary*) scanPostRefs: (id)jsonobj;
-- (KFReference*) scanPostRef: (id)jsonobj;
-- (NSArray*) scanScaffolds:(id)jsonobj;
+//- (NSArray*) scanRegistrations: (id)jsonobj;
+//- (NSArray*) scanViews: (id)jsonobj;
+//- (NSArray*) scanUsers: (id)jsonobj;
+//- (NSArray*) scanPosts: (id)jsonobj;
+//- (KFPost*) scanPost: (id)jsonobj;
+//- (NSDictionary*) scanPostRefs: (id)jsonobj;
+//- (KFReference*) scanPostRef: (id)jsonobj;
+//- (NSArray*) scanScaffolds:(id)jsonobj;
 - (NSString*) generateRandomString: (int)len;
 
 //- (NSDictionary*) getUsers;

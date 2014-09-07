@@ -66,7 +66,7 @@ class KFCanvasViewController: UIViewController {
         
         if(type == "postref" && method == "create"){
             let ref = service.getPostRef(target!);
-            service.updateBuildOnsInPost(ref!.post!);
+            //service.updateBuildOnsInPost(ref!.post!);
             self.addReference(ref!);
             self.addBuildsOn(ref!);
         }

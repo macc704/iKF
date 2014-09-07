@@ -21,21 +21,21 @@
     return self;
 }
 
-- (NSArray*) scanRegistrations: (id)jsonobj{
-    NSMutableArray* models = [NSMutableArray array];
-    for (id each in jsonobj) {
-        KFRegistration* model = [[KFRegistration alloc] init];
-        model.guid = each[@"guid"];
-        model.roleName = each[@"roleInfo"][@"name"];
-        KFCommunity* community = [[KFCommunity alloc] init];
-        community.guid = each[@"sectionId"];
-        community.name = each[@"sectionTitle"];
-        model.community = community;
-        
-        [models addObject: model];
-    }
-    return models;
-}
+//- (NSArray*) scanRegistrations: (id)jsonobj{
+//    NSMutableArray* models = [NSMutableArray array];
+//    for (id each in jsonobj) {
+//        KFRegistration* model = [[KFRegistration alloc] init];
+//        model.guid = each[@"guid"];
+//        model.roleName = each[@"roleInfo"][@"name"];
+//        KFCommunity* community = [[KFCommunity alloc] init];
+//        community.guid = each[@"sectionId"];
+//        community.name = each[@"sectionTitle"];
+//        model.community = community;
+//        
+//        [models addObject: model];
+//    }
+//    return models;
+//}
 
 - (NSArray*) scanViews: (id)jsonobj{
     NSMutableArray* models = [[NSMutableArray alloc] init];
