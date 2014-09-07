@@ -12,5 +12,6 @@
 
 + (NSString*) getBuildDate;
 + (NSString*) getBuildTime;
++ (NSString*) generateRandomString: (int)len;
 
 @end

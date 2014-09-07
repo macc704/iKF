@@ -26,7 +26,7 @@
 //#import "iKFWebView.h"
 //#import "iKFLayerView.h"
 
-#import "iKFJSONScanner.h"
+//#import "iKFJSONScanner.h"
 #import "iKFUtil.h"
 
 //#import "iKFViewController.h"

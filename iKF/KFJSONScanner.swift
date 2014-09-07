@@ -134,14 +134,18 @@ class KFJSONScanner: NSObject {
     func scanPostRefs(json:JSON)->KFModelArray<KFReference>{
         var models = KFModelArray<KFReference>();
         
-        for each in json["viewPostRefs"].asArray!{
-            let ref = scanPostRef(each);
-            models.add(ref);
+        if(json["viewPostRefs"].isArray){
+            for each in json["viewPostRefs"].asArray!{
+                let ref = scanPostRef(each);
+                models.add(ref);
+            }
         }
         
-        for each in json["linkedViewReferences"].asArray!{
-            let ref = scanPostRef(each);
-            models.add(ref);
+        if(json["linkedViewReferences"].isArray){
+            for each in json["linkedViewReferences"].asArray!{
+                let ref = scanPostRef(each);
+                models.add(ref);
+            }
         }
         return models;
     }
@@ -195,17 +199,19 @@ class KFJSONScanner: NSObject {
     func scanScaffolds(json:JSON)->KFModelArray<KFScaffold>{
         var models = KFModelArray<KFScaffold>();
         
-        for each in json.asArray!{
-            let model = KFScaffold();
-            model.guid = each["guid"].asString!;
-            model.title = each["title"].asString!;
-            for eacheach in each["supports"].asArray! {
-                let support = KFSupport();
-                support.guid = eacheach["guid"].asString!;
-                support.title = eacheach["text"].asString!;
-                model.addSupport(support);
+        if(json.isArray){
+            for each in json.asArray!{
+                let model = KFScaffold();
+                model.guid = each["guid"].asString!;
+                model.title = each["title"].asString!;
+                for eacheach in each["supports"].asArray! {
+                    let support = KFSupport();
+                    support.guid = eacheach["guid"].asString!;
+                    support.title = eacheach["text"].asString!;
+                    model.addSupport(support);
+                }
+                models.add(model);
             }
-            models.add(model);
         }
         
         return models;

@@ -113,7 +113,6 @@
 		49C78D70194105C2004D3404 /* iKFTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C78D6F194105C2004D3404 /* iKFTests.swift */; };
 		49DD55F319B4DF450094AE87 /* iKFUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DD55F219B4DF450094AE87 /* iKFUtil.m */; };
 		49EEFF071981627600F78F16 /* KFNetworkUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EEFF061981627600F78F16 /* KFNetworkUtil.swift */; };
-		49EEFF0C1981974500F78F16 /* iKFJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 49EEFF0B1981974500F78F16 /* iKFJSONScanner.m */; };
 		49FCA09B199037DA00D4EEC4 /* WebResources in Resources */ = {isa = PBXBuildFile; fileRef = 49FCA09A199037DA00D4EEC4 /* WebResources */; };
 /* End PBXBuildFile section */
 
@@ -241,8 +240,6 @@
 		49DD55F119B4DF450094AE87 /* iKFUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFUtil.h; sourceTree = "<group>"; };
 		49DD55F219B4DF450094AE87 /* iKFUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFUtil.m; sourceTree = "<group>"; };
 		49EEFF061981627600F78F16 /* KFNetworkUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFNetworkUtil.swift; sourceTree = "<group>"; };
-		49EEFF0A1981974500F78F16 /* iKFJSONScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFJSONScanner.h; sourceTree = "<group>"; };
-		49EEFF0B1981974500F78F16 /* iKFJSONScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFJSONScanner.m; sourceTree = "<group>"; };
 		49FCA09A199037DA00D4EEC4 /* WebResources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WebResources; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -267,8 +264,6 @@
 		490E7572194111A8004E8BF7 /* ObjC */ = {
 			isa = PBXGroup;
 			children = (
-				49EEFF0A1981974500F78F16 /* iKFJSONScanner.h */,
-				49EEFF0B1981974500F78F16 /* iKFJSONScanner.m */,
 				4903CD8C1942159D00C698AD /* iKFErrorHandler.h */,
 				4903CD8D1942159D00C698AD /* iKFErrorHandler.m */,
 				49DD55F119B4DF450094AE87 /* iKFUtil.h */,
@@ -707,7 +702,6 @@
 				49C5591919462FB700FDFF32 /* KFDrawingRefView.swift in Sources */,
 				494DE5A4195488DD0053F9DF /* KFAppUtils.swift in Sources */,
 				49C12594198B0B59000336D8 /* KFTestViewController.swift in Sources */,
-				49EEFF0C1981974500F78F16 /* iKFJSONScanner.m in Sources */,
 				49842F7219805A3D0012900B /* KFService.swift in Sources */,
 				499DE6F41989A9CF00BA2209 /* KFCanvasViewController.swift in Sources */,
 				495761A91945EEA10017A852 /* KFPost.swift in Sources */,

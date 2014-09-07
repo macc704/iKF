@@ -20,8 +20,7 @@ class KFService: NSObject {
     var username:String?
     var password:String?
     
-    private var jsonScanner:iKFJSONScanner?;
-    private var jsonScanner2 = KFJSONScanner();
+    private var jsonScanner = KFJSONScanner();
     
     //cache
     var currentRegistration:KFRegistration!;
@@ -31,8 +30,6 @@ class KFService: NSObject {
     private var readTemplate:String?;
     private var mobileJS:String?;
     
-    //    var globalEditWebView:iKFWebView?;//tmp
-    
     private override init(){
     }
     
@@ -40,16 +37,12 @@ class KFService: NSObject {
         self.host = host;
         self.baseURL = "http://\(host)/kforum/";
         
-        self.jsonScanner = iKFJSONScanner();
-        
         //clear cache
         self.currentRegistration = nil;
         self.currentUser = nil;
-        //self.views = [String: KFView]();
         self.editTemplate = nil;
         self.readTemplate = nil;
         self.mobileJS = nil;
-        //        globalEditWebView = nil;
     }
     
     func getHost() -> String{
@@ -153,14 +146,9 @@ class KFService: NSObject {
             return false;
         }
         
-        let json: AnyObject = res.getBodyAsJSON();
-        let each = json as NSDictionary;
-        let model = KFUser();
-        model.guid = each["guid"] as String;
-        model.firstName = each["firstName"] as String;
-        model.lastName = each["lastName"] as String;
-        
-        self.currentUser = model;
+        let json = res.getBodyAsJSON();
+        let user = jsonScanner.scanUser(json);
+        self.currentUser = user;
         return true;
     }
     
@@ -183,7 +171,7 @@ class KFService: NSObject {
             handleError("in getRegistrations() code=\(res.getStatusCode())");
             return [];
         }
-        return jsonScanner2.scanRegistrations(res.getBodyAsJSON2()).array;
+        return jsonScanner.scanRegistrations(res.getBodyAsJSON()).array;
     }
     
     func enterCommunity(registration:KFRegistration) -> Bool{
@@ -211,7 +199,7 @@ class KFService: NSObject {
             handleError("in getViews() code=\(res.getStatusCode())");
             return KFModelArray<KFView>();
         }
-        return jsonScanner2.scanViews(res.getBodyAsJSON2());
+        return jsonScanner.scanViews(res.getBodyAsJSON());
     }
     
     func refreshMembers(){
@@ -226,7 +214,7 @@ class KFService: NSObject {
             handleError("in getViews() code=\(res.getStatusCode())");
             return KFModelArray<KFUser>();
         }
-        return jsonScanner2.scanUsers(res.getBodyAsJSON2());
+        return jsonScanner.scanUsers(res.getBodyAsJSON());
     }
     
     func getAllPosts() -> KFModelArray<KFPost>{
@@ -237,7 +225,7 @@ class KFService: NSObject {
             handleError("in getPostsOrdered() code=\(res.getStatusCode())");
             return KFModelArray<KFPost>();
         }
-        return jsonScanner2.scanPosts(res.getBodyAsJSON2());
+        return jsonScanner.scanPosts(res.getBodyAsJSON());
     }
     
     func getPost(postId:String) -> KFPost?{
@@ -248,8 +236,8 @@ class KFService: NSObject {
             handleError("in getPost() code=\(res.getStatusCode())");
             return nil;
         }
-        let json = res.getBodyAsJSON2();
-        let post = jsonScanner2.scanPost(json["body"]);
+        let json = res.getBodyAsJSON();
+        let post = jsonScanner.scanPost(json["body"]);
         //builds-on parsing ommited now
         return post;
     }
@@ -281,8 +269,8 @@ class KFService: NSObject {
             handleError("in getPosts() code=\(res.getStatusCode())");
             return [:];
         }
-        let json = res.getBodyAsJSON2();
-        let dic = jsonScanner2.scanView(json).dic;
+        let json = res.getBodyAsJSON();
+        let dic = jsonScanner.scanView(json).dic;
         return dic;
     }
     
@@ -294,8 +282,8 @@ class KFService: NSObject {
             handleError("in getPosts() code=\(res.getStatusCode())");
             return nil;
         }
-        let json = res.getBodyAsJSON2();
-        let ref = jsonScanner2.scanPostRef(json["body"]);
+        let json = res.getBodyAsJSON();
+        let ref = jsonScanner.scanPostRef(json["body"]);
         
         for each in json["buildsons"].asArray! {
             let fromId = each["from"].asString!;
@@ -464,7 +452,7 @@ class KFService: NSObject {
             handleError("in getScaffolds() code=\(res.getStatusCode())");
             return [];
         }
-        return jsonScanner2.scanScaffolds(res.getBodyAsJSON2()).array;
+        return jsonScanner.scanScaffolds(res.getBodyAsJSON()).array;
     }
     
     func getNextViewVersionAsync(viewId:String, currentVersion:Int) -> Int{
@@ -480,7 +468,7 @@ class KFService: NSObject {
     
     func createPicture(image:UIImage, viewId:String, location:CGPoint) -> Bool{
         let imageData = UIImagePNGRepresentation(image);
-        let filenameBase = jsonScanner?.generateRandomString(8);
+        let filenameBase = iKFUtil.generateRandomString(8);
         let filename = "\(filenameBase!).png";
         
         let jsonobj:AnyObject? = self.sendAttachment(imageData, mime: "image/png", filename: filename);
@@ -508,7 +496,7 @@ class KFService: NSObject {
         let url = "\(self.baseURL!)rest/file/easyUpload/" + currentRegistration.community.guid;
         
         // generate form boundary
-        let key = jsonScanner?.generateRandomString(16);
+        let key = iKFUtil.generateRandomString(16);
         let formBoundary = "----FormBoundary\(key!)";
         let path = "C\\fakepath\\\(filename)";
         
