@@ -50,7 +50,6 @@ class KFMenuViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let original:CGFloat = 568;//iphone 4inch
             let calc:CGFloat = CGFloat(44*menues.count)+titleBar.frame.size.height;
             let height = min(original, calc);
-            println(height);
             self.preferredContentSize = CGSizeMake(self.view.frame.width,height);
         }else{
             self.preferredContentSize = self.view.frame.size;

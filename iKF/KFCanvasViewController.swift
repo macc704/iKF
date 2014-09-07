@@ -23,11 +23,8 @@ class KFCanvasViewController: UIViewController {
     private var registration:KFRegistration?;
     private var postRefs:[String: KFReference] = [:];
     private var postRefViews:[String: KFPostRefView] = [:];
-    //    private var views:[KFView] = [];
     private var currentView:KFView?
     private var reusableRefViews:[String: KFPostRefView] = [:];
-    
-    private var initialized = false;
     private var cometManager:KFMobileCometManager = KFMobileCometManager();
     
     required init(coder aDecoder: NSCoder) {
@@ -61,12 +58,12 @@ class KFCanvasViewController: UIViewController {
     }
     
     func messageReceived(type:String?, method:String?, target:String?){
-        //            println("messageReceived: \(type), \(method), \(target)");
+        //println("messageReceived: \(type), \(method), \(target)");
         let service = KFService.getInstance();
         
         if(type == "postref" && method == "create"){
             let ref = service.getPostRef(target!);
-            //service.updateBuildOnsInPost(ref!.post!);
+            //service.updateBuildOnsInPost(ref!.post!); // not necessary any more
             self.addReference(ref!);
             self.addBuildsOn(ref!);
         }
@@ -75,7 +72,7 @@ class KFCanvasViewController: UIViewController {
             //println(ref);
             let refView = self.postRefViews[ref!.guid];
             if(refView == nil){
-                println("ref is null =\(target)");
+                println("warning: ref is null =\(target)");
                 return;
             }
             refView!.setModel(ref!);
@@ -91,7 +88,7 @@ class KFCanvasViewController: UIViewController {
             let post = service.getPost(target!);
             let refView = self.postRefViews[target!];//ずる
             if(refView == nil){
-                println("ref is null =\(target)");
+                println("warning: ref is null =\(target)");
                 return;
             }
             refView!.getModel().post = post;
@@ -122,13 +119,10 @@ class KFCanvasViewController: UIViewController {
                 self.user = KFService.getInstance().currentUser;
                 let enterResult = KFService.getInstance().enterCommunity(registration);
                 if(enterResult == false){
-                    //alert
-                    return;
+                    return;//alert
                 }
                 KFService.getInstance().refreshMembers();//order imporatnt
                 KFService.getInstance().refreshViews();//order important
-                self.initialized = true;
-                println(registration.community.guid);
                 KFAppUtils.executeInGUIThread({
                     self.cometManager.subscribeCommunityEvent(registration.community.guid);
                     return;
@@ -285,12 +279,6 @@ class KFCanvasViewController: UIViewController {
         self.canvasView.connectionLayer.requestRepaint();
     }
     
-    //    func openNoteEditController(: (KFNote*)note mode: (NSString*)mode;
-    
-    //    func update(){
-    //
-    //    }
-    
     func setCurrentView(view:KFView){
         if(self.currentView == view){
             return;//already the view
@@ -303,9 +291,6 @@ class KFCanvasViewController: UIViewController {
             self.navBar.topItem!.title = self.currentView!.title;
             self.refreshAllPostsAsync();
             let res = self.cometManager.subscribeViewEvent(self.getCurrentView().guid);
-            println(res);
-            //self.cometThreadNumber++;
-            //self.startComet(self.cometThreadNumber);
         });
     }
     
@@ -373,13 +358,10 @@ class KFCanvasViewController: UIViewController {
     private func showViewSelection(){
         let viewSelectionController = KFViewSelectionController();
         viewSelectionController.models = KFService.getInstance().currentRegistration.community.views.array;
-        //        let popController = UIPopoverController(contentViewController: viewSelectionController);
         viewSelectionController.selectedHandler = {(model:KFModel) in
-            //            popController.dismissPopoverAnimated(true);
             self.setCurrentView(model as KFView);
         }
         KFPopoverManager.getInstance().openInPopoverFromBarButton(self.viewsButton, controller: viewSelectionController);
-        //        popController.presentPopoverFromBarButtonItem(self.viewsButton, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true);
     }
     
     func openNoteEditController(note:KFNote, mode:String){
@@ -439,16 +421,11 @@ class KFCanvasViewController: UIViewController {
         var x = from.center.x;
         var y = from.center.y;
         
-        //        var screenW = self.view.frame.width;
-        //        var screenH = self.view.frame.height;
         let screenW = canvasView.frame.size.width;
         let screenH = canvasView.frame.size.height;
         
         let fromCenter = CGPointMake(from.frame.size.width/2, from.frame.size.height/2);
         let absP = from.convertPoint(fromCenter, toView: canvasView);
-        //        let absP = from.convertPoint(fromCenter, toView: nil);
-        //println("\(screenW), \(screenH)");
-        //println(absP);
         
         // horizontal - default right
         if(absP.x > screenW/2){// located in right

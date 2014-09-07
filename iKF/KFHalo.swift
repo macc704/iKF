@@ -28,9 +28,24 @@ class KFHalo: UIView {
         super.init(frame: KFAppUtils.DEFAULT_RECT());
         self.locator = KFHaloLocator(halo: self, size: size);
         self.installHaloHandles();
-        //self.initializeSizeAndHandles();
+        
+        
+        //supress under object gestures
+        let tapGestureDouble = UITapGestureRecognizer(target: self, action: "tapDouble:")
+        tapGestureDouble.numberOfTapsRequired = 2;
+        self.addGestureRecognizer(tapGestureDouble);
+        let tapGestureSingle = UITapGestureRecognizer(target: self, action: "tapSingle:")
+        tapGestureSingle.numberOfTapsRequired = 1;
+        self.addGestureRecognizer(tapGestureSingle);
+
+        // below will be done by startanimation
+        // self.initializeSizeAndHandles();
     }
     
+    func tapDouble(recognizer:UITapGestureRecognizer){
+    }
+    func tapSingle(recognizer:UITapGestureRecognizer){
+    }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         controller?.suppressScroll();
@@ -288,6 +303,7 @@ class KFHalo: UIView {
         let fromViewId = controller!.getCurrentView().guid;
         viewSelectionController.selectedHandler = {(model:KFModel) in
             KFPopoverManager.getInstance().closeCurrentPopover();
+            self.controller?.hideHalo();
             KFService.getInstance().createViewLink(fromViewId, toViewId: model.guid , location: creatingPoint);
             return;
         }
@@ -305,6 +321,7 @@ class KFHalo: UIView {
         let fromViewId = controller!.getCurrentView().guid;
         viewSelectionController.selectedHandler = {(model:KFModel) in
             KFPopoverManager.getInstance().closeCurrentPopover();
+            self.controller?.hideHalo();
             KFService.getInstance().createPostLink(fromViewId, toPostId: model.guid , location: creatingPoint);
             return;
         }

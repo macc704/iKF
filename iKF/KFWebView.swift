@@ -36,7 +36,7 @@ class KFWebView: UIWebView {
         //        if(postInstances == nil){
         //            return;
         //        }
-        print(postInstances.count);
+        //print(postInstances.count);
         for instance in postInstances{
             if(instance.value != nil){
                 instance.value!.close();

@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let DEBUG = true;
+private let DEBUG = false;
 private var default_rect:CGRect?;
 
 class KFAppUtils: NSObject {

@@ -167,7 +167,7 @@ class KFNoteEditViewByTinyMCE: KFAbstractNoteEditView, UIWebViewDelegate {
     
     private func isTextDirty() -> Bool{
         let res = webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.isDirty();");
-        println(res)
+        //println(res)
         return res == "true";
     }
     
