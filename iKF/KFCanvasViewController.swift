@@ -77,6 +77,7 @@ class KFCanvasViewController: UIViewController {
             }
             refView!.setModel(ref!);
             refView!.updateFromModel();
+            self.requestConnectionsRepaint();
         }
         if(type == "postref" && method == "delete"){
             let refView = self.postRefViews[target!];
