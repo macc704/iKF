@@ -70,7 +70,12 @@
 .popup-item {
 	font-weight: normal;
 	font-size: 80%;
-}
+	}
+	
+.popup-Menu {
+	height:100px;
+	overflow:auto;
+	}	
 
 .tools {
 	list-style-type: none;
@@ -209,6 +214,7 @@
 	text-decoration: underline;
 }
 
+
 .postTitleContentLink {
 	/*	background: transparent;		*/
 	font-weight: 700;
@@ -232,10 +238,10 @@
 	font-weight: 700;
 	margin-top: 0;
 	font-family: 'Roboto Slab', Helvetica, Arial, sans-serif, Verdana;
-	margin-left: 2px;
+	margin-left:12px;
 	font-size: 1.25em;
 	overflow: hidden;
-	color: #900;
+	color: #000;
 	text-decoration: none;
 	cursor: pointer;
 	/*	cursor:   default;*/
@@ -293,21 +299,7 @@
 	cursor: default;
 }
 
-.postStar {
-	position: absolute;
-	left: 20px;
-	top: -12px;
-	cursor: pointer;
-	cursor: default;
-}
 
-.postSupportedBy {
-	position: absolute;
-	left: 40px;
-	top: -14px;
-	cursor: pointer;
-	cursor: default;
-}
 
 .postAttachmentList {
 	margin: 0;
@@ -356,21 +348,6 @@
 	cursor: default;
 }
 
-.postAuthor {
-	position: relative;
-	top: -2px;
-	color: #5F5F5F;
-	font-size: 11px;
-}
-
-.postDateCreated {
-	position: relative;
-	clear: both;
-	top: -2px;
-	left: 2px;
-	font-size: 10px;
-	color: #5F5F5F;
-}
 
 .postEditPanel {
 	margin: 5px 5px 5px 0;
@@ -478,11 +455,52 @@
 	display: block;
 }
 
+.kfSupportContent {
+	
+}
+
+.kfSupportStartTag{
+	
+}
+
+.kfEndSupport{
+	
+}
+
+
+
 .startLabelTag {
 	border-color: #EFB137;
 	border-style: solid;
 	border-width: 1px;
 	padding: 1px 2px 1px 1px;
+}
+
+.kfSupportStartLabel {
+	border-color: #EFB137;
+	border-style: solid;
+	border-width: 1px;
+	padding: 1px 2px 1px 1px;
+}
+
+.kfSupportEndMark {
+	background-color: #EFB137;
+	border-color: #EFB137;
+	color: #EFB137;
+	border-radius: 0 10px 10px 0;
+	border-style: solid;
+	border-width: 1px;
+	padding: 1px 0 1px 2px;
+}
+
+.kfSupportStartMark {
+	background-color: #EFB137;
+	border-color: #EFB137;
+	color: #EFB137;
+	border-radius: 10px 0 0 10px;
+	border-style: solid;
+	border-width: 1px;
+	padding: 1px 0 1px 2px;
 }
 
 .endMark {
@@ -1043,7 +1061,7 @@ html>body .gwt-MenuBarPopup {
 	overflow: hidden;
 	max-width: 200px;
 	padding-right: 12px;
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 .admin-tools1:hover {
@@ -1053,14 +1071,13 @@ html>body .gwt-MenuBarPopup {
 
 .admin-toolsSelected1 {
 	list-style-type: none;
-	color: #C00;
-	font-weight: bold;
+		font-weight: bold;
 	line-height: 1em;
 	font-size: 11px;
 	overflow: hidden;
 	max-width: 200px;
 	padding-right: 12px;
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 .noteSelected {
@@ -1155,14 +1172,137 @@ html>body .gwt-MenuBarPopup {
 	padding:1px 0 1px 2px;
 }
 
-.referenceContent{
+.referenceNoteTitle{
 	cursor: pointer;
 	color:blue;
 	font-weight: bold;
+	font-size: x-small;
 }
 
-.referenceContent:hover {
+.referenceNoteTitle:hover {
 	text-decoration: underline;
 	
 }
+.referenceText{
+    font-weight: bold;
+	font-style:italic;
+}
+
+
+.kfPostHandle {
+	position: absolute; 
+	left:0;
+	top: 0;
+	cursor: move;
+}
+
+.kfPostHandle:hover {
+	cursor: move;
+}
+
+.kfPostStar {
+	position: absolute; 
+	left: 20px;
+	top: -12px;
+	cursor: pointer;
+	cursor: default;
+}
+
+.kfPostSupportedBy {
+	position: absolute; 
+	left: 40px;
+	top: -14px;
+	cursor: pointer;
+	cursor: default;
+}
+
+.kfPostTitleContent {
+	margin-top: 0;
+	margin-left:2px;
+    font-weight: 700;
+	font-family: 'Roboto Slab', Helvetica, Arial, sans-serif, Verdana;
+	font-size: 1.25em;
+	overflow: hidden;
+	color: #039;
+	text-decoration: none;
+	cursor: pointer;
+	}
+
+.kfPostTitleContent:hover {
+	text-decoration: underline;
+}
+
+.kfPostTitleContentRead {
+	margin-top: 0;
+	margin-left:2px;
+    font-weight: 700;
+	font-family: 'Roboto Slab', Helvetica, Arial, sans-serif, Verdana;
+	font-size: 1.25em;
+	overflow: hidden;
+	color: yellow;
+	text-decoration: none;
+	cursor: pointer;
+	}
+
+
+.kfPostTitleContentRead:hover {
+	text-decoration: underline;
+}
+
+.kfPostContainer {
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 0;
+	cursor: default;
+	line-height: 1em;
+	position: relative;
+	/* position: absolute; */
+}
+
+.kfPostWrapper {
+	display:block;
+	margin-left: 10px;
+}
+
+.kfPostContainer:hover {
+	cursor: move;
+}
+
+.kfPostContentAndPanelDrawing {
+	position: relative;
+	/*	overflow:auto;*/ /*	height:300px;*/
+	display: block;
+	/*min-height:20px;*/
+	margin: 0 3px 2px;
+	line-height: 1.75em !important;
+	/*        background-color: #FFFFFF;
+        border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-right-color: #CCC;
+	border-bottom-color: #D6D6D6;*/
+	cursor: default;
+}
+
+
+.kfPostTitleContentLink {
+	margin-top: 0;
+	margin-left:20px;
+    font-weight: 700;
+	font-family: 'Roboto Slab', Helvetica, Arial, sans-serif, Verdana;
+	font-size: 1.25em;
+	overflow: hidden;
+	color: #039;
+	text-decoration: none;
+	cursor: pointer;
+	}
+
+.kfPostTitleContentLink:hover {
+	text-decoration: underline;
+}
+
+
 
