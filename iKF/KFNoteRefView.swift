@@ -26,6 +26,12 @@ class KFNoteRefView: KFPostRefView {
         //self.backgroundColor = UIColor.lightGrayColor();
     }
     
+    deinit{
+        if(getModel() != nil){
+            getModel().post?.detach(self);
+        }
+    }
+    
     override func setModel(newModel: KFReference) {
         if(getModel() != nil){
             getModel().post?.detach(self);
