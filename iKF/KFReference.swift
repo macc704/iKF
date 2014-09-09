@@ -17,7 +17,15 @@ class KFReference: KFModel {
     let BORDER_BIT = 0x10;
     let FITSCALE_BIT = 0x20;
     
-    var post:KFPost?;
+    var post:KFPost?{
+        willSet{
+            unhook();
+        }
+        didSet{
+            hook();
+        }
+    };
+    
     var location = CGPoint(x:0, y:0);
     var width = CGFloat(0);
     var height = CGFloat(0);
@@ -25,6 +33,27 @@ class KFReference: KFModel {
     var displayFlags = Int(0);
     
     override init(){
+    }
+    
+    deinit{
+        unhook();
+        post = nil;
+    }
+    
+    private func unhook(){
+        if(self.post != nil){
+            self.post!.detach(self);
+        }
+    }
+    
+    private func hook(){
+        if(self.post != nil){
+            self.post!.attach(self, selector: "postChanged");
+        }
+    }
+    
+    func postChanged(){
+        self.notify();
     }
     
     func isHidden() -> Bool{
@@ -98,5 +127,5 @@ class KFReference: KFModel {
             displayFlags = displayFlags & ~FITSCALE_BIT;
         }
     }
-
+    
 }

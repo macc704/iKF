@@ -114,7 +114,7 @@ class KFCanvasViewController: UIViewController {
         }
         if(type == "postref" && method == "update"){
             let ref = service.getPostRef(target!);
-            //println(ref);
+            //println("postref-update-\(ref)");
             let refView = self.postRefViews[ref!.guid];
             if(refView == nil){
                 println("warning: ref is null =\(target)");
@@ -137,7 +137,9 @@ class KFCanvasViewController: UIViewController {
                 println("warning: ref is null =\(target)");
                 return;
             }
-            refView!.getModel().post = post;
+            //println("\((post! as KFNote).guid), \(post!.beenRead)");
+            refView!.getModel().post?.merge(post!);
+            //refView!.getModel().post?.notify();
             refView!.updateFromModel();
         }
         if(type == "view" && method == "create"){

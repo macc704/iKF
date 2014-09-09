@@ -15,6 +15,12 @@ class KFModel: NSObject{
     override init(){
     }
     
+    func merge(another: KFModel){
+        if(guid != another.guid){
+            //throw exception
+        }
+    }
+    
     func detach(observer:AnyObject){
         NSNotificationCenter.defaultCenter().removeObserver(observer, name: "CHANGED", object: self);
     }

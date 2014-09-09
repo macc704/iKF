@@ -228,24 +228,52 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     var note:KFNote?;
     
     func kfSetNote(note:KFNote){
+        unhook();
         self.note = note;
         self.webView.kfModel = note;
-        webView.scalesPageToFit = false;//necessary
-        self.titleLabel.text = self.note!.title;
-        let html = note.getReadHtml();
-        //println(html);
-        let baseURL = note.getBaseURL();
-        //println(baseURL);
-        //println(baseURL2);
-        self.webView.loadHTMLString(html, baseURL: baseURL);
-        KFAppUtils.executeInBackThread({
-            KFService.getInstance().readPost(self.note!);
-            return;
-            });
-
+        hook();
+        updateFromNote();
     }
     
-
+    private func updateFromNote(){
+        webView.scalesPageToFit = false;//necessary
+        self.titleLabel.text = self.note!.title;
+        let html = self.note!.getReadHtml();
+        let baseURL = self.note!.getBaseURL();
+        self.webView.loadHTMLString(html, baseURL: baseURL);
+    }
+    
+    deinit{
+        unhook();
+        self.note = nil;
+    }
+    
+    private func unhook(){
+        if(self.note != nil){
+            self.note!.detach(self);
+        }
+    }
+    
+    private func hook(){
+        if(self.note != nil){
+            self.note!.attach(self, selector: "noteChanged");
+        }
+    }
+    
+    func noteOpened(){
+        if(note!.beenRead == false){
+            note!.beenRead = true;
+            note!.notify();
+            KFAppUtils.executeInBackThread(){
+                KFService.getInstance().readPost(self.note!);
+                return;
+            }
+        }
+    }
+    
+    func noteChanged(){
+        updateFromNote();
+    }
     
     var suppressWebLayout = false;
     
@@ -315,14 +343,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         loading.hide();
         updateStatus();
         if(note != nil){
-            self.titleLabel.text = note!.title;
-            note!.beenRead = true;
-            note!.notify();
-            KFAppUtils.executeInBackThread(){
-                KFService.getInstance().readPost(self.note!);
-                return;
-            }
-
+            noteOpened();
         }else{
             self.titleLabel.text = getTitle();
         }

@@ -16,6 +16,13 @@ class KFNote: KFPost {
 //    var buildsOn:KFNote?;
 //    var refId = "";
     
+    override func marge(another: KFPost) {
+        super.merge(another);
+        let anotherNote = another as KFNote;
+        title = anotherNote.title;
+        content = anotherNote.title;
+    }
+    
     func getReadHtml() -> String{
         //let template = KFService.getInstance().getReadTemplate();
         let template = KFResource.loadReadTemplate();

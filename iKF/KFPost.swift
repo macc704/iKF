@@ -20,6 +20,18 @@ class KFPost: KFModel {
     var dirtyAuthors = false;
     var buildsOn:KFPost?;
     
+    func marge(another: KFPost) {
+        authors = another.authors;
+        primaryAuthor = another.primaryAuthor;
+        canEdit = another.canEdit;
+        beenRead = another.beenRead;
+        created = another.created;
+        modified = another.modified;
+
+        dirtyAuthors = another.dirtyAuthors;
+        buildsOn = another.buildsOn;
+    }
+    
     func canEditMe() -> Bool{
         return canEdit(KFService.getInstance().currentUser);
     }
