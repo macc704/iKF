@@ -94,7 +94,7 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     
     override func updateFromModel(){
         super.updateFromModel();
-        self.updatePanEventBinding();
+        self.updateEventBinding();
         if(getModel().isShowInPlace()){
             kfSetSize(getModel().width, height: getModel().height);
             kfSetRotation(getModel().rotation);

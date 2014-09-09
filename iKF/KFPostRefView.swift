@@ -12,7 +12,10 @@ class KFPostRefView: UIView {
     
     var mainController: KFCanvasViewController!;
     private var _model: KFReference!;
+    
     private var panGesture:UIPanGestureRecognizer?;
+    private var singleTapGesture:UITapGestureRecognizer?;
+    private var gestureAttached = false;
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -35,20 +38,38 @@ class KFPostRefView: UIView {
     }
     
     private func bindEvents(){
-        //Pan
-        updatePanEventBinding();
         
         //Single Tap
-        let recognizerSingleTap = UITapGestureRecognizer(target:self, action:"handleSingleTap:");
-        recognizerSingleTap.numberOfTapsRequired = 1;
-        self.addGestureRecognizer(recognizerSingleTap);
+        singleTapGesture = UITapGestureRecognizer(target:self, action:"handleSingleTap:");
+        singleTapGesture!.numberOfTapsRequired = 1;
+        //self.addGestureRecognizer(recognizerSingleTap);
         
         //Double Tap
         let recognizerDoubleTap = UITapGestureRecognizer(target:self, action:"handleDoubleTap:");
         recognizerDoubleTap.numberOfTapsRequired = 2;
         self.addGestureRecognizer(recognizerDoubleTap);
         
-        recognizerSingleTap.requireGestureRecognizerToFail(recognizerDoubleTap);
+        singleTapGesture!.requireGestureRecognizerToFail(recognizerDoubleTap);
+        
+        
+        //Pan Gesture
+        self.panGesture = UIPanGestureRecognizer(target:self, action:"handlePanning:");
+        
+        //update event binding
+        updateEventBinding();
+    }
+    
+    func updateEventBinding(){
+        if(self.getModel().isLocked() && gestureAttached){//tolock
+            self.removeGestureRecognizer(self.singleTapGesture!);
+            self.removeGestureRecognizer(self.panGesture!);
+            gestureAttached = false;
+        }
+        else if(!self.getModel().isLocked() && !gestureAttached){//tounlock
+            self.addGestureRecognizer(self.singleTapGesture!);
+            self.addGestureRecognizer(self.panGesture!);
+            gestureAttached = true;
+        }
     }
     
     func getMenuItems() -> [KFMenu]{
@@ -74,7 +95,7 @@ class KFPostRefView: UIView {
             self.updateFromModel();
             self.mainController.updatePostRef(self);
         }
-
+        
         let fitscale = KFDefaultMenu();
         fitscale.name = "FitScale";
         fitscale.checked = refModel.isFitScale();
@@ -88,15 +109,7 @@ class KFPostRefView: UIView {
         return [operatable, border, fitscale];
     }
     
-    func updatePanEventBinding(){
-        if(!self.getModel().isLocked() && self.panGesture == nil){
-            self.panGesture = UIPanGestureRecognizer(target:self, action:"handlePanning:");
-            self.addGestureRecognizer(self.panGesture!);
-        }else if(self.getModel().isLocked() && self.panGesture != nil){
-            self.removeGestureRecognizer(self.panGesture!);
-            self.panGesture = nil;
-        }
-    }
+    
     
     func kfSetSize(width:CGFloat, height:CGFloat){
         self.getModel().width = width;
@@ -177,7 +190,7 @@ class KFPostRefView: UIView {
         mainController.showHalo(self);
     }
     
-    func updateToModel(){        
+    func updateToModel(){
     }
     
     var border:Bool = false;

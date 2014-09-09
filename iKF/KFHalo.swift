@@ -350,7 +350,7 @@ class KFHalo: UIView {
     private func setLock(lock:Bool){
         let postTarget = target as KFPostRefView;
         postTarget.getModel().setLocked(lock);
-        postTarget.updatePanEventBinding();
+        postTarget.updateEventBinding();
         controller?.updatePostRef(postTarget);
         controller?.hideHalo();
     }
