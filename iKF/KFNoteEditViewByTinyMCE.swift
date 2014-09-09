@@ -56,8 +56,8 @@ class KFNoteEditViewByTinyMCE: KFAbstractNoteEditView, UIWebViewDelegate {
             self.insertText(text);
         };
         webView.scrollView.scrollEnabled = false;
-        webView.layer.borderColor = UIColor.blackColor().CGColor;
-        webView.layer.borderWidth = 1.0;
+        //webView.layer.borderColor = UIColor.blackColor().CGColor;
+        //webView.layer.borderWidth = 1.0;
         containerView.addSubview(webView);
     }
     

@@ -37,6 +37,11 @@
 
 	<body>	
         <!--<textarea rows="5" id="mcearea">%YOURCONTENT%</textarea>-->
-        <div id="mcearea1" class="mcearea"></div>
+        <p>&nbsp;</p> <!-- This space used for tinyMCE toolbar -->
+        <p>(Please Tap within Dashed Border to Edit)</p> <!-- This space used for tinyMCE toolbar -->
+        <!-- inline way is the only one to prevent make it scrollable by fixing toolbar in Mobile Safari -->
+        <div style="border:1px dashed;" >
+            <div id="mcearea1" class="mcearea"></div>
+        </div>
 	</body>
 </html>
