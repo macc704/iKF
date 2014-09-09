@@ -12,7 +12,7 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
 //    var INPUT = "(input textfield)";
     
-    var servers = ["132.203.154.41:8080", "rooibos.cs.inf.shizuoka.ac.jp", "128.100.72.137:8080", "kforum.glm.edu.co:8080", "localhost:8080", "(input textfield)"];
+    var servers = ["kf.utoronto.ca:8080", "rooibos.cs.inf.shizuoka.ac.jp", "132.203.154.41:8080", "kforum.glm.edu.co:8080", "localhost:8080", "(input textfield)"];
     
     @IBOutlet var passwordField : UITextField!
     @IBOutlet var usernameField : UITextField!
