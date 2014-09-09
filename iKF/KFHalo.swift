@@ -45,6 +45,7 @@ class KFHalo: UIView {
     func tapDouble(recognizer:UITapGestureRecognizer){
     }
     func tapSingle(recognizer:UITapGestureRecognizer){
+        controller?.hideHalo();
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
