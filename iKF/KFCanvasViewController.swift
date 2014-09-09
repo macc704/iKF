@@ -318,13 +318,19 @@ class KFCanvasViewController: UIViewController {
     }
     
     private func refreshAllPostsAsync(){
-        KFAppUtils.executeInBackThread({
+        //        KFAppUtils.executeInBackThread({
+        var task:(()->()) = {
             let viewId = self.getCurrentView().guid;
             let newRefs = KFService.getInstance().getPostRefs(viewId);
             KFAppUtils.executeInGUIThread({
                 self.refreshPosts(newRefs);
             });
-        });
+            return;
+        };
+        
+        KFAppUtils.asyncExecWithLoadingView(self.canvasView, task, nil);
+        
+        //        });
     }
     
     private func addReference(ref:KFReference){
