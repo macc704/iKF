@@ -27,6 +27,8 @@ class KFCanvasViewController: UIViewController {
     private var reusableRefViews:[String: KFPostRefView] = [:];
     private var cometManager:KFMobileCometManager = KFMobileCometManager();
     
+    private var initialized = false;
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -53,8 +55,51 @@ class KFCanvasViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
-        
-
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated);
+        canvasView.setSize(canvasContainer.frame.size);
+        if(initialized == false){
+            go();
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated);
+        //        cometManager.stop();
+    }
+    
+    func setKFRegistration(registration:KFRegistration){
+        self.registration = registration;
+    }
+    
+    func go(){
+        let loading = KFLoadingView();
+        loading.showOnView(self.canvasView);
+        self.cometManager.busInitialized = {
+            KFAppUtils.executeInBackThread({
+                self.user = KFService.getInstance().currentUser;
+                let enterResult = KFService.getInstance().enterCommunity(self.registration!);
+                if(enterResult == false){
+                    return;//alert
+                }
+                KFService.getInstance().refreshMembers();//order imporatnt
+                KFService.getInstance().refreshViews();//order important
+                KFAppUtils.executeInGUIThread({
+                    self.cometManager.subscribeCommunityEvent(self.registration!.community.guid);
+                    return;
+                });
+                self.setCurrentView(KFService.getInstance().currentRegistration.community.views.array[0]);
+                self.initialized = true;
+                KFAppUtils.executeInGUIThread({
+                    loading.hide();
+                });
+            });
+        }
+        self.cometManager.messageReceived = self.messageReceived;
+        let service = KFService.getInstance();
+        self.cometManager.start(service.getHost(), username: service.username!, password: service.password!);
     }
     
     func messageReceived(type:String?, method:String?, target:String?){
@@ -97,43 +142,10 @@ class KFCanvasViewController: UIViewController {
         }
         if(type == "view" && method == "create"){
             KFService.getInstance().refreshViews();
-        }        
+        }
         if(type == "view" && method == "delete"){
             KFService.getInstance().refreshViews();
         }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated);
-        canvasView.setSize(canvasContainer.frame.size);
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated);
-        //        cometManager.stop();
-    }
-    
-    func go(registration:KFRegistration){
-        self.cometManager.busInitialized = {
-            KFAppUtils.executeInBackThread({
-                self.registration = registration;
-                self.user = KFService.getInstance().currentUser;
-                let enterResult = KFService.getInstance().enterCommunity(registration);
-                if(enterResult == false){
-                    return;//alert
-                }
-                KFService.getInstance().refreshMembers();//order imporatnt
-                KFService.getInstance().refreshViews();//order important
-                KFAppUtils.executeInGUIThread({
-                    self.cometManager.subscribeCommunityEvent(registration.community.guid);
-                    return;
-                });
-                self.setCurrentView(KFService.getInstance().currentRegistration.community.views.array[0]);
-            });
-        }
-        self.cometManager.messageReceived = self.messageReceived;
-        let service = KFService.getInstance();
-        self.cometManager.start(service.getHost(), username: service.username!, password: service.password!);
     }
     
     func addNote(ref:KFReference){
@@ -498,10 +510,18 @@ class KFCanvasViewController: UIViewController {
     }
     
     @IBAction func viewsButtonPressed(sender: AnyObject) {
+        if(initialized == false){
+            KFAppUtils.showAlert("Warning", msg: "Not initialized yet");
+            return;
+        }
         self.showViewSelection();
     }
     
     @IBAction func updatePressed(sender: AnyObject) {
+        if(initialized == false){
+            KFAppUtils.showAlert("Warning", msg: "Not initialized yet");
+            return;
+        }
         self.refreshAllPostsAsync();
     }
     

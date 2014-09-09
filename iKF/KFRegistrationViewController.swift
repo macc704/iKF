@@ -80,10 +80,9 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
         }
         
         let canvasViewController = KFCanvasViewController();
-        self.presentViewController(canvasViewController, animated: true, completion: nil);
-        
         let row = self.registrationsPicker.selectedRowInComponent(0);
-        canvasViewController.go(self.registrations[row]);
+        canvasViewController.setKFRegistration(self.registrations[row]);
+        self.presentViewController(canvasViewController, animated: true, completion: nil);
     }
     
     @IBAction func regsiterButtonPressed(sender : AnyObject) {
