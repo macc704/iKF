@@ -174,6 +174,8 @@ class KFHalo: UIView {
         if(pan != nil){
             let gesture = UIPanGestureRecognizer(target: self, action: pan!);
             button.addGestureRecognizer(gesture);
+            let illegal = UITapGestureRecognizer(target: self, action: "handleIllegalTapping:");
+            button.addGestureRecognizer(illegal);
         }
         self.handles[button] = locator;
         return button;
@@ -432,7 +434,7 @@ class KFHalo: UIView {
     }
     
     func handleIllegalTapping(recognizer:UIGestureRecognizer){
-        openMessage(recognizer.view!, message: "Don't tap me\nDrag me");
+        openMessage(recognizer.view!, message: "Don't Tap me\n\nDrag me!");
     }
     
     private func openMessage(from:UIView, message:String){
