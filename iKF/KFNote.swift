@@ -17,10 +17,10 @@ class KFNote: KFPost {
 //    var refId = "";
     
     override func marge(another: KFPost) {
-        super.merge(another);
+        super.marge(another);
         let anotherNote = another as KFNote;
         title = anotherNote.title;
-        content = anotherNote.title;
+        content = anotherNote.content;
     }
     
     func getReadHtml() -> String{

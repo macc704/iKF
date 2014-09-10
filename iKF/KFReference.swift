@@ -40,6 +40,16 @@ class KFReference: KFModel {
         post = nil;
     }
     
+    func marge(another: KFReference) {
+        location = another.location;
+        width = another.width;
+        height = another.height;
+        rotation = another.rotation;
+        displayFlags = another.displayFlags;
+
+        //post = another.post;
+    }
+    
     private func unhook(){
         if(self.post != nil){
             self.post!.detach(self);
