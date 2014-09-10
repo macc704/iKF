@@ -426,8 +426,19 @@ class KFHalo: UIView {
         var dic = NSMutableDictionary(dictionary: pasteboard.items[0] as NSDictionary);
         dic["kfmodel.guid"] = note.guid;
         pasteboard.items = [dic];
-        KFAppUtils.showAlert("Notification", msg: "Cliped Post '\(note.title)'")
+        //KFAppUtils.showAlert("Notification", msg: "Cliped Post '\(note.title)'")
+        openMessage(noteRef, message: "Cliped Post '\(note.title)'");
         controller?.hideHalo();
+    }
+    
+    func handleIllegalTapping(recognizer:UIGestureRecognizer){
+        openMessage(recognizer.view!, message: "Don't tap me\nDrag me");
+    }
+    
+    private func openMessage(from:UIView, message:String){
+        let c = KFSimplePopupViewController();
+        c.message = message;
+        KFPopoverManager.getInstance().openInPopover(from, controller: c);
     }
     
     func handleBuildsOn(recognizer:UIPanGestureRecognizer){

@@ -14,6 +14,8 @@
 		490E75E119411653004E8BF7 /* KFLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 490E75DF19411653004E8BF7 /* KFLoginViewController.xib */; };
 		491AD84419B668D000B92386 /* KFLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AD84319B668D000B92386 /* KFLayerView.swift */; };
 		491AD84619B66B6700B92386 /* KFNoteEditViewByTinyMCE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491AD84519B66B6700B92386 /* KFNoteEditViewByTinyMCE.swift */; };
+		491D3E0519C0DB0F00B4BE56 /* KFSimplePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D3E0319C0DB0F00B4BE56 /* KFSimplePopupViewController.swift */; };
+		491D3E0619C0DB0F00B4BE56 /* KFSimplePopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 491D3E0419C0DB0F00B4BE56 /* KFSimplePopupViewController.xib */; };
 		49245907198A952A00242188 /* KFConnectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49245906198A952A00242188 /* KFConnectionViewModel.swift */; };
 		4924590B198A9BDF00242188 /* KFHaloLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924590A198A9BDF00242188 /* KFHaloLocator.swift */; };
 		492C1024194755FE00512591 /* KFScaffoldingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C1022194755FE00512591 /* KFScaffoldingTableViewController.swift */; };
@@ -136,6 +138,8 @@
 		490E75DF19411653004E8BF7 /* KFLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFLoginViewController.xib; sourceTree = "<group>"; };
 		491AD84319B668D000B92386 /* KFLayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFLayerView.swift; sourceTree = "<group>"; };
 		491AD84519B66B6700B92386 /* KFNoteEditViewByTinyMCE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFNoteEditViewByTinyMCE.swift; sourceTree = "<group>"; };
+		491D3E0319C0DB0F00B4BE56 /* KFSimplePopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFSimplePopupViewController.swift; sourceTree = "<group>"; };
+		491D3E0419C0DB0F00B4BE56 /* KFSimplePopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFSimplePopupViewController.xib; sourceTree = "<group>"; };
 		49245906198A952A00242188 /* KFConnectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFConnectionViewModel.swift; sourceTree = "<group>"; };
 		4924590A198A9BDF00242188 /* KFHaloLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFHaloLocator.swift; sourceTree = "<group>"; };
 		492C1022194755FE00512591 /* KFScaffoldingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFScaffoldingTableViewController.swift; sourceTree = "<group>"; };
@@ -389,6 +393,8 @@
 				496074FD1992613F00131111 /* KFWebView.swift */,
 				495A155D198BC6770056EE50 /* KFWebBrowserView.swift */,
 				4991C32C19BA9CC000677B9A /* KFMobileCometManager.swift */,
+				491D3E0319C0DB0F00B4BE56 /* KFSimplePopupViewController.swift */,
+				491D3E0419C0DB0F00B4BE56 /* KFSimplePopupViewController.xib */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -620,6 +626,7 @@
 				496402BC198D7FFF009504B7 /* hidetoicon.png in Resources */,
 				496402CB198D7FFF009504B7 /* viewlink.png in Resources */,
 				492C1025194755FE00512591 /* KFScaffoldingTableViewController.xib in Resources */,
+				491D3E0619C0DB0F00B4BE56 /* KFSimplePopupViewController.xib in Resources */,
 				496402C5198D7FFF009504B7 /* notex.png in Resources */,
 				496402BF198D7FFF009504B7 /* move.png in Resources */,
 				496402B6198D7FFF009504B7 /* buildson.png in Resources */,
@@ -729,6 +736,7 @@
 				494D214E19B76EB200189EE6 /* KFNoteReadView.swift in Sources */,
 				4991C32D19BA9CC000677B9A /* KFMobileCometManager.swift in Sources */,
 				49EEFF071981627600F78F16 /* KFNetworkUtil.swift in Sources */,
+				491D3E0519C0DB0F00B4BE56 /* KFSimplePopupViewController.swift in Sources */,
 				49842F7619805AE20012900B /* KFHttpRequest.swift in Sources */,
 				4989F572198C96A60053DCC8 /* KFImageView.swift in Sources */,
 				494D215219B7736100189EE6 /* KFCompositeNoteViewController.swift in Sources */,
