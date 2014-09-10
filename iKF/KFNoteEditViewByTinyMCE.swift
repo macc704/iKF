@@ -55,7 +55,8 @@ class KFNoteEditViewByTinyMCE: KFAbstractNoteEditView, UIWebViewDelegate {
         webView.performPasteAsReference = {(text:String)->() in
             self.insertText(text);
         };
-        webView.scrollView.scrollEnabled = false;
+        webView.scrollView.scrollEnabled = true;
+        webView.scrollView.bounces = false;
         //webView.layer.borderColor = UIColor.blackColor().CGColor;
         //webView.layer.borderWidth = 1.0;
         containerView.addSubview(webView);
