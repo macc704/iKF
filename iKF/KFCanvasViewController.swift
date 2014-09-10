@@ -455,7 +455,7 @@ class KFCanvasViewController: UIViewController {
     func openPostViewer0(post:KFPost, frame:CGRect, refView:KFPostRefView? = nil){
         let browser = KFWebBrowserView(showToolBar: false);
         browser.frame = frame;
-        browser.kfSetNote(post as KFNote);
+        browser.kfSetNote(post as? KFNote);
         browser.noteRef = refView; //temporary
         browser.mainController = self;
         self.canvasView.windowsLayer.addSubview(browser);

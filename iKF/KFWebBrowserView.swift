@@ -40,6 +40,9 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     
     private var showToolBar = true;
     
+    var noteRef:KFPostRefView?;//model is wrong this is temporary
+    var note:KFNote?;
+    
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         //println(mainController);
         mainController?.suppressScroll();
@@ -224,10 +227,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         webView.stopLoading();
     }
     
-    var noteRef:KFPostRefView?;//model is wrong this is temporary
-    var note:KFNote?;
-    
-    func kfSetNote(note:KFNote){
+    func kfSetNote(note:KFNote?){
         unhook();
         self.note = note;
         self.webView.kfModel = note;
@@ -236,6 +236,9 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     }
     
     private func updateFromNote(){
+        if(self.note == nil){
+            return;
+        }
         webView.scalesPageToFit = false;//necessary
         self.titleLabel.text = self.note!.title;
         let html = self.note!.getReadHtml();
@@ -261,6 +264,9 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     }
     
     func noteOpened(){
+        if(self.note == nil){
+            return;
+        }
         if(note!.beenRead == false){
             note!.beenRead = true;
             note!.notify();
@@ -328,6 +334,8 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
             let frame = CGRectMake(self.frame.origin.x + 50, self.frame.origin.y + 50, self.frame.size.width, self.frame.size.height);
             self.mainController?.openPostById(guid, frame: frame);
             return false;
+        }else if(request.URL.absoluteString! == "about:blank"){
+            self.kfSetNote(nil);//important to close
         }
         return true;
     }
