@@ -15,6 +15,8 @@ class KFPostRefView: UIView {
     
     private var panGesture:UIPanGestureRecognizer?;
     private var singleTapGesture:UITapGestureRecognizer?;
+    private var doubleTapGesture:UITapGestureRecognizer?;
+    private var longPressGesture:UILongPressGestureRecognizer?;
     private var gestureAttached = false;
     
     required init(coder aDecoder: NSCoder) {
@@ -45,11 +47,14 @@ class KFPostRefView: UIView {
         //self.addGestureRecognizer(recognizerSingleTap);
         
         //Double Tap
-        let recognizerDoubleTap = UITapGestureRecognizer(target:self, action:"handleDoubleTap:");
-        recognizerDoubleTap.numberOfTapsRequired = 2;
-        self.addGestureRecognizer(recognizerDoubleTap);
+        doubleTapGesture = UITapGestureRecognizer(target:self, action:"handleDoubleTap:");
+        doubleTapGesture!.numberOfTapsRequired = 2;
         
-        singleTapGesture!.requireGestureRecognizerToFail(recognizerDoubleTap);
+        //long Tap
+        longPressGesture = UILongPressGestureRecognizer(target:self, action:"handleLongPress:");
+        self.addGestureRecognizer(self.longPressGesture!);
+        
+        singleTapGesture!.requireGestureRecognizerToFail(doubleTapGesture!);
         
         
         //Pan Gesture
@@ -59,14 +64,22 @@ class KFPostRefView: UIView {
         updateEventBinding();
     }
     
+    func handleLongPress(sender:UILongPressGestureRecognizer) {
+        if(sender.state == UIGestureRecognizerState.Began){
+            tapB();
+        }
+    }
+    
     func updateEventBinding(){
         if(self.getModel().isLocked() && gestureAttached){//tolock
             self.removeGestureRecognizer(self.singleTapGesture!);
+            self.removeGestureRecognizer(self.doubleTapGesture!);
             self.removeGestureRecognizer(self.panGesture!);
             gestureAttached = false;
         }
         else if(!self.getModel().isLocked() && !gestureAttached){//tounlock
             self.addGestureRecognizer(self.singleTapGesture!);
+            self.addGestureRecognizer(self.doubleTapGesture!);
             self.addGestureRecognizer(self.panGesture!);
             gestureAttached = true;
         }
