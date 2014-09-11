@@ -8,6 +8,8 @@
 
 import UIKit
 
+//private var lastMemoryWarning = NSDate();
+
 class KFCanvasViewController: UIViewController {
     
     @IBOutlet weak var navBar: UINavigationBar!
@@ -372,7 +374,7 @@ class KFCanvasViewController: UIViewController {
         if(self.currentView == view){
             return;//already the view
         }
-
+        
         if(push == true && self.currentView != nil){
             self.undoStack.push(self.currentView!);
             self.redoStack.clear();
@@ -588,10 +590,6 @@ class KFCanvasViewController: UIViewController {
     
     /* event handlers */
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     @IBAction func exitPressed(sender: AnyObject) {
         KFWebView.clearAllInstances();
         cometManager.stop();
@@ -674,5 +672,16 @@ class KFCanvasViewController: UIViewController {
     // Pass the selected object to the new view controller.
     }
     */
+    
+    override func didReceiveMemoryWarning() {
+        //        let now = NSDate();
+        //        let diff = now.timeIntervalSinceDate(lastMemoryWarning);
+        //        if(diff > 60){
+        //        lastMemoryWarning = now;
+        //        KFAppUtils.showAlert("Memory Warning", msg: "This may cause a problem.");
+        //        }else{
+        //        println("memory warning:\(diff)");
+        //        }
+    }
     
 }
