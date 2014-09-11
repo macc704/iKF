@@ -471,14 +471,14 @@ class KFService: NSObject {
         let filenameBase = iKFUtil.generateRandomString(8);
         let filename = "\(filenameBase!).png";
         
-        let jsonobj:AnyObject? = self.sendAttachment(imageData, mime: "image/png", filename: filename);
+        let jsonobj = self.sendAttachment(imageData, mime: "image/png", filename: filename);
         if(jsonobj == nil){
             return false;
         }
         
         let w = Int(image.size.width);
         let h = Int(image.size.height);
-        let attachmentURL = ((jsonobj! as NSDictionary)["url"]) as String;
+        let attachmentURL = jsonobj!["url"].asString!;
         var svg = NSMutableString();
         svg.appendFormat("<svg width=\"%d\" height=\"%d\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">", w, h);
         svg.appendFormat("<g id=\"group\">");
@@ -491,7 +491,7 @@ class KFService: NSObject {
         return drawingResult;
     }
     
-    private func sendAttachment(data:NSData, mime:String, filename:String) -> AnyObject!{
+    private func sendAttachment(data:NSData, mime:String, filename:String) -> JSON?{
         // generate url
         let url = "\(self.baseURL!)rest/file/easyUpload/" + currentRegistration.community.guid;
         
