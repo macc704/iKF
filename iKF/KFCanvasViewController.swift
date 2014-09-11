@@ -461,6 +461,7 @@ class KFCanvasViewController: UIViewController {
         viewSelectionController.models = KFService.getInstance().currentRegistration.community.views.array;
         viewSelectionController.selectedHandler = {(model:KFModel) in
             self.setCurrentView(model as KFView);
+            KFPopoverManager.getInstance().closeCurrentPopover(animated: true);
         }
         KFPopoverManager.getInstance().openInPopover(self.viewButton, controller: viewSelectionController);
     }
