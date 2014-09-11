@@ -27,6 +27,9 @@ class KFCanvasViewController: UIViewController {
     private var reusableRefViews:[String: KFPostRefView] = [:];
     private var cometManager:KFMobileCometManager = KFMobileCometManager();
     
+    private var dummyRef:KFNoteRefView?;
+    //private var dummyShowing = false;
+    
     private var initialized = false;
     
     required init(coder aDecoder: NSCoder) {
@@ -80,6 +83,7 @@ class KFCanvasViewController: UIViewController {
         self.cometManager.busInitialized = {
             KFAppUtils.executeInBackThread({
                 self.user = KFService.getInstance().currentUser;
+                
                 let enterResult = KFService.getInstance().enterCommunity(self.registration!);
                 if(enterResult == false){
                     return;//alert
@@ -119,6 +123,9 @@ class KFCanvasViewController: UIViewController {
         if(type == "postref" && method == "update"){
             KFAppUtils.executeInBackThread({
                 let newRef = service.getPostRef(target!);
+                if(newRef == nil){
+                    return;
+                }
                 KFAppUtils.executeInGUIThread({
                     //println("postref-update-\(ref)");
                     let refView = self.postRefViews[newRef!.guid];
@@ -191,6 +198,7 @@ class KFCanvasViewController: UIViewController {
         }
         
         //self.hideHalo();
+        removeDummy();
         
         var postRefView:KFNoteRefView!;
         
@@ -277,15 +285,47 @@ class KFCanvasViewController: UIViewController {
     func createNote(p:CGPoint, buildsOn:KFPostRefView?){
         self.hideHalo();
         let viewId = self.getCurrentView().guid;
+        addDummy(p);
         KFAppUtils.executeInBackThread({
             KFService.getInstance().createNote(viewId, buildsOn: buildsOn?.getModel(), location: p);
             return;
         });
     }
     
+    private func addDummy(p:CGPoint){
+        if(dummyRef != nil){
+            return;
+        }
+        dummyRef = createDummy(p);
+        self.canvasView.noteLayer.addSubview(dummyRef!);
+    }
+    
+    private func createDummy(p:CGPoint) -> KFNoteRefView {
+        let ref = KFReference();
+        let note = KFNote();
+        note.title = "New Note";
+        note.primaryAuthor = self.user;
+        ref.post = note;
+        let refview = KFNoteRefView(controller: self, ref: ref);
+        refview.getModel().location = p;
+        refview.updateFromModel();
+        let loading = KFLoadingView();
+        loading.showOnView(refview);
+        refview.userInteractionEnabled = false;
+        return refview;
+    }
+    
+    private func removeDummy(){
+        if(dummyRef != nil){
+            dummyRef!.removeFromSuperview();
+            dummyRef = nil;
+        }
+    }
+    
     func createWebNote(p:CGPoint, url:String, title:String){
         self.hideHalo();
         let viewId = self.getCurrentView().guid;
+        addDummy(p);
         KFAppUtils.executeInBackThread({
             var body = "<html><head>";
             body = body + "<meta http-equiv='refresh' content='0; URL="+url+"'>";

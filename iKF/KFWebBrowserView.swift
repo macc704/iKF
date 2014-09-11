@@ -43,6 +43,8 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
     var noteRef:KFPostRefView?;//model is wrong this is temporary
     var note:KFNote?;
     
+    private var dummyRef:KFViewRefView?;
+    
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         //println(mainController);
         mainController?.suppressScroll();
@@ -127,6 +129,8 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         //almost ok but still parent scroll would be happened in scale up
         let noPanGesture = UIPanGestureRecognizer(target: self, action: "nopan:");
         self.addGestureRecognizer(noPanGesture);
+        
+        
     }
     
     func setShowToolbar(show:Bool){
