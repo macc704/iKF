@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6206.9" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
+        <capability name="Constraints with attributes relative to the layout margin" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KFCanvasViewController" customModule="iKF" customModuleProvider="target">
             <connections>
+                <outlet property="backButton" destination="6sv-Ua-oOM" id="w6d-n1-3Sb"/>
                 <outlet property="canvasContainer" destination="lAP-Yn-aQA" id="kLc-JF-HhL"/>
+                <outlet property="forwardButton" destination="U0p-oJ-68H" id="xI3-qA-9X5"/>
                 <outlet property="navBar" destination="2Yo-JF-yLy" id="EUw-ep-sv5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outlet property="viewsButton" destination="F4e-6v-8ew" id="2Je-WG-RvU"/>
+                <outlet property="viewButton" destination="mah-Mu-5RG" id="Gr2-Sy-nj9"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -26,11 +30,6 @@
                                     <action selector="exitPressed:" destination="-1" id="V9F-zP-NW8"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem key="rightBarButtonItem" title="Views" id="F4e-6v-8ew">
-                                <connections>
-                                    <action selector="viewsButtonPressed:" destination="-1" id="WZO-eV-lcP"/>
-                                </connections>
-                            </barButtonItem>
                         </navigationItem>
                     </items>
                 </navigationBar>
@@ -38,38 +37,79 @@
                     <rect key="frame" x="0.0" y="66" width="1024" height="658"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sqk-mv-Do0">
-                    <rect key="frame" x="0.0" y="724" width="1024" height="45"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="45" id="akJ-lm-QeU"/>
-                    </constraints>
-                    <items>
-                        <barButtonItem title="Update" id="roO-yp-1oE">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r37-k5-eHK">
+                    <rect key="frame" x="0.0" y="724" width="1024" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U0p-oJ-68H">
+                            <rect key="frame" x="841" y="6" width="30" height="30"/>
+                            <state key="normal" title=">">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                             <connections>
-                                <action selector="updatePressed:" destination="-1" id="gHI-oi-9E1"/>
+                                <action selector="forwardButtonPressed:" destination="-1" eventType="touchUpInside" id="pZS-zZ-vKI"/>
                             </connections>
-                        </barButtonItem>
-                    </items>
-                </toolbar>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6sv-Ua-oOM">
+                            <rect key="frame" x="795" y="6" width="30" height="30"/>
+                            <state key="normal" title="&lt;">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="backButtonPressed:" destination="-1" eventType="touchUpInside" id="ieV-Kx-v9o"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kLv-Xv-cOQ">
+                            <rect key="frame" x="27" y="6" width="51" height="30"/>
+                            <state key="normal" title="Update">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="updateButtonPressed:" destination="-1" eventType="touchUpInside" id="hmj-RL-F4w"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mah-Mu-5RG">
+                            <rect key="frame" x="909" y="7" width="73" height="30"/>
+                            <state key="normal" title="go to View">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="viewButtonPressed:" destination="-1" eventType="touchUpInside" id="las-UN-QjJ"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="U0p-oJ-68H" firstAttribute="leading" secondItem="6sv-Ua-oOM" secondAttribute="trailing" constant="16" id="4OI-Tq-ng6"/>
+                        <constraint firstItem="6sv-Ua-oOM" firstAttribute="bottom" secondItem="r37-k5-eHK" secondAttribute="bottomMargin" id="6UV-ww-cTc"/>
+                        <constraint firstItem="mah-Mu-5RG" firstAttribute="leading" secondItem="U0p-oJ-68H" secondAttribute="trailing" constant="38" id="8hM-bR-GEr"/>
+                        <constraint firstItem="kLv-Xv-cOQ" firstAttribute="baseline" secondItem="6sv-Ua-oOM" secondAttribute="baseline" id="CMp-oK-WHA"/>
+                        <constraint firstItem="kLv-Xv-cOQ" firstAttribute="top" secondItem="r37-k5-eHK" secondAttribute="top" constant="6" id="HmK-WI-7Z7"/>
+                        <constraint firstItem="kLv-Xv-cOQ" firstAttribute="leading" secondItem="r37-k5-eHK" secondAttribute="leading" constant="27" id="Y0p-hY-h7J"/>
+                        <constraint firstItem="mah-Mu-5RG" firstAttribute="centerY" secondItem="r37-k5-eHK" secondAttribute="centerY" id="cew-zE-nII"/>
+                        <constraint firstItem="U0p-oJ-68H" firstAttribute="baseline" secondItem="6sv-Ua-oOM" secondAttribute="baseline" id="nPN-ux-fZQ"/>
+                        <constraint firstAttribute="trailing" secondItem="mah-Mu-5RG" secondAttribute="trailing" constant="42" id="qJL-cs-fup"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="2Yo-JF-yLy" firstAttribute="leading" secondItem="lAP-Yn-aQA" secondAttribute="leading" id="3BD-Uc-SsX"/>
-                <constraint firstItem="lAP-Yn-aQA" firstAttribute="top" secondItem="2Yo-JF-yLy" secondAttribute="bottom" id="7iU-bg-iZ7"/>
-                <constraint firstItem="Sqk-mv-Do0" firstAttribute="top" secondItem="lAP-Yn-aQA" secondAttribute="bottom" id="Hce-TZ-X0l"/>
-                <constraint firstAttribute="bottom" secondItem="Sqk-mv-Do0" secondAttribute="bottom" constant="-1" id="Kr2-Gb-4o6"/>
-                <constraint firstItem="Sqk-mv-Do0" firstAttribute="trailing" secondItem="lAP-Yn-aQA" secondAttribute="trailing" id="P9V-Tp-BFy"/>
-                <constraint firstItem="2Yo-JF-yLy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="22" id="k0V-qV-BSM"/>
-                <constraint firstItem="2Yo-JF-yLy" firstAttribute="trailing" secondItem="lAP-Yn-aQA" secondAttribute="trailing" id="kyl-z4-6YD"/>
-                <constraint firstAttribute="trailing" secondItem="lAP-Yn-aQA" secondAttribute="trailing" id="pVS-t4-gdx"/>
-                <constraint firstItem="Sqk-mv-Do0" firstAttribute="leading" secondItem="lAP-Yn-aQA" secondAttribute="leading" id="sIO-Sh-ziu"/>
-                <constraint firstItem="2Yo-JF-yLy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="uQp-Jc-VFe"/>
+                <constraint firstAttribute="trailing" secondItem="2Yo-JF-yLy" secondAttribute="trailing" id="FEV-II-34Q"/>
+                <constraint firstItem="2Yo-JF-yLy" firstAttribute="trailing" secondItem="lAP-Yn-aQA" secondAttribute="trailing" id="b3o-1s-4D4"/>
+                <constraint firstItem="r37-k5-eHK" firstAttribute="leading" secondItem="lAP-Yn-aQA" secondAttribute="leading" id="mSa-NV-ZkC"/>
+                <constraint firstItem="lAP-Yn-aQA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="nCj-DO-eaw"/>
+                <constraint firstItem="lAP-Yn-aQA" firstAttribute="leading" secondItem="2Yo-JF-yLy" secondAttribute="leading" id="nZO-Lt-hep"/>
+                <constraint firstItem="lAP-Yn-aQA" firstAttribute="top" secondItem="2Yo-JF-yLy" secondAttribute="bottom" id="oR6-YZ-Xx2"/>
+                <constraint firstItem="r37-k5-eHK" firstAttribute="top" secondItem="lAP-Yn-aQA" secondAttribute="bottom" id="rQy-cd-5yo"/>
+                <constraint firstItem="2Yo-JF-yLy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="22" id="tO1-az-Itq"/>
+                <constraint firstAttribute="bottom" secondItem="r37-k5-eHK" secondAttribute="bottom" id="tgK-74-1eQ"/>
+                <constraint firstItem="r37-k5-eHK" firstAttribute="trailing" secondItem="lAP-Yn-aQA" secondAttribute="trailing" id="uxE-nV-ggU"/>
             </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics">
                 <size key="portraitSize" width="768" height="1024"/>
                 <size key="landscapeSize" width="1024" height="768"/>
             </simulatedScreenMetrics>
+            <point key="canvasLocation" x="126" y="136"/>
         </view>
     </objects>
 </document>

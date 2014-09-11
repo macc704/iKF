@@ -13,8 +13,6 @@ class KFCanvasViewController: UIViewController {
     @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet weak var canvasContainer: UIView!
     
-    @IBOutlet weak var viewsButton: UIBarButtonItem!
-    
     private var canvasView = KFCanvasView();
     private let creationToolView = KFCreationToolView(frame: CGRect(x:0, y:0, width:120, height:35));
     private var imagePickerManager:KFImagePicker?;
@@ -50,6 +48,8 @@ class KFCanvasViewController: UIViewController {
             self.showHalo(self.creationToolView);
         };
         canvasContainer.addSubview(canvasView);
+        
+        updateViewNavStatus();
     }
     
     override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
@@ -368,9 +368,15 @@ class KFCanvasViewController: UIViewController {
         self.canvasView.connectionLayer.requestRepaint();
     }
     
-    func setCurrentView(view:KFView){
+    func setCurrentView(view:KFView, push:Bool = true){
         if(self.currentView == view){
             return;//already the view
+        }
+
+        if(push == true && self.currentView != nil){
+            self.undoStack.push(self.currentView!);
+            self.redoStack.clear();
+            self.updateViewNavStatus();
         }
         
         //new view
@@ -456,7 +462,7 @@ class KFCanvasViewController: UIViewController {
         viewSelectionController.selectedHandler = {(model:KFModel) in
             self.setCurrentView(model as KFView);
         }
-        KFPopoverManager.getInstance().openInPopoverFromBarButton(self.viewsButton, controller: viewSelectionController);
+        KFPopoverManager.getInstance().openInPopover(self.viewButton, controller: viewSelectionController);
     }
     
     func openNoteEditController(note:KFNote, mode:String){
@@ -592,20 +598,12 @@ class KFCanvasViewController: UIViewController {
     }
     
     @IBAction func viewsButtonPressed(sender: AnyObject) {
-        if(initialized == false){
-            KFAppUtils.showAlert("Warning", msg: "Not initialized yet");
-            return;
-        }
-        self.showViewSelection();
+        
     }
     
-    @IBAction func updatePressed(sender: AnyObject) {
-        if(initialized == false){
-            KFAppUtils.showAlert("Warning", msg: "Not initialized yet");
-            return;
-        }
-        self.refreshAllPostsAsync();
-    }
+    //    @IBAction func updatePressed(sender: AnyObject) {
+    
+    //    }
     
     func suppressScroll(){
         canvasView.suppressScroll();
@@ -613,6 +611,57 @@ class KFCanvasViewController: UIViewController {
     
     func unlockSuppressScroll(){
         canvasView.unlockSuppressScroll();
+    }
+    
+    @IBOutlet weak var forwardButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var viewButton: UIButton!
+    
+    private var undoStack = KFStack<KFView>();
+    private var redoStack = KFStack<KFView>();
+    
+    private func updateViewNavStatus(){
+        forwardButton.enabled = !redoStack.isEmpty();
+        backButton.enabled = !undoStack.isEmpty();
+    }
+    
+    @IBAction func viewButtonPressed(sender: AnyObject) {
+        if(initialized == false){
+            KFAppUtils.showAlert("Warning", msg: "Not initialized yet");
+            return;
+        }
+        self.showViewSelection();
+    }
+    
+    @IBAction func updateButtonPressed(sender: AnyObject) {
+        if(initialized == false){
+            KFAppUtils.showAlert("Warning", msg: "Not initialized yet");
+            return;
+        }
+        self.refreshAllPostsAsync();
+    }
+    
+    @IBAction func forwardButtonPressed(sender: AnyObject) {
+        if(redoStack.isEmpty()){
+            println("redoStack.isEmpty()");
+            return;
+        }
+        let view = redoStack.pop();
+        undoStack.push(self.getCurrentView());
+        updateViewNavStatus();
+        setCurrentView(view, push:false);
+    }
+    
+    @IBAction func backButtonPressed(sender: AnyObject) {
+        if(undoStack.isEmpty()){
+            updateViewNavStatus();
+            println("undoStack.isEmpty()");
+            return;
+        }
+        let view = undoStack.pop();
+        redoStack.push(self.getCurrentView());
+        updateViewNavStatus();
+        setCurrentView(view, push:false);
     }
     
     /*
