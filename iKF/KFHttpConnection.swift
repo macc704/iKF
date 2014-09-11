@@ -10,7 +10,9 @@ import UIKit
 
 class KFHttpConnection: NSObject {
     class func connect(req: KFHttpRequest) -> KFHttpResponse{
-        KFAppUtils.debug("URL='\(req.nsRequest.URL)'");
+        if(req.nsRequest.URL != nil){
+            KFAppUtils.debug("URL='\(req.nsRequest.URL!)'");
+        }
         
         req.updateParams();
         var res :NSURLResponse?
