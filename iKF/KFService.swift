@@ -53,6 +53,10 @@ class KFService: NSObject {
         return "http://\(host)/";
     }
     
+    func getAppURL() -> String{
+        return self.baseURL!;
+    }
+    
     func getHostURL() -> NSURL{
         return NSURL(string: getHostURLString());
     }
@@ -225,6 +229,7 @@ class KFService: NSObject {
             handleError("in getPostsOrdered() code=\(res.getStatusCode())");
             return KFModelArray<KFPost>();
         }
+
         return jsonScanner.scanPosts(res.getBodyAsJSON());
     }
     

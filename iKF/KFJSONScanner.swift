@@ -106,6 +106,17 @@ class KFJSONScanner: NSObject {
         model!.created = json["created"].asString!;
         model!.modified = json["modified"].asString!;
         
+        if(!json["attachments"].isNull){
+            for each in json["attachments"].asArray! {
+                let att = KFAttachment();
+                att.guid = each["guid"].asString!;
+                att.title = each["title"].asString!;
+                att.url = KFService.getInstance().getAppURL()+each["file"].asString!;
+                model!.attachments.append(att);
+            }
+        }
+        
+        
         return model;
     }
     

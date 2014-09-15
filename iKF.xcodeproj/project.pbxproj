@@ -101,6 +101,7 @@
 		49B938441946404000BD9C0D /* KFViewRefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B938431946404000BD9C0D /* KFViewRefView.swift */; };
 		49C12594198B0B59000336D8 /* KFTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C12592198B0B59000336D8 /* KFTestViewController.swift */; };
 		49C12595198B0B59000336D8 /* KFTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C12593198B0B59000336D8 /* KFTestViewController.xib */; };
+		49C4004B19C7850D002ED98D /* KFAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C4004A19C7850D002ED98D /* KFAttachment.swift */; };
 		49C5590B1945EF1700FDFF32 /* KFDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5590A1945EF1700FDFF32 /* KFDrawing.swift */; };
 		49C5590D1945EF5F00FDFF32 /* KFModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5590C1945EF5F00FDFF32 /* KFModel.swift */; };
 		49C5590F1945F5D700FDFF32 /* KFReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5590E1945F5D700FDFF32 /* KFReference.swift */; };
@@ -226,6 +227,7 @@
 		49B938431946404000BD9C0D /* KFViewRefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFViewRefView.swift; sourceTree = "<group>"; };
 		49C12592198B0B59000336D8 /* KFTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFTestViewController.swift; sourceTree = "<group>"; };
 		49C12593198B0B59000336D8 /* KFTestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFTestViewController.xib; sourceTree = "<group>"; };
+		49C4004A19C7850D002ED98D /* KFAttachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFAttachment.swift; sourceTree = "<group>"; };
 		49C5590A1945EF1700FDFF32 /* KFDrawing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFDrawing.swift; sourceTree = "<group>"; };
 		49C5590C1945EF5F00FDFF32 /* KFModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFModel.swift; sourceTree = "<group>"; };
 		49C5590E1945F5D700FDFF32 /* KFReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFReference.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 				49C5590E1945F5D700FDFF32 /* KFReference.swift */,
 				492C10261947562800512591 /* KFScaffold.swift */,
 				492C10281947563300512591 /* KFSupport.swift */,
+				49C4004A19C7850D002ED98D /* KFAttachment.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -754,6 +757,7 @@
 				4991C33219BBF90E00677B9A /* KFJSONScanner.swift in Sources */,
 				496074FE1992613F00131111 /* KFWebView.swift in Sources */,
 				492C10271947562800512591 /* KFScaffold.swift in Sources */,
+				49C4004B19C7850D002ED98D /* KFAttachment.swift in Sources */,
 				497C26E9198889D7007CCEED /* KFImagePicker.swift in Sources */,
 				4904812519B763FB00126571 /* KFAbstractNoteView.swift in Sources */,
 				498BD1AB1942B768006217AD /* KFRegistration.swift in Sources */,

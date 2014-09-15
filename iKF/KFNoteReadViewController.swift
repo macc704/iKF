@@ -39,6 +39,9 @@ class KFNoteReadViewController: UIViewController {
                 KFService.getInstance().readPost(self.note!);
                 return;
             });
+            for att in note!.attachments{
+                println(att.url);
+            }
         }
     }
     

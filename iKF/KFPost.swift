@@ -20,6 +20,8 @@ class KFPost: KFModel {
     var dirtyAuthors = false;
     var buildsOn:KFPost?;
     
+    var attachments:[KFAttachment]=[];
+    
     func marge(another: KFPost) {
         authors = another.authors;
         primaryAuthor = another.primaryAuthor;
