@@ -26,7 +26,17 @@ function replaceContentReferenceTag() {
 	}
 }
 
+function replaceWebLinkTag() {
+    var elements = document.getElementsByTagName("kf-redirect");
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        var toUrl = element.getAttribute("url");
+        elements[i].innerHTML = "<meta http-equiv='refresh' content='0; URL="+toUrl+"'>";
+    }
+}
+
 function onLoadHook() {
+    replaceWebLinkTag();
 	replacePostReferenceTag();
 	replaceContentReferenceTag();
 }

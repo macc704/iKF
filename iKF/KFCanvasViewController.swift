@@ -330,8 +330,9 @@ class KFCanvasViewController: UIViewController {
         addDummy(p);
         KFAppUtils.executeInBackThread({
             var body = "<html><head>";
-            body = body + "<meta http-equiv='refresh' content='0; URL="+url+"'>";
-            body = body + "</head><body></body></html>";
+            body = body + "</head><body>";
+            body = body + "<kf-redirect url='\(url)'>(kf-redirect tag for '\(url)')</kf-redirect>";
+            body = body + "</body></html>";
             KFService.getInstance().createNote(viewId, location: p, title:title, body: body);
             return;
         });
