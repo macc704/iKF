@@ -106,7 +106,7 @@ class KFJSONScanner: NSObject {
         model!.created = json["created"].asString!;
         model!.modified = json["modified"].asString!;
         
-        if(!json["attachments"].isNull){
+        if(json["attachments"].isArray){
             for each in json["attachments"].asArray! {
                 let att = KFAttachment();
                 att.guid = each["guid"].asString!;
