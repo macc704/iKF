@@ -105,9 +105,9 @@ class KFWebView: UIWebView {
         let title = pasteboard.string;
         var pasteString:String;
         if (type == "contentreference"){
-            pasteString = "<kf-content-reference class=\"mceNonEditable\" postid=\"\(guid!)\">\(title)</kf-content-reference>";
+            pasteString = "<kf-content-reference class=\"mceNonEditable\" postid=\"\(guid!)\">\(title!)</kf-content-reference>";
         }else{//assume postreference
-            pasteString = "<kf-post-reference class=\"mceNonEditable\" postid=\"\(guid!)\">\(title)</kf-post-reference>";
+            pasteString = "<kf-post-reference class=\"mceNonEditable\" postid=\"\(guid!)\">\(title!)</kf-post-reference>";
         }
         //        //NSLog(@"pasteString=%@", pasteString);
         self.performPasteAsReference!(pasteString);
