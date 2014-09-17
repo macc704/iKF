@@ -22,7 +22,7 @@ class KFLabelNoteRefView: UIView {
     init(ref: KFReference) {
         self.model = ref;
         
-        icon = KFPostRefIconView(frame: CGRectMake(5, 5, 20, 20));
+        icon = KFPostRefIconView(frame: CGRectMake(5, 5, 25, 25));
         titleLabel = UILabel(frame: CGRectMake(40, 7, 200, 20));
         authorLabel = UILabel(frame: CGRectMake(50, 23, 120, 10));
         
@@ -69,6 +69,10 @@ class KFLabelNoteRefView: UIView {
         let newWidth = tmp ? titleRight : authorRight;
         let r = self.frame;
         self.frame = CGRectMake(0, 0,  newWidth, r.size.height);
+    }
+    
+    func getRelativeReference() -> CGPoint{
+        return icon.center;
     }
     
     /*

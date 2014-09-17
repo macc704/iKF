@@ -325,8 +325,8 @@
 			children = (
 				49C55910194600FA00FDFF32 /* KFPostRefView.swift */,
 				49C5591A1946300700FDFF32 /* KFNoteRefView.swift */,
-				49C559121946142600FDFF32 /* KFPostRefIconView.swift */,
 				4989F567198C2ABE0053DCC8 /* KFLabelNoteRefView.swift */,
+				49C559121946142600FDFF32 /* KFPostRefIconView.swift */,
 				49C5591819462FB700FDFF32 /* KFDrawingRefView.swift */,
 				49B938431946404000BD9C0D /* KFViewRefView.swift */,
 				496402CD198D8184009504B7 /* KFCreationToolView.swift */,

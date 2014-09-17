@@ -86,13 +86,13 @@ class KFConnectionLayer: CALayer {
     private func drawAll(context: CGContext!){
         //CGContextClearRect(context, rect);
         
-        CGContextSetStrokeColorWithColor(context, UIColor.blueColor().CGColor);
+        CGContextSetStrokeColorWithColor(context, UIColor(red: 0, green: 0, blue: 1.0, alpha: 0.8).CGColor);
         CGContextSetLineWidth(context, 2.0);
         
         for conn in connections {
             //CGPoint fromP = conn.from.center;
-            let fromP = self.createChopBoxAnchor(conn.to, to: conn.from);
-            let toP = self.createChopBoxAnchor(conn.from, to: conn.to);
+            let fromP = self.createChopBoxAnchor(conn.to, toView: conn.from);
+            let toP = self.createChopBoxAnchor(conn.from, toView: conn.to);
             CGContextMoveToPoint(context, fromP.x, fromP.y);
             CGContextAddLineToPoint(context, toP.x, toP.y);
             CGContextStrokePath(context);
@@ -122,26 +122,27 @@ class KFConnectionLayer: CALayer {
         CGContextStrokePath(context);
     }
     
-    func createChopBoxAnchor(from:UIView, to:UIView) -> CGPoint{
-        let reference = from.center;
-        let r = to.frame;
-        var centerX = r.origin.x + 0.5 * r.size.width;
-        var centerY = r.origin.y + 0.5 * r.size.height;
+    func createChopBoxAnchor(fromView:KFPostRefView, toView:KFPostRefView) -> CGPoint{
+        let from = center(fromView.getReference());
+        let chopbox = toView.getReference().size;
+        let to = center(toView.getReference());
         
         // This avoids divide-by-zero
-        if (/*r.isEmpty()*/ r.size.width <= 0 || r.size.height <= 0 ||
-            (reference.x == centerX && reference.y == centerY)){
-                return CGPointMake(centerX, centerY);
+        if (/*r.isEmpty()*/ chopbox.width <= 0 || chopbox.height <= 0 ||
+            (from.x == to.x && from.y == to.y)){
+                return CGPointMake(to.x, to.y);
         }
         
-        var dx = reference.x - centerX;
-        var dy = reference.y - centerY;
-        let scale = 0.5 / max(abs(dx) / r.size.width, abs(dy) / r.size.height);
+        var dx = from.x - to.x;
+        var dy = from.y - to.y;
+        let scale = 0.5 / max(abs(dx) / chopbox.width, abs(dy) / chopbox.height);
         dx *= scale;
         dy *= scale;
-        centerX += dx;
-        centerY += dy;
-        return CGPointMake(round(centerX), round(centerY));
+        return CGPointMake(to.x + dx, to.y + dy);
+    }
+    
+    private func center(rect:CGRect) -> CGPoint{
+        return CGPointMake(rect.origin.x + rect.size.width / 2, rect.origin.y + rect.size.height / 2);
     }
     
     /*

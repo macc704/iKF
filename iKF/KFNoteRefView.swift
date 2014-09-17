@@ -150,4 +150,15 @@ class KFNoteRefView: KFPostRefView {
         self.mainController.openPost(self);
     }
     
+    override func getReference() -> CGRect {
+        if(refView is KFLabelNoteRefView){
+            let icon = (refView! as KFLabelNoteRefView).icon!
+            var r = icon.convertRect(icon.bounds, toView:self.superview!);
+            r = CGRectMake(r.origin.x, r.origin.y, r.size.width + 10, r.size.height + 10);
+            return r;
+        }
+        return super.getReference();
+    }
+
+    
 }

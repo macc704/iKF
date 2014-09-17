@@ -222,6 +222,14 @@ class KFPostRefView: UIView {
         self.frame = CGRectMake(getModel().location.x, getModel().location.y, r.size.width, r.size.height);
     }
     
+//    func getChopbox() -> CGSize{
+//        return self.frame.size;
+//    }
+       
+    func getReference() -> CGRect{
+        return self.frame;
+    }
+    
     //    func die(){
     //
     //    }
