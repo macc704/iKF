@@ -34,14 +34,15 @@ class KFNoteReadViewController: UIViewController {
             self.readView._webView.kfModel = self.note!;
             self.note!.beenRead = true;
             self.note!.notify();
-            self.readView.showHTML(self.note!.content, title:self.note!.title);
+            self.readView.model = self.note!;
+            self.readView.load();
             KFAppUtils.executeInBackThread({
                 KFService.getInstance().readPost(self.note!);
                 return;
             });
-            for att in note!.attachments{
-                println(att.url);
-            }
+            //for att in note!.attachments{
+                //println(att.url);
+            //}
         }
     }
     

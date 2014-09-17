@@ -32,6 +32,8 @@ class KFPost: KFModel {
 
         dirtyAuthors = another.dirtyAuthors;
         buildsOn = another.buildsOn;
+        
+        attachments = another.attachments;
     }
     
     func canEditMe() -> Bool{

@@ -111,7 +111,7 @@ class KFJSONScanner: NSObject {
                 let att = KFAttachment();
                 att.guid = each["guid"].asString!;
                 att.title = each["title"].asString!;
-                att.url = KFService.getInstance().getAppURL()+each["file"].asString!;
+                att.url = KFService.getInstance().getHostURLString()+each["file"].asString!;
                 model!.attachments.append(att);
             }
         }
