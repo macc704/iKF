@@ -141,11 +141,11 @@ class KFHalo: UIView {
             installHaloHandle("move.png", locator: locator.TOP(), tap: nil, pan: "handleMoveWeb:");
             installHaloHandle("resize.png", locator: locator.BOTTOM_RIGHT(), tap: nil, pan: "handlePanResizeWeb:");
             if((target as KFWebBrowserView).noteRef == nil){
+                installHaloHandle("window.png", locator: locator.RIGHT(), tap: "handleToggleMenuWeb:", pan: nil);
                 installHaloHandle("anchor.png", locator: locator.BOTTOM(), tap: nil, pan: "handleAnchorWeb:");
             }else{
                 installHaloHandle("buildson.png", locator: locator.BOTTOM(), tap: nil, pan: "handleBuildsOn:");
             }
-            installHaloHandle("window.png", locator: locator.RIGHT(), tap: "handleToggleMenuWeb:", pan: nil);
             installHaloHandle("close.png", locator: locator.TOP_LEFT(), tap: "closeWeb:", pan: nil);
         }
         
