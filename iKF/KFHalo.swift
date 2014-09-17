@@ -429,7 +429,7 @@ class KFHalo: UIView {
         dic["kfmodel.guid"] = note.guid;
         pasteboard.items = [dic];
         //KFAppUtils.showAlert("Notification", msg: "Cliped Post '\(note.title)'")
-        openMessage(noteRef, message: "Cliped Post '\(note.title)'");
+        openMessage(noteRef, message: "This note was clipped to pasteboard.\n\nYou can make a reference\nby 'Paste as Reference'");
         controller?.hideHalo();
     }
     
