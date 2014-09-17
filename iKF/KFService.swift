@@ -50,7 +50,7 @@ class KFService: NSObject {
     }
     
     func getHostURLString() -> String{
-        return "http://\(host)/";
+        return "http://\(host!)/";
     }
     
     func getAppURL() -> String{

@@ -26,8 +26,12 @@ class KFNote: KFPost {
     func getReadHtml() -> String{
         //let template = KFService.getInstance().getReadTemplate();
         let template = KFResource.loadReadTemplate();
-        var html = content;
-        html = template.stringByReplacingOccurrencesOfString("%YOURCONTENT%", withString:content);
+        var html = template;
+        html = html.stringByReplacingOccurrencesOfString("%YOURCONTENT%", withString:content);
+        var systemVersion = UIDevice.currentDevice().systemVersion;
+        if(systemVersion.hasPrefix("7.") == false){
+            html = html.stringByReplacingOccurrencesOfString("../kforum_uploads/", withString: KFService.getInstance().getHostURLString() + "kforum_uploads/");
+        }
         return html;
     }
     
