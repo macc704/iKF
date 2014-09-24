@@ -591,6 +591,7 @@ class KFCanvasViewController: UIViewController {
     
     /* event handlers */
     
+
     @IBAction func exitPressed(sender: AnyObject) {
         KFWebView.clearAllInstances();
         cometManager.stop();
