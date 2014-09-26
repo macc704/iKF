@@ -83,11 +83,15 @@ class KFConnectionLayer: CALayer {
     //        }
     //    }
     
+    private let arrowColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.35).CGColor;
+    private let arrowSize:CGFloat = 8.0;
+    
     private func drawAll(context: CGContext!){
         //CGContextClearRect(context, rect);
         
-        CGContextSetStrokeColorWithColor(context, UIColor(red: 0, green: 0, blue: 1.0, alpha: 0.8).CGColor);
-        CGContextSetLineWidth(context, 2.0);
+        //CGContextSetStrokeColorWithColor(context, UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.8).CGColor);
+        CGContextSetStrokeColorWithColor(context, arrowColor);
+        CGContextSetLineWidth(context, 1.0);
         
         for conn in connections {
             //CGPoint fromP = conn.from.center;
@@ -98,28 +102,49 @@ class KFConnectionLayer: CALayer {
             CGContextStrokePath(context);
             
             //Arrow
-            self.createArrow(context, from: fromP, to: toP);
+            self.createFillArrow(context, from: fromP, to: toP);
         }
     }
     
-    func createArrow(context:CGContextRef, from:CGPoint, to:CGPoint){
+    private func createArrow(context:CGContextRef, from:CGPoint, to:CGPoint){
         var baseDir = atan2(to.y - from.y, to.x - from.x);
         baseDir = baseDir + 3.141592 * 1;//逆向き
         
         let dir1 = baseDir + 0.5;
         let dir2 = baseDir - 0.5;
         
-        var newX = to.x + cos(dir1) * 13;
-        var newY = to.y + sin(dir1) * 13;
+        let aX = to.x + cos(dir1) * arrowSize;
+        let aY = to.y + sin(dir1) * arrowSize;
         CGContextMoveToPoint(context, to.x, to.y);
-        CGContextAddLineToPoint(context, newX, newY);
+        CGContextAddLineToPoint(context, aX, aY);
         CGContextStrokePath(context);
         
-        newX = to.x + cos(dir2) * 13;
-        newY = to.y + sin(dir2) * 13;
+        let bX = to.x + cos(dir2) * arrowSize;
+        let bY = to.y + sin(dir2) * arrowSize;
         CGContextMoveToPoint(context, to.x, to.y);
-        CGContextAddLineToPoint(context, newX, newY);
+        CGContextAddLineToPoint(context, bX, bY);
         CGContextStrokePath(context);
+    }
+    
+    private func createFillArrow(context:CGContextRef, from:CGPoint, to:CGPoint){
+        var baseDir = atan2(to.y - from.y, to.x - from.x);
+        baseDir = baseDir + 3.141592 * 1;//逆向き
+        
+        let dir1 = baseDir + 0.5;
+        let dir2 = baseDir - 0.5;
+        
+        CGContextSetFillColorWithColor(context, arrowColor);
+        
+        let aX = to.x + cos(dir1) * arrowSize;
+        let aY = to.y + sin(dir1) * arrowSize;
+        let bX = to.x + cos(dir2) * arrowSize;
+        let bY = to.y + sin(dir2) * arrowSize;
+        
+        CGContextBeginPath(context);
+        CGContextMoveToPoint(context, to.x, to.y);
+        CGContextAddLineToPoint(context, aX, aY);
+        CGContextAddLineToPoint(context, bX, bY);
+        CGContextFillPath(context);
     }
     
     func createChopBoxAnchor(fromView:KFPostRefView, toView:KFPostRefView) -> CGPoint{
