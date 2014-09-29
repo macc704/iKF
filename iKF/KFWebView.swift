@@ -33,10 +33,6 @@ class KFWebView: UIWebView {
     }
     
     class func clearPostInstances(){
-        //        if(postInstances == nil){
-        //            return;
-        //        }
-        //print(postInstances.count);
         for instance in postInstances{
             if(instance.value != nil){
                 instance.value!.close();
@@ -47,10 +43,6 @@ class KFWebView: UIWebView {
     
     class func clearAllInstances(){
         self.clearPostInstances();
-        
-        //        if(instances == nil){
-        //            return;
-        //        }
         for instance in instances{
             if(instance.value != nil){
                 instance.value!.close();
@@ -132,9 +124,9 @@ class KFWebView: UIWebView {
         let title = pasteboard.string;
         var pasteString:String;
         if (type == "contentreference"){
-            pasteString = "<kf-content-reference class=\"mceNonEditable\" postid=\"\(guid!)\">\(title!)</kf-content-reference>";
+            pasteString = KFNote.createReferenceContentTag(guid!, title: title!);
         }else{//assume postreference
-            pasteString = "<kf-post-reference class=\"mceNonEditable\" postid=\"\(guid!)\">\(title!)</kf-post-reference>";
+            pasteString = KFNote.createReferenceNoteTag(guid!, title: title!);
         }
         self.performPasteAsReference!(pasteString);
     }

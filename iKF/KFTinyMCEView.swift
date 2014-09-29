@@ -30,12 +30,7 @@ class KFTinyMCEView: KFWebView {
     }
     
     func insertSupport(support:KFSupport){
-        let uniqueId = String(Int(NSDate.date().timeIntervalSince1970));
-        let template = KFResource.loadScaffoldTagTemplate();
-        var insertString = template;
-        insertString = insertString.stringByReplacingOccurrencesOfString("%SUPPORTID%", withString: support.guid, options: nil, range: nil);
-        insertString = insertString.stringByReplacingOccurrencesOfString("%UNIQUEID%", withString: uniqueId, options: nil, range: nil);
-        insertString = insertString.stringByReplacingOccurrencesOfString("%TITLE%", withString: support.title, options: nil, range: nil);
+        var insertString = KFNote.createSupportTag(support);
         self.insertText(insertString);
     }
     

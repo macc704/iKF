@@ -157,7 +157,18 @@ class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
     }
     
     override func candrop(view:UIView) -> Bool{
-        return view is KFNoteRefView;
+        if(self.note != nil && view is KFNoteRefView){
+            if(self.note!.canEditMe()){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    override func dropped(view: UIView) {
+        let refNote = (view as KFNoteRefView).getModel().post! as KFNote;
+        self.note!.addReference(refNote);
+        self.note!.updateToServer();
     }
     
     var doubleTapHandler:(()->())?;

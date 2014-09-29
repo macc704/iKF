@@ -69,6 +69,45 @@ class KFNote: KFPost {
         return text;
     }
     
+    class func createReferenceNoteTag(guid:String, title:String) -> String{
+        return "<kf-post-reference class=\"mceNonEditable\" postid=\"\(guid)\">\(title)</kf-post-reference>";
+    }
+    
+    class func createReferenceContentTag(guid:String, title:String) -> String{
+        return "<kf-content-reference class=\"mceNonEditable\" postid=\"\(guid)\">\(title)</kf-content-reference>";
+    }
+    
+    class func createSupportTag(support:KFSupport) -> String{
+        let uniqueId = String(Int(NSDate.date().timeIntervalSince1970));
+        let template = KFResource.loadScaffoldTagTemplate();
+        var tagString = template;
+        tagString = tagString.stringByReplacingOccurrencesOfString("%SUPPORTID%", withString: support.guid, options: nil, range: nil);
+        tagString = tagString.stringByReplacingOccurrencesOfString("%UNIQUEID%", withString: uniqueId, options: nil, range: nil);
+        tagString = tagString.stringByReplacingOccurrencesOfString("%TITLE%", withString: support.title, options: nil, range: nil);
+        return tagString;
+    }
+    
+    //temporary implementation
+    func addReference(refNote:KFNote){        
+        let tag = "<ul><li>\(KFNote.createReferenceNoteTag(refNote.guid, title: refNote.title))</li></ul>";
+        self.content = self.content.stringByReplacingOccurrencesOfString("</body>", withString: "\(tag)</body>");
+        self.notify();
+    }
+    
+    func updateToServer(){
+        KFAppUtils.executeInBackThread({
+            let res = KFService.getInstance().updateNote(self);
+            if(res == false){
+                KFAppUtils.showDialog("Saving Failed", msg: "Would you like to save contents to clipboard?", okHandler:
+                    {(UIAlertAction) in
+                        let pasteboard = UIPasteboard.generalPasteboard();
+                        pasteboard.string = self.content;
+                        return;
+                });
+            }
+        });
+    }
+    
 }
 
 
