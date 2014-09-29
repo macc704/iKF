@@ -371,6 +371,10 @@ class KFCanvasViewController: UIViewController {
         self.canvasView.connectionLayer.requestRepaint();
     }
     
+    func findDropTargetWindow(view:UIView) -> KFDropTargetView?{
+        return self.canvasView.findDropTargetWindow(view);
+    }
+    
     func setCurrentView(view:KFView, push:Bool = true){
         if(self.currentView == view){
             return;//already the view

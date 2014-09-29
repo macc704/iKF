@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KFWebBrowserView: UIView, UIWebViewDelegate {
+class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
     
     //    override func hitTest(point: CGPoint, withEvent event: UIEvent!) -> UIView! {
     //        let hitView = super.hitTest(point, withEvent: event);
@@ -61,7 +61,7 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         mainController?.unlockSuppressScroll();
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required override init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -166,6 +166,10 @@ class KFWebBrowserView: UIView, UIWebViewDelegate {
         default:
             break;
         }
+    }
+    
+    override func candrop(view:UIView) -> Bool{
+        return view is KFNoteRefView;
     }
     
     var doubleTapHandler:(()->())?;

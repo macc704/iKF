@@ -147,9 +147,13 @@ class KFPostRefView: UIView {
         mainController.unlockSuppressScroll();
     }
     
+    private var originalPosition:CGPoint?;
+    private var dropTarget:KFDropTargetView?
+    
     func handlePanning(recognizer: UIPanGestureRecognizer){
         switch(recognizer.state){
         case .Began:
+            self.originalPosition = self.frame.origin;
             self.superview!.bringSubviewToFront(self);
             self.makeShadow();
             break;
@@ -158,15 +162,40 @@ class KFPostRefView: UIView {
             let movePoint = CGPointMake(self.center.x+location.x, self.center.y+location.y);
             self.center = movePoint;
             recognizer.setTranslation(CGPointZero, inView:self);
+            self.droptargetManagement();
             break;
         case .Ended:
-            mainController.requestConnectionsRepaint();
-            mainController.postLocationChanged(self);
+            if(dropTarget == nil){
+                mainController.requestConnectionsRepaint();
+                mainController.postLocationChanged(self);
+            }else{
+                dropTarget!.leaveDroppable(self);
+                dropTarget!.dropped(self);
+                dropTarget = nil;
+                UIView.animateWithDuration(0.25, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                    self.frame.origin = self.originalPosition!;
+                    }, completion: nil);
+            }
             self.removeShadow();
             break;
         default:
             break;
         }
+    }
+    
+    private func droptargetManagement(){
+        let newdropTarget = self.mainController.findDropTargetWindow(self);
+        if(dropTarget == nil && newdropTarget != nil){
+            newdropTarget!.enterDroppable(self);
+        }
+        else if(dropTarget != nil && newdropTarget != nil && dropTarget != newdropTarget){
+            dropTarget!.leaveDroppable(self);
+            newdropTarget!.enterDroppable(self);
+        }
+        else if(dropTarget != nil && newdropTarget == nil){
+            dropTarget!.leaveDroppable(self);
+        }
+        dropTarget = newdropTarget;
     }
     
     private var savedBackgroundColor:UIColor?;
@@ -222,10 +251,10 @@ class KFPostRefView: UIView {
         self.frame = CGRectMake(getModel().location.x, getModel().location.y, r.size.width, r.size.height);
     }
     
-//    func getChopbox() -> CGSize{
-//        return self.frame.size;
-//    }
-       
+    //    func getChopbox() -> CGSize{
+    //        return self.frame.size;
+    //    }
+    
     func getReference() -> CGRect{
         return self.frame;
     }

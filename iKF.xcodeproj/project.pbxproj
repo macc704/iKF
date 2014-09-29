@@ -19,6 +19,7 @@
 		491D3E0819C1484100B4BE56 /* KFStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D3E0719C1484100B4BE56 /* KFStack.swift */; };
 		49245907198A952A00242188 /* KFConnectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49245906198A952A00242188 /* KFConnectionViewModel.swift */; };
 		4924590B198A9BDF00242188 /* KFHaloLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924590A198A9BDF00242188 /* KFHaloLocator.swift */; };
+		4928F7DF19D5FD3400921E92 /* KFDropTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4928F7DE19D5FD3400921E92 /* KFDropTargetView.swift */; };
 		492C1024194755FE00512591 /* KFScaffoldingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C1022194755FE00512591 /* KFScaffoldingTableViewController.swift */; };
 		492C1025194755FE00512591 /* KFScaffoldingTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 492C1023194755FE00512591 /* KFScaffoldingTableViewController.xib */; };
 		492C10271947562800512591 /* KFScaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C10261947562800512591 /* KFScaffold.swift */; };
@@ -145,6 +146,7 @@
 		491D3E0719C1484100B4BE56 /* KFStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFStack.swift; sourceTree = "<group>"; };
 		49245906198A952A00242188 /* KFConnectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFConnectionViewModel.swift; sourceTree = "<group>"; };
 		4924590A198A9BDF00242188 /* KFHaloLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFHaloLocator.swift; sourceTree = "<group>"; };
+		4928F7DE19D5FD3400921E92 /* KFDropTargetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFDropTargetView.swift; sourceTree = "<group>"; };
 		492C1022194755FE00512591 /* KFScaffoldingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFScaffoldingTableViewController.swift; sourceTree = "<group>"; };
 		492C1023194755FE00512591 /* KFScaffoldingTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFScaffoldingTableViewController.xib; sourceTree = "<group>"; };
 		492C10261947562800512591 /* KFScaffold.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFScaffold.swift; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 				499DE6E61989770700BA2209 /* KFLoadingView.swift */,
 				4984496E198E735900D80327 /* KFPopoverManager.swift */,
 				491AD84319B668D000B92386 /* KFLayerView.swift */,
+				4928F7DE19D5FD3400921E92 /* KFDropTargetView.swift */,
 				496074FD1992613F00131111 /* KFWebView.swift */,
 				495A155D198BC6770056EE50 /* KFWebBrowserView.swift */,
 				4991C32C19BA9CC000677B9A /* KFMobileCometManager.swift */,
@@ -756,6 +759,7 @@
 				4904812319B762A500126571 /* KFAbstractNoteEditView.swift in Sources */,
 				4991C33219BBF90E00677B9A /* KFJSONScanner.swift in Sources */,
 				496074FE1992613F00131111 /* KFWebView.swift in Sources */,
+				4928F7DF19D5FD3400921E92 /* KFDropTargetView.swift in Sources */,
 				492C10271947562800512591 /* KFScaffold.swift in Sources */,
 				49C4004B19C7850D002ED98D /* KFAttachment.swift in Sources */,
 				497C26E9198889D7007CCEED /* KFImagePicker.swift in Sources */,

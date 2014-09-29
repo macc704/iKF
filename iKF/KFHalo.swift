@@ -101,8 +101,6 @@ class KFHalo: UIView {
             
             let pinchGesture = UIPinchGestureRecognizer(target: self, action: "handleGestureResize:");
             self.addGestureRecognizer(pinchGesture);
-            
-            
         }
         
         if(target is KFNoteRefView){
@@ -512,6 +510,7 @@ class KFHalo: UIView {
         case .Began:
             break;
         case .Changed:
+            //move halo
             let location = recognizer.translationInView(self);
             let movePoint = CGPoint(x:self.center.x+location.x, y:self.center.y+location.y);
             self.center = movePoint;

@@ -84,6 +84,10 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
             subview.removeFromSuperview();
         }
     }
+    
+    func findDropTargetWindow(view:UIView) -> KFDropTargetView?{
+        return windowsLayer.findDropTarget(view);
+    }
 
     /* halo management */
     

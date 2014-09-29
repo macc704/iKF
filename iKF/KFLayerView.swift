@@ -20,4 +20,19 @@ class KFLayerView: UIView {
         }
         return hitView;
     }
+    
+    func findDropTarget(view:UIView) -> KFDropTargetView?{
+        for subview in self.subviews{
+            if(subview is KFDropTargetView){
+                let dropTarget = subview as KFDropTargetView;
+                if(dropTarget.candrop(view)){
+                    let viewFrame = view.convertRect(view.bounds, toView: self);
+                    if(dropTarget.frame.intersects(viewFrame)){
+                        return dropTarget;
+                    }
+                }
+            }
+        }
+        return nil;
+    }
 }
