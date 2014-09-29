@@ -18,14 +18,14 @@ class KFNoteEditViewController: UIViewController {
     }
     
     init(view: KFNoteEditViewByTinyMCE){
-        super.init(nibName: nil, bundle: nil);        
+        super.init(nibName: nil, bundle: nil);
         self.editView = view;
     }
     
     override func loadView() {
         super.loadView();
         self.view = self.editView;
-    }    
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
@@ -45,11 +45,21 @@ class KFNoteEditViewController: UIViewController {
         self.note!.title = editView.getTitle()!;
         self.note!.content = editView.getText()!;
         KFAppUtils.executeInBackThread({
-            KFService.getInstance().updateNote(self.note!);
+            let res = KFService.getInstance().updateNote(self.note!);
+            if(res == false){
+                KFAppUtils.executeInGUIThread({
+                    KFAppUtils.showDialog("Saving Failed", msg: "Would you like to save contents to clipboard?", okHandler: {(UIAlertAction) in
+                        let pasteboard = UIPasteboard.generalPasteboard();
+                        pasteboard.string = self.note!.content;
+                        return;
+                    });
+                    return;
+                });
+            }
             return;
         });
         self.note!.notify();
     }
-
+    
     
 }

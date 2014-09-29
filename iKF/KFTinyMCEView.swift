@@ -22,6 +22,9 @@ class KFTinyMCEView: KFWebView {
         self.performPasteAsReference = {(text:String)->() in
             self.insertText(text);
         };
+        self.performPasteAsHtml = {(text:String)->() in
+            self.insertText(text);
+        };
         self.scrollView.scrollEnabled = true;
         self.scrollView.bounces = false;
     }

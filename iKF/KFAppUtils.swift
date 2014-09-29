@@ -34,6 +34,21 @@ class KFAppUtils: NSObject {
         alertView.show();
     }
     
+    class func topController() -> UIViewController{
+        var controller:UIViewController! = UIApplication.sharedApplication().keyWindow.rootViewController!;
+        while ((controller.presentedViewController) != nil){
+            controller = controller.presentedViewController!;
+        }
+        return controller;
+    }
+    
+    class func showDialog(title:String, msg:String, okHandler:((UIAlertAction!)->())?){
+        var alert:UIAlertController = UIAlertController(title: title, message: msg, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil));
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: okHandler));
+        topController().presentViewController(alert, animated: false, completion: nil);
+    }
+    
     class func executeInGUIThread(execute:()->()){
         dispatch_async(dispatch_get_main_queue()){
             execute();
