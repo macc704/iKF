@@ -12,6 +12,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     
     private let scrollView = UIScrollView();
     private let layerContainerView = UIView();
+    let draggingLayer = KFLayerView();
     let windowsLayer = KFLayerView();
     let noteLayer = KFLayerView();
     let connectionLayer = KFConnectionLayer();
@@ -43,6 +44,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         self.noteLayer.layer.addSublayer(connectionLayer);
         layerContainerView.addSubview(self.noteLayer);
         layerContainerView.addSubview(self.windowsLayer);
+        layerContainerView.addSubview(self.draggingLayer);
         
         //halo disappear
         let singleRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:");
@@ -61,12 +63,31 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
         self.scrollView.frame.size = size;
     }
     
+    func putToDraggingLayer(view:KFPostRefView){
+        if(view.superview == noteLayer){
+            //view.removeFromSuperview();
+            draggingLayer.addSubview(view);
+        }
+    }
+    
+    func pullBackFromDraggingLayer(view:KFPostRefView){
+        if(view.superview == draggingLayer){
+            view.removeFromSuperview();
+            if(view is KFDrawingRefView){
+                drawingLayer.addSubview(view);
+            }else{
+                noteLayer.addSubview(view);
+            }
+        }
+    }
+    
     func setCanvasSize(width:CGFloat, height:CGFloat){
         layerContainerView.frame = CGRectMake(0, 0, width, height);
         drawingLayer.frame = layerContainerView.frame;
         connectionLayer.frame = layerContainerView.frame;
         noteLayer.frame = layerContainerView.frame;
         windowsLayer.frame = layerContainerView.frame;
+        draggingLayer.frame = layerContainerView.frame;
         
         scrollView.contentSize = layerContainerView.frame.size;
         scrollView.maximumZoomScale = 4.0;
@@ -88,7 +109,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     func findDropTargetWindow(view:UIView) -> KFDropTargetView?{
         return windowsLayer.findDropTarget(view);
     }
-
+    
     /* halo management */
     
     func handleDoubleTap(recognizer: UIGestureRecognizer){
@@ -105,7 +126,7 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     }
     
     func showHalo(newHalo:KFHalo){
-        self.hideHalo();        
+        self.hideHalo();
         self.halo = newHalo;
         self.halo!.showWithAnimation(self.layerContainerView);
     }

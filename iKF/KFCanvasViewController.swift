@@ -592,6 +592,14 @@ class KFCanvasViewController: UIViewController {
         KFPopoverManager.getInstance().openInPopover(popOverLoc, controller: pickerController);
     }
     
+    func putToDraggingLayer(view:KFPostRefView){
+        self.canvasView.putToDraggingLayer(view);
+    }
+    
+    func pullBackFromDraggingLayer(view:KFPostRefView){
+        self.canvasView.pullBackFromDraggingLayer(view);
+    }
+    
     
     /* event handlers */
     

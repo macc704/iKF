@@ -155,6 +155,7 @@ class KFPostRefView: UIView {
         case .Began:
             self.originalPosition = self.frame.origin;
             self.superview!.bringSubviewToFront(self);
+            mainController.putToDraggingLayer(self);
             self.makeShadow();
             break;
         case .Changed:
@@ -168,13 +169,14 @@ class KFPostRefView: UIView {
             if(dropTarget == nil){
                 mainController.requestConnectionsRepaint();
                 mainController.postLocationChanged(self);
+                mainController.pullBackFromDraggingLayer(self);
             }else{
                 dropTarget!.leaveDroppable(self);
                 dropTarget!.dropped(self);
                 dropTarget = nil;
                 UIView.animateWithDuration(0.25, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                     self.frame.origin = self.originalPosition!;
-                    }, completion: nil);
+                    }, completion: {(Bool) in self.mainController.pullBackFromDraggingLayer(self);return;});
             }
             self.removeShadow();
             break;
