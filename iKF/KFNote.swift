@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Yoshiaki Matsuzawa. All rights reserved.
 //
 
+import UIKit
+
 var idCounter = 0;
 
 class KFNote: KFPost {

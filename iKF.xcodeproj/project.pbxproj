@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4903CD8E1942159D00C698AD /* iKFErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4903CD8D1942159D00C698AD /* iKFErrorHandler.m */; };
 		4904812319B762A500126571 /* KFAbstractNoteEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4904812219B762A500126571 /* KFAbstractNoteEditView.swift */; };
 		4904812519B763FB00126571 /* KFAbstractNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4904812419B763FB00126571 /* KFAbstractNoteView.swift */; };
 		490E75E019411653004E8BF7 /* KFLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490E75DE19411653004E8BF7 /* KFLoginViewController.swift */; };
@@ -132,8 +131,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4903CD8C1942159D00C698AD /* iKFErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKFErrorHandler.h; sourceTree = "<group>"; };
-		4903CD8D1942159D00C698AD /* iKFErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iKFErrorHandler.m; sourceTree = "<group>"; };
 		4904812219B762A500126571 /* KFAbstractNoteEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFAbstractNoteEditView.swift; sourceTree = "<group>"; };
 		4904812419B763FB00126571 /* KFAbstractNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KFAbstractNoteView.swift; path = ObjC/KFAbstractNoteView.swift; sourceTree = "<group>"; };
 		490E756E1941116A004E8BF7 /* iKF-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iKF-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -274,8 +271,6 @@
 		490E7572194111A8004E8BF7 /* ObjC */ = {
 			isa = PBXGroup;
 			children = (
-				4903CD8C1942159D00C698AD /* iKFErrorHandler.h */,
-				4903CD8D1942159D00C698AD /* iKFErrorHandler.m */,
 				49DD55F119B4DF450094AE87 /* iKFUtil.h */,
 				49DD55F219B4DF450094AE87 /* iKFUtil.m */,
 			);
@@ -700,7 +695,6 @@
 			files = (
 				499DE6EA1989893400BA2209 /* KFViewSelectionController.swift in Sources */,
 				49DD55F319B4DF450094AE87 /* iKFUtil.m in Sources */,
-				4903CD8E1942159D00C698AD /* iKFErrorHandler.m in Sources */,
 				49C78D5F194105C2004D3404 /* ViewController.swift in Sources */,
 				49C5590B1945EF1700FDFF32 /* KFDrawing.swift in Sources */,
 				490E75E019411653004E8BF7 /* KFLoginViewController.swift in Sources */,

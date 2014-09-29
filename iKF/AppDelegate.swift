@@ -30,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
         appInstance = self;
-        iKFErrorHandler.hookErrorHandler(application);
         
         let nav = UINavigationController();
         nav.setNavigationBarHidden(true, animated: false);
