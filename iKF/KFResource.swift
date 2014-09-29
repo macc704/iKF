@@ -37,15 +37,6 @@ class KFResource: NSObject {
         return NSBundle.mainBundle().bundleURL.URLByAppendingPathComponent("WebResources");
     }
     
-    class func encodingForJS(text:String) -> String{
-        var insertString = text;
-        insertString = insertString.stringByReplacingOccurrencesOfString("\\", withString: "\\\\");//order important
-        insertString = insertString.stringByReplacingOccurrencesOfString("\r", withString: "");
-        insertString = insertString.stringByReplacingOccurrencesOfString("\n", withString: "");
-        insertString = insertString.stringByReplacingOccurrencesOfString("'", withString: "\\'");
-        return insertString;
-    }
-    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

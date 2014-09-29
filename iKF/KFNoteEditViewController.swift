@@ -10,14 +10,14 @@ import UIKit
 
 class KFNoteEditViewController: UIViewController {
     
-    var editView:KFAbstractNoteEditView!;
+    var editView:KFNoteEditViewByTinyMCE!;
     var note:KFNote?;
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    init(view: KFAbstractNoteEditView){
+    init(view: KFNoteEditViewByTinyMCE){
         super.init(nibName: nil, bundle: nil);        
         self.editView = view;
     }

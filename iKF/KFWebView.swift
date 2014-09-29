@@ -66,12 +66,16 @@ class KFWebView: UIWebView {
         super.init(coder: aDecoder)
     }
     
-    private override init(){
+    override init(){
         super.init(frame: KFAppUtils.DEFAULT_RECT());
         //TODO to global
         let menuItem = UIMenuItem(title: "Paste As Reference", action: Selector("onPasteAsReference:"));
         UIMenuController.sharedMenuController().menuItems = [menuItem];
     }
+    
+    /*****************************
+    * Utilities
+    ******************************/
     
     func close(){
         self.setURL("about:blank");
@@ -81,6 +85,20 @@ class KFWebView: UIWebView {
         let url = NSURL(string: url);
         let req = NSURLRequest(URL: url);
         self.loadRequest(req);
+    }
+    
+    class func encodingForJS(text:String) -> String{
+        var encoded = text;
+        //order important
+        encoded = encoded.stringByReplacingOccurrencesOfString("\\", withString: "\\\\");
+        encoded = encoded.stringByReplacingOccurrencesOfString("\r", withString: "");
+        encoded = encoded.stringByReplacingOccurrencesOfString("\n", withString: "");
+        encoded = encoded.stringByReplacingOccurrencesOfString("'", withString: "\\'");
+        return encoded;
+    }
+    
+    func evalJavascript(js:String) -> String?{
+        return self.stringByEvaluatingJavaScriptFromString(js);
     }
     
     /*****************************
@@ -152,14 +170,6 @@ class KFWebView: UIWebView {
         newdic[key] = value;
         pasteboard.items[0] = newdic;
     }
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect)
-    {
-    // Drawing code
-    }
-    */
+
     
 }

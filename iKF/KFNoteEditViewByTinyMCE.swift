@@ -8,13 +8,16 @@
 
 import UIKit
 
-class KFNoteEditViewByTinyMCE: KFAbstractNoteEditView, UIWebViewDelegate {
+class KFNoteEditViewByTinyMCE: KFAbstractNoteView {
+
+    var scaffoldButton:UIBarButtonItem!;
+    var viewId:String!;
     
     var containerView:UIView!;
     var titleLabel:UILabel!;
     var titleView:UITextField!;
     var sourceLabel:UILabel!;
-    var webView:KFWebView!;
+    var webView:KFTinyMCEView!;
     
     private var cachedTitle:String?;
     
@@ -26,6 +29,10 @@ class KFNoteEditViewByTinyMCE: KFAbstractNoteEditView, UIWebViewDelegate {
     
     override init(){
         super.init();
+        
+        // Initialization code
+        self.scaffoldButton = UIBarButtonItem(title: "Scaffold", style: UIBarButtonItemStyle.Bordered, target: self, action: "scaffoldPressed");
+        self.navBarItem!.rightBarButtonItem = self.scaffoldButton;
 
         // container
         containerView = UIView();
@@ -50,72 +57,46 @@ class KFNoteEditViewByTinyMCE: KFAbstractNoteEditView, UIWebViewDelegate {
         sourceLabel.font = UIFont.systemFontOfSize(24);
         containerView.addSubview(sourceLabel);
         
-        webView = KFWebView.create();
-        webView.delegate = self;
-        webView.performPasteAsReference = {(text:String)->() in
-            self.insertText(text);
-        };
+        webView = KFTinyMCEView();
         webView.scrollView.scrollEnabled = true;
         webView.scrollView.bounces = false;
-        //webView.layer.borderColor = UIColor.blackColor().CGColor;
-        //webView.layer.borderWidth = 1.0;
         containerView.addSubview(webView);
     }
     
-    private func pasteAsReference(text:String){
-        self.insertText(text);
+    func scaffoldPressed(){
+        if(self.viewId == nil){
+            return;
+        }
+        let controller = KFScaffoldingTableViewController(nibName: nil, bundle: nil);
+        controller.selectedHandler = {(support:KFSupport) in
+            self.webView.insertSupport(support);
+        }
+        controller.scaffolds = KFService.getInstance().getScaffolds(self.viewId);
+        KFPopoverManager.getInstance().openInPopoverFromBarButton(scaffoldButton, controller: controller);
     }
     
-    override func insertText(text:String) {
-        let insertString = KFResource.encodingForJS(text);
-        webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.insertContent('\(insertString)')");
-    }
-    
-    override func setText(text:String, title:String) {
+    func setText(text:String, title:String) {
         self.setNavBarTitle("Edit");
         self.cachedTitle = title;
         titleView.text = title;
         
-        let setString = KFResource.encodingForJS(text);
-        if(self.isInitialized()){
-            webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.setContent('\(setString)')");
-            webView.stringByEvaluatingJavaScriptFromString(getSetHeightJS());
-            return;
-        }
-        
-        //else not initialized
-        webView.stringByEvaluatingJavaScriptFromString("window.onload = function(){tinymce.activeEditor.setContent('\(setString)');\(getSetHeightJS())}");
-        
-        let path = NSBundle.mainBundle().pathForResource("edit", ofType: "html", inDirectory: "WebResources");
-        let req = NSURLRequest(URL: NSURL(string: path!));
-        webView.loadRequest(req);
+        webView.setText(text);
     }
     
-    func webView(webView: UIWebView!, shouldStartLoadWithRequest request: NSURLRequest!, navigationType: UIWebViewNavigationType) -> Bool {
-        //        NSLog(@"shoud start? = %@", [request URL]);
-        return true;
+    func getText() -> String?{
+        return webView.getText();
     }
     
-    func webViewDidStartLoad(webView: UIWebView!) {
-    }
-    
-    func webViewDidFinishLoad(webView: UIWebView!) {
-    }
-    
-    func isInitialized()->Bool{
-        let res = webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.isDirty();");
-        if(res == nil || res!.isEmpty){
-            return false;
-        }
-        return true;
-    }
-    
-    override func getText() -> String?{
-        return webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.getContent();");
-    }
-    
-    override func getTitle() -> String?{
+    func getTitle() -> String?{
         return titleView.text;
+    }
+    
+    func isDirty() -> Bool{
+        return isTitleDirty() || webView.isDirty();
+    }
+    
+    private func isTitleDirty() -> Bool {
+        return cachedTitle != nil && cachedTitle! != titleView.text;
     }
     
     override func layoutContentWithRect(rect: CGRect) {
@@ -139,36 +120,11 @@ class KFNoteEditViewByTinyMCE: KFAbstractNoteEditView, UIWebViewDelegate {
         if(portrait){
             y=y+40;
             webView.frame = CGRectMake(x, y, fullWidth, 520);
-            if(isInitialized()){
-                webView.stringByEvaluatingJavaScriptFromString(getSetHeightJS());
-            }
+            webView.refreshAreaHeight(400);
         }else{//landscape
             webView.frame = CGRectMake(x+100, y, fullWidth-100, 220);
-            if(isInitialized()){
-                webView.stringByEvaluatingJavaScriptFromString(getSetHeightJS());
-            }
+            webView.refreshAreaHeight(100);
         }
     }
-    
-    private func getSetHeightJS() -> String{
-        if(portrait){
-            return "document.getElementById('mcearea1').style.height='400px';";
-        }else{//landscape
-            return "document.getElementById('mcearea1').style.height='110px';";
-        }
-    }
-    
-    override func isDirty() -> Bool{
-        return isTitleDirty() || isTextDirty();
-    }
-    
-    private func isTitleDirty() -> Bool {
-        return cachedTitle != nil && cachedTitle! != titleView.text;
-    }
-    
-    private func isTextDirty() -> Bool{
-        let res = webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.isDirty();");
-        return res == "true";
-    }
-    
+
 }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4904812319B762A500126571 /* KFAbstractNoteEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4904812219B762A500126571 /* KFAbstractNoteEditView.swift */; };
 		4904812519B763FB00126571 /* KFAbstractNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4904812419B763FB00126571 /* KFAbstractNoteView.swift */; };
 		490E75E019411653004E8BF7 /* KFLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490E75DE19411653004E8BF7 /* KFLoginViewController.swift */; };
 		490E75E119411653004E8BF7 /* KFLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 490E75DF19411653004E8BF7 /* KFLoginViewController.xib */; };
@@ -19,6 +18,7 @@
 		49245907198A952A00242188 /* KFConnectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49245906198A952A00242188 /* KFConnectionViewModel.swift */; };
 		4924590B198A9BDF00242188 /* KFHaloLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4924590A198A9BDF00242188 /* KFHaloLocator.swift */; };
 		4928F7DF19D5FD3400921E92 /* KFDropTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4928F7DE19D5FD3400921E92 /* KFDropTargetView.swift */; };
+		4928F7E119D9D45900921E92 /* KFTinyMCEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4928F7E019D9D45900921E92 /* KFTinyMCEView.swift */; };
 		492C1024194755FE00512591 /* KFScaffoldingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C1022194755FE00512591 /* KFScaffoldingTableViewController.swift */; };
 		492C1025194755FE00512591 /* KFScaffoldingTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 492C1023194755FE00512591 /* KFScaffoldingTableViewController.xib */; };
 		492C10271947562800512591 /* KFScaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C10261947562800512591 /* KFScaffold.swift */; };
@@ -131,7 +131,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4904812219B762A500126571 /* KFAbstractNoteEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFAbstractNoteEditView.swift; sourceTree = "<group>"; };
 		4904812419B763FB00126571 /* KFAbstractNoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KFAbstractNoteView.swift; path = ObjC/KFAbstractNoteView.swift; sourceTree = "<group>"; };
 		490E756E1941116A004E8BF7 /* iKF-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iKF-Bridging-Header.h"; sourceTree = "<group>"; };
 		490E75DE19411653004E8BF7 /* KFLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFLoginViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +143,7 @@
 		49245906198A952A00242188 /* KFConnectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFConnectionViewModel.swift; sourceTree = "<group>"; };
 		4924590A198A9BDF00242188 /* KFHaloLocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFHaloLocator.swift; sourceTree = "<group>"; };
 		4928F7DE19D5FD3400921E92 /* KFDropTargetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFDropTargetView.swift; sourceTree = "<group>"; };
+		4928F7E019D9D45900921E92 /* KFTinyMCEView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFTinyMCEView.swift; sourceTree = "<group>"; };
 		492C1022194755FE00512591 /* KFScaffoldingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFScaffoldingTableViewController.swift; sourceTree = "<group>"; };
 		492C1023194755FE00512591 /* KFScaffoldingTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFScaffoldingTableViewController.xib; sourceTree = "<group>"; };
 		492C10261947562800512591 /* KFScaffold.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFScaffold.swift; sourceTree = "<group>"; };
@@ -341,8 +341,8 @@
 				4997F4FC19BE04290038E290 /* KFNoteEditViewController.swift */,
 				4904812419B763FB00126571 /* KFAbstractNoteView.swift */,
 				494D214D19B76EB200189EE6 /* KFNoteReadView.swift */,
-				4904812219B762A500126571 /* KFAbstractNoteEditView.swift */,
 				491AD84519B66B6700B92386 /* KFNoteEditViewByTinyMCE.swift */,
+				4928F7E019D9D45900921E92 /* KFTinyMCEView.swift */,
 			);
 			name = NoteUI;
 			sourceTree = "<group>";
@@ -728,6 +728,7 @@
 				491AD84619B66B6700B92386 /* KFNoteEditViewByTinyMCE.swift in Sources */,
 				49842F7819805AFC0012900B /* KFHttpConnection.swift in Sources */,
 				495A155E198BC6770056EE50 /* KFWebBrowserView.swift in Sources */,
+				4928F7E119D9D45900921E92 /* KFTinyMCEView.swift in Sources */,
 				4924590B198A9BDF00242188 /* KFHaloLocator.swift in Sources */,
 				491D3E0819C1484100B4BE56 /* KFStack.swift in Sources */,
 				4997F4FD19BE04290038E290 /* KFNoteEditViewController.swift in Sources */,
@@ -750,7 +751,6 @@
 				496075001992759F00131111 /* KFResource.swift in Sources */,
 				491AD84419B668D000B92386 /* KFLayerView.swift in Sources */,
 				49C78D5A194105C2004D3404 /* AppDelegate.swift in Sources */,
-				4904812319B762A500126571 /* KFAbstractNoteEditView.swift in Sources */,
 				4991C33219BBF90E00677B9A /* KFJSONScanner.swift in Sources */,
 				496074FE1992613F00131111 /* KFWebView.swift in Sources */,
 				4928F7DF19D5FD3400921E92 /* KFDropTargetView.swift in Sources */,
