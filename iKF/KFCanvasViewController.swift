@@ -471,10 +471,17 @@ class KFCanvasViewController: UIViewController {
         if(view != nil){
             let refview = view! as KFPostRefView;
             openPostViewer0(refview.getModel().post!, frame: frame, refView:refview);
-        }else{
-            KFAppUtils.showAlert("not implemented", msg: "ref to post not found in this view guid=\(guid)");
-            //not implemented
+            return;
         }
+
+        //temporary solution
+        let post = KFService.getInstance().getPost(guid);
+        if(post != nil){
+            openPostViewer0(post!, frame: frame, refView:nil);
+            return;
+        }
+        
+        KFAppUtils.showAlert("not implemented", msg: "ref to post not found in this view guid=\(guid)");
     }
     
     func openPost(postRefView:KFPostRefView){
