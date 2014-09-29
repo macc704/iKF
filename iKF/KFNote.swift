@@ -69,6 +69,10 @@ class KFNote: KFPost {
         return text;
     }
     
+    class func createInitialContent() -> String{
+        return "<html><body></body></html>";
+    }
+    
     class func createReferenceNoteTag(guid:String, title:String) -> String{
         return "<kf-post-reference class=\"mceNonEditable\" postid=\"\(guid)\">\(title)</kf-post-reference>";
     }
@@ -88,7 +92,10 @@ class KFNote: KFPost {
     }
     
     //temporary implementation
-    func addReference(refNote:KFNote){        
+    func addReference(refNote:KFNote){
+        if(self.content.isEmpty){
+            self.content = KFNote.createInitialContent();
+        }
         let tag = "<ul><li>\(KFNote.createReferenceNoteTag(refNote.guid, title: refNote.title))</li></ul>";
         self.content = self.content.stringByReplacingOccurrencesOfString("</body>", withString: "\(tag)</body>");
         self.notify();
