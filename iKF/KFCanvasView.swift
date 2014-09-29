@@ -65,7 +65,6 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     
     func putToDraggingLayer(view:KFPostRefView){
         if(view.superview == noteLayer){
-            //view.removeFromSuperview();
             draggingLayer.addSubview(view);
         }
     }
@@ -159,22 +158,5 @@ class KFCanvasView: UIView, UIScrollViewDelegate{
     func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView! {
         return layerContainerView;
     }
-    
-    //    func scrollViewDidZoom(scrollView: UIScrollView!) {
-    //        if(scrollView.zoomScale > 1.0){
-    //            scrollView.canCancelContentTouches = false;
-    //        }else{
-    //            scrollView.canCancelContentTouches = true;
-    //        }
-    //    }
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect)
-    {
-    // Drawing code
-    }
-    */
     
 }

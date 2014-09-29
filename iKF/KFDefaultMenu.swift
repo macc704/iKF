@@ -9,6 +9,7 @@
 import UIKit
 
 class KFDefaultMenu: NSObject, KFMenu {
+    
     var name:String = "default";
     var checked:Bool = false;
     var exec:(()->()) = {};

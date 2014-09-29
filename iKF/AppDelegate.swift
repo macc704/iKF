@@ -9,14 +9,9 @@
 import UIKit
 import CoreData
 
-private var appInstance:AppDelegate?;
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    class func getInstance() -> AppDelegate{
-        return appInstance!;
-    }
     
     var window: UIWindow?
     
@@ -29,13 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
-        appInstance = self;
         
         let nav = UINavigationController();
         nav.setNavigationBarHidden(true, animated: false);
         window!.rootViewController = nav;
         let loginController = KFLoginViewController(nibName: "KFLoginViewController", bundle: nil);
-        AppDelegate.getInstance().getRootNavigationViewController().pushViewController(loginController, animated: false);
+        self.getRootNavigationViewController().pushViewController(loginController, animated: false);
         return true;
     }
 
@@ -140,6 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return _persistentStoreCoordinator!
     }
+    
     var _persistentStoreCoordinator: NSPersistentStoreCoordinator? = nil
 
     // #pragma mark - Application's Documents directory

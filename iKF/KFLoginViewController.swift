@@ -10,8 +10,6 @@ import UIKit
 
 class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate {
     
-//    var INPUT = "(input textfield)";
-    
     var servers = ["kf.utoronto.ca:8080", "rooibos.cs.inf.shizuoka.ac.jp", "132.203.154.41:8080", "kforum.glm.edu.co:8080", "localhost:8080", "(input textfield)"];
     
     @IBOutlet var passwordField : UITextField!
@@ -22,7 +20,6 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var labelVersion: UILabel!
     @IBOutlet weak var labelBuild: UILabel!
     @IBOutlet weak var labelBuildDate: UILabel!
-    //    var nav:UINavigationController!;
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -42,14 +39,11 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         let date = iKFUtil.getBuildDate() + " " + iKFUtil.getBuildTime();
         labelBuildDate.text = date;
         
-        ////nav = UINavigationController(rootViewController: self);
-        //self.navigationController = UINavigationController(rootViewController: self);
-        
         serverPicker.dataSource = self;
         serverPicker.delegate = self;
         
         let userDefaults = NSUserDefaults.standardUserDefaults();
-         let username = userDefaults.stringForKey("username");
+        let username = userDefaults.stringForKey("username");
         let password = userDefaults.stringForKey("password");
         self.usernameField.text = username;
         self.passwordField.text = password;
@@ -88,25 +82,19 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     @IBAction func loginButtonPressed(sender : AnyObject) {
-        //        let queue = dispatch_queue_create("sub_queue", 0);
         var res:(result: Bool, errorMsg: String?)?;
         
-        func execute(){
+        KFAppUtils.asyncExecWithLoadingView(self.view, execute: {
             res = self.login();
-        }
-        
-        func onFinish(){
-            if(res!.result == true){
-                let c = KFRegistrationViewController(nibName: "KFRegistrationViewController", bundle: nil);
-                c.host = getHost();
-                //self.presentViewController(registrationViewController, animated: true, completion: nil);
-                self.navigationController!.pushViewController(c, animated: true);
-            }else{
-                KFAppUtils.showAlert("ConnectionError", msg: res!.errorMsg!);
-            }
-        }
-        
-        KFAppUtils.asyncExecWithLoadingView(self.view, execute: execute, onFinish: onFinish);
+            }, onFinish: {
+                if(res!.result == true){
+                    let c = KFRegistrationViewController(nibName: "KFRegistrationViewController", bundle: nil);
+                    c.host = self.getHost();
+                    self.navigationController!.pushViewController(c, animated: true);
+                }else{
+                    KFAppUtils.showAlert("ConnectionError", msg: res!.errorMsg!);
+                }
+        });
     }
     
     private func getHost() -> String{
@@ -129,7 +117,7 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         serverNameField.text = host;
     }
     
-    func login() -> (result: Bool, errorMsg: String?) {        
+    func login() -> (result: Bool, errorMsg: String?) {
         var service = KFService.getInstance();
         let host = getHost();
         service.initialize(host);
@@ -161,9 +149,6 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         return (true, nil);
     }
     
-    //    func alertView(alertView: UIAlertView!, clickedButtonAtIndex buttonIndex: Int){
-    //    }
-    
     /* data source */
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
@@ -189,16 +174,6 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
-    
-    /*
-    // #pragma mark - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    }
-    */
     
 }
 

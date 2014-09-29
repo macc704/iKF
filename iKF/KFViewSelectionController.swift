@@ -33,18 +33,11 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
         self.tableView.dataSource = self;
         
         self.preferredContentSize = self.view.frame.size;
-//        let a = NSIndexPath(index: 0);
-//        tableView.selectRowAtIndexPath(a, animated: false, scrollPosition: UITableViewScrollPosition.Middle);
         navigationBar.topItem!.title = barTitle;
     }
     
     func setBarTitle(title:String){
         self.barTitle = title;
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // #pragma mark - Table view data source
@@ -73,15 +66,5 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
             self.dismissViewControllerAnimated(false, completion: nil);
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

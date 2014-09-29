@@ -18,7 +18,6 @@ class KFViewRefView: KFPostRefView {
         super.init(controller: controller, ref: ref);
 
         self.frame = CGRectMake(ref.location.x, ref.location.y, 230, 30);
-        //self.backgroundColor = UIColor.blueColor();
         self.backgroundColor = UIColor.clearColor();
         
         //icon
@@ -41,24 +40,12 @@ class KFViewRefView: KFPostRefView {
         
         let titleRight = 40+titleLabel.frame.size.width;
         self.frame = CGRectMake(ref.location.x, ref.location.y, titleRight, 30);
-        //bindEvents();
     }
-    
-//    override func handleSingleTap(recognizer: UIGestureRecognizer){
-//        mainController.showHalo(self);
-//    }
+
     
     override func tapA() {
         self.mainController.setCurrentView(self.getModel().post as KFView);
     }
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect)
-    {
-        // Drawing code
-    }
-    */
 
 }

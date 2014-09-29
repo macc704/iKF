@@ -25,7 +25,6 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
     
     override init(controller: KFCanvasViewController, ref: KFReference) {
         webView = KFWebView.createAsPost();
-        //        web.backgroundColor = [UIColor clearColor];
         webView.userInteractionEnabled = false;
         
         super.init(controller: controller, ref: ref);
@@ -110,9 +109,6 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
         self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, newWidth,newHeight);
         webView.transform = CGAffineTransformMakeScale(self.scaleX, self.scaleY);//necessary
         
-        //let rotatedWidth = cos(rotation)*newWidth + sin(rotation)*newHeight;
-        //let rotatedHeight = cos(rotation)*newHeight + sin(rotation)*newWidth;
-        //webView.frame = CGRectMake(0, 0, rotatedHeight, rotatedWidth);
         webView.frame = CGRectMake(0, 0, newWidth, newHeight);
         updateTransform();
     }
@@ -152,28 +148,5 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
             imgview!.transform = rotationT;//CGAffineTransformConcat(scaleT, rotationT);
         }
     }
-    
-    //    override func handleSingleTap(recognizer: UIGestureRecognizer){
-    //        let drawing = model.post as KFDrawing;
-    //        //println("drawing svg="+drawing.content);
-    //    }
-    
-    //    func handleDoubleTap(recognizer: UIGestureRecognizer){
-    //        //        let drawing = model.post as KFDrawing;
-    //        //        println("drawing svg="+drawing.content);
-    //    }
-    
-    //    override func handleDoubleTap(recognizer: UIGestureRecognizer){
-    //        mainController.showHalo(self);
-    //    }
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect)
-    {
-    // Drawing code
-    }
-    */
     
 }

@@ -13,9 +13,6 @@ class KFAbstractNoteEditView: KFAbstractNoteView {
     var scaffoldButton:UIBarButtonItem!;
     var viewId:String!;
     
-    //UIPopoverController* popController;
-    //    }
-    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -64,14 +61,5 @@ class KFAbstractNoteEditView: KFAbstractNoteView {
     func getTitle()->String?{
         return nil;
     }
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect)
-    {
-    // Drawing code
-    }
-    */
     
 }

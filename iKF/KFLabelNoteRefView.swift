@@ -31,7 +31,6 @@ class KFLabelNoteRefView: UIView {
         self.layer.cornerRadius = 5;
         self.layer.masksToBounds = true;
         
-        //self.backgroundColor = UIColor.whiteColor();
         self.backgroundColor = UIColor.clearColor();
         self.frame = CGRectMake(0, 0, 230, 40);
         
@@ -47,19 +46,14 @@ class KFLabelNoteRefView: UIView {
         self.layer.masksToBounds = true;
         
         self.updateFromModel();
-        
-        //bindEvents();
     }
     
     func updateFromModel(){
-        //super.updateFromModel();
         icon.beenRead = (self.model.post as KFNote).beenRead;
         icon.update();
         titleLabel.text = (self.model.post as KFNote).title;
-        //titleLabel.backgroundColor = UIColor.blueColor();
         titleLabel.sizeToFit();
         authorLabel.text = (self.model.post as KFNote).primaryAuthor?.getFullName();
-        //authorLabel.backgroundColor = UIColor.yellowColor();
         authorLabel.sizeToFit();
         
         //self.sizeToFit(); //does not work
@@ -75,12 +69,4 @@ class KFLabelNoteRefView: UIView {
         return icon.center;
     }
     
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect)
-    {
-    // Drawing code
-    }
-    */
 }

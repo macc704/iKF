@@ -10,7 +10,6 @@ import UIKit
 
 protocol KFMenu{
     func getAccessoryType()->UITableViewCellAccessoryType;
-    //{return UITableViewCellAccessoryCheckmark;}
     func getName()->String;
     func execute();
 }
@@ -54,10 +53,6 @@ class KFMenuViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }else{
             self.preferredContentSize = self.view.frame.size;
         }
-        //        self.preferredContentSize = self.view.frame.size;
-        
-        //        let a = NSIndexPath(index: 0);
-        //        tableView.selectRowAtIndexPath(a, animated: false, scrollPosition: UITableViewScrollPosition.Middle);
     }
     
     func setBarTitle(title:String){
@@ -76,7 +71,6 @@ class KFMenuViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // #pragma mark - Table view data source
@@ -106,7 +100,6 @@ class KFMenuViewController: UIViewController, UITableViewDelegate, UITableViewDa
             selectedHandler!(self.menues[row]);
         }
         tableView.reloadData();
-        //self.dismissViewControllerAnimated(false, completion: nil);
     }
     
 }

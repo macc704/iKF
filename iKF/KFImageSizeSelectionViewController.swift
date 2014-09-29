@@ -12,16 +12,6 @@ class KFImageSizeSelectionViewController: UIViewController {
     
     private let mainController:KFCanvasViewController!;
     
-    //    private var image:UIImage?{
-    //    get{
-    //        return self.image;
-    //    }
-    //    set{
-    //        self.image = newValue;
-    //        imageView.image = self.image;
-    //    }
-    //    }
-    
     var image:UIImage?{
     didSet{
         updateImageInfo();
@@ -31,16 +21,12 @@ class KFImageSizeSelectionViewController: UIViewController {
     var point = CGPoint(x:50, y:50);
     
     @IBOutlet weak var labelSize: UILabel!
-    //    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageContainer: UIView!
     private let imageView = UIImageView();
     @IBOutlet weak var button1: UIButton!
     @IBOutlet weak var button2: UIButton!
     @IBOutlet weak var button3: UIButton!
-    //@IBOutlet weak var sizelabel: UILabel!
     @IBOutlet weak var button33: UIButton!
-    
-    //private var handler: ((CGFloat) -> ())?
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -53,8 +39,6 @@ class KFImageSizeSelectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //layout has not finished
         
         self.imageContainer.addSubview(imageView);
         updateImageInfo();
@@ -83,23 +67,6 @@ class KFImageSizeSelectionViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
-        //layout has not finished
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        //layout has finished
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    //    func setButtonPressHandler(handler: (CGFloat) -> () ){
-    //        self.handler = handler;
-    //    }
-    
     @IBAction func button1Pressed(sender: AnyObject) {
         upload(1.0);
     }
@@ -120,9 +87,7 @@ class KFImageSizeSelectionViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil);
     }
     
-    private func upload(scale:CGFloat){
-        //self.handler?(1.0);
-        
+    private func upload(scale:CGFloat){       
         func execute(){
             let width = self.image!.size.width;
             let height = self.image!.size.height;
@@ -131,7 +96,6 @@ class KFImageSizeSelectionViewController: UIViewController {
         }
         
         func onFinish(){
-            //self.mainController.update();
             self.dismissViewControllerAnimated(true, completion: nil);
         }
         
@@ -145,16 +109,6 @@ class KFImageSizeSelectionViewController: UIViewController {
         UIGraphicsEndImageContext();
         return newImage;
     }
-    
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
+
     
 }

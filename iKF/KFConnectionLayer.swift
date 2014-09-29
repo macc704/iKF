@@ -12,20 +12,7 @@ import QuartzCore
 
 class KFConnectionLayer: CALayer {
     
-    var connections:[KFConnectionViewModel] = [];
-    
-    //    required init(coder aDecoder: NSCoder!) {
-    //        super.init(coder: aDecoder)
-    //    }
-    //
-    //    override init(){
-    //        super.init(frame: KFAppUtils.DEFAULT_RECT());
-    //
-    ////        let a = CALayer();
-    //        self.layer.
-    //        self.userInteractionEnabled = false;
-    //        self.backgroundColor = UIColor.clearColor();
-    //    }
+    private var connections:[KFConnectionViewModel] = [];
     
     func clearAllConnections(){
         connections = [];
@@ -61,35 +48,10 @@ class KFConnectionLayer: CALayer {
         self.drawAll(ctx);
     }
     
-    
-    //    override func drawRect(rect: CGRect) {
-    //        let context = UIGraphicsGetCurrentContext();
-    //
-    //        CGContextClearRect(context, rect);
-    //
-    //        CGContextSetStrokeColorWithColor(context, UIColor.blueColor().CGColor);
-    //        CGContextSetLineWidth(context, 2.0);
-    //
-    //        for conn in connections {
-    //            //CGPoint fromP = conn.from.center;
-    //            let fromP = self.createChopBoxAnchor(conn.to, to: conn.from);
-    //            let toP = self.createChopBoxAnchor(conn.from, to: conn.to);
-    //            CGContextMoveToPoint(context, fromP.x, fromP.y);
-    //            CGContextAddLineToPoint(context, toP.x, toP.y);
-    //            CGContextStrokePath(context);
-    //
-    //            //Arrow
-    //            self.createArrow(context, from: fromP, to: toP);
-    //        }
-    //    }
-    
     private let arrowColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.35).CGColor;
     private let arrowSize:CGFloat = 8.0;
     
     private func drawAll(context: CGContext!){
-        //CGContextClearRect(context, rect);
-        
-        //CGContextSetStrokeColorWithColor(context, UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.8).CGColor);
         CGContextSetStrokeColorWithColor(context, arrowColor);
         CGContextSetLineWidth(context, 1.0);
         
@@ -169,14 +131,5 @@ class KFConnectionLayer: CALayer {
     private func center(rect:CGRect) -> CGPoint{
         return CGPointMake(rect.origin.x + rect.size.width / 2, rect.origin.y + rect.size.height / 2);
     }
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect)
-    {
-    // Drawing code
-    }
-    */
     
 }

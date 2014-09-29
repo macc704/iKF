@@ -168,31 +168,7 @@ class KFNoteEditViewByTinyMCE: KFAbstractNoteEditView, UIWebViewDelegate {
     
     private func isTextDirty() -> Bool{
         let res = webView.stringByEvaluatingJavaScriptFromString("tinymce.activeEditor.isDirty();");
-        //println(res)
         return res == "true";
     }
-    
-    //NSString* newTitle = [self.editView getTitle];
-    //bool dirty = false;
-    //if(![newTitle isEqualToString: self.note.title]){
-    //    dirty = true;
-    //}
-    //NSString* newContent = [self.editView getText];
-    //if(![newContent isEqualToString: self.note.content]){
-    //    dirty = true;
-    //}
-    //
-    //if(dirty){
-    
-    
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect)
-    {
-    // Drawing code
-    }
-    */
     
 }

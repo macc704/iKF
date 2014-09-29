@@ -10,15 +10,6 @@ import UIKit
 
 class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
     
-    //    override func hitTest(point: CGPoint, withEvent event: UIEvent!) -> UIView! {
-    //        let hitView = super.hitTest(point, withEvent: event);
-    //        if(hitView == self){
-    //            return nil;
-    //        }else{
-    //            return hitView;
-    //        }
-    //    }
-    
     var mainController:KFCanvasViewController?;
     
     let BORDER_COLOR = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0);
@@ -28,7 +19,6 @@ class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
     private let titleLabel:UILabel = UILabel();
     private let webView = KFWebView.create();
     
-    //    private let toolContainer:UIView = UIView();
     private let toolContainer:UIView = UIView();
     
     private var urlTextfield:UITextField?;
@@ -46,7 +36,6 @@ class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
     private var dummyRef:KFViewRefView?;
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        //println(mainController);
         mainController?.suppressScroll();
     }
     
@@ -78,7 +67,6 @@ class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
         
         //status bar
         statusBar.backgroundColor = TITLEBAR_COLOR;
-//        statusBar.backgroundColor = UIColor.redColor();
         statusBar.layer.borderColor = BORDER_COLOR.CGColor;
         statusBar.layer.borderWidth = 1.0;
         self.addSubview(statusBar);
@@ -364,7 +352,6 @@ class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
             self.titleLabel.text = getTitle();
         }
         self.urlTextfield!.text = getURL();
-        //self.webView.scrollView.zoomToRect(self.webView.frame, animated: false);
     }
 
     func webView(webView: UIWebView!, didFailLoadWithError error: NSError!) {
@@ -375,15 +362,9 @@ class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
     }
     
     
-    //    - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error | ウェ
-    
     func updateStatus(){
-        
-        //println(webView.canGoBack);
         backButton!.enabled = webView.canGoBack;
-        //println(webView.canGoForward);
         forwardButton!.enabled = webView.canGoForward;
-        //reloadButton!.enabled = !(webView.loading);
         stopButton!.enabled = webView.loading;
     }
     

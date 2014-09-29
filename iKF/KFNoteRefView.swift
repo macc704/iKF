@@ -20,10 +20,6 @@ class KFNoteRefView: KFPostRefView {
     
     override init(controller: KFCanvasViewController, ref: KFReference) {
         super.init(controller: controller, ref: ref);
-        //bindEvents();
-        
-
-        //self.backgroundColor = UIColor.lightGrayColor();
     }
     
     deinit{

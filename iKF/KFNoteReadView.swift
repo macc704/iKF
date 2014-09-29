@@ -25,20 +25,6 @@ class KFNoteReadView: KFAbstractNoteView, UIWebViewDelegate {
         self.addSubview(self._webView);
     }
     
-    //    func showPage(urlString:String, title:String){
-    //        self.setNavBarTitle(title);
-    //        let url = NSURL(string: urlString);
-    //        let req = NSURLRequest(URL: url);
-    //        self._webView.loadRequest(req);
-    //    }
-    
-    //    func showHTML(textString:String, title:String){
-    //        self.setNavBarTitle(title);
-    //        let template = KFResource.loadReadTemplate();
-    //        let html = template.stringByReplacingOccurrencesOfString("%YOURCONTENT%", withString:textString);
-    //        self._webView.loadHTMLString(html, baseURL:KFResource.getWebResourceURL());
-    //    }
-    
     func load(){
         if(model == nil){
             return;
@@ -85,14 +71,5 @@ class KFNoteReadView: KFAbstractNoteView, UIWebViewDelegate {
             self._attachmentView.frame = attachRect;
         }
     }
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect)
-    {
-    // Drawing code
-    }
-    */
     
 }

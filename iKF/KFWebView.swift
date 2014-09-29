@@ -73,6 +73,20 @@ class KFWebView: UIWebView {
         UIMenuController.sharedMenuController().menuItems = [menuItem];
     }
     
+    func close(){
+        self.setURL("about:blank");
+    }
+    
+    func setURL(url:String){
+        let url = NSURL(string: url);
+        let req = NSURLRequest(URL: url);
+        self.loadRequest(req);
+    }
+    
+    /*****************************
+    * Copy and Pasting
+    ******************************/
+    
     override func canPerformAction(action: Selector, withSender sender: AnyObject!) -> Bool {
         if(action == Selector("onPasteAsReference:")){
             return self.canPerformPasteAsReference();
@@ -82,16 +96,6 @@ class KFWebView: UIWebView {
     
     private func canPerformPasteAsReference() -> Bool{
         return self.performPasteAsReference != nil && self.getValueFromPasteboard("kfmodel.guid") != nil;
-    }
-    
-    func close(){
-        self.setURL("about:blank");
-    }
-    
-    func setURL(url:String){
-        let url = NSURL(string: url);
-        let req = NSURLRequest(URL: url);
-        self.loadRequest(req);
     }
     
     func onPasteAsReference(sender:UIMenuController){
@@ -109,9 +113,7 @@ class KFWebView: UIWebView {
         }else{//assume postreference
             pasteString = "<kf-post-reference class=\"mceNonEditable\" postid=\"\(guid!)\">\(title!)</kf-post-reference>";
         }
-        //        //NSLog(@"pasteString=%@", pasteString);
         self.performPasteAsReference!(pasteString);
-        //        self.pasteAsReferenceTarget pasteAsReference: pasteString];
     }
     
     override func copy(sender: AnyObject!) {

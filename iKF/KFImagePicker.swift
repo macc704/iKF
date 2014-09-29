@@ -11,7 +11,6 @@ import UIKit
 class KFImagePicker: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     private let mainController:KFCanvasViewController;
-    //var popController:UIPopoverController?;
     var loc:CGPoint?;
     
     init(mainController:KFCanvasViewController){
@@ -36,14 +35,12 @@ class KFImagePicker: NSObject, UINavigationControllerDelegate, UIImagePickerCont
         if(loc != nil){
             sizeSelectionController.point = loc!;
         }
-//        popController?.dismissPopoverAnimated(true);
         KFPopoverManager.getInstance().closeCurrentPopover();
         mainController.presentViewController(sizeSelectionController, animated: true, completion: nil);
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController!){
         KFPopoverManager.getInstance().closeCurrentPopover();
-//        popController?.dismissPopoverAnimated(true);
     }
     
 

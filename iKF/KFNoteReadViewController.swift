@@ -40,19 +40,7 @@ class KFNoteReadViewController: UIViewController {
                 KFService.getInstance().readPost(self.note!);
                 return;
             });
-            //for att in note!.attachments{
-                //println(att.url);
-            //}
         }
     }
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect)
-    {
-    // Drawing code
-    }
-    */
     
 }

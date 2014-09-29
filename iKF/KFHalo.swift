@@ -192,13 +192,7 @@ class KFHalo: UIView {
             for handle in self.handles.keys{
                 handle.frame = self.handles[handle]!();
             }
-            }, completion: {
-                (x:Bool) in
-                // not necessary
-                //            for handle in self.handles.keys{
-                //                handle.frame = self.handles[handle]!();
-                //            }
-        });
+            }, completion: nil);
     }
     
     // ----------- handlers -----------

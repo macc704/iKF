@@ -29,7 +29,6 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
         super.viewDidLoad()
         self.registrationsPicker.dataSource = self;
         self.registrationsPicker.delegate = self;
-        //        self.navBar.topItem.title = "Hello, " + KFService.getInstance().getCurrentUser().getFullName();
         self.navigationItem.title = "Welcome to " + host;
         self.usernameLabel.text = KFService.getInstance().currentUser.getFullName();
         self.refreshRegistrations();
@@ -67,12 +66,7 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
     }
     
-    //    @IBAction func backButtonPressed(sender : AnyObject) {
-    ////        self.dismissViewControllerAnimated(false, completion: nil);
-    //        self.navigationController.popViewControllerAnimated(true);
-    //
-    //    }
-    
+   
     @IBAction func enterButtonPressed(sender : AnyObject) {
         if(self.registrations.count <= 0){
             KFAppUtils.showAlert("Error", msg: "No registration selected.");
@@ -99,15 +93,6 @@ class KFRegistrationViewController: UIViewController, UIPickerViewDelegate, UIPi
         self.registrations = service.getRegistrations();
         self.registrationsPicker.reloadAllComponents();
     }
-    
-    /*
-    // #pragma mark - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    }
-    */
+
     
 }

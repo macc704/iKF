@@ -72,7 +72,6 @@ class KFCanvasViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
-        //        cometManager.stop();
     }
     
     func setKFRegistration(registration:KFRegistration){
@@ -109,7 +108,6 @@ class KFCanvasViewController: UIViewController {
     }
     
     func messageReceived(type:String?, method:String?, target:String?){
-        //println("messageReceived: \(type), \(method), \(target)");
         let service = KFService.getInstance();
         
         if(type == "postref" && method == "create"){
@@ -129,7 +127,6 @@ class KFCanvasViewController: UIViewController {
                     return;
                 }
                 KFAppUtils.executeInGUIThread({
-                    //println("postref-update-\(ref)");
                     let refView = self.postRefViews[newRef!.guid];
                     if(refView == nil){
                         println("warning: ref is null =\(target)");
@@ -195,11 +192,9 @@ class KFCanvasViewController: UIViewController {
     
     func addNote(ref:KFReference){
         if(!(ref.post is KFNote)){
-            //    [NSException raise:@"iKFConnectionException" format:@"Illegal addNote"];
             return;
         }
         
-        //self.hideHalo();
         removeDummy();
         
         var postRefView:KFNoteRefView!;
@@ -219,7 +214,6 @@ class KFCanvasViewController: UIViewController {
     
     func addDrawing(ref:KFReference){
         if(!(ref.post is KFDrawing)){
-            //    [NSException raise:@"iKFConnectionException" format:@"Illegal addDrawing"];
             return;
         }
         
@@ -242,7 +236,6 @@ class KFCanvasViewController: UIViewController {
     
     func addViewRef(ref:KFReference){
         if(!(ref.post is KFView)){
-            //[NSException raise:@"iKFConnectionException" format:@"Illegal ViewRef"];
         }
         
         //self.hideHalo();
@@ -253,7 +246,6 @@ class KFCanvasViewController: UIViewController {
     
     func addBuildsOn(ref:KFReference){
         if(!(ref.post is KFNote)){
-            //    [NSException raise:@"iKFConnectionException" format:@"Illegal addNote"];
             return;
         }
         
@@ -496,7 +488,6 @@ class KFCanvasViewController: UIViewController {
     }
     
     func openPost(postRefView:KFPostRefView){
-        //openPopupViewer(postRefView);
         self.openPostViewer(postRefView.getModel().post!, from: postRefView, refView:postRefView);
     }
     
@@ -564,20 +555,11 @@ class KFCanvasViewController: UIViewController {
         return CGRectMake(x, y, width, height);
     }
     
-    //    private func openPopupViewer(postRefView:KFPostRefView){
-    //        let notePopupController = iKFNotePopupViewController();
-    //        notePopupController.note = (postRefView.model.post as KFNote);
-    //        notePopupController.kfViewController = self;
-    //        notePopupController.preferredContentSize = notePopupController.view.frame.size;
-    //        KFPopoverManager.getInstance().openInPopover(postRefView, controller: notePopupController);
-    //    }
-    
     func openBrowser(p:CGPoint, size:CGSize = CGSize(width: 500, height: 600)){
         let browser = KFWebBrowserView();
         //let p = self.canvasView.translateToCanvas(CGPointMake(50, 50));
         browser.frame = CGRect(x: p.x, y:p.y, width: size.width, height:size.height);
         browser.mainController = self;
-        //println(browser.frame);
         browser.setURL("http://www.google.com");
         self.canvasView.windowsLayer.addSubview(browser);
         browser.doubleTapHandler = {
@@ -602,7 +584,6 @@ class KFCanvasViewController: UIViewController {
     
     
     /* event handlers */
-    
 
     @IBAction func exitPressed(sender: AnyObject) {
         KFWebView.clearAllInstances();
@@ -613,10 +594,6 @@ class KFCanvasViewController: UIViewController {
     @IBAction func viewsButtonPressed(sender: AnyObject) {
         
     }
-    
-    //    @IBAction func updatePressed(sender: AnyObject) {
-    
-    //    }
     
     func suppressScroll(){
         canvasView.suppressScroll();
