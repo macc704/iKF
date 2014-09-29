@@ -47,19 +47,15 @@ class KFNoteEditViewController: UIViewController {
         KFAppUtils.executeInBackThread({
             let res = KFService.getInstance().updateNote(self.note!);
             if(res == false){
-                KFAppUtils.executeInGUIThread({
-                    KFAppUtils.showDialog("Saving Failed", msg: "Would you like to save contents to clipboard?", okHandler: {(UIAlertAction) in
+                KFAppUtils.showDialog("Saving Failed", msg: "Would you like to save contents to clipboard?", okHandler:
+                    {(UIAlertAction) in
                         let pasteboard = UIPasteboard.generalPasteboard();
                         pasteboard.string = self.note!.content;
                         return;
-                    });
-                    return;
                 });
             }
-            return;
         });
         self.note!.notify();
     }
-    
     
 }

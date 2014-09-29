@@ -553,7 +553,8 @@ class KFService: NSObject {
     }
     
     func handleError(msg:String){
-        KFAppUtils.debug("KFService: Error: \(msg)");
+        //KFAppUtils.debug("KFService: Error: \(msg)");
+        KFAppUtils.showAlert("KFService Error: \(msg)", msg: "Please check connection.");
     }
     
     

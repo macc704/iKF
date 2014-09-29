@@ -27,11 +27,13 @@ class KFAppUtils: NSObject {
     }
     
     class func showAlert(title:String, msg:String){
-        var alertView = UIAlertView();
-        alertView.addButtonWithTitle("OK");
-        alertView.title = title;
-        alertView.message = msg;
-        alertView.show();
+        executeInGUIThread({
+            var alertView = UIAlertView();
+            alertView.addButtonWithTitle("OK");
+            alertView.title = title;
+            alertView.message = msg;
+            alertView.show();
+        });
     }
     
     class func topController() -> UIViewController{
@@ -43,10 +45,12 @@ class KFAppUtils: NSObject {
     }
     
     class func showDialog(title:String, msg:String, okHandler:((UIAlertAction!)->())?){
-        var alert:UIAlertController = UIAlertController(title: title, message: msg, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil));
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: okHandler));
-        topController().presentViewController(alert, animated: false, completion: nil);
+        executeInGUIThread({
+            var alert:UIAlertController = UIAlertController(title: title, message: msg, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil));
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: okHandler));
+            KFAppUtils.topController().presentViewController(alert, animated: false, completion: nil);
+        });
     }
     
     class func executeInGUIThread(execute:()->()){
