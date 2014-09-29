@@ -8,8 +8,6 @@
 
 import UIKit
 
-//private var lastMemoryWarning = NSDate();
-
 class KFCanvasViewController: UIViewController {
     
     @IBOutlet weak var navBar: UINavigationBar!
@@ -392,24 +390,16 @@ class KFCanvasViewController: UIViewController {
         return self.currentView!;
     }
     
-    private func startComet(threadNumber:Int){
-        
-    }
-    
     private func refreshAllPostsAsync(){
-        //        KFAppUtils.executeInBackThread({
-        var task:(()->()) = {
+        KFAppUtils.asyncExecWithLoadingView(self.canvasView, {
             let viewId = self.getCurrentView().guid;
             let newRefs = KFService.getInstance().getPostRefs(viewId);
             KFAppUtils.executeInGUIThread({
                 self.refreshPosts(newRefs);
             });
             return;
-        };
-        
-        KFAppUtils.asyncExecWithLoadingView(self.canvasView, task, nil);
-        
-        //        });
+            }
+        ,nil);
     }
     
     private func addReference(ref:KFReference){
@@ -557,7 +547,6 @@ class KFCanvasViewController: UIViewController {
     
     func openBrowser(p:CGPoint, size:CGSize = CGSize(width: 500, height: 600)){
         let browser = KFWebBrowserView();
-        //let p = self.canvasView.translateToCanvas(CGPointMake(50, 50));
         browser.frame = CGRect(x: p.x, y:p.y, width: size.width, height:size.height);
         browser.mainController = self;
         browser.setURL("http://www.google.com");
@@ -582,19 +571,6 @@ class KFCanvasViewController: UIViewController {
         self.canvasView.pullBackFromDraggingLayer(view);
     }
     
-    
-    /* event handlers */
-
-    @IBAction func exitPressed(sender: AnyObject) {
-        KFWebView.clearAllInstances();
-        cometManager.stop();
-        self.dismissViewControllerAnimated(true, completion: nil);
-    }
-    
-    @IBAction func viewsButtonPressed(sender: AnyObject) {
-        
-    }
-    
     func suppressScroll(){
         canvasView.suppressScroll();
     }
@@ -603,6 +579,26 @@ class KFCanvasViewController: UIViewController {
         canvasView.unlockSuppressScroll();
     }
     
+    /* event handlers */
+    
+    /* general handlers */
+    
+    @IBAction func exitPressed(sender: AnyObject) {
+        KFWebView.clearAllInstances();
+        cometManager.stop();
+        self.dismissViewControllerAnimated(true, completion: nil);
+    }
+    
+    @IBAction func updateButtonPressed(sender: AnyObject) {
+        if(initialized == false){
+            KFAppUtils.showAlert("Warning", msg: "Not initialized yet");
+            return;
+        }
+        self.refreshAllPostsAsync();
+    }
+    
+    /* view controllers */
+
     @IBOutlet weak var forwardButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var viewButton: UIButton!
@@ -621,14 +617,6 @@ class KFCanvasViewController: UIViewController {
             return;
         }
         self.showViewSelection();
-    }
-    
-    @IBAction func updateButtonPressed(sender: AnyObject) {
-        if(initialized == false){
-            KFAppUtils.showAlert("Warning", msg: "Not initialized yet");
-            return;
-        }
-        self.refreshAllPostsAsync();
     }
     
     @IBAction func forwardButtonPressed(sender: AnyObject) {
@@ -654,16 +642,8 @@ class KFCanvasViewController: UIViewController {
         setCurrentView(view, push:false);
     }
     
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
+    /* memory alert */
+
     override func didReceiveMemoryWarning() {
         //        let now = NSDate();
         //        let diff = now.timeIntervalSinceDate(lastMemoryWarning);
