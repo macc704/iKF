@@ -36,6 +36,8 @@
 		494D215219B7736100189EE6 /* KFCompositeNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494D215119B7736100189EE6 /* KFCompositeNoteViewController.swift */; };
 		494DE5A4195488DD0053F9DF /* KFAppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494DE5A3195488DD0053F9DF /* KFAppUtils.swift */; };
 		494E90C01996FD6800296204 /* KFConnectionLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494E90BF1996FD6800296204 /* KFConnectionLayer.swift */; };
+		4952AE4919DB379F006AEC6F /* KFAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4952AE4719DB379F006AEC6F /* KFAboutViewController.swift */; };
+		4952AE4A19DB379F006AEC6F /* KFAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4952AE4819DB379F006AEC6F /* KFAboutViewController.xib */; };
 		495761A91945EEA10017A852 /* KFPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495761A81945EEA10017A852 /* KFPost.swift */; };
 		495A155E198BC6770056EE50 /* KFWebBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495A155D198BC6770056EE50 /* KFWebBrowserView.swift */; };
 		496074FE1992613F00131111 /* KFWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496074FD1992613F00131111 /* KFWebView.swift */; };
@@ -161,6 +163,8 @@
 		494D215119B7736100189EE6 /* KFCompositeNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFCompositeNoteViewController.swift; sourceTree = "<group>"; };
 		494DE5A3195488DD0053F9DF /* KFAppUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFAppUtils.swift; sourceTree = "<group>"; };
 		494E90BF1996FD6800296204 /* KFConnectionLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFConnectionLayer.swift; sourceTree = "<group>"; };
+		4952AE4719DB379F006AEC6F /* KFAboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFAboutViewController.swift; sourceTree = "<group>"; };
+		4952AE4819DB379F006AEC6F /* KFAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFAboutViewController.xib; sourceTree = "<group>"; };
 		495761A81945EEA10017A852 /* KFPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFPost.swift; sourceTree = "<group>"; };
 		495A155D198BC6770056EE50 /* KFWebBrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFWebBrowserView.swift; sourceTree = "<group>"; };
 		496074FD1992613F00131111 /* KFWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFWebView.swift; sourceTree = "<group>"; };
@@ -300,6 +304,8 @@
 				492F402C1941F3600038E621 /* KFRegistrationViewController.xib */,
 				496075011992AD0D00131111 /* KFAccountCreationViewController.swift */,
 				496075021992AD0D00131111 /* KFAccountCreationViewController.xib */,
+				4952AE4719DB379F006AEC6F /* KFAboutViewController.swift */,
+				4952AE4819DB379F006AEC6F /* KFAboutViewController.xib */,
 			);
 			name = LoginUI;
 			sourceTree = "<group>";
@@ -638,6 +644,7 @@
 				496402C6198D7FFF009504B7 /* read.png in Resources */,
 				49C78D62194105C2004D3404 /* Main.storyboard in Resources */,
 				49844979198E77DD00D80327 /* KFViewEditViewController.xib in Resources */,
+				4952AE4A19DB379F006AEC6F /* KFAboutViewController.xib in Resources */,
 				496075041992AD0D00131111 /* KFAccountCreationViewController.xib in Resources */,
 				496402BD198D7FFF009504B7 /* list.png in Resources */,
 				496402C2198D7FFF009504B7 /* newview.png in Resources */,
@@ -738,6 +745,7 @@
 				4930D4AB19B399B600AEAE86 /* KFModelArray.swift in Sources */,
 				49C5590F1945F5D700FDFF32 /* KFReference.swift in Sources */,
 				499DE6E419894A3000BA2209 /* KFImageSizeSelectionViewController.swift in Sources */,
+				4952AE4919DB379F006AEC6F /* KFAboutViewController.swift in Sources */,
 				494D214E19B76EB200189EE6 /* KFNoteReadView.swift in Sources */,
 				4991C32D19BA9CC000677B9A /* KFMobileCometManager.swift in Sources */,
 				49EEFF071981627600F78F16 /* KFNetworkUtil.swift in Sources */,

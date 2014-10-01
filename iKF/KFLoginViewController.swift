@@ -17,10 +17,6 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet var serverPicker : UIPickerView!
     @IBOutlet weak var serverNameField: UITextField!
     
-    @IBOutlet weak var labelVersion: UILabel!
-    @IBOutlet weak var labelBuild: UILabel!
-    @IBOutlet weak var labelBuildDate: UILabel!
-    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -32,12 +28,7 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let version = NSBundle.mainBundle().infoDictionary["CFBundleShortVersionString"]! as String;
-        labelVersion.text = version;
-        let build = NSBundle.mainBundle().infoDictionary["CFBundleVersion"]! as String;
-        labelBuild.text = build;
-        let date = iKFUtil.getBuildDate() + " " + iKFUtil.getBuildTime();
-        labelBuildDate.text = date;
+
         
         serverPicker.dataSource = self;
         serverPicker.delegate = self;
@@ -73,12 +64,6 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    @IBAction func newAccountButtonPressed(sender: AnyObject) {
-        let c = KFAccountCreationViewController(nibName: "KFAccountCreationViewController", bundle: nil);
-        c.host = getHost();
-        self.navigationController!.pushViewController(c, animated: true);
     }
     
     @IBAction func loginButtonPressed(sender : AnyObject) {
@@ -147,6 +132,17 @@ class KFLoginViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         userDefaults.setValue(host, forKey: "hostname");
         userDefaults.synchronize();
         return (true, nil);
+    }
+    
+    @IBAction func newAccountButtonPressed(sender: AnyObject) {
+        let c = KFAccountCreationViewController(nibName: "KFAccountCreationViewController", bundle: nil);
+        c.host = getHost();
+        self.navigationController!.pushViewController(c, animated: true);
+    }
+    
+    @IBAction func aboutPressed(sender: AnyObject) {
+        let c = KFAboutViewController(nibName: "KFAboutViewController", bundle: nil);
+        self.navigationController!.pushViewController(c, animated: true);
     }
     
     /* data source */
