@@ -309,55 +309,6 @@ class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
         updateFromNote();
     }
     
-    var suppressWebLayout = false;
-    
-    override func layoutSubviews() {
-        super.layoutSubviews();
-        
-        let width:CGFloat = self.frame.size.width;
-        let height:CGFloat = self.frame.size.height;
-        
-        let statusBarH:CGFloat = 44.0;
-        self.statusBar.frame = CGRectMake(0,0,width,statusBarH);
-        self.titleLabel.frame = CGRectMake(1,1,width-2,statusBarH-2);
-        self.closeButton!.frame = CGRectMake(width - (statusBarH-2), 1, statusBarH-2, statusBarH-2);
-        
-        var toolBarH:CGFloat = 44.0;
-        if(!self.showToolBar){
-            toolBarH = 0.0;
-        }
-        self.toolContainer.frame = CGRectMake(0,statusBarH,width,44);
-        var x = CGFloat(5);
-        self.backButton!.frame = CGRectMake(x,5,35,35);
-        x += 40;
-        self.forwardButton!.frame = CGRectMake(x,5,35,35);
-        var tfWidth:CGFloat = width;
-        tfWidth -= 10;
-        tfWidth -= (40 * 4);
-        let tmp = tfWidth > 30;
-        tfWidth = tmp ? tfWidth : 30;
-        x += 40;
-        self.urlTextfield!.frame = CGRectMake(x,5,tfWidth,35);
-        x += tfWidth + 10;
-        self.reloadButton!.frame = CGRectMake(x,5,35,35);
-        x += 40;
-        self.stopButton!.frame = CGRectMake(x,5,35,35);
-        
-        if(!suppressWebLayout){
-            var webViewHeight = height-(statusBarH+toolBarH);
-            if(self._attachmentView != nil){
-                let attachHeight = min(webViewHeight-1, 100);
-                webViewHeight = webViewHeight - attachHeight;
-                self._attachmentView!.frame = CGRectMake(0,(statusBarH+toolBarH)+webViewHeight,width,attachHeight);
-            }
-            self.webView.frame = CGRectMake(0,(statusBarH+toolBarH),width,webViewHeight);
-            loading.frame = self.webView.frame;
-            //self.webView.scrollView.zoomToRect(self.webView.frame, animated: false);//does not work
-        }
-    }
-    
-    let loading = KFLoadingView();
-    
     func webView(webView: UIWebView!, shouldStartLoadWithRequest request: NSURLRequest!, navigationType: UIWebViewNavigationType) -> Bool {
         let host = request.URL.host;
         if(host != nil && host == "kfpost"){
@@ -411,7 +362,53 @@ class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
         return webView.stringByEvaluatingJavaScriptFromString("document.URL")!;
     }
     
-
+    var suppressWebLayout = false;
+    let loading = KFLoadingView();
     
+    override func layoutSubviews() {
+        super.layoutSubviews();
+        
+        let width:CGFloat = self.frame.size.width;
+        let height:CGFloat = self.frame.size.height;
+        
+        let statusBarH:CGFloat = 44.0;
+        self.statusBar.frame = CGRectMake(0,0,width,statusBarH);
+        self.titleLabel.frame = CGRectMake(1,1,width-2,statusBarH-2);
+        self.closeButton!.frame = CGRectMake(width - (statusBarH-2), 1, statusBarH-2, statusBarH-2);
+        
+        var toolBarH:CGFloat = 44.0;
+        if(!self.showToolBar){
+            toolBarH = 0.0;
+        }
+        self.toolContainer.frame = CGRectMake(0,statusBarH,width,44);
+        var x = CGFloat(5);
+        self.backButton!.frame = CGRectMake(x,5,35,35);
+        x += 40;
+        self.forwardButton!.frame = CGRectMake(x,5,35,35);
+        var tfWidth:CGFloat = width;
+        tfWidth -= 10;
+        tfWidth -= (40 * 4);
+        let tmp = tfWidth > 30;
+        tfWidth = tmp ? tfWidth : 30;
+        x += 40;
+        self.urlTextfield!.frame = CGRectMake(x,5,tfWidth,35);
+        x += tfWidth + 10;
+        self.reloadButton!.frame = CGRectMake(x,5,35,35);
+        x += 40;
+        self.stopButton!.frame = CGRectMake(x,5,35,35);
+        
+        if(!suppressWebLayout){
+            var webViewHeight = height-(statusBarH+toolBarH);
+            if(self._attachmentView != nil){
+                let attachHeight = min(webViewHeight-1, 100);
+                webViewHeight = webViewHeight - attachHeight;
+                self._attachmentView!.frame = CGRectMake(0,(statusBarH+toolBarH)+webViewHeight,width,attachHeight);
+            }
+            self.webView.frame = CGRectMake(0,(statusBarH+toolBarH),width,webViewHeight);
+            loading.frame.size = self.webView.frame.size;
+            //self.webView.scrollView.zoomToRect(self.webView.frame, animated: false);//does not work
+        }
+    }
+
     
 }
