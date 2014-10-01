@@ -15,11 +15,7 @@ class KFCommunity: KFModel {
     
     var views = KFModelArray<KFView>();
     var members = KFModelArray<KFUser>();
-    
-//    var members:[String: KFUser] = [:];
-    
-    //connector to objc
-    
+
     func getView(guid:String) -> KFView?{
         return views.dic[guid];
     }

@@ -14,9 +14,6 @@ class KFNote: KFPost {
 
     var title = "";
     var content = "";
-//    var location = CGPoint(x:0, y:0);
-//    var buildsOn:KFNote?;
-//    var refId = "";
     
     override func marge(another: KFPost) {
         super.marge(another);
@@ -26,7 +23,6 @@ class KFNote: KFPost {
     }
     
     func getReadHtml() -> String{
-        //let template = KFService.getInstance().getReadTemplate();
         let template = KFResource.loadReadTemplate();
         var html = template;
         html = html.stringByReplacingOccurrencesOfString("%YOURCONTENT%", withString:content);
@@ -57,7 +53,6 @@ class KFNote: KFPost {
     }
     
     override func toString() -> String {
-        //        var text = "Note:";
         var text = "";
         text += "\"\(title)\"";
         if(self.primaryAuthor != nil){

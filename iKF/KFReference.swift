@@ -46,8 +46,6 @@ class KFReference: KFModel {
         height = another.height;
         rotation = another.rotation;
         displayFlags = another.displayFlags;
-
-        //post = another.post;
     }
     
     private func unhook(){

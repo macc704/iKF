@@ -76,27 +76,6 @@ class KFService: NSObject {
         return res;
     }
     
-    //    func getMobileJS() -> String?{
-    //        if(mobileJS == nil){
-    //            mobileJS = getURL("https://dl.dropboxusercontent.com/u/11409191/ikf/kfmobile.js");
-    //        }
-    //        return mobileJS;
-    //    }
-    
-    //    func getEditTemplate() -> String?{
-    //        if(editTemplate == nil){
-    //            editTemplate = getURL("http://dl.dropboxusercontent.com/u/11409191/ikf/edit.html");
-    //        }
-    //        return editTemplate;
-    //    }
-    //
-    //    func getReadTemplate() -> String?{
-    //        if(readTemplate == nil){
-    //            readTemplate = getURL("http://dl.dropboxusercontent.com/u/11409191/ikf/read.html");
-    //        }
-    //        return readTemplate;
-    //    }
-    
     func getURL(urlString:String) -> String?{
         let req = KFHttpRequest(urlString: urlString, method: "GET");
         let res = KFHttpConnection.connect(req);
@@ -124,22 +103,6 @@ class KFService: NSObject {
         let res = KFHttpConnection.connect(req);
         return res.getStatusCode() == 200;
     }
-    
-    //    func getCurrentUser() -> KFUser{
-    //        if(currentUser == nil){
-    //            refreshCurrentUser();
-    //        }
-    //        return self.currentUser!;
-    //    }
-    //
-    //    func getCurrentRegistration() -> KFRegistration{
-    //        return self.currentRegistration;
-    //    }
-    
-    //temporary
-    //    func getUsers() -> [String:KFUser]{
-    //        return jsonScanner!.getUsers() as [String:KFUser];
-    //    }
     
     func refreshCurrentUser() -> Bool{
         let url = "\(self.baseURL!)rest/account/currentUser";
@@ -246,25 +209,6 @@ class KFService: NSObject {
         //builds-on parsing ommited now
         return post;
     }
-    
-    //    func updateBuildOnsInPost(post:KFPost){
-    //        let url = "\(self.baseURL!)rest/mobile/getBuildsOnInPost/\(post.guid)";
-    //        let req = KFHttpRequest(urlString: url, method: "GET");
-    //        let res = KFHttpConnection.connect(req);
-    //        if(res.getStatusCode() != 200){
-    //            handleError("in getBuildsOnInPost() code=\(res.getStatusCode())");
-    //            return;
-    //        }
-    //
-    //        let json = res.getBodyAsJSON2();
-    //        for each in json.asArray! {
-    //            let fromId = each["from"].asString!;
-    //            let toId = each["to"].asString!; //parent
-    //            if(fromId == post.guid){ //be supposed to
-    //                post.buildsOn = getPost(toId);
-    //            }
-    //        }
-    //    }
     
     func getPostRefs(viewId:String) -> [String: KFReference]{
         let url = "\(self.baseURL!)rest/mobile/getView/\(viewId)";
@@ -559,16 +503,3 @@ class KFService: NSObject {
     
     
 }
-
-// JSON on Swift requires painful code, so I decided to stay this part on Obj-C
-//    let json: AnyObject = res.getBodyAsJSON();
-//    var models = [KFRegistration]();
-//    for each in (json as Array<NSDictionary>) {
-//    var model = KFRegistration();
-//    model.guid = each["guid"] as String;
-//    model.communityId = each["sectionId"] as String;
-//    model.communityName = each["sectionTitle"] as String;
-//    model.roleName = (each["roleInfo"] as NSDictionary)["name"] as String;
-//    models.append(model);
-//    }
-//    return models;

@@ -45,37 +45,8 @@ class KFDrawingRefView: KFPostRefView, NSXMLParserDelegate{
         let baseURL = NSURL(string: baseURLStr);
         
         var systemVersion = UIDevice.currentDevice().systemVersion;
-        if(systemVersion.hasPrefix("7.") && imageName != nil){
-            //no way to load UIWebview the site while comet working
-            let html = "<html><head></head><body><p>image not support in ios7</p><img src='\(imageName!)' width='\(svgwidth) height='\(svgheight)'/></body></html>";
-            webView.loadHTMLString(html, baseURL: baseURL);
-            webView.layer.borderColor = UIColor.grayColor().CGColor;
-            webView.layer.borderWidth = 1;
-            
-            KFAppUtils.executeInBackThread({
-                let fullURL = baseURLStr + self.imageName!;
-                let req = KFHttpRequest(urlString: fullURL, method: "GET");
-                let res = KFHttpConnection.connect(req);
-                if(res.getStatusCode() == 200){
-                    KFAppUtils.executeInGUIThread({
-                        let img = UIImage(data: res.bodyData!);
-                        self.imgview = UIImageView(image: img);
-                        self.imgview!.frame = CGRectMake(0, 0, self.svgwidth, self.svgheight);
-                        self.addSubview(self.imgview!);
-                        self.updateTransform();
-                        return;
-                    });
-                }
-                return;
-            });
-            return;
-        }
         
         webView.loadHTMLString(drawing.content, baseURL: baseURL);
-        
-        //println(model.width);
-        //println(model.height);
-        //println(model.rotation);
     }
     
     //for ios 7
