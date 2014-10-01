@@ -101,8 +101,6 @@
 		499DE6F41989A9CF00BA2209 /* KFCanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499DE6F21989A9CF00BA2209 /* KFCanvasViewController.swift */; };
 		499DE6F51989A9CF00BA2209 /* KFCanvasViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 499DE6F31989A9CF00BA2209 /* KFCanvasViewController.xib */; };
 		49B938441946404000BD9C0D /* KFViewRefView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B938431946404000BD9C0D /* KFViewRefView.swift */; };
-		49C12594198B0B59000336D8 /* KFTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C12592198B0B59000336D8 /* KFTestViewController.swift */; };
-		49C12595198B0B59000336D8 /* KFTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49C12593198B0B59000336D8 /* KFTestViewController.xib */; };
 		49C4004B19C7850D002ED98D /* KFAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C4004A19C7850D002ED98D /* KFAttachment.swift */; };
 		49C5590B1945EF1700FDFF32 /* KFDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5590A1945EF1700FDFF32 /* KFDrawing.swift */; };
 		49C5590D1945EF5F00FDFF32 /* KFModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C5590C1945EF5F00FDFF32 /* KFModel.swift */; };
@@ -228,8 +226,6 @@
 		499DE6F21989A9CF00BA2209 /* KFCanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFCanvasViewController.swift; sourceTree = "<group>"; };
 		499DE6F31989A9CF00BA2209 /* KFCanvasViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFCanvasViewController.xib; sourceTree = "<group>"; };
 		49B938431946404000BD9C0D /* KFViewRefView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFViewRefView.swift; sourceTree = "<group>"; };
-		49C12592198B0B59000336D8 /* KFTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFTestViewController.swift; sourceTree = "<group>"; };
-		49C12593198B0B59000336D8 /* KFTestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KFTestViewController.xib; sourceTree = "<group>"; };
 		49C4004A19C7850D002ED98D /* KFAttachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFAttachment.swift; sourceTree = "<group>"; };
 		49C5590A1945EF1700FDFF32 /* KFDrawing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFDrawing.swift; sourceTree = "<group>"; };
 		49C5590C1945EF5F00FDFF32 /* KFModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KFModel.swift; sourceTree = "<group>"; };
@@ -471,8 +467,6 @@
 		49C12591198B0B2F000336D8 /* TestUI */ = {
 			isa = PBXGroup;
 			children = (
-				49C12592198B0B59000336D8 /* KFTestViewController.swift */,
-				49C12593198B0B59000336D8 /* KFTestViewController.xib */,
 			);
 			name = TestUI;
 			sourceTree = "<group>";
@@ -648,7 +642,6 @@
 				496075041992AD0D00131111 /* KFAccountCreationViewController.xib in Resources */,
 				496402BD198D7FFF009504B7 /* list.png in Resources */,
 				496402C2198D7FFF009504B7 /* newview.png in Resources */,
-				49C12595198B0B59000336D8 /* KFTestViewController.xib in Resources */,
 				496402C7198D7FFF009504B7 /* resize.png in Resources */,
 				496402C1198D7FFF009504B7 /* newpicture.png in Resources */,
 				498A1BD81993194300E448EA /* KFMenuViewController.xib in Resources */,
@@ -717,7 +710,6 @@
 				49C78D5D194105C2004D3404 /* iKF.xcdatamodeld in Sources */,
 				49C5591919462FB700FDFF32 /* KFDrawingRefView.swift in Sources */,
 				494DE5A4195488DD0053F9DF /* KFAppUtils.swift in Sources */,
-				49C12594198B0B59000336D8 /* KFTestViewController.swift in Sources */,
 				49842F7219805A3D0012900B /* KFService.swift in Sources */,
 				499DE6F41989A9CF00BA2209 /* KFCanvasViewController.swift in Sources */,
 				495761A91945EEA10017A852 /* KFPost.swift in Sources */,
