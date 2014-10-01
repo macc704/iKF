@@ -551,12 +551,12 @@ class KFCanvasViewController: UIViewController {
         
         return CGRectMake(x, y, width, height);
     }
-    
-    func openBrowser(p:CGPoint, size:CGSize = CGSize(width: 500, height: 600)){
+       
+    func openBrowser(p:CGPoint, size:CGSize = CGSize(width: 500, height: 600), url:String = "http://www.google.com"){
         let browser = KFWebBrowserView();
         browser.frame = CGRect(x: p.x, y:p.y, width: size.width, height:size.height);
         browser.mainController = self;
-        browser.setURL("http://www.google.com");
+        browser.setURL(url);
         self.canvasView.windowsLayer.addSubview(browser);
         browser.doubleTapHandler = {
             self.showHalo(browser);

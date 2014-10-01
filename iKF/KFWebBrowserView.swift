@@ -19,6 +19,8 @@ class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
     private let titleLabel:UILabel = UILabel();
     private let webView = KFWebView.create();
     
+    private var _attachmentView:KFAttachmentView?;
+    
     private let toolContainer:UIView = UIView();
     
     private var urlTextfield:UITextField?;
@@ -246,11 +248,30 @@ class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
         if(self.note == nil){
             return;
         }
+        
         webView.scalesPageToFit = false;//necessary
         self.titleLabel.text = self.note!.title;
         let html = self.note!.getReadHtml();
         let baseURL = self.note!.getBaseURL();
         self.webView.loadHTMLString(html, baseURL: baseURL);
+        
+        if(note!.attachments.count > 0 && _attachmentView == nil){
+            _attachmentView = KFAttachmentView(post: note!, selectedHandler: {req in
+                let loc = CGPointMake(self.frame.origin.x + 10, self.frame.origin.y + 10);
+                self.mainController!.openBrowser(loc, size: self.frame.size, url: req.URL.absoluteString!);
+                return;
+            });
+            self.addSubview(_attachmentView!);
+            self.setNeedsLayout();
+        }
+        else if(note!.attachments.count > 0 && _attachmentView != nil){
+            _attachmentView?.reload();
+        }
+        else if(note!.attachments.count <= 0 && _attachmentView != nil){
+            _attachmentView?.removeFromSuperview();
+            _attachmentView = nil;
+            self.setNeedsLayout();
+        }
     }
     
     deinit{
@@ -323,13 +344,16 @@ class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
         self.stopButton!.frame = CGRectMake(x,5,35,35);
         
         if(!suppressWebLayout){
-            self.webView.frame = CGRectMake(0,(statusBarH+toolBarH),width,height-(statusBarH+toolBarH));
+            var webViewHeight = height-(statusBarH+toolBarH);
+            if(self._attachmentView != nil){
+                let attachHeight = min(webViewHeight-1, 100);
+                webViewHeight = webViewHeight - attachHeight;
+                self._attachmentView!.frame = CGRectMake(0,(statusBarH+toolBarH)+webViewHeight,width,attachHeight);
+            }
+            self.webView.frame = CGRectMake(0,(statusBarH+toolBarH),width,webViewHeight);
+            loading.frame = self.webView.frame;
+            //self.webView.scrollView.zoomToRect(self.webView.frame, animated: false);//does not work
         }
-        
-        //self.webView.scrollView.zoomToRect(self.webView.frame, animated: false);//does not work
-    }
-    
-    func reLayoutSubViews(){
     }
     
     let loading = KFLoadingView();
@@ -386,6 +410,8 @@ class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
     func getURL() -> String{
         return webView.stringByEvaluatingJavaScriptFromString("document.URL")!;
     }
+    
+
     
     
 }
