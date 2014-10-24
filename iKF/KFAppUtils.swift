@@ -37,7 +37,7 @@ class KFAppUtils: NSObject {
     }
     
     class func topController() -> UIViewController{
-        var controller:UIViewController! = UIApplication.sharedApplication().keyWindow.rootViewController!;
+        var controller:UIViewController! = UIApplication.sharedApplication().keyWindow!.rootViewController!;
         while ((controller.presentedViewController) != nil){
             controller = controller.presentedViewController!;
         }

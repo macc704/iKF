@@ -13,9 +13,9 @@ class KFResource: NSObject {
     class func loadWebResource(name:String, ext:String) -> String{
         objc_sync_enter(self);
         let path = NSBundle.mainBundle().pathForResource(name, ofType: ext, inDirectory: "WebResources");
-        let text = NSString.stringWithContentsOfFile(path!, encoding: NSUTF8StringEncoding, error: nil);
+        let text = NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: nil);
         objc_sync_exit(self);
-        return text;//KFResource.encodingForJS(text);
+        return text!;//KFResource.encodingForJS(text);
     }
     
     class func loadReadTemplate() -> String{

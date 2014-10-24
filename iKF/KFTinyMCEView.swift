@@ -46,7 +46,7 @@ class KFTinyMCEView: KFWebView {
         }else{//else not initialized
             self.evalJavascript("window.onload = function(){\(setTextJS(text))\(getSetHeightJS())}");
             let path = NSBundle.mainBundle().pathForResource("edit", ofType: "html", inDirectory: "WebResources");
-            let req = NSURLRequest(URL: NSURL(string: path!));
+            let req = NSURLRequest(URL: NSURL(string: path!)!);
             self.loadRequest(req);
         }
     }

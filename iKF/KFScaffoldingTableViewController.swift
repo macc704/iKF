@@ -47,7 +47,7 @@ class KFScaffoldingTableViewController: UITableViewController {
         let section:Int = indexPath.section;
         let row:Int = indexPath.row;
         let cell:UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: nil);
-        cell.textLabel!.text = self.scaffolds[section].supports[row].title;
+        cell.textLabel.text = self.scaffolds[section].supports[row].title;
         return cell;
     }
     

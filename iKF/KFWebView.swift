@@ -77,7 +77,7 @@ class KFWebView: UIWebView {
     
     func setURL(url:String){
         let url = NSURL(string: url);
-        let req = NSURLRequest(URL: url);
+        let req = NSURLRequest(URL: url!);
         self.loadRequest(req);
     }
     

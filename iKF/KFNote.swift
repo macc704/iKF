@@ -77,7 +77,7 @@ class KFNote: KFPost {
     }
     
     class func createSupportTag(support:KFSupport) -> String{
-        let uniqueId = String(Int(NSDate.date().timeIntervalSince1970));
+        let uniqueId = String(Int(NSDate().timeIntervalSince1970));
         let template = KFResource.loadScaffoldTagTemplate();
         var tagString = template;
         tagString = tagString.stringByReplacingOccurrencesOfString("%SUPPORTID%", withString: support.guid, options: nil, range: nil);

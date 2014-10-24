@@ -18,7 +18,7 @@ class KFAccountCreationViewController: UIViewController {
         super.viewDidLoad()
         if(host != nil){
             let url = NSURL(string: "http://\(host)/kforum/register");
-            let req = NSURLRequest(URL: url);
+            let req = NSURLRequest(URL: url!);
             self.webView.loadRequest(req);
         }
     }

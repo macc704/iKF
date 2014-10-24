@@ -18,7 +18,7 @@ class KFHttpRequest: NSObject {
     //let -> immutable, var -> mutable
     
     init(urlString: String, method: String){
-        let url = NSURL.URLWithString(urlString);
+        let url = NSURL(string: urlString)!;
         nsRequest = NSMutableURLRequest(URL: url);
         nsRequest.HTTPMethod = method;
     }

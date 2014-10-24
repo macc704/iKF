@@ -58,7 +58,7 @@ class KFService: NSObject {
     }
     
     func getHostURL() -> NSURL{
-        return NSURL(string: getHostURLString());
+        return NSURL(string: getHostURLString())!;
     }
     
     func testConnectionToGoogle() -> Bool{

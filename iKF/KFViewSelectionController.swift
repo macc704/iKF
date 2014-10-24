@@ -55,7 +55,7 @@ class KFViewSelectionController: UIViewController, UITableViewDelegate, UITableV
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let row:Int = indexPath.row;
         let cell:UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: nil);
-        cell.textLabel!.text = self.models[row].toString();
+        cell.textLabel.text = self.models[row].toString();
         return cell;
     }
     

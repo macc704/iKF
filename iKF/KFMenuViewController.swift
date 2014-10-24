@@ -89,7 +89,7 @@ class KFMenuViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let row:Int = indexPath.row;
         let cell:UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: nil);
         cell.accessoryType = self.menues[row].getAccessoryType();
-        cell.textLabel!.text = self.menues[row].getName();
+        cell.textLabel.text = self.menues[row].getName();
         return cell;
     }
     

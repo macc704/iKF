@@ -35,7 +35,7 @@ class KFMobileCometManager: NSObject, UIWebViewDelegate {
     }
     
     func stop(){
-        let req = NSURLRequest(URL: NSURL(string: "about:blank"));
+        let req = NSURLRequest(URL: NSURL(string: "about:blank")!);
         self.webView.loadRequest(req);
     }
     

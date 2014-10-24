@@ -21,9 +21,9 @@ class KFAboutViewController: UIViewController {
         
         let aboutStr = KFResource.loadWebResource("about", ext: "html");
         webView.loadHTMLString(aboutStr, baseURL: nil);
-        let version = NSBundle.mainBundle().infoDictionary["CFBundleShortVersionString"]! as String;
+        let version = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"]! as String;
         labelVersion.text = version;
-        let build = NSBundle.mainBundle().infoDictionary["CFBundleVersion"]! as String;
+        let build = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"]! as String;
         labelBuild.text = build;
         let date = iKFUtil.getBuildDate() + " " + iKFUtil.getBuildTime();
         labelBuildDate.text = date;
