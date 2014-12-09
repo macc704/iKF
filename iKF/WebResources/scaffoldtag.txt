@@ -6,5 +6,5 @@
 - enter your idea here -
 <span supportId="%SUPPORTID%" class="kfSupportEndTag kfSupportEndMark mceNonEditable">&nbsp; </span>
 </p>
-<br/>
+<br>
 
