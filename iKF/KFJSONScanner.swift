@@ -37,7 +37,16 @@ class KFJSONScanner: NSObject {
             model.title = each["title"].asString!;
             model.published = each["published"].asBool!;
             model.authors = scanUsers(each["authors"]).dic;
-            model.primaryAuthor = getUserById(each["primaryAuthorId"].asString!)!;
+            if(each["primaryAuthorId"].isNull != false){
+                model.primaryAuthor = getUserById(each["primaryAuthorId"].asString!)!;
+            }else{
+                let user = KFUser();
+                user.guid = "test";
+                user.firstName = "No";
+                user.lastName = "User";
+                model.primaryAuthor = user;
+                
+            }
             models.add(model);
         }
         
