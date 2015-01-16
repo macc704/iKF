@@ -18,7 +18,8 @@ class KFHttpRequest: NSObject {
     //let -> immutable, var -> mutable
     
     init(urlString: String, method: String){
-        let url = NSURL(string: urlString)!;
+        let encodedUrl = urlString.stringByReplacingOccurrencesOfString(" ",withString:"%20");//remporary work on Jan 16, 2015
+        let url = NSURL(string: encodedUrl)!;
         nsRequest = NSMutableURLRequest(URL: url);
         nsRequest.HTTPMethod = method;
     }
