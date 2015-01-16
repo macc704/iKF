@@ -71,7 +71,7 @@ class KFMobileCometManager: NSObject, UIWebViewDelegate {
         }
         if(host != nil && host == "kfbus.receiveevent"){
             var jsonStr = request.URL.lastPathComponent;
-            let json = JSON.parse(jsonStr);
+            let json = JSON.parse(jsonStr!);
             messageReceived?(type: json["type"].asString, method: json["method"].asString, target: json["target"].asString);
             return false;
         }

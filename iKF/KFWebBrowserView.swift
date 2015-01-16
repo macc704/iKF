@@ -314,7 +314,7 @@ class KFWebBrowserView: KFDropTargetView, UIWebViewDelegate {
         if(host != nil && host == "kfpost"){
             var guid = request.URL.lastPathComponent;
             let frame = CGRectMake(self.frame.origin.x + 50, self.frame.origin.y + 50, self.frame.size.width, self.frame.size.height);
-            self.mainController?.openPostById(guid, frame: frame);
+            self.mainController?.openPostById(guid!, frame: frame);
             return false;
         }else if(request.URL.absoluteString! == "about:blank"){
             self.kfSetNote(nil);//important to close
